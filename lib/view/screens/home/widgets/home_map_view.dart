@@ -14,6 +14,8 @@ import 'dart:ui' as ui;
 
 import 'package:ride_sharing_user_app/view/widgets/permission_dialog.dart';
 
+import '../controller/home_view_controller.dart';
+
 const kStartPosition = LatLng(18.488213, -69.959186);
 const kSantoDomingo = CameraPosition(target: kStartPosition, zoom: 15);
 const kMarkerId = MarkerId('MarkerId1');
@@ -32,19 +34,20 @@ class HomeMapView extends StatefulWidget {
 }
 
 class HomeMapViewState extends State<HomeMapView> {
+  final controller =Get.put(HomeViewController());
   Position? position;
   GoogleMapController? mapController;
   final markers = <MarkerId, Marker>{};
-  final controller = Completer<GoogleMapController>();
+  final googleMapController = Completer<GoogleMapController>();
   final stream = Stream.periodic(kDuration, (count) => kLocations[count])
       .take(kLocations.length);
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
-
-  @override
-  void initState() {
-    super.initState();
-    _determinePosition();
-  }
+  //
+  // @override
+  // initState()   {
+  //   super.initState();
+  //    // _determinePosition();
+  // }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
@@ -73,7 +76,7 @@ class HomeMapViewState extends State<HomeMapView> {
             rippleRadius: 0.2,
             useRotation: false,
             duration: const Duration(milliseconds: 2300),
-            mapId: controller.future.then<int>((value) => value.mapId),
+            mapId: googleMapController.future.then<int>((value) => value.mapId),
             //Grab Google Map Id
             markers: markers.values.toSet(),
             child: GoogleMap(
@@ -91,10 +94,10 @@ class HomeMapViewState extends State<HomeMapView> {
                 initialCameraPosition: CameraPosition(
                     target: LatLng(
                         position?.latitude ?? 0.0, position?.longitude ?? 0.0)),
-                onMapCreated: (gController) {
+                onMapCreated: (gController) async{
                   // stream.forEach((value) => newLocationUpdate(value));
-                  controller.complete(gController);
-                  _determinePosition();
+                  googleMapController.complete(gController);
+               controller .determinePosition();
                   //Complete the future GoogleMapController
                 }),
           ),
@@ -103,89 +106,5 @@ class HomeMapViewState extends State<HomeMapView> {
     );
   }
 
-  void newLocationUpdate(LatLng latLng) async {
-    var marker = RippleMarker(
-        markerId: kMarkerId,
-        position: latLng,
-        ripple: false,
-        icon: BitmapDescriptor.fromBytes(
-            await getBytesFromAsset(Images.carIcon, 100)),
-        onTap: () {});
-    var marker2 = RippleMarker(
-        markerId: kMarkerId2,
-        position: const LatLng(23.836982, 90.374282),
-        ripple: false,
-        icon: BitmapDescriptor.fromBytes(
-            await getBytesFromAsset(Images.carIcon, 100)),
-        onTap: () {});
-    setState(() {
-      markers[kMarkerId] = marker;
-      markers[kMarkerId2] = marker2;
-    });
-  }
 
-  Future<Position?> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      showDialog(
-          context: Get.context!,
-          barrierDismissible: false,
-          builder: (context) => const PermissionDialog());
-
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        showDialog(
-            context: Get.context!,
-            barrierDismissible: false,
-            builder: (context) => const PermissionDialog());
-
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      showDialog(
-          context: Get.context!,
-          barrierDismissible: false,
-          builder: (context) => const PermissionDialog());
-
-      // Permissions are denied forever, handle appropriately.
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    position = await Geolocator.getCurrentPosition();
-    print(position?.latitude);
-    mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(position?.latitude ?? 0.0, position?.longitude ?? 0.0),
-        zoom: 17)));
-    var marker = RippleMarker(
-        markerId: kMarkerId,
-        position: LatLng(position?.latitude ?? 0.0, position?.longitude ?? 0.0),
-        ripple: false,
-        icon: BitmapDescriptor.fromBytes(
-            await getBytesFromAsset(Images.carIcon, 100)),
-        onTap: () {});
-    setState(() {
-      markers[kMarkerId] = marker;
-    });
-    return position;
-  }
-  // convertLocation() async {
-  //   GeoData data = await Geocoder2.getDataFromCoordinates(
-  //       latitude: pickedPosition.value.latitude,
-  //       longitude: pickedPosition.value.longitude,
-  //       googleMapApiKey: AppConstants.mapKey);
-  //   print(data.address);
-  //   addressEditingController.text = data.address;
-  //   _address.value.value = addressEditingController.text;
-  // }
 }

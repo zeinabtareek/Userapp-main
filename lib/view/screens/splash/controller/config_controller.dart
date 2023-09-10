@@ -47,47 +47,8 @@ class ConfigController extends GetxController implements GetxService {
   @override
   onInit() async {
     super.onInit();
-    await _determinePosition();
+
   }
 
-  Future<Position?> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
 
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      showDialog(
-          context: Get.context!,
-          barrierDismissible: false,
-          builder: (context) => const PermissionDialog());
-
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        showDialog(
-            context: Get.context!,
-            barrierDismissible: false,
-            builder: (context) => const PermissionDialog());
-
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      showDialog(
-          context: Get.context!,
-          barrierDismissible: false,
-          builder: (context) => const PermissionDialog());
-
-      // Permissions are denied forever, handle appropriately.
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    return Geolocator.getCurrentPosition();
-  }
 }

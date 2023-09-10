@@ -1,11 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/view/screens/history/history_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/home/home_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/notification/notification_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/profile/profile_screen/profile_screen.dart';
 
 import '../../../util/app_strings.dart';
+import '../../widgets/permission_dialog.dart';
 
 
 class BottomMenuController extends GetxController implements GetxService{
@@ -19,7 +24,14 @@ class BottomMenuController extends GetxController implements GetxService{
   ];
   Widget _currentScreen = const HomeScreen();
   Widget get currentScreen => _currentScreen;
+onInit() async {
+  super.onInit();
 
+
+  // await _determinePosition();
+
+
+}
   resetNavBar(){
     _currentScreen = const HomeScreen();
     _currentTab = 0;
@@ -48,4 +60,53 @@ class BottomMenuController extends GetxController implements GetxService{
     _currentTab = 3;
     update();
   }
+
+  ///for determining  location  condition
+  // Future<Position?> _determinePosition() async {
+  //   bool serviceEnabled;
+  //   LocationPermission permission;
+  //
+  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //   if (!serviceEnabled) {
+  //     showDialog(
+  //         context: Get.context!,
+  //         barrierDismissible: false,
+  //         builder: (context) => const PermissionDialog());
+  //
+  //     return Future.error('Location services are disabled.');
+  //   }
+  //
+  //   permission = await Geolocator.checkPermission();
+  //   ///LocationPermission.denied
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       showDialog(
+  //           context: Get.context!,
+  //           barrierDismissible: false,
+  //           builder: (context) => const PermissionDialog());
+  //
+  //       return Future.error('Location permissions are denied');
+  //     }
+  //   }
+  //   ///LocationPermission.deniedForever
+  //
+  //   if (permission == LocationPermission.deniedForever) {
+  //     showDialog(
+  //         context: Get.context!,
+  //         barrierDismissible: false,
+  //         builder: (context) => const PermissionDialog());
+  //
+  //     // Permissions are denied forever, handle appropriately.
+  //     return Future.error(
+  //         'Location permissions are permanently denied, we cannot request permissions.');
+  //   }
+  //
+  //
+  //
+  //
+  //   return Geolocator.getCurrentPosition();
+  // }
+
+
 }
