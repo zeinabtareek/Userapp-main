@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/screens/history/controller/activity_controller.dart';
@@ -12,10 +14,12 @@ import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
 import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
+import 'model/history_model.dart';
 
 class HistoryDetailsScreen extends StatelessWidget {
-  final ActivityItemModel activityItemModel;
-  // final HistoryModel activityItemModel;
+  // final ActivityItemModel activityItemModel;
+  // final ActivityItemModel ?activityItemModel1;
+  final HistoryData activityItemModel;
   const HistoryDetailsScreen({Key? key, required this.activityItemModel}) : super(key: key);
 
   @override
@@ -31,13 +35,14 @@ class HistoryDetailsScreen extends StatelessWidget {
                   color: Theme.of(context).textTheme.bodyLarge?.color)),
               Divider(color: Theme.of(context).primaryColor.withOpacity(0.2),),
 
-              ActivityItemView(activityItemModel: activityItemModel,isDetailsScreen: true,),
+            Obx(()=>activityController.isLoading.value?Center(child: CupertinoActivityIndicator(),) :  ActivityItemView(activityItemModel: activityItemModel,isDetailsScreen: true,),),
               const SizedBox(height: Dimensions.paddingSizeSmall,),
-              const ActivityScreenMapView(),
-              if(activityItemModel.tripDetails!=null)
-              ActivityScreenTripDetails(tripDetails: activityItemModel.tripDetails!),
-              if(activityItemModel.tripDetails!=null)
-              ActivityScreenRiderDetails(riderDetails: activityItemModel.riderDetails!),
+                ActivityScreenMapView(position: LatLng(activityItemModel.to?.lat??0.0, activityItemModel.to?.lng??0.0,),),
+              // if(activityItemModel.tripDetails!=null)
+              ActivityScreenTripDetails(tripDetails: activityItemModel ),
+              // if(activityItemModel.tripDetails!=null)
+              ///uncomment this
+              // ActivityScreenRiderDetails(riderDetails: activityItemModel ),
             ],
             );
           }),

@@ -348,5 +348,18 @@
   "otp_forget_password": "نسيت كلمة المرور",
   "history": "الرحلات السابقة",
   "set_destination": "حدد الوجهة",
-  "select_destination": "حدد الموقع علي الخريطه"
+  "select_destination": "حدد الموقع علي الخريطه",
+  "location_disabled": "خدمة الموقع معطلة. برجاء تفعيل الخدمة",
+  "location_denied": "تم رفض أذونات الموقع",
+  "location_permanent_denied": "تم رفض أذونات الموقع نهائيًا، ولا يمكننا طلب الأذونات.",
+  "you_denied_location_permission": "لقد رفضت إذن تحديد الموقع",
+  "enter_current_location_route": "أدخل طريق الموقع الحالي",
+  "enter_entrance": "أدخل المدخل",
+  "enter_destination_route": "أدخل طريق الوجهة",
+  "enter_extra_route": "أدخل طريقًا إضافيًا",
+  "canceled": " ملغاة "
+
+
+
+
 }

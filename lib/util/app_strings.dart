@@ -116,6 +116,26 @@ class Strings {
   static const String addNote = "add_note";
   static const String endThisTripAtYourDestination = "end_this_trip_at_your_destination";
   static const String selectDestination = "select_destination";
+  static const String locationServicesDisabled = "location_disabled";
+  static const String locationDenied = "location_denied";
+  static const String locationPermanentlyDenied= "location_permanent_denied";
+  static const String youDeniedLocationPermission= "you_denied_location_permission";
+  static const String enterCurrentLocationRoute= "enter_current_location_route";
+  static const String to = "to";
+  static const String setFromMap = "set_from_map";
+  static const String chooseFromMap = "choose_from_map";
+  static const String saved = "saved";
+  static const String suggestions = "suggestions";
+  static const String youCanAddMultipleRouteTo = "you_can_add_multiple_route_to";
+  static const String done = "done";
+  static const String addEntrance = "add_entrance";
+  static const String enterEntrance = "enter_entrance";
+  static const String enterDestinationRoute = "enter_destination_route";
+  static const String enterExtraRoute = "enter_extra_route";
+  static const String canceled = "canceled";
+  static const String payment = "payment";
+  static const String totalDistance = "total_distance";
+
 
 
 

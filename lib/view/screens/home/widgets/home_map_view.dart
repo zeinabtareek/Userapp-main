@@ -97,7 +97,7 @@ class HomeMapViewState extends State<HomeMapView> {
                 onMapCreated: (gController) async{
                   // stream.forEach((value) => newLocationUpdate(value));
                   googleMapController.complete(gController);
-               controller .determinePosition();
+               // await controller .determinePosition();
                   //Complete the future GoogleMapController
                 }),
           ),

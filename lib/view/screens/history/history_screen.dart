@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
@@ -23,14 +24,14 @@ class HistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomBody(
-        appBar: CustomAppBar(title: Strings.checkYourAllTrip.tr,showBackButton:  true),
+        appBar: CustomAppBar(title: Strings.checkYourAllTrip.tr,showBackButton:  false),
         body: Padding(
           padding: K.fixedPadding0,
           child: GetBuilder<ActivityController>(builder: (activityController){
             return Column(children: [
-              TextButton(onPressed: ()async{
-                await  controller.activityRepo.getAllHistoryTrips();
-              }, child: Text('click')),
+              // TextButton(onPressed: ()async{
+              //   await  controller.activityRepo.getAllHistoryTrips();
+              // }, child: Text('click')),
 
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text(Strings.yourTrips.tr,
@@ -103,12 +104,14 @@ class HistoryScreen extends StatelessWidget {
               ]),
 
               Divider(color: Theme.of(context).primaryColor.withOpacity(0.2),),
-              Flexible(
-                child: ListView.builder(itemBuilder: (context,index){
-                  return ActivityItemView(activityItemModel: activityController.activityItemList[index],isDetailsScreen: false,);
+             Obx(()=>controller.isLoading.value?Center(child: CupertinoActivityIndicator(),) :Flexible(
+                child: ListView.builder(
+                  itemBuilder: (context,index){
+                  return ActivityItemView(activityItemModel: activityController.model.data![index],isDetailsScreen: false,);
                 },
-                  itemCount: activityController.activityItemList.length,
+                  itemCount: activityController.model.data?.length,
                   padding: EdgeInsets.zero,
+                )
                 ))
               ],
             );

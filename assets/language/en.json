@@ -350,6 +350,14 @@
   "otp_forget_password": "Otp Forgot Password",
   "history": "History trips",
   "set_destination": "Set Destination",
-  "select_destination":   "Select Destination"
-
+  "select_destination":   "Select Destination",
+  "location_disabled": "The location service is disabled. Please activate the service",
+  "location_denied": "Location permissions are denied",
+  "location_permanent_denied": "Location permissions are permanently denied, we cannot request permissions.",
+  "you_denied_location_permission":" you Denied Location Permission",
+  "enter_current_location_route": "Enter Current Location Route",
+  "enter_entrance": "Enter Entrance",
+  "enter_destination_route":  "Enter Destination Route",
+  "enter_extra_route": "Enter Extra Route",
+  "canceled": "canceled"
 }

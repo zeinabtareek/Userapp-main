@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
+import '../../util/app_strings.dart';
+
 class PermissionDialog extends StatelessWidget {
   const PermissionDialog({super.key});
 
@@ -20,8 +22,7 @@ class PermissionDialog extends StatelessWidget {
             Icon(Icons.add_location_alt_rounded,
                 color: Theme.of(context).primaryColor, size: 100),
             const SizedBox(height: Dimensions.paddingSizeLarge),
-            Text(
-              "you Denied Location Permission",
+            Text(Strings.youDeniedLocationPermission.tr,
               textAlign: TextAlign.justify,
               style: TextStyle(fontSize: Dimensions.fontSizeExtraLarge),
             ),
@@ -36,7 +37,7 @@ class PermissionDialog extends StatelessWidget {
                             width: 2, color: Theme.of(context).primaryColor)),
                     minimumSize: const Size(1, 50),
                   ),
-                  child: const Text("No"),
+                  child:   Text(Strings.no.tr),
                   onPressed: () async{
                     await Geolocator.openAppSettings();
 
@@ -47,7 +48,7 @@ class PermissionDialog extends StatelessWidget {
                const SizedBox(width: Dimensions.paddingSizeSmall),
               Expanded(
                   child: CustomButton(
-                      buttonText: "yes",
+                      buttonText: Strings.yes.tr,
                       onPressed: () async {
                         await Geolocator.openAppSettings();
 

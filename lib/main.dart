@@ -18,6 +18,7 @@ import 'package:ride_sharing_user_app/view/screens/auth/sign_up_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/choose_from_map/choose_from_map_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/forgot_password/verify_forget_password_otp_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/n/test_polyline_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/profile/edit_profile_screen/edit_profile_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/profile/profile_screen/profile_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/profile/widgets/edit_profile_account_info.dart';
@@ -95,7 +96,7 @@ class MyApp extends StatelessWidget {
             transitionDuration:   Duration(milliseconds: 500),
 
 
-            // home: ChooseFromMapScreen(),
+            // home: TestPolylineMap(),
             // home: DashboardScreen(),
             // home: SignUpScreen(),
           );

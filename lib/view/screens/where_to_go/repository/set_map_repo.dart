@@ -1,7 +1,7 @@
 
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:ride_sharing_user_app/data/api_client.dart';
-import 'package:ride_sharing_user_app/view/screens/set_map/model/suggested_route_model.dart';
+import '../model/suggested_route_model.dart';
 
 class SetMapRepo{
   final ApiClient apiClient;

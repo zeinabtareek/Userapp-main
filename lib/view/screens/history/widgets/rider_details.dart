@@ -7,6 +7,7 @@ import 'package:ride_sharing_user_app/view/widgets/custom_image.dart';
 
 class ActivityScreenRiderDetails extends StatelessWidget {
   final RiderDetails riderDetails;
+  // final RiderDetails riderDetails;
   const ActivityScreenRiderDetails({Key? key, required this.riderDetails}) : super(key: key);
 
   @override

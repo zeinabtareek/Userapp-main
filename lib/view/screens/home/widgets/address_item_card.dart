@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/view/screens/home/model/address_model.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/controller/parcel_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/set_map/set_map_screen.dart';
+
+import '../../where_to_go/where_to_go_screen.dart';
 
 
 class AddressItemCard extends StatelessWidget {
