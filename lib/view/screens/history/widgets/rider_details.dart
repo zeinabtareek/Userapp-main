@@ -5,17 +5,20 @@ import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/screens/history/model/activity_item_model.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_image.dart';
 
+import '../../../../util/app_strings.dart';
+import '../model/history_model.dart';
+
 class ActivityScreenRiderDetails extends StatelessWidget {
-  final RiderDetails riderDetails;
+  final Driver riderDetails;
   // final RiderDetails riderDetails;
-  const ActivityScreenRiderDetails({Key? key, required this.riderDetails}) : super(key: key);
+  const ActivityScreenRiderDetails({Key? key,   required this.riderDetails}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
 
       Padding(padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-        child: Text('rider_details'.tr,style: textBold.copyWith(fontSize: Dimensions.fontSizeDefault,color: Theme.of(context).primaryColor),),
+        child: Text(Strings.riderDetails.tr,style: textBold.copyWith(fontSize: Dimensions.fontSizeDefault,color: Theme.of(context).primaryColor),),
       ),
 
       Row(children: [
@@ -31,7 +34,7 @@ class ActivityScreenRiderDetails extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(riderDetails.name!,
+                  Text('${riderDetails.firstName.toString().tr} ${riderDetails.lastName.toString().tr}',
                     style: textMedium.copyWith(fontSize: Dimensions.fontSizeLarge,color: Theme.of(context).primaryColorDark),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -44,7 +47,7 @@ class ActivityScreenRiderDetails extends StatelessWidget {
                         child: Icon(Icons.star,color: Theme.of(context).colorScheme.primaryContainer,size: 15,),
                         alignment: PlaceholderAlignment.middle
                       ),
-                      TextSpan(text: riderDetails.rating.toString(),style: textRegular.copyWith(fontSize: Dimensions.fontSizeDefault)),
+                      TextSpan(text: riderDetails.rate.toString(),style: textRegular.copyWith(fontSize: Dimensions.fontSizeDefault)),
                     ],
                   ),
                   ),
@@ -67,7 +70,7 @@ class ActivityScreenRiderDetails extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(riderDetails.vehicleName!,
+                  Text('bike',
                     style: textMedium.copyWith(fontSize: Dimensions.fontSizeDefault,color: Theme.of(context).primaryColorDark),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -77,10 +80,10 @@ class ActivityScreenRiderDetails extends StatelessWidget {
                         color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8)
                     ),
                     children:  [
-                      TextSpan(text: "${riderDetails.vehicleType!.tr} : ",style: textRegular.copyWith(fontSize: Dimensions.fontSizeDefault,
+                      TextSpan(text: "${'bike Type.'.tr} : ",style: textRegular.copyWith(fontSize: Dimensions.fontSizeDefault,
                         color: Theme.of(context).primaryColor
                       )),
-                      TextSpan(text: riderDetails.vehicleNumber,style: textRegular.copyWith(fontSize: Dimensions.fontSizeDefault)),
+                      TextSpan(text: 'vehicleNumber',style: textRegular.copyWith(fontSize: Dimensions.fontSizeDefault)),
                     ],
                   ),
                     overflow: TextOverflow.ellipsis,

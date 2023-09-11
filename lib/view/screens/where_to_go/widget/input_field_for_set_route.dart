@@ -8,9 +8,10 @@ import '../../choose_from_map/choose_from_map_screen.dart';
 class InputField extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode node;
+  void Function(String)? onChange;
   final String? hint;
   final VoidCallback? onTap;
-  const InputField({Key? key, required this.controller, required this.node, this.hint,this.onTap}) : super(key: key);
+   InputField({Key? key, required this.controller, required this.node, this.hint,this.onTap,this.onChange}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class InputField extends StatelessWidget {
           ),
 
 
-        ),
+        ),onChanged: onChange,
         cursorColor: Colors.white,
 
       ),);

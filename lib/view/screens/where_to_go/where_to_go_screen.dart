@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -5,11 +6,13 @@ import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
+import 'package:ride_sharing_user_app/view/screens/where_to_go/repository/search_service.dart';
 import 'package:ride_sharing_user_app/view/screens/where_to_go/widget/input_field_for_set_route.dart';
 import 'package:ride_sharing_user_app/view/screens/where_to_go/widget/saved_recent_items.dart';
 import 'package:ride_sharing_user_app/view/screens/where_to_go/widget/suggested_route_screen.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_divider.dart';
 
+import '../../../enum/view_state.dart';
 import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
 import '../choose_from_map/choose_from_map_screen.dart';
@@ -27,7 +30,7 @@ class SetDestinationScreen extends StatelessWidget {
   // }
   @override
   Widget build(BuildContext context) {
-    final controller=Get.put(WhereToGoController(setMapRepo: Get.find()));
+    final controller = Get.put(WhereToGoController(setMapRepo: Get.find()));
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
@@ -37,7 +40,8 @@ class SetDestinationScreen extends StatelessWidget {
       ),
       body: GetBuilder<WhereToGoController>(builder: (setMapController) {
         return SingleChildScrollView(
-          child: Column(
+            child: Stack(children: [
+          Column(
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(
@@ -98,17 +102,22 @@ class SetDestinationScreen extends StatelessWidget {
                           ),
                           Expanded(
                             child: Padding(
-                              padding:K.fixedPadding0,
+                              padding: K.fixedPadding0,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   InputField(
                                     controller: controller.fromRouteController,
                                     node: controller.fromNode,
-                                    hint:Strings.enterCurrentLocationRoute.tr,
-                                    onTap: ()  async=>await controller.checkPermissionBeforeNavigation(context),
+                                    hint: Strings.enterCurrentLocationRoute.tr,
+                                    onTap: () async => await controller
+                                        .checkPermissionBeforeNavigation(
+                                            context),
+                                    onChange:(v){
+                                      controller.searchPlacesFrom(v);
+                                      print(v);
+                                  }
                                   ),
-
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical:
@@ -118,38 +127,37 @@ class SetDestinationScreen extends StatelessWidget {
                                             color: Colors.white)),
                                   ),
                                   ListView.builder(
-                                    itemCount:
-                                        setMapController.currentExtraRoute,
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemBuilder: (context, index) {
-                                      return Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: Dimensions
-                                                  .paddingSizeDefault),
-                                          child: InputField(
-                                              controller: controller.extraRouteController,
+                                      itemCount:
+                                          setMapController.currentExtraRoute,
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: Dimensions
+                                                    .paddingSizeDefault),
+                                            child: InputField(
+                                              controller: controller
+                                                  .extraRouteController,
                                               node: controller.extraNode,
-                                              hint:Strings.enterExtraRoute.tr,
-                                              onTap:   () async {
-                                                Get.to(()=>ChooseFromMapScreen());
+                                              hint: Strings.enterExtraRoute.tr,
+                                              onTap: () async {
+                                                Get.to(() =>
+                                                    ChooseFromMapScreen());
+                                              },
+                                            ));
 
-
-
-                                    },
-                                  ));
-
-                                  //                           );
-                                                          }),
-
+                                        //                           );
+                                      }),
                                   Row(
                                     children: [
                                       Expanded(
                                         child: InputField(
-                                          controller: controller.toRouteController,
-
-                                          hint:Strings.enterDestinationRoute.tr,
+                                          controller:
+                                              controller.toRouteController,
+                                          hint:
+                                              Strings.enterDestinationRoute.tr,
                                           node: controller.toRoutNode,
                                         ),
                                       ),
@@ -181,9 +189,10 @@ class SetDestinationScreen extends StatelessWidget {
                                       ? SizedBox(
                                           width: 200,
                                           child: InputField(
-                                            controller: controller.entranceController,
+                                            controller:
+                                                controller.entranceController,
                                             node: controller.entranceNode,
-                                            hint:Strings.enterEntrance.tr,
+                                            hint: Strings.enterEntrance.tr,
                                           ))
                                       : GestureDetector(
                                           onTap: () =>
@@ -207,7 +216,8 @@ class SetDestinationScreen extends StatelessWidget {
                                                   children: [
                                                     const Icon(Icons.add,
                                                         color: Colors.white),
-                                                    Text(Strings.addEntrance.tr,
+                                                    Text(
+                                                      Strings.addEntrance.tr,
                                                       style: textMedium.copyWith(
                                                           color: Colors.white
                                                               .withOpacity(.75),
@@ -224,9 +234,6 @@ class SetDestinationScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-
-
-
                         ],
                       ),
                       Padding(
@@ -238,7 +245,8 @@ class SetDestinationScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(Strings.youCanAddMultipleRouteTo.tr,
+                            Text(
+                              Strings.youCanAddMultipleRouteTo.tr,
                               style: textRegular.copyWith(
                                   fontSize: Dimensions.fontSizeSmall,
                                   color: Colors.white.withOpacity(.75)),
@@ -249,7 +257,8 @@ class SetDestinationScreen extends StatelessWidget {
                                 Get.find<RideController>()
                                     .updateRideCurrentState(RideState.initial);
                               },
-                              child: Text(Strings.done.tr,
+                              child: Text(
+                                Strings.done.tr,
                                 style: textRegular.copyWith(
                                     fontSize: Dimensions.fontSizeExtraLarge,
                                     color: Theme.of(context)
@@ -297,7 +306,7 @@ class SetDestinationScreen extends StatelessWidget {
                             Get.to(ChooseFromMapScreen());
                           },
                           child: SavedAndRecentItem(
-                              title:  Strings.setFromMap.tr,
+                              title: Strings.setFromMap.tr,
                               icon: Images.setFromMap,
                               subTitle: Strings.chooseFromMap.tr)),
                     ],
@@ -322,7 +331,8 @@ class SetDestinationScreen extends StatelessWidget {
                       Padding(
                         padding:
                             const EdgeInsets.all(Dimensions.paddingSizeDefault),
-                        child: Text(Strings.suggestions.tr,
+                        child: Text(
+                          Strings.suggestions.tr,
                           style: textMedium.copyWith(
                               color: Theme.of(context).primaryColor,
                               fontSize: Dimensions.fontSizeLarge),
@@ -368,7 +378,8 @@ class SetDestinationScreen extends StatelessWidget {
                       Padding(
                         padding:
                             const EdgeInsets.all(Dimensions.paddingSizeDefault),
-                        child: Text(Strings.setFromMap.tr,
+                        child: Text(
+                          Strings.setFromMap.tr,
                           style: textMedium.copyWith(
                               color: Theme.of(context).primaryColor,
                               fontSize: Dimensions.fontSizeLarge),
@@ -403,7 +414,8 @@ class SetDestinationScreen extends StatelessWidget {
                               const SizedBox(
                                 width: Dimensions.paddingSizeSmall,
                               ),
-                              Text(Strings.chooseFromMap.tr,
+                              Text(
+                                Strings.chooseFromMap.tr,
                                 style: textRegular.copyWith(
                                     color: Theme.of(context).primaryColor),
                               )
@@ -417,10 +429,72 @@ class SetDestinationScreen extends StatelessWidget {
               ),
             ],
           ),
-        );
+        Obx(() =>    controller.searchResultsFrom.isNotEmpty?   controller.state == ViewState.busy
+                  ? const Center(
+                child: CupertinoActivityIndicator(),
+              )
+                  : Positioned(
+              top: 280,
+              left: 15,
+              right: 15,
+              child:
+                  // GetBuilder<MapController>(
+                  //     init :MapController(),
+                  //     builder:(controller) {
+                  //       if((controller.searchresultsfrom!=null && controller.searchresultsfrom.length!=0) ) {
+                  //         return
+
+                  Container(
+                height: 700,
+                width: 100,
+                padding:  EdgeInsets.all(5),
+                decoration: const BoxDecoration(
+                    // color: Theme.of(context)
+                    //     .colorScheme
+                    //     .onSecondary,
+                    color:Colors.white,
+                    // color:Color(0xffE1EDDB),
+        borderRadius: BorderRadius.only(  topLeft: Radius.circular(15.0),topRight:   Radius.circular(15.0),),
+                  //   backgroundBlendMode: BlendMode.darken
+                ),
+                child:  ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    // itemCount: 33,
+                    padding: EdgeInsets.zero,
+                    itemCount: controller.searchResultsFrom.length!=0?controller.searchResultsFrom.length:2,
+                    itemBuilder: (context, index) {
+                      return   Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular( 10),
+                            ),
+
+                            child: ListTile(
+                              leading: Icon(Icons.location_on,color: Theme.of(Get.context!).primaryColor,),
+                                title: Text(
+                                   controller.searchResultsFrom[index].description
+                                      .toString(),maxLines: 1,
+                                   style: const TextStyle(
+                                    color: Colors.black,
+                                ),
+                                ),
+                                subtitle: Text( 'controller.se ', style:   TextStyle(
+                                    color: Colors.black.withOpacity(.8),
+                                    fontSize: 14
+                                ),),
+                                 onTap: () async {}),
+                          ),
+                          const Divider(thickness: 1 ,),
+                        ],
+                      );
+                    })),
+              ):SizedBox())
+        ]),);
       }),
     );
   }
 }
-
-

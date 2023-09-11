@@ -4,6 +4,7 @@ import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/screens/history/model/activity_item_model.dart';
+import 'package:ride_sharing_user_app/view/screens/history/model/history_model.dart';
 import 'package:ride_sharing_user_app/view/screens/history/widgets/rider_details.dart';
 import 'package:ride_sharing_user_app/view/screens/map/controller/map_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/contact_widget.dart';
@@ -161,14 +162,23 @@ class BikeRideDetailsWidgets extends StatelessWidget {
                 const SizedBox(height: Dimensions.paddingSizeDefault,),
 
                 ActivityScreenRiderDetails(
-                  riderDetails: RiderDetails(
-                      name: "mostafizur",
-                      vehicleNumber: "DH-1234",
-                      rating: 5,
-                      vehicleType: "bike",
-                      vehicleName: "Pulser-150",
-                      image: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg"
+                  riderDetails:Driver(
+                    firstName: "mostafizur",
+                    rate: 5,
+                    img: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                    lastName: "smith"
+
                   ),
+
+
+                  // RiderDetails(
+                  //     f: "mostafizur",
+                  //     vehicleNumber: "DH-1234",
+                  //     rating: 5,
+                  //     vehicleType: "bike",
+                  //     vehicleName: "Pulser-150",
+                  //     image: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg"
+                  // ),
                 ),
                 const SizedBox(height: Dimensions.paddingSizeDefault,),
 
@@ -226,13 +236,12 @@ class BikeRideDetailsWidgets extends StatelessWidget {
                 ),
 
                 ActivityScreenRiderDetails(
-                  riderDetails: RiderDetails(
-                      name: "mostafizur",
-                      vehicleNumber: "DH-1234",
-                      rating: 5,
-                      vehicleType: "bike",
-                      vehicleName: "Pulser-150",
-                      image: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg"
+                  riderDetails: Driver(
+                      firstName: "mostafizur",
+                      rate: 5,
+                      img: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                      lastName: "smith"
+
                   ),
                 ),
                 const SizedBox(height: Dimensions.paddingSizeDefault,),

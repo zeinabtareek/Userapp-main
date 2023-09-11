@@ -3,16 +3,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/controller/base_controller.dart';
 import 'package:ride_sharing_user_app/data/api_checker.dart';
+import 'package:ride_sharing_user_app/enum/view_state.dart';
 
 import '../../../../helper/display_helper.dart';
 import '../../../../helper/location_permission.dart';
 import '../../../../util/app_strings.dart';
 import '../../choose_from_map/choose_from_map_screen.dart';
+import '../model/search_suggestion_model.dart';
 import '../model/suggested_route_model.dart';
+import '../repository/search_service.dart';
 import '../repository/set_map_repo.dart';
 
-class WhereToGoController extends GetxController implements GetxService{
+class WhereToGoController extends BaseController implements GetxService{
   final SetMapRepo setMapRepo;
 
   WhereToGoController({required this.setMapRepo});
@@ -33,7 +37,6 @@ class WhereToGoController extends GetxController implements GetxService{
     // TODO: implement onInit
     super.onInit();
 
-    // fromRouteController.text = widget.address ?? "";
   }
   void setExtraRoute(){
     if(currentExtraRoute < 2){
@@ -59,7 +62,6 @@ class WhereToGoController extends GetxController implements GetxService{
     update();
   }
 
-
   checkPermissionBeforeNavigation(context)async{
 
      await checkPermissionBeforeNavigate(context);
@@ -67,6 +69,23 @@ class WhereToGoController extends GetxController implements GetxService{
   }
 
 
+  /*************************SearchController*********************************/
+
+  final searchServices=SearchServices();
+
+
+
+  final searchResultsFrom=<Suggestion>[].obs;
+  searchPlacesFrom(String searchTerm )async{
+    setState(ViewState.busy);
+      searchResultsFrom.value=  await searchServices.getAutoCompleteFrom(  search:searchTerm.toString(),country: 'eg' );
+    print('data ${searchResultsFrom.value} length is ${searchResultsFrom.length}');
+    setState(ViewState.idle);
+    update();
+    return searchResultsFrom;
+
+
+  }
 
 
 }
