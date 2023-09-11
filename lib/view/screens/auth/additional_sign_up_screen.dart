@@ -1,31 +1,28 @@
 import 'dart:io';
-import 'package:dotted_border/dotted_border.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/helper/display_helper.dart';
-import 'package:ride_sharing_user_app/util/dimensions.dart';
-import 'package:ride_sharing_user_app/util/images.dart';
-import 'package:ride_sharing_user_app/util/text_style.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/controller/auth_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/model/sign_up_body.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/widgets/test_field_title.dart';
-import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_image.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_text_field.dart';
 
 import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
+import '../../../util/dimensions.dart';
+import '../../../util/images.dart';
+import '../../../util/text_style.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/custom_image.dart';
+import '../../widgets/custom_text_field.dart';
+import '../dashboard/dashboard_screen.dart';
+import 'controller/auth_controller.dart';
+import 'widgets/test_field_title.dart';
 
 class AdditionalSignUpScreen extends StatelessWidget {
   const AdditionalSignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
-      body: GetBuilder<AuthController>(builder: (authController){
+      body: GetBuilder<FAuthController>(builder: (authController) {
         return Center(
           child: SingleChildScrollView(
             child: Padding(
@@ -34,24 +31,34 @@ class AdditionalSignUpScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(child: Image.asset(Images.logo, width: 120,)),
-
+                  Center(
+                      child: Image.asset(
+                    Images.logo,
+                    width: 120,
+                  )),
 
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0,Dimensions.paddingSizeSignUp,0,Dimensions.paddingSizeSmall),
+                    padding: const EdgeInsets.fromLTRB(
+                        0,
+                        Dimensions.paddingSizeSignUp,
+                        0,
+                        Dimensions.paddingSizeSmall),
                     child: Text(Strings.signUpSuccessful.tr,
                         style: K.primaryMediumTextStyle),
-
                   ),
-                  Text(Strings.additionalSignUpMessage.tr,    style: K.hintMediumTextStyle),
-                  const SizedBox(height: Dimensions.paddingSizeLarge,),
+                  Text(Strings.additionalSignUpMessage.tr,
+                      style: K.hintMediumTextStyle),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeLarge,
+                  ),
 
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       authController.pickImage(false, true);
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(top: Dimensions.paddingSizeSmall),
+                      padding: const EdgeInsets.only(
+                          top: Dimensions.paddingSizeSmall),
                       child: Container(
                         height: 90,
                         width: Get.width,
@@ -59,38 +66,41 @@ class AdditionalSignUpScreen extends StatelessWidget {
                             shape: BoxShape.circle,
                             border: Border.all(
                                 color: Theme.of(context).primaryColor,
-                                width: 1
-                            )
-                        ),
+                                width: 1)),
                         child: Center(
-                          child: Stack(alignment: AlignmentDirectional.center,
+                          child: Stack(
+                            alignment: AlignmentDirectional.center,
                             clipBehavior: Clip.none,
                             children: [
-                              authController.pickedProfileFile==null?
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: const CustomImage(
-                                  image: '',
-                                  height: 86,
-                                  width: 86,
-                                  placeholder: Images.personPlaceholder,
-                                ),
-                              )
-                                  :CircleAvatar(radius: 40, backgroundImage:FileImage(File(authController.pickedProfileFile!.path))),
-
+                              authController.pickedProfileFile == null
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(50),
+                                      child: const CustomImage(
+                                        image: '',
+                                        height: 86,
+                                        width: 86,
+                                        placeholder: Images.personPlaceholder,
+                                      ),
+                                    )
+                                  : CircleAvatar(
+                                      radius: 40,
+                                      backgroundImage: FileImage(File(
+                                          authController
+                                              .pickedProfileFile!.path))),
                               Positioned(
                                   right: 5,
                                   bottom: -3,
                                   child: Container(
                                     decoration: BoxDecoration(
                                         color: Theme.of(context).primaryColor,
-                                        shape: BoxShape.circle
-                                    ),
+                                        shape: BoxShape.circle),
                                     padding: const EdgeInsets.all(5),
-                                    child: const Icon(Icons.camera_enhance_rounded, color: Colors.white,size: 13,
+                                    child: const Icon(
+                                      Icons.camera_enhance_rounded,
+                                      color: Colors.white,
+                                      size: 13,
                                     ),
-                                  )
-                              ),
+                                  )),
                             ],
                           ),
                         ),
@@ -98,7 +108,9 @@ class AdditionalSignUpScreen extends StatelessWidget {
                     ),
                   ),
 
-                  TextFieldTitle(title:Strings.email.tr,),
+                  TextFieldTitle(
+                    title: Strings.email.tr,
+                  ),
                   CustomTextField(
                     hintText: Strings.email.tr,
                     inputType: TextInputType.emailAddress,
@@ -107,10 +119,11 @@ class AdditionalSignUpScreen extends StatelessWidget {
                     focusNode: authController.emailNode,
                     nextFocus: authController.addressNode,
                     inputAction: TextInputAction.next,
-
                   ),
 
-                  TextFieldTitle(title: Strings.address.tr,),
+                  TextFieldTitle(
+                    title: Strings.address.tr,
+                  ),
                   CustomTextField(
                     hintText: Strings.address.tr,
                     inputType: TextInputType.text,
@@ -120,8 +133,8 @@ class AdditionalSignUpScreen extends StatelessWidget {
                     nextFocus: authController.identityNumberNode,
                     inputAction: TextInputAction.next,
                   ),
-K.sizedBoxH0,
-K.sizedBoxH0,
+                  K.sizedBoxH0,
+                  K.sizedBoxH0,
                   // TextFieldTitle(title: 'identification_number'.tr,),
                   // CustomTextField(
                   //   hintText: 'Ex: 12345',
@@ -211,10 +224,9 @@ K.sizedBoxH0,
                   //   ],),
                   // ),
 
-
                   CustomButton(
                     buttonText: Strings.send.tr,
-                    onPressed: (){
+                    onPressed: () {
                       // String email = authController.emailController.text;
                       // String address = authController.addressController.text;
                       // String identityNumber = authController.identityNumberController.text;
@@ -245,38 +257,40 @@ K.sizedBoxH0,
                       //
                       //   );
                       //    authController.register(signUpBody);
-                        Get.off(()=>   DashboardScreen());
-                    //   }
+                      Get.off(() => DashboardScreen());
+                      //   }
                     },
                     radius: 50,
                   ),
 
-                  const SizedBox(height: Dimensions.paddingSizeDefault,),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(Strings.notEnoughTime.tr ,
+                      Text(
+                        Strings.notEnoughTime.tr,
                         style: textMedium.copyWith(
                           fontSize: Dimensions.fontSizeDefault,
                           color: Theme.of(context).hintColor,
                         ),
                       ),
-
                       TextButton(
-                        onPressed: (){
-                          Get.to(()=>  DashboardScreen());
+                        onPressed: () {
+                          Get.to(() => DashboardScreen());
                         },
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
-                          minimumSize: const Size(50,30),
+                          minimumSize: const Size(50, 30),
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-
                         ),
-                        child: Text(Strings.addLater.tr, style: textMedium.copyWith(
-                          decoration: TextDecoration.underline,
-                          color: Theme.of(context).primaryColor,
-                          fontSize: Dimensions.fontSizeDefault,
-                        )),
+                        child: Text(Strings.addLater.tr,
+                            style: textMedium.copyWith(
+                              decoration: TextDecoration.underline,
+                              color: Theme.of(context).primaryColor,
+                              fontSize: Dimensions.fontSizeDefault,
+                            )),
                       )
                     ],
                   ),

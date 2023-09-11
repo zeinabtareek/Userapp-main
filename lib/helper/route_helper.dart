@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/home/home_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/splash/splash_screen.dart';
+
+import '../authenticate/config/config.dart';
+import '../view/screens/dashboard/dashboard_screen.dart';
+import '../view/screens/home/home_screen.dart';
+import '../view/screens/splash/splash_screen.dart';
 
 class RouteHelper {
   static const String initial = '/';
@@ -17,5 +19,7 @@ class RouteHelper {
     //GetPage(name: splash, page: () => const SplashScreen()),
     GetPage(name: splash, page: () => const SplashScreen()),
     GetPage(name: home, page: () => const HomeScreen()),
+
+  ...AuthLib.authPages
   ];
 }

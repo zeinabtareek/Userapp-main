@@ -37,7 +37,7 @@ class _ConversationBubbleState extends State<ConversationBubble> {
   }
 
   @pragma('vm:entry-point')
-  static void downloadCallback(String id, DownloadTaskStatus status, int progress) {
+  static void downloadCallback(String id, int status, int progress) {
     final SendPort? send = IsolateNameServer.lookupPortByName('downloader_send_port');
     send!.send([id, status, progress]);
   }

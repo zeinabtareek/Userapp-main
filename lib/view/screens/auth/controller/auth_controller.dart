@@ -3,22 +3,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/model/sign_up_body.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/repository/auth_repo.dart';
-import 'package:ride_sharing_user_app/view/screens/dashboard/bottom_menu_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_snackbar.dart';
 
+import '../../../../authenticate/presentation/login-with-pass/sign_in_screen.dart';
 import '../../../../helper/display_helper.dart';
 import '../../../../util/app_constants.dart';
 import '../../../../util/app_strings.dart';
+import '../../../widgets/custom_snackbar.dart';
+import '../../dashboard/bottom_menu_controller.dart';
+import '../../dashboard/dashboard_screen.dart';
 import '../additional_sign_up_screen.dart';
-import '../sign_in_screen.dart';
+import '../model/sign_up_body.dart';
+import '../repository/auth_repo.dart';
 
-class AuthController extends GetxController  {//implements GetxService
-  final AuthRepo authRepo;
-  AuthController({required this.authRepo});
-  static AuthController get to => Get.find();
+class FAuthController extends GetxController {
+  //implements GetxService
+  final FAuthRepo authRepo;
+  FAuthController({required this.authRepo});
+  static FAuthController get to => Get.find();
 
   bool? _isLoading = false;
   bool _acceptTerms = false;
@@ -26,18 +27,16 @@ class AuthController extends GetxController  {//implements GetxService
   bool? get isLoading => _isLoading;
   bool get acceptTerms => _acceptTerms;
 
-
   final String _mobileNumber = '';
   String get mobileNumber => _mobileNumber;
 
-  XFile? _pickedProfileFile ;
+  XFile? _pickedProfileFile;
   XFile? get pickedProfileFile => _pickedProfileFile;
 
-  XFile? _pickedIdentityImageFront ;
+  XFile? _pickedIdentityImageFront;
   XFile? get pickedIdentityImageFront => _pickedIdentityImageFront;
-  XFile? _pickedIdentityImageBack ;
+  XFile? _pickedIdentityImageBack;
   XFile? get pickedIdentityImageBack => _pickedIdentityImageBack;
-
 
   TextEditingController fNameController = TextEditingController();
   TextEditingController lNameController = TextEditingController();
@@ -53,13 +52,11 @@ class AuthController extends GetxController  {//implements GetxService
 
   TextEditingController forgetPasswordPhoneController = TextEditingController();
   TextEditingController changePasswordPhoneController = TextEditingController();
-  TextEditingController resetConfirmPasswordController = TextEditingController();
+  TextEditingController resetConfirmPasswordController =
+      TextEditingController();
   TextEditingController oldPasswordController = TextEditingController();
   TextEditingController resetPasswordController = TextEditingController();
   // TextEditingController = TextEditingController();
-
-
-
 
   FocusNode fNameNode = FocusNode();
   FocusNode lNameNode = FocusNode();
@@ -84,26 +81,31 @@ class AuthController extends GetxController  {//implements GetxService
   String get otp => _otp;
   String get verificationCode => _verificationCode;
 
-  String countryDialCode = CountryCode.fromCountryCode("BD").dialCode??'';
+  String countryDialCode = CountryCode.fromCountryCode("BD").dialCode ?? '';
 
-   TextEditingController phoneControllerForOTPLogInScreen = TextEditingController();
+  TextEditingController phoneControllerForOTPLogInScreen =
+      TextEditingController();
   FocusNode nodeForOTPLogInScreen = FocusNode();
   @override
   void onInit() {
     phoneControllerForOTPLogInScreen.text = countryDialCode;
-    Get.lazyPut(() => AuthController(authRepo: AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find())));
+    Get.lazyPut(() => FAuthController(
+        authRepo:
+            FAuthRepo(apiClient: Get.find(), sharedPreferences: Get.find())));
 
     super.onInit();
   }
 
-
   void pickImage(bool isBack, bool isProfile) async {
-    if(isBack){
-      _pickedIdentityImageBack = (await ImagePicker().pickImage(source: ImageSource.gallery))!;
-    }else if(isProfile){
-      _pickedProfileFile = (await ImagePicker().pickImage(source: ImageSource.gallery))!;
-    } else{
-      _pickedIdentityImageFront = (await ImagePicker().pickImage(source: ImageSource.gallery))!;
+    if (isBack) {
+      _pickedIdentityImageBack =
+          (await ImagePicker().pickImage(source: ImageSource.gallery))!;
+    } else if (isProfile) {
+      _pickedProfileFile =
+          (await ImagePicker().pickImage(source: ImageSource.gallery))!;
+    } else {
+      _pickedIdentityImageFront =
+          (await ImagePicker().pickImage(source: ImageSource.gallery))!;
     }
     update();
   }
@@ -111,43 +113,40 @@ class AuthController extends GetxController  {//implements GetxService
   Future<void> login(String phone, String password) async {
     _isLoading = true;
     update();
-    _navigateLogin(phone,password);
+    _navigateLogin(phone, password);
     _isLoading = false;
     update();
-
   }
 
-
-
-  onCountryChanged (CountryCode countryCode , TextEditingController valueController) {//onInit
-  countryDialCode = countryCode.dialCode.toString();
-  valueController.text = countryDialCode;
-  // signInPhoneController.text = countryDialCode;
+  onCountryChanged(
+      CountryCode countryCode, TextEditingController valueController) {
+    //onInit
+    countryDialCode = countryCode.dialCode.toString();
+    valueController.text = countryDialCode;
+    // signInPhoneController.text = countryDialCode;
   }
 
+  Future<void> register(SignUpBody signUpBody) async {}
 
-
-  Future<void> register(SignUpBody signUpBody) async {
-  }
-
-  _navigateLogin(String phone, String password){
+  _navigateLogin(String phone, String password) {
     if (_isActiveRememberMe) {
       saveUserNumberAndPassword(phone, password);
     } else {
       clearUserNumberAndPassword();
     }
     Get.find<BottomMenuController>().resetNavBar();
-    Get.offAll(()=>   DashboardScreen());
+    Get.offAll(() => DashboardScreen());
   }
 
   Future<void> forgetPassword() async {
     _isLoading = true;
     update();
-    Response? response = await authRepo.forgetPassword("_numberWithCountryCode");
+    Response? response =
+        await authRepo.forgetPassword("_numberWithCountryCode");
     if (response!.body['response_code'] == 'default_200') {
       _isLoading = false;
       customSnackBar('successfully_sent_otp'.tr, isError: false);
-    }else{
+    } else {
       _isLoading = false;
       customSnackBar('invalid_number'.tr);
     }
@@ -168,27 +167,27 @@ class AuthController extends GetxController  {//implements GetxService
   Future<void> resetPassword(String phoneOrEmail) async {
     _isLoading = true;
     update();
-    Response? response = await authRepo.resetPassword(_mobileNumber, _otp, "newPasswordController.value.text", "confirmNewPasswordController.value.text");
+    Response? response = await authRepo.resetPassword(
+        _mobileNumber,
+        _otp,
+        "newPasswordController.value.text",
+        "confirmNewPasswordController.value.text");
     if (response!.body['response_code'] == 'default_password_reset_200') {
-
       customSnackBar('password_change_successfully'.tr, isError: false);
-    }else{
+    } else {
       customSnackBar(response.body['message']);
     }
     _isLoading = false;
     update();
   }
 
-
-
   void updateVerificationCode(String query) {
     _verificationCode = query;
-    if(_verificationCode.isNotEmpty){
+    if (_verificationCode.isNotEmpty) {
       _otp = _verificationCode;
     }
     update();
   }
-
 
   bool _isActiveRememberMe = false;
   bool get isActiveRememberMe => _isActiveRememberMe;
@@ -208,12 +207,11 @@ class AuthController extends GetxController  {//implements GetxService
     update();
   }
 
-
   bool isLoggedIn() {
     return authRepo.isLoggedIn();
   }
 
-  Future <bool> clearSharedData() async {
+  Future<bool> clearSharedData() async {
     return authRepo.clearSharedData();
   }
 
@@ -232,11 +230,12 @@ class AuthController extends GetxController  {//implements GetxService
   String getUserPassword() {
     return authRepo.getUserPassword();
   }
+
   bool isNotificationActive() {
     return authRepo.isNotificationActive();
-
   }
-  toggleNotificationSound(){
+
+  toggleNotificationSound() {
     authRepo.toggleNotificationSound(!isNotificationActive());
     update();
   }
@@ -248,78 +247,74 @@ class AuthController extends GetxController  {//implements GetxService
   String getUserToken() {
     return authRepo.getUserToken();
   }
-  Future <void> setUserToken(String token) async{
+
+  Future<void> setUserToken(String token) async {
     authRepo.saveUserToken(token);
   }
 
-  validationLoginPress( ){
-    if(signInPhoneController.text.length<8){
+  validationLoginPress() {
+    if (signInPhoneController.text.length < 8) {
       showCustomSnackBar(Strings.invalidPhone.tr);
-    }else if(signInPasswordController.text.isEmpty){
+    } else if (signInPasswordController.text.isEmpty) {
       showCustomSnackBar(Strings.passIsRequired.tr);
-    }else if(signInPasswordController.text.length<8){
+    } else if (signInPasswordController.text.length < 8) {
       showCustomSnackBar(Strings.minimumPassLength.tr);
-    }else{
-       setUserToken(AppConstants.token).then((value){
+    } else {
+      setUserToken(AppConstants.token).then((value) {
         login(signInPhoneController.text, signInPasswordController.text);
       });
-     }
-    }
-
-  confirmPassValidation()async{
-
-
-    //
-    if(resetPasswordController.text.isEmpty){
-      showCustomSnackBar(Strings.passIsRequired.tr);
-    }else if(resetPasswordController.text.length<8){
-      showCustomSnackBar(Strings.minPassLength.tr);
-    }else if(resetConfirmPasswordController.text.isEmpty){
-      showCustomSnackBar(Strings.confirmPasswordIsRequired.tr);
-    }else if(resetPasswordController.text != resetConfirmPasswordController.text){
-      showCustomSnackBar(Strings.passwordIsMismatch.tr);
-    }
-    else{
-      showCustomSnackBar(Strings.passwordResetSuccessfully.tr, isError: false);
-      Get.offAll(()=>   SignInScreen());
     }
   }
 
-  validationSignUp()async{
-    if( fNameController.text.isEmpty){
-      showCustomSnackBar(Strings.firstNameIsRequired.tr);
-    }
-    else
-    if( lNameController.text.isEmpty){
-      showCustomSnackBar(Strings.lastNameIsRequired.tr);
-    }else if(signupPhoneController.text.isEmpty){
-      showCustomSnackBar(Strings.phoneIsRequired.tr);
-    }else if(signupPhoneController.text.length<8){
-      showCustomSnackBar(Strings.invalidPhone.tr);
-    }else if(signupPasswordController.text.isEmpty){
+  confirmPassValidation() async {
+    //
+    if (resetPasswordController.text.isEmpty) {
       showCustomSnackBar(Strings.passIsRequired.tr);
-    }else if(confirmPasswordController.text.length<8){
+    } else if (resetPasswordController.text.length < 8) {
       showCustomSnackBar(Strings.minPassLength.tr);
-    }else if(confirmPasswordController.text.isEmpty){
+    } else if (resetConfirmPasswordController.text.isEmpty) {
       showCustomSnackBar(Strings.confirmPasswordIsRequired.tr);
-    }else if(signupPasswordController.text != confirmPasswordController.text){
+    } else if (resetPasswordController.text !=
+        resetConfirmPasswordController.text) {
       showCustomSnackBar(Strings.passwordIsMismatch.tr);
+    } else {
+      showCustomSnackBar(Strings.passwordResetSuccessfully.tr, isError: false);
+      Get.offAll(() => SignInScreen());
     }
-    else{
+  }
+
+  validationSignUp() async {
+    if (fNameController.text.isEmpty) {
+      showCustomSnackBar(Strings.firstNameIsRequired.tr);
+    } else if (lNameController.text.isEmpty) {
+      showCustomSnackBar(Strings.lastNameIsRequired.tr);
+    } else if (signupPhoneController.text.isEmpty) {
+      showCustomSnackBar(Strings.phoneIsRequired.tr);
+    } else if (signupPhoneController.text.length < 8) {
+      showCustomSnackBar(Strings.invalidPhone.tr);
+    } else if (signupPasswordController.text.isEmpty) {
+      showCustomSnackBar(Strings.passIsRequired.tr);
+    } else if (confirmPasswordController.text.length < 8) {
+      showCustomSnackBar(Strings.minPassLength.tr);
+    } else if (confirmPasswordController.text.isEmpty) {
+      showCustomSnackBar(Strings.confirmPasswordIsRequired.tr);
+    } else if (signupPasswordController.text !=
+        confirmPasswordController.text) {
+      showCustomSnackBar(Strings.passwordIsMismatch.tr);
+    } else {
       SignUpBody signUpBody = SignUpBody(
-          fName: fNameController.text,
-          lName: lNameController.text,
-          phone: signupPhoneController.text,
-          password: signupPasswordController.text,
-          confirmPassword:  confirmPasswordController.text
+        fName: fNameController.text,
+        lName: lNameController.text,
+        phone: signupPhoneController.text,
+        password: signupPasswordController.text,
+        confirmPassword: confirmPasswordController.text,
       );
       if (kDebugMode) {
         print(signUpBody);
-      }  setUserToken(AppConstants.signUpBody).then((value){
+      }
+      setUserToken(AppConstants.signUpBody).then((value) {
         Get.to(const AdditionalSignUpScreen());
       });
-
     }
   }
-
-  }
+}

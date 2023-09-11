@@ -7,44 +7,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/firebase_options.dart';
-import 'package:ride_sharing_user_app/helper/network/dio_integration.dart';
-import 'package:ride_sharing_user_app/helper/notification_helper.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/additional_sign_up_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/controller/auth_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/otp_log_in_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/sign_in_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/sign_up_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/choose_from_map/choose_from_map_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/forgot_password/verify_forget_password_otp_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/profile/edit_profile_screen/edit_profile_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/profile/profile_screen/profile_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/profile/widgets/edit_profile_account_info.dart';
-import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
-import 'package:ride_sharing_user_app/helper/responsive_helper.dart';
-import 'package:ride_sharing_user_app/helper/di_container.dart' as di;
-import 'package:ride_sharing_user_app/helper/route_helper.dart';
-import 'package:ride_sharing_user_app/localization/localization_controller.dart';
-import 'package:ride_sharing_user_app/localization/messages.dart';
-import 'package:ride_sharing_user_app/theme/dark_theme.dart';
-import 'package:ride_sharing_user_app/theme/light_theme.dart';
-import 'package:ride_sharing_user_app/theme/theme_controller.dart';
-import 'package:ride_sharing_user_app/util/app_constants.dart';
 
-import 'helper/cache_helper.dart';
+import 'firebase_options.dart';
+import 'helper/di_container.dart' as di;
+import 'helper/notification_helper.dart';
+import 'helper/responsive_helper.dart';
+import 'helper/route_helper.dart';
+import 'initialize_dependencies.dart';
+import 'localization/localization_controller.dart';
+import 'localization/messages.dart';
+import 'theme/dark_theme.dart';
+import 'theme/light_theme.dart';
+import 'theme/theme_controller.dart';
+import 'util/app_constants.dart';
+import 'view/screens/auth/controller/auth_controller.dart';
+import 'view/screens/splash/controller/config_controller.dart';
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
-
-
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.dark, // dark text for status bar
-      statusBarColor: Colors.transparent),
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark, // dark text for status bar
+        statusBarColor: Colors.transparent),
   );
 
-  if(ResponsiveHelper.isMobilePhone) {
+  if (ResponsiveHelper.isMobilePhone) {
     HttpOverrides.global = MyHttpOverrides();
   }
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,7 +42,7 @@ Future<void> main() async {
 
   await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
   FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
-
+ await initializeDependencies();
   runApp(MyApp(languages: languages));
 }
 
@@ -63,42 +52,46 @@ class MyApp extends StatelessWidget {
 
   void _route() async {
     bool isSuccess = await Get.find<ConfigController>().getConfigData();
-    if (isSuccess) {
-
-    }
+    if (isSuccess) {}
   }
 
   @override
   Widget build(BuildContext context) {
-    if(GetPlatform.isWeb) {
+    if (GetPlatform.isWeb) {
       Get.find<ConfigController>().initSharedData();
       _route();
     }
-    final authController = Get.find<AuthController>();
+    final authController = Get.find<FAuthController>();
     return GetBuilder<ThemeController>(builder: (themeController) {
       return GetBuilder<LocalizationController>(builder: (localizeController) {
         return GetBuilder<ConfigController>(builder: (configController) {
-          return (GetPlatform.isWeb && configController.config == null) ? const SizedBox() : GetMaterialApp(
-            title: AppConstants.appName,
-            debugShowCheckedModeBanner: false,
-            navigatorKey: Get.key,
-            scrollBehavior: const MaterialScrollBehavior().copyWith(
-              dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
-            ),
-            theme: themeController.darkTheme ? darkTheme : lightTheme,
-            locale: localizeController.locale,
-            translations: Messages(languages: languages),
-            fallbackLocale: Locale(AppConstants.languages[0].languageCode, AppConstants.languages[0].countryCode),
-            initialRoute: RouteHelper.getSplashRoute(),
-            getPages: RouteHelper.routes,
-            defaultTransition: Transition.topLevel,
-            transitionDuration:   Duration(milliseconds: 500),
+          return (GetPlatform.isWeb && configController.config == null)
+              ? const SizedBox()
+              : GetMaterialApp(
+                  title: AppConstants.appName,
+                  debugShowCheckedModeBanner: false,
+                  navigatorKey: Get.key,
+                  scrollBehavior: const MaterialScrollBehavior().copyWith(
+                    dragDevices: {
+                      PointerDeviceKind.mouse,
+                      PointerDeviceKind.touch
+                    },
+                  ),
+                  theme: themeController.darkTheme ? darkTheme : lightTheme,
+                  locale: localizeController.locale,
+                  translations: Messages(languages: languages),
 
+                  fallbackLocale: Locale(AppConstants.languages[0].languageCode,
+                      AppConstants.languages[0].countryCode),
+                  initialRoute: RouteHelper.getSplashRoute(),
+                  getPages: RouteHelper.routes,
+                  defaultTransition: Transition.topLevel,
+                  transitionDuration: Duration(milliseconds: 500),
 
-            // home: ChooseFromMapScreen(),
-            // home: DashboardScreen(),
-            // home: SignUpScreen(),
-          );
+                  // home: ChooseFromMapScreen(),
+                  // home: DashboardScreen(),
+                  // home: SignUpScreen(),
+                );
         });
       });
     });
@@ -108,6 +101,8 @@ class MyApp extends StatelessWidget {
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
