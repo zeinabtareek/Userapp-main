@@ -19,9 +19,11 @@ import '../services/remote/remote_auth.dart';
 class AuthRepoImp implements AuthRepo {
   final RemoteApiAuth remoteApiAuth;
   final LocalAuth localAuth;
+  final SecureLocalAuth secureLocalAuth;
   AuthRepoImp({
     required this.remoteApiAuth,
     required this.localAuth,
+    required this.secureLocalAuth,
   });
   @override
   Future<DataState<HOODAuthorizedResModel>> completeData(
@@ -167,16 +169,29 @@ class AuthRepoImp implements AuthRepo {
   @override
   Future<DataState<MsgModel>> changePass(ChangePasswordReqModel req) async {
     try {
-  final res =await remoteApiAuth.changePass(req);
-     if (res.response.statusCode == HttpStatus.ok) {
+      final res = await remoteApiAuth.changePass(req);
+      if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
         return DataFailedErrorMsg(res.data.msg ?? "");
       }
-} catch (e) {
+    } catch (e) {
       return DataFailedErrorMsg(e.toString());
     }
+  }
 
+  @override
+  Future<LoginWithPassReqModel?> getAuthUserData() {
+    return secureLocalAuth.getAuthUserData();
+  }
 
+  @override
+  Future<bool> isContainsAuthUserData() {
+    return secureLocalAuth.isContainsAuthUserData();
+  }
+
+  @override
+  Future<void> saveAuthUserData(LoginWithPassReqModel? loginWithPassReqModel) {
+    return secureLocalAuth.saveAuthUserData(loginWithPassReqModel);
   }
 }

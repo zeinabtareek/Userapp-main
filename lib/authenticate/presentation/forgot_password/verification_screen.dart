@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../../../helper/display_helper.dart';
 import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
 import '../../../util/dimensions.dart';
@@ -20,17 +19,24 @@ class VerificationScreen extends GetView<AuthController> {
   final String number;
   final String countryCode;
   final OtpState otpState;
-  const VerificationScreen({
+  VerificationScreen({
     Key? key,
     required this.number,
     required this.otpState,
     required this.countryCode,
-  }) : super(key: key);
+  }) : super(key: key) {
+    controller.initVerificationScreen();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomBody(
-        appBar: CustomAppBar(title: Strings.forgetPassword.tr),
+        appBar: CustomAppBar(
+            title: Strings.forgetPassword.tr,
+            onBackPressed: () {
+              controller.disposeVerificationScreen();
+              Get.back();
+            }),
         body: Center(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -85,6 +91,18 @@ class VerificationScreen extends GetView<AuthController> {
                         color: Theme.of(context).textTheme.bodyMedium!.color),
                   ),
                 ),
+                Obx(() => Visibility(
+                      visible: controller.isCounting.isTrue,
+                      child: Center(
+                        child: Text(
+                          "${controller.min}:${controller.second}",
+                          style: textRegular.copyWith(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      ),
+                    )),
+                const SizedBox(height: 10),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -98,18 +116,22 @@ class VerificationScreen extends GetView<AuthController> {
                                 .color!
                                 .withOpacity(.6)),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          // TODO: 
-                          showCustomSnackBar(Strings.otpSentSuccessfully.tr,
-                              isError: false);
-                        },
-                        child: Text(
-                          Strings.resendIt.tr,
-                          style: K.hintMediumTextStyle,
-                          textAlign: TextAlign.end,
-                        ),
-                      ),
+                      Obx(() => TextButton(
+                            onPressed: controller.isCounting.isFalse
+                                ? () {
+                                    controller.reSendMsg(countryCode, number);
+                                  }
+                                : null,
+                            child: Text(
+                              Strings.resendIt.tr,
+                              style: K.hintMediumTextStyle.copyWith(
+                                color: controller.isCounting.isTrue
+                                    ? null
+                                    : Theme.of(context).primaryColor,
+                              ),
+                              textAlign: TextAlign.end,
+                            ),
+                          )),
                     ]),
                 K.sizedBoxH0,
                 K.sizedBoxH0,

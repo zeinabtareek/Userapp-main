@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ride_sharing_user_app/authenticate/domain/use-cases/auth_cases.dart';
 
@@ -18,16 +19,20 @@ Future<void> initializeDependencies() async {
   sl.registerLazySingleton<RemoteApiAuth>(() => RemoteApiAuth(sl()));
 
   sl.registerLazySingleton<LocalAuth>(() => LocalAuth());
-
+  sl.registerLazySingleton<FlutterSecureStorage>(
+    () => const FlutterSecureStorage(
+      iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+      aOptions: AndroidOptions(encryptedSharedPreferences: true),
+    ),
+  );
+  sl.registerLazySingleton<SecureLocalAuth>(() => SecureLocalAuth(sl()));
   sl.registerLazySingleton<AuthRepo>(
     () => AuthRepoImp(
       remoteApiAuth: sl(),
       localAuth: sl(),
+      secureLocalAuth: sl(),
     ),
   );
 
-  sl.registerLazySingleton<AuthCases>(
-      () => AuthCases(sl()));
-
-
+  sl.registerLazySingleton<AuthCases>(() => AuthCases(sl()));
 }

@@ -96,7 +96,7 @@ class SignUpScreen extends GetView<AuthController> {
                 CustomTextField(
                   hintText: Strings.phone.tr,
                   inputType: TextInputType.number,
-                  countryDialCode: "+20",
+                  countryDialCode: defultDailCode,
                   controller: controller.regPhoneController,
                   focusNode: controller.regPhoneFocusNode,
                   nextFocus: controller.regPasswordFocusNode,

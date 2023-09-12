@@ -10,10 +10,10 @@ dependencies:
   cached_network_image: ^3.2.3
   carousel_slider: ^4.1.1
   connectivity_plus: ^3.0.2
-  country_code_picker: 
-   git:
-        url: https://github.com/Alaabadr44/CountryCodePicker.git
-        ref: main
+  country_code_picker:
+    git:
+      url: https://github.com/Alaabadr44/CountryCodePicker.git
+      ref: main
   cupertino_icons: ^1.0.2
   dio: ^5.3.2
   dotted_border: ^2.0.0+2
@@ -28,6 +28,7 @@ dependencies:
   flutter_html: ^3.0.0-alpha.5
   flutter_local_notifications: ^12.0.4
   flutter_polyline_points: ^2.0.0
+  flutter_secure_storage: any
   flutter_svg: ^1.1.6
   flutter_widget_from_html_core: ^0.8.5+1
   geocoder2: null
@@ -56,8 +57,8 @@ dependency_overrides:
       url: https://github.com/danReynolds/modal_bottom_sheet.git
       path: modal_bottom_sheet
 
-  http:
-  intl:     
+  http: null
+  intl: null
 
 dev_dependencies:
   build_runner: null

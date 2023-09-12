@@ -51,4 +51,10 @@ abstract class AuthRepo {
   Future<User?> getUserData();
 
   Future<bool> isAuthenticated();
+
+  Future<LoginWithPassReqModel?> getAuthUserData();
+
+  Future<void> saveAuthUserData(LoginWithPassReqModel? loginWithPassReqModel);
+
+  Future<bool> isContainsAuthUserData();
 }

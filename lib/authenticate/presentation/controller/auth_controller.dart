@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:country_code_picker/country_code_picker.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../helper/display_helper.dart';
+import '../../../initialize_dependencies.dart';
 import '../../../util/app_strings.dart';
 import '../../../view/screens/dashboard/bottom_menu_controller.dart';
 import '../../../view/screens/dashboard/dashboard_screen.dart';
@@ -24,6 +26,8 @@ import '../forgot_password/verification_screen.dart';
 import '../login-with-otp/otp_log_in_screen.dart';
 import '../sign-up/additional_sign_up_screen.dart';
 import '../sign-up/sign_up_screen.dart';
+
+const String defultDailCode = "+966";
 
 class AuthController extends GetxController {
   toForgetPassScreen() {
@@ -67,49 +71,52 @@ class AuthController extends GetxController {
   }
 
   /// login
-  TextEditingController LoginPhoneController = TextEditingController();
-  TextEditingController LoginPassController = TextEditingController();
-  Rx<CountryCode> LoginSelectCountry = CountryCode.fromDialCode("+20").obs;
+  TextEditingController loginPhoneController = TextEditingController();
+  TextEditingController loginPassController = TextEditingController();
+  Rx<CountryCode> loginSelectCountry =
+      CountryCode.fromDialCode(defultDailCode).obs;
+
+  void initLoginWithPassScreen() async {
+    loginPhoneController = TextEditingController();
+    loginPassController = TextEditingController();
+    if (await authCases.isContainsAuthUserData()) {
+      LoginWithPassReqModel? req = await authCases.getAuthUserData();
+      loginPassController.text = req?.password ?? "";
+
+      // TODO:  phonecode
+    }
+  }
 
   RxBool isLoginWithPassLoading = false.obs;
-
+  RxBool isLoginRememberMe = false.obs;
   void loginWithPass() async {
-    if (LoginPhoneController.text.length < 8) {
+    if (loginPhoneController.text.length < 8) {
       showCustomSnackBar(Strings.invalidPhone.tr);
-    } else if (LoginPassController.text.isEmpty) {
+    } else if (loginPassController.text.isEmpty) {
       showCustomSnackBar(Strings.passIsRequired.tr);
-    } else if (LoginPassController.text.length < 8) {
+    } else if (loginPassController.text.length < 8) {
       showCustomSnackBar(Strings.minimumPassLength.tr);
     } else {
       isLoginWithPassLoading(true);
 
-      final res = await authCases.loginWithPassword(
-        LoginWithPassReqModel(
-          password: LoginPassController.text,
-          phone: LoginPhoneController.text,
-          countryCode: LoginSelectCountry.value.dialCode!,
-        ),
+      var req = LoginWithPassReqModel(
+        password: loginPassController.text,
+        phone: loginPhoneController.text,
+        countryCode: loginSelectCountry.value.dialCode!,
       );
+      final res = await authCases.loginWithPassword(req);
       isLoginWithPassLoading(false);
-// TODO: 
-      /*
-          
-          if (_isActiveRememberMe) {
-      
-      saveUserNumberAndPassword(phone, password);
-    } else {
-      clearUserNumberAndPassword();
-    } */
 
-  
-        
-         
-   
       checkStatus(
         res,
         onError: (error) {},
-        onSucses: (res) {
-          
+        onSucses: (res) async {
+          if (isLoginRememberMe.isTrue) {
+            await authCases.saveAuthUserData(req);
+          } else {
+            await authCases.saveAuthUserData(null);
+          }
+
           Get.find<BottomMenuController>().resetNavBar();
           Get.offAll(() => DashboardScreen());
         },
@@ -117,14 +124,12 @@ class AuthController extends GetxController {
     }
   }
 
-  RxBool LoginRememberMe = false.obs;
-
   toggleRememberMe() {
-    LoginRememberMe.value = LoginRememberMe.toggle().value;
+    isLoginRememberMe.value = isLoginRememberMe.toggle().value;
   }
 
   void disposeLogin() {
-    for (var element in [LoginPhoneController, LoginPassController]) {
+    for (var element in [loginPhoneController, loginPassController]) {
       element.dispose();
     }
   }
@@ -143,7 +148,8 @@ class AuthController extends GetxController {
   TextEditingController regNewPassController = TextEditingController();
   FocusNode regNewPassFocusNode = FocusNode();
 
-  Rx<CountryCode> regSelectCountry = CountryCode.fromDialCode("+20").obs;
+  Rx<CountryCode> regSelectCountry =
+      CountryCode.fromDialCode(defultDailCode).obs;
 
   initSignUp() {
     regFristNameController = TextEditingController();
@@ -262,7 +268,8 @@ class AuthController extends GetxController {
 
   TextEditingController forgetPasswordPhoneController = TextEditingController();
   FocusNode forgetPasswordPhoneNode = FocusNode();
-  Rx<CountryCode> forgetSelectCountry = CountryCode.fromDialCode("+20").obs;
+  Rx<CountryCode> forgetSelectCountry =
+      CountryCode.fromDialCode(defultDailCode).obs;
   final GlobalKey<FormState> forgetPasswordValdteKey = GlobalKey<FormState>();
 
   void disposeForgetPassScreen() {
@@ -280,6 +287,7 @@ class AuthController extends GetxController {
   forgetPassClick() async {
     if (!forgetPasswordValdteKey.currentState!.validate()) {
       showCustomSnackBar(Strings.phoneIsRequired.tr);
+      return;
     } else {
       isForgetPassLoading(true);
 
@@ -288,17 +296,24 @@ class AuthController extends GetxController {
           phone: forgetPasswordPhoneController.text);
       final res = await authCases.forgetPassword(req);
       isForgetPassLoading(false);
-      // TODO:
 
-      if (res.data?.isSuccess ?? true) {
-        Get.to(
-          () => VerificationScreen(
-            otpState: OtpState.forgetPassword,
-            number: forgetPasswordPhoneController.text,
-            countryCode: forgetSelectCountry.value.dialCode!,
-          ),
-        );
-      } else {}
+      checkStatus(
+        res,
+        onSucses: (res) {
+          Get.to(
+            () => VerificationScreen(
+              otpState: OtpState.forgetPassword,
+              number: forgetPasswordPhoneController.text,
+              countryCode: forgetSelectCountry.value.dialCode!,
+            ),
+            binding: BindingsBuilder(
+              () {
+                Get.lazyPut(() => AuthController(sl()));
+              },
+            ),
+          );
+        },
+      );
     }
   }
 
@@ -307,14 +322,15 @@ class AuthController extends GetxController {
   TextEditingController phoneControllerForOTPLogInScreen =
       TextEditingController();
   FocusNode nodeForOTPLogInScreen = FocusNode();
-  Rx<CountryCode> otpSelectCountry = CountryCode.fromDialCode("+20").obs;
+  Rx<CountryCode> otpSelectCountry =
+      CountryCode.fromDialCode(defultDailCode).obs;
 
   RxBool otpLoginIsLoading = false.obs;
 
   initOtpScreen() {
     phoneControllerForOTPLogInScreen = TextEditingController();
     nodeForOTPLogInScreen = FocusNode();
-    otpSelectCountry = CountryCode.fromDialCode("+20").obs;
+    otpSelectCountry = CountryCode.fromDialCode(defultDailCode).obs;
 
     otpLoginIsLoading = false.obs;
   }
@@ -332,6 +348,66 @@ class AuthController extends GetxController {
   RxString updateVerificationCode = ''.obs;
 
   RxBool isVerificationIsLoading = false.obs;
+
+  RxString min = '00'.obs;
+  RxString second = '00'.obs;
+  RxBool isCounting = false.obs;
+
+  Timer? countdownTimer;
+  Duration waitingDuration = const Duration(seconds: 59);
+
+  void disposeVerificationScreen() {
+    countdownTimer?.cancel();
+    waitingDuration = const Duration(seconds: 59);
+    isCounting = false.obs;
+    isVerificationIsLoading = false.obs;
+  }
+
+  void initVerificationScreen() {
+    countdownTimer = countdownTimer.reactive.value;
+    waitingDuration = const Duration(seconds: 59);
+    startTimer();
+
+    isVerificationIsLoading = false.obs;
+  }
+
+  void startTimer() {
+    countdownTimer =
+        Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
+    isCounting.value = true;
+  }
+
+  void setCountDown() {
+    const reduceSecondsBy = 1;
+    final seconds = waitingDuration.inSeconds - reduceSecondsBy;
+    if (seconds < 0) {
+      countdownTimer!.cancel();
+      isCounting.value = false;
+    } else {
+      waitingDuration = Duration(seconds: seconds);
+    }
+    min.value = waitingDuration.inMinutes.toString().padLeft(2, '0');
+    second.value = waitingDuration.inSeconds.toString().padLeft(2, '0');
+  }
+
+  reSendMsg(String countryCode, String phone) async {
+    if (updateVerificationCode.isEmpty ||
+        updateVerificationCode.value.length < 4) {
+      showCustomSnackBar(Strings.phoneIsRequired.tr);
+      return;
+    }
+    isVerificationIsLoading(true);
+    var req = OtpReqModel(countryCode: countryCode, phone: phone);
+    final res = await authCases.sendOtp(req);
+    isVerificationIsLoading(false);
+
+    checkStatus(
+      res,
+      onSucses: (res) {
+        showCustomSnackBar(Strings.otpSentSuccessfully.tr, isError: false);
+      },
+    );
+  }
 
   // reset- password- screen
 
@@ -374,8 +450,19 @@ class AuthController extends GetxController {
     String otpCode,
     String phone,
   ) async {
-    // TODO:  validation
+    if (resetNewPasswordController.text.trim().isEmpty) {
+      showCustomSnackBar(Strings.passIsRequired.tr);
+      return;
+    } else if (resetNewPasswordController.text.trim().length < 8) {
+      showCustomSnackBar(Strings.minPassLength.tr);
+      return;
+    } else if (resetNewPasswordController.text.trim() !=
+        resetConfirmPasswordController.text.trim()) {
+      showCustomSnackBar(Strings.passwordIsMismatch.tr);
+      return;
+    }
 
+    resetPassScreenIsLoading(true);
     final req = UpdatePasswordReqModel(
       countryCode: countryCode,
       forgetPasswordCode: otpCode,
@@ -385,12 +472,27 @@ class AuthController extends GetxController {
     final res = await authCases.updatePassword(req);
     resetPassScreenIsLoading(false);
 
-    if (res.data!.status == 200) {
-      // TODO:  after updatePASS Action
-    }
+    checkStatus(
+      res,
+      onSucses: (res) {},
+      showSucsesToast: true,
+    );
   }
 
   changePass() async {
+    if (resetNewPasswordController.text.trim().isEmpty ||
+        resetOldPasswordController.text.trim().isEmpty) {
+      showCustomSnackBar(Strings.passIsRequired.tr);
+      return;
+    } else if (resetNewPasswordController.text.trim().length < 8 ||
+        resetOldPasswordController.text.trim().length < 8) {
+      showCustomSnackBar(Strings.minPassLength.tr);
+      return;
+    } else if (resetNewPasswordController.text.trim() !=
+        resetConfirmPasswordController.text.trim()) {
+      showCustomSnackBar(Strings.passwordIsMismatch.tr);
+      return;
+    }
     resetPassScreenIsLoading(true);
     final req = ChangePasswordReqModel(
       oldPass: resetOldPasswordController.text,
@@ -400,8 +502,9 @@ class AuthController extends GetxController {
     final res = await authCases.changePass(req);
     resetPassScreenIsLoading(false);
 
-    if (res.data?.status == 200) {
-// TODO:  action after  changePass
-    }
+    checkStatus(
+      res,
+      onSucses: (res) {},
+    );
   }
 }

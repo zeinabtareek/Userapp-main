@@ -3,19 +3,19 @@ import 'dart:convert';
 abstract class LoginReqModel {}
 
 class LoginWithPassReqModel implements LoginReqModel {
-  String? countryCode;
-  String? phone;
-  String? password;
+  String countryCode;
+  String phone;
+  String password;
   LoginWithPassReqModel({
-    this.countryCode,
-    this.phone,
-    this.password,
-  });
+    required this.countryCode,
+    required this.phone,
+    required this.password,
+  }) {
+    phone = phone.replaceFirst(countryCode, "");
+    countryCode = countryCode.replaceFirst("+", "");
+  }
 
   Map<String, dynamic> toJson() {
-    print(" countryCode $countryCode ");
-    phone = phone!.replaceFirst(countryCode!, "");
-    countryCode = countryCode!.replaceFirst("+", "");
     return {
       'phone_code': countryCode,
       'phone': phone,
@@ -25,7 +25,7 @@ class LoginWithPassReqModel implements LoginReqModel {
 
   factory LoginWithPassReqModel.fromMap(Map<String, dynamic> map) {
     return LoginWithPassReqModel(
-      countryCode: map['countryCode'],
+      countryCode: map['phone_code'],
       phone: map['phone'],
       password: map['password'],
     );

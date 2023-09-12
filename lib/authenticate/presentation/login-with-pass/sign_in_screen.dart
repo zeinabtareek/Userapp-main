@@ -55,13 +55,13 @@ class SignInScreen extends GetView<AuthController> {
                 CustomTextField(
                   hintText: Strings.phone.tr,
                   inputType: TextInputType.number,
-                  countryDialCode: "+20",
+                  countryDialCode: defultDailCode,
                   prefixHeight: 70,
-                  controller: controller.LoginPhoneController,
+                  controller: controller.loginPhoneController,
                   focusNode: null,
                   nextFocus: null,
                   inputAction: TextInputAction.next,
-                  onCountryChanged: controller.LoginSelectCountry,
+                  onCountryChanged: controller.loginSelectCountry,
                 ),
                 K.sizedBoxH0,
                 CustomTextField(
@@ -71,7 +71,7 @@ class SignInScreen extends GetView<AuthController> {
                   prefixHeight: 70,
                   inputAction: TextInputAction.done,
                   isPassword: true,
-                  controller: controller.LoginPassController,
+                  controller: controller.loginPassController,
                   focusNode: null,
                 ),
                 Row(
@@ -87,7 +87,7 @@ class SignInScreen extends GetView<AuthController> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5)),
                                 activeColor: Theme.of(context).primaryColor,
-                                value: controller.LoginRememberMe.value,
+                                value: controller.isLoginRememberMe.value,
                                 onChanged: (bool? isChecked) =>
                                     controller.toggleRememberMe(),
                               ),

@@ -73,4 +73,16 @@ class AuthCases {
   FDM changePass(ChangePasswordReqModel req) async {
     return _data.changePass(req);
   }
+
+  Future<LoginWithPassReqModel?> getAuthUserData() async {
+    return _data.getAuthUserData();
+  }
+
+  Future<void> saveAuthUserData(LoginWithPassReqModel? loginWithPassReqModel) {
+    return _data.saveAuthUserData(loginWithPassReqModel);
+  }
+
+  Future<bool> isContainsAuthUserData() async {
+    return _data.isContainsAuthUserData();
+  }
 }

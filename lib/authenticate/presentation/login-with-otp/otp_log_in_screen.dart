@@ -64,7 +64,7 @@ class OtpLoginScreen extends GetView<AuthController> {
                 CustomTextField(
                   hintText: Strings.phone,
                   inputType: TextInputType.number,
-                  countryDialCode: "+20",
+                  countryDialCode: defultDailCode ,
                   prefixHeight: 70,
                   controller: controller.phoneControllerForOTPLogInScreen,
                   focusNode: controller.nodeForOTPLogInScreen,
