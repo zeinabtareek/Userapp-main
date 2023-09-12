@@ -493,7 +493,7 @@ packages:
       sha256: f185ac890306b5779ecbd611f52502d8d4d63d27703ef73161ca0407e815f02c
       url: "https://pub-web.flutter-io.cn"
     source: hosted
-    version: "2.0.16"
+    version: "2.0.7"
   flutter_svg:
     dependency: "direct main"
     description:

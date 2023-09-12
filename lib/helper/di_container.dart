@@ -36,12 +36,12 @@ import '../view/screens/profile/profile_screen/controller/user_controller.dart';
 import '../view/screens/profile/repository/uer_repo.dart';
 import '../view/screens/ride/controller/ride_controller.dart';
 import '../view/screens/ride/repository/ride_repo.dart';
-import '../view/screens/set_map/controller/set_map_controller.dart';
-import '../view/screens/set_map/repository/set_map_repo.dart';
 import '../view/screens/splash/controller/config_controller.dart';
 import '../view/screens/splash/repo/config_repo.dart';
 import '../view/screens/wallet/controller/wallet_controller.dart';
 import '../view/screens/wallet/repository/wallet_repo.dart';
+import '../view/screens/where_to_go/controller/where_to_go_controller.dart';
+import '../view/screens/where_to_go/repository/set_map_repo.dart';
 import 'cache_helper.dart';
 import 'network/dio_integration.dart';
 
@@ -93,7 +93,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => AddressController(addressRepo: Get.find()));
   Get.lazyPut(() => MapController());
   Get.lazyPut(() => ParcelController(parcelRepo: Get.find()));
-  Get.lazyPut(() => SetMapController(setMapRepo: Get.find()));
+  Get.lazyPut(() => WhereToGoController(setMapRepo: Get.find()));
   Get.lazyPut(() => RideController(rideRepo: Get.find()));
   Get.lazyPut(() => PaymentController(paymentRepo: Get.find()));
   Get.lazyPut(() => BottomMenuController());

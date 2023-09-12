@@ -6,8 +6,8 @@ class AppConstants {
   static const String appName = 'Hood';
   static const bool isDevelopment = true;
 
-  // static const String baseUrl = 'http://127.0.0.1:8000';
-  static const String baseUrl = 'https://hood-sa.net';
+  static const String baseUrl = 'http://172.16.13.16:8000';
+  // static const String baseUrl = 'https://hood-sa.net';
   static const String getAllOrders = '/api/user/orders';
 
 ///****************
@@ -42,7 +42,9 @@ class AppConstants {
   static const String serverFailure = 'serverFailure';
 
 
+//map api key
 
+  static const String mapKey = 'AIzaSyCaCSJ0BZItSyXqBv8vpD1N4WBffJeKhLQ';
 
 
 

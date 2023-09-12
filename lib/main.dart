@@ -42,7 +42,7 @@ Future<void> main() async {
 
   await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
   FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
- await initializeDependencies();
+  await initializeDependencies();
   runApp(MyApp(languages: languages));
 }
 

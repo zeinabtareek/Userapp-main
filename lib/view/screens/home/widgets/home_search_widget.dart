@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
-import 'package:ride_sharing_user_app/view/screens/set_map/set_map_screen.dart';
 
 import '../../../../util/app_strings.dart';
+import '../../where_to_go/where_to_go_screen.dart';
 
 class HomeSearchWidget extends StatelessWidget {
   const HomeSearchWidget({Key? key}) : super(key: key);

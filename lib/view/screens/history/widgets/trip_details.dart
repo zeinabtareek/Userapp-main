@@ -6,8 +6,12 @@ import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/screens/history/model/activity_item_model.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_divider.dart';
 
+import '../../../../util/app_strings.dart';
+import '../model/history_model.dart';
+
 class ActivityScreenTripDetails extends StatelessWidget {
-  final TripDetails tripDetails;
+  final HistoryData tripDetails;
+  // final TripDetails tripDetails;
   const ActivityScreenTripDetails({Key? key,required this.tripDetails}) : super(key: key);
 
   @override
@@ -31,7 +35,7 @@ class ActivityScreenTripDetails extends StatelessWidget {
             const SizedBox(width: Dimensions.paddingSizeSmall,),
             Flexible(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
-                Text(tripDetails.pickLocation!,
+                Text(tripDetails.from?.location??'',
                   style: textRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),
                     fontSize: Dimensions.fontSizeDefault,
                   ),
@@ -39,7 +43,7 @@ class ActivityScreenTripDetails extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height:10),
-                Text(tripDetails.destination!,
+                Text(tripDetails.to?.location??'',
                   style: textRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),
                     fontSize: Dimensions.fontSizeDefault,
                   ),
@@ -57,13 +61,13 @@ class ActivityScreenTripDetails extends StatelessWidget {
               Row(children: [
                 Image.asset(Images.profileMyWallet,height: 15,width: 15,),
                 const SizedBox(width: Dimensions.paddingSizeSmall,),
-                Text('total_distance'.tr,
+                Text(Strings.totalDistance.tr,
                   style: textRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),
                     fontSize: Dimensions.fontSizeSmall,
                   ),
                 ),
               ]),
-              Text(tripDetails.totalDistance!.toString(),
+              Text(tripDetails.distance!.toString(),
                 style: textRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),
                   fontSize: Dimensions.fontSizeSmall,
                 ),
@@ -104,11 +108,11 @@ class ActivityScreenTripDetails extends StatelessWidget {
             Row(children: [
               Image.asset(Images.profileMyWallet,height: 15,width: 15,),
               const SizedBox(width: Dimensions.paddingSizeSmall,),
-              Text('payment'.tr,style: textRegular.copyWith(color: Theme.of(context).primaryColor,fontSize: Dimensions.fontSizeSmall),),
+              Text(Strings.payment.tr,style: textRegular.copyWith(color: Theme.of(context).primaryColor,fontSize: Dimensions.fontSizeSmall),),
             ]),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(tripDetails.paymentMethod!.tr,style: textRegular.copyWith(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).primaryColor),),
+              child: Text(tripDetails.paymentType!.tr,style: textRegular.copyWith(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).primaryColor),),
             )]
           )
         ],

@@ -7,7 +7,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/view/screens/history/controller/activity_controller.dart';
 
 class ActivityScreenMapView extends StatelessWidget {
-  const ActivityScreenMapView({Key? key}) : super(key: key);
+  LatLng position;
+    ActivityScreenMapView({Key? key ,required this.position}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class ActivityScreenMapView extends StatelessWidget {
         mapId: mapCompleter.future.then<int>((value) => value.mapId),
         // markers: {},
         shouldAnimateCamera: false,
-        child: Container(
+        child:  Container(
           height: 200,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
@@ -35,7 +36,8 @@ class ActivityScreenMapView extends StatelessWidget {
             child: GoogleMap(
               compassEnabled: true,
               mapType: MapType.normal,
-              initialCameraPosition: CameraPosition(target: activityController.initialPosition, zoom: 16),
+              initialCameraPosition: CameraPosition(target: position, zoom: 16),
+              // initialCameraPosition: CameraPosition(target: activityController.initialPosition, zoom: 16),
               onMapCreated: (gController) {
                 activityController.setMapController(gController);
 

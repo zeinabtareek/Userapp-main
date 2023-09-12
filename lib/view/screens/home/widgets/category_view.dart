@@ -6,7 +6,7 @@ import 'package:ride_sharing_user_app/view/screens/home/controller/category_cont
 import 'package:ride_sharing_user_app/view/screens/map/map_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/controller/parcel_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/set_map/set_map_screen.dart';
+import '../../where_to_go/where_to_go_screen.dart';
 
 
 class CategoryView extends StatelessWidget {

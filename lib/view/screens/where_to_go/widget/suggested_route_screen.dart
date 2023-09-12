@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
-import 'package:ride_sharing_user_app/view/screens/set_map/controller/set_map_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/set_map/widget/suggested_route_card.dart';
+import 'package:ride_sharing_user_app/view/screens/where_to_go/widget/suggested_route_card.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 import 'package:ride_sharing_user_app/view/widgets/secondery_custom_app_bar.dart';
+
+import '../controller/where_to_go_controller.dart';
 
 class SuggestedRouteScreen extends StatelessWidget {
   const SuggestedRouteScreen({Key? key}) : super(key: key);
@@ -17,9 +18,9 @@ class SuggestedRouteScreen extends StatelessWidget {
       appBar: const SecondaryCustomAppBar(title: 'suggested_route'),
       body: Stack(
         children: [
-          GetBuilder<SetMapController>(
+          GetBuilder<WhereToGoController>(
             initState: (context){
-              Get.find<SetMapController>().getSuggestedRouteList();
+              Get.find<WhereToGoController>().getSuggestedRouteList();
             },
             builder: (setMapController) {
               return Column(children: [

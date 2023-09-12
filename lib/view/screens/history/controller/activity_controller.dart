@@ -38,8 +38,8 @@ class ActivityController extends GetxController implements GetxService {
 
   @override
     onInit()async {
-    await activityRepo.getAllHistoryTrips();
-    // await getAllHistoryTrips();
+    // await activityRepo.getAllHistoryTrips();
+    await getAllHistoryTrips();
     super.onInit();
   }
 
@@ -77,7 +77,7 @@ class ActivityController extends GetxController implements GetxService {
   final isLoading=false.obs;
   getAllHistoryTrips()async{
     isLoading.value=true;
-    // model = await activityRepo.getAllHistoryTrips( );
+    model = await activityRepo.getAllHistoryTrips( );
     isLoading.value=false;
 
  }
