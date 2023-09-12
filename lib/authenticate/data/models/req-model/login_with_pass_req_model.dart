@@ -13,6 +13,7 @@ class LoginWithPassReqModel implements LoginReqModel {
   });
 
   Map<String, dynamic> toJson() {
+    print(" countryCode $countryCode ");
     phone = phone!.replaceFirst(countryCode!, "");
     countryCode = countryCode!.replaceFirst("+", "");
     return {

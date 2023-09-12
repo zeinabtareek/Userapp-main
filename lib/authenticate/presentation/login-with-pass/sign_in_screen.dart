@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/authenticate/enums/auth_enums.dart';
 
 import '../../../util/app_constants.dart';
 import '../../../util/app_strings.dart';
@@ -63,7 +62,6 @@ class SignInScreen extends GetView<AuthController> {
                   nextFocus: null,
                   inputAction: TextInputAction.next,
                   onCountryChanged: controller.LoginSelectCountry,
-                  onChanged: (text) => print(" text $text "),
                 ),
                 K.sizedBoxH0,
                 CustomTextField(
@@ -148,8 +146,7 @@ class SignInScreen extends GetView<AuthController> {
                   isLoading: false,
                   buttonText: Strings.otpLogin.tr,
                   onPressed: () {
-                    Get.to(() =>
-                        const OtpLoginScreen(otpState: OtpState.loginWithOtp));
+                    Get.to(() => const OtpLoginScreen());
                   },
                   radius: 50,
                 ),

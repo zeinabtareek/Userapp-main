@@ -1,5 +1,5 @@
-import '../../data_state.dart';
 import '../../data/models/base_model.dart';
+import '../../data/models/req-model/change_password_req_model.dart';
 import '../../data/models/req-model/complete_data_req_model.dart';
 import '../../data/models/req-model/login_with_otp_model.dart';
 import '../../data/models/req-model/login_with_pass_req_model.dart';
@@ -9,6 +9,7 @@ import '../../data/models/req-model/update_password_req_model.dart';
 import '../../data/models/req-model/verify_phone_req_model.dart';
 import '../../data/models/res-models/register_res_model.dart';
 import '../../data/models/res-models/user_model.dart';
+import '../../data_state.dart';
 
 abstract class AuthRepo {
   Future<DataState<HOODAuthorizedResModel>> register(HOODRegisterReqModel req);
@@ -37,12 +38,14 @@ abstract class AuthRepo {
     OtpReqModel sendOtpReqModel,
   );
 
-   Future<DataState<MsgModel>> updatePassword(
+  Future<DataState<MsgModel>> updatePassword(
     UpdatePasswordReqModel updatePasswordReqModel,
   );
 
+  Future<DataState<MsgModel>> changePass(ChangePasswordReqModel req);
+
   Future<bool?> setUserDate(
-    User user,
+    User? user,
   );
 
   Future<User?> getUserData();

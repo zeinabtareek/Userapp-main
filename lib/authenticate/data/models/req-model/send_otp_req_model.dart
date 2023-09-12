@@ -4,11 +4,13 @@ class OtpReqModel {
   String? countryCode;
   String? phone;
   OtpReqModel({
-    this.countryCode,
-    this.phone,
+    required this.countryCode,
+    required this.phone,
   });
 
   Map<String, dynamic> toJson() {
+    phone = phone!.replaceAll(countryCode!, "");
+    countryCode = countryCode!.replaceAll("+", "00");
     return {
       'phone_code': countryCode,
       'phone': phone,
@@ -21,7 +23,6 @@ class OtpReqModel {
       phone: map['phone'],
     );
   }
-
 
   factory OtpReqModel.fromJson(String source) =>
       OtpReqModel.fromMap(json.decode(source));

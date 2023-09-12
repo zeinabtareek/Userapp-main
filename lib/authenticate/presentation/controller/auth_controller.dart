@@ -1,49 +1,41 @@
 import 'dart:io';
 
-import 'package:country_code_picker/country_code.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../helper/display_helper.dart';
 import '../../../util/app_strings.dart';
-import '../../../view/screens/auth/additional_sign_up_screen.dart';
 import '../../../view/screens/dashboard/bottom_menu_controller.dart';
 import '../../../view/screens/dashboard/dashboard_screen.dart';
 import '../../../view/screens/html/html_viewer_screen.dart';
+import '../../config/config.dart';
+import '../../data/models/req-model/change_password_req_model.dart';
+import '../../data/models/req-model/complete_data_req_model.dart';
 import '../../data/models/req-model/login_with_pass_req_model.dart';
 import '../../data/models/req-model/register_req_model.dart';
 import '../../data/models/req-model/send_otp_req_model.dart';
+import '../../data/models/req-model/update_password_req_model.dart';
+import '../../data/models/res-models/user_model.dart';
 import '../../domain/use-cases/auth_cases.dart';
 import '../../enums/auth_enums.dart';
-import '../forgot_password/forget_password_screen.dart';
+import '../../helper/helper.dart';
 import '../forgot_password/verification_screen.dart';
 import '../login-with-otp/otp_log_in_screen.dart';
+import '../sign-up/additional_sign_up_screen.dart';
 import '../sign-up/sign_up_screen.dart';
 
 class AuthController extends GetxController {
-  /// login
-  TextEditingController LoginPhoneController = TextEditingController();
-  TextEditingController LoginPassController = TextEditingController();
-  Rx<CountryCode> LoginSelectCountry = CountryCode.fromDialCode("+20").obs;
-  AuthCases authCases;
-
-  AuthController(
-    this.authCases,
-  );
   toForgetPassScreen() {
-    // Get.toNamed(AuthScreenPath.forgetPasswordScreenRouteName);
-    Get.to(() => const ForgotPasswordScreen());
+    initForgetPassScreen();
+    Get.toNamed(AuthScreenPath.forgetPasswordScreenRouteName);
   }
 
-  toLoginOtpScreen() {
-    // TODO:
-    Get.to(() => const OtpLoginScreen(
-          otpState: OtpState.loginWithOtp,
-        ));
+  toLoginOtpScreen(OtpState otpState) {
+    Get.to(() => const OtpLoginScreen());
   }
 
   toSignUpScreen() {
-    // TODO:
     Get.to(
       () => const SignUpScreen(),
     );
@@ -52,6 +44,32 @@ class AuthController extends GetxController {
   toHtmlViewer() {
     Get.to(() => const HtmlViewerScreen());
   }
+
+  toCompleteDataScreen() {
+    Get.to(() => const AdditionalSignUpScreen());
+  }
+
+  AuthCases authCases;
+
+  AuthController(
+    this.authCases,
+  );
+
+  @override
+  void onClose() {
+    disposeCompleteDataScreen();
+    disposeForgetPassScreen();
+    disposeLogin();
+    disposeOtpScreen();
+    disposeResetScreen();
+    disposeSignUp();
+    super.onClose();
+  }
+
+  /// login
+  TextEditingController LoginPhoneController = TextEditingController();
+  TextEditingController LoginPassController = TextEditingController();
+  Rx<CountryCode> LoginSelectCountry = CountryCode.fromDialCode("+20").obs;
 
   RxBool isLoginWithPassLoading = false.obs;
 
@@ -73,27 +91,29 @@ class AuthController extends GetxController {
         ),
       );
       isLoginWithPassLoading(false);
-      if (res.data!.isSuccess) {
-        // Success Action
-
-// TODO:
-        /*
+// TODO: 
+      /*
+          
           if (_isActiveRememberMe) {
       
       saveUserNumberAndPassword(phone, password);
     } else {
       clearUserNumberAndPassword();
-    }
+    } */
 
   
         
-         */
-        Get.find<BottomMenuController>().resetNavBar();
-        Get.offAll(() => DashboardScreen());
-      } else {
-        // fail Action
-        showCustomSnackBar(res.data?.msg ?? "");
-      }
+         
+   
+      checkStatus(
+        res,
+        onError: (error) {},
+        onSucses: (res) {
+          
+          Get.find<BottomMenuController>().resetNavBar();
+          Get.offAll(() => DashboardScreen());
+        },
+      );
     }
   }
 
@@ -124,6 +144,20 @@ class AuthController extends GetxController {
   FocusNode regNewPassFocusNode = FocusNode();
 
   Rx<CountryCode> regSelectCountry = CountryCode.fromDialCode("+20").obs;
+
+  initSignUp() {
+    regFristNameController = TextEditingController();
+    regFristNameFocusNode = FocusNode();
+    regLastNameController = TextEditingController();
+    regLastNameFocusNode = FocusNode();
+
+    regPhoneController = TextEditingController();
+    regPhoneFocusNode = FocusNode();
+    regPassController = TextEditingController();
+    regPasswordFocusNode = FocusNode();
+    regNewPassController = TextEditingController();
+    regNewPassFocusNode = FocusNode();
+  }
 
   void disposeSignUp() {
     for (var element in [
@@ -170,11 +204,10 @@ class AuthController extends GetxController {
       final res = await authCases.register(reqModel);
       isLoadingSignUp(false);
       if (res.data?.isSuccess ?? true) {
-        Get.to(() => const AdditionalSignUpScreen());
+        User user = res.data!.user!;
+        authCases.setUserDate(user);
+        toCompleteDataScreen();
       }
-      // setUserToken(AppConstants.signUpBody).then((value) {
-      //   Get.to(const AdditionalSignUpScreen());
-      // });
     }
   }
 
@@ -192,7 +225,14 @@ class AuthController extends GetxController {
   TextEditingController addressCompleteController = TextEditingController();
   FocusNode completeAddressFocusNode = FocusNode();
 
-  disposeCompleteData() {
+  initCompleteDataScreen() {
+    completeAddressFocusNode = FocusNode();
+    addressCompleteController = TextEditingController();
+    completeEmailFocusNode = FocusNode();
+    completeEmailController = TextEditingController();
+  }
+
+  disposeCompleteDataScreen() {
     completeAddressFocusNode.dispose();
     addressCompleteController.dispose();
     completeEmailFocusNode.dispose();
@@ -201,8 +241,21 @@ class AuthController extends GetxController {
 
   RxBool isLoadingCompleteData = false.obs;
 
-  void completeData() {
-    
+  void completeData() async {
+    isLoadingCompleteData(true);
+    final req = CompleteDataReqModel(
+      email: completeEmailController.text,
+      address: addressCompleteController.text,
+      img: _pickedProfileFile.value,
+    );
+    final res = await authCases.completeData(req);
+    isLoadingCompleteData(false);
+    if (res.data?.isSuccess ?? true) {
+      authCases.setUserDate(null);
+      User user = res.data!.user!;
+      authCases.setUserDate(user);
+      toLoginOtpScreen(OtpState.register);
+    }
   }
 
   // forgetPassWord
@@ -215,6 +268,11 @@ class AuthController extends GetxController {
   void disposeForgetPassScreen() {
     forgetPasswordPhoneController.dispose();
     forgetPasswordPhoneNode.dispose();
+  }
+
+  initForgetPassScreen() {
+    forgetPasswordPhoneController = TextEditingController();
+    forgetPasswordPhoneNode = FocusNode();
   }
 
   RxBool isForgetPassLoading = false.obs;
@@ -233,10 +291,13 @@ class AuthController extends GetxController {
       // TODO:
 
       if (res.data?.isSuccess ?? true) {
-        Get.to(() => VerificationScreen(
-              otpState: OtpState.forgetPassword,
-              number: forgetPasswordPhoneController.text,
-            ));
+        Get.to(
+          () => VerificationScreen(
+            otpState: OtpState.forgetPassword,
+            number: forgetPasswordPhoneController.text,
+            countryCode: forgetSelectCountry.value.dialCode!,
+          ),
+        );
       } else {}
     }
   }
@@ -249,6 +310,19 @@ class AuthController extends GetxController {
   Rx<CountryCode> otpSelectCountry = CountryCode.fromDialCode("+20").obs;
 
   RxBool otpLoginIsLoading = false.obs;
+
+  initOtpScreen() {
+    phoneControllerForOTPLogInScreen = TextEditingController();
+    nodeForOTPLogInScreen = FocusNode();
+    otpSelectCountry = CountryCode.fromDialCode("+20").obs;
+
+    otpLoginIsLoading = false.obs;
+  }
+
+  void disposeOtpScreen() {
+    phoneControllerForOTPLogInScreen.dispose();
+    nodeForOTPLogInScreen.dispose();
+  }
 
   // nav to vitrifaction page and put phone
   //
@@ -272,6 +346,18 @@ class AuthController extends GetxController {
 
   RxBool resetPassScreenIsLoading = false.obs;
 
+  initResetScreen() {
+    resetOldPasswordController = TextEditingController();
+    resetNewPasswordController = TextEditingController();
+    resetConfirmPasswordController = TextEditingController();
+
+    resetOldPasswordFocus = FocusNode();
+    resetNewPasswordFocusNode = FocusNode();
+    resetConfirmPasswordFocusNode = FocusNode();
+
+    resetPassScreenIsLoading = false.obs;
+  }
+
   void disposeResetScreen() {
     resetOldPasswordController.dispose();
     resetNewPasswordController.dispose();
@@ -283,8 +369,39 @@ class AuthController extends GetxController {
 
   final GlobalKey<FormState> resetKey = GlobalKey<FormState>();
 
+  void resetPass(
+    String countryCode,
+    String otpCode,
+    String phone,
+  ) async {
+    // TODO:  validation
 
+    final req = UpdatePasswordReqModel(
+      countryCode: countryCode,
+      forgetPasswordCode: otpCode,
+      password: resetConfirmPasswordController.text,
+      phone: phone,
+    );
+    final res = await authCases.updatePassword(req);
+    resetPassScreenIsLoading(false);
 
+    if (res.data!.status == 200) {
+      // TODO:  after updatePASS Action
+    }
+  }
 
+  changePass() async {
+    resetPassScreenIsLoading(true);
+    final req = ChangePasswordReqModel(
+      oldPass: resetOldPasswordController.text,
+      newPass: resetConfirmPasswordController.text,
+    );
 
+    final res = await authCases.changePass(req);
+    resetPassScreenIsLoading(false);
+
+    if (res.data?.status == 200) {
+// TODO:  action after  changePass
+    }
+  }
 }

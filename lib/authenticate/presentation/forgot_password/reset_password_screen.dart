@@ -14,10 +14,14 @@ import '../controller/auth_controller.dart';
 
 class ResetPasswordScreen extends GetView<AuthController> {
   final String phone;
+  final String? countryCode;
   final bool fromChangePassword;
+  final String? otpCode;
   const ResetPasswordScreen({
     Key? key,
     this.fromChangePassword = false,
+    this.countryCode,
+    this.otpCode,
     required this.phone,
   }) : super(key: key);
   @override
@@ -43,7 +47,6 @@ class ResetPasswordScreen extends GetView<AuthController> {
                     title: Strings.oldPassword.tr,
                   ),
                 if (fromChangePassword)
-                  
                   CustomTextField(
                     hintText: Strings.passwordHint.tr,
                     inputType: TextInputType.text,
@@ -57,7 +60,6 @@ class ResetPasswordScreen extends GetView<AuthController> {
                 TextFieldTitle(
                   title: Strings.newPassword.tr,
                 ),
-             
                 CustomTextField(
                   hintText: Strings.passwordHint.tr,
                   inputType: TextInputType.text,
@@ -71,7 +73,6 @@ class ResetPasswordScreen extends GetView<AuthController> {
                 TextFieldTitle(
                   title: Strings.confirmNewPassword.tr,
                 ),
-          
                 CustomTextField(
                   hintText: '•••••••••••',
                   inputType: TextInputType.text,
@@ -80,7 +81,6 @@ class ResetPasswordScreen extends GetView<AuthController> {
                   focusNode: controller.resetConfirmPasswordFocusNode,
                   inputAction: TextInputAction.done,
                   isPassword: true,
-            
                 ),
                 K.sizedBoxH0,
                 Obx(() => CustomButton(
@@ -89,7 +89,6 @@ class ResetPasswordScreen extends GetView<AuthController> {
                           : Strings.save.tr,
                       isLoading: controller.resetPassScreenIsLoading.isTrue,
                       onPressed: () async {
-                         
                         // await controller.confirmPassValidation();
                       },
                       radius: 50,

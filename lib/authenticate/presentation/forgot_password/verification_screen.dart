@@ -18,11 +18,13 @@ import 'reset_password_screen.dart';
 
 class VerificationScreen extends GetView<AuthController> {
   final String number;
+  final String countryCode;
   final OtpState otpState;
   const VerificationScreen({
     Key? key,
     required this.number,
     required this.otpState,
+    required this.countryCode,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -77,9 +79,6 @@ class VerificationScreen extends GetView<AuthController> {
                     backgroundColor: Colors.transparent,
                     enableActiveFill: true,
                     onChanged: controller.updateVerificationCode,
-                    validator: (value) {
-                      // TODO:
-                    },
                     beforeTextPaste: (text) => true,
                     textStyle: textSemiBold.copyWith(),
                     pastedTextStyle: textRegular.copyWith(
@@ -101,6 +100,7 @@ class VerificationScreen extends GetView<AuthController> {
                       ),
                       TextButton(
                         onPressed: () {
+                          // TODO: 
                           showCustomSnackBar(Strings.otpSentSuccessfully.tr,
                               isError: false);
                         },
@@ -125,13 +125,17 @@ class VerificationScreen extends GetView<AuthController> {
                                 controller.isVerificationIsLoading.isTrue,
                             radius: 50,
                             onPressed: () {
+                              // TODO:
                               if (otpState == OtpState.loginWithOtp ||
                                   otpState == OtpState.register) {
                                 Get.offAll(() => DashboardScreen());
                               } else {
                                 Get.to(
-                                  () =>  ResetPasswordScreen(
+                                  () => ResetPasswordScreen(
                                     phone: number,
+                                    countryCode: countryCode,
+                                    otpCode:
+                                        controller.updateVerificationCode.value,
                                   ),
                                 );
                               }

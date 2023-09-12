@@ -1,5 +1,3 @@
-
-
 abstract class RegisterReqModel {}
 
 class HOODRegisterReqModel extends RegisterReqModel {
@@ -16,15 +14,16 @@ class HOODRegisterReqModel extends RegisterReqModel {
     required this.password,
   });
 
-  
   Map<String, dynamic> toJson() {
+    phone = phone.replaceAll(countryCode, "");
+    countryCode = countryCode.replaceAll("+", "00");
     return {
       'first_name': fName,
       'last_name': lName,
       'phone_code': countryCode,
       'phone': phone,
       'password': password,
-      'password_confirmation':password,
+      'password_confirmation': password,
     };
   }
 }

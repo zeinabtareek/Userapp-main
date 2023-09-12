@@ -5,12 +5,14 @@ class LoginWithOtpReqModel {
   String? phone;
   String? otp;
   LoginWithOtpReqModel({
-    this.countryCode,
-    this.phone,
-    this.otp,
+    required this.countryCode,
+    required this.phone,
+    required this.otp,
   });
 
   Map<String, dynamic> toJson() {
+    phone = phone!.replaceAll(countryCode!, "");
+    countryCode = countryCode!.replaceAll("+", "00");
     return {
       'phone_code': countryCode,
       'phone': phone,
@@ -25,7 +27,6 @@ class LoginWithOtpReqModel {
       otp: map['otp'],
     );
   }
-
 
   factory LoginWithOtpReqModel.fromJson(String source) =>
       LoginWithOtpReqModel.fromMap(json.decode(source));

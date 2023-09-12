@@ -1,16 +1,17 @@
-
 // verify_phone_req_model
 class VerifyPhoneReqModel {
-  String? phone;
-  String? countryCode;
-  String? phoneConfirmationToken;
+  String phone;
+  String countryCode;
+  String phoneConfirmationToken;
   VerifyPhoneReqModel({
-    this.phone,
-    this.countryCode,
-    this.phoneConfirmationToken,
+    required this.phone,
+    required this.countryCode,
+    required this.phoneConfirmationToken,
   });
 
   Map<String, dynamic> toMap() {
+    phone = phone.replaceAll(countryCode, "");
+    countryCode = countryCode.replaceAll("+", "00");
     return {
       'phone': phone,
       'phone_code': countryCode,
@@ -25,6 +26,4 @@ class VerifyPhoneReqModel {
       phoneConfirmationToken: map['phoneConfirmationToken'],
     );
   }
-
-
 }

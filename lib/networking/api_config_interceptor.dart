@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
-
 class ApiConfigInterceptor extends InterceptorsWrapper {
   final loggingTag = "DIO_TAG";
 
@@ -19,7 +18,7 @@ class ApiConfigInterceptor extends InterceptorsWrapper {
     debugPrint('interceptor $loggingTag');
 
     debugPrint(
-      '$loggingTag-REQUEST[${options.method}] => PATH: ${options.path}',
+      '$loggingTag-REQUEST[${options.method}] => PATH: ${options.path} \n Body [${options.data}]',
     );
     return super.onRequest(options, handler);
   }
@@ -27,15 +26,15 @@ class ApiConfigInterceptor extends InterceptorsWrapper {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     debugPrint(
-      '$loggingTag-RESPONSE[${response.data}] => EXTRAS: ${response.extra}',
+      '$loggingTag-RESPONSE[${response.data}] => EXTRAS: ${response.extra} \n Body [${response.data}]',
     );
     super.onResponse(response, handler);
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     debugPrint(
-      '$loggingTag-ERROR[${err.error}] => MESSAGE: ${err.message}|| StackTrace: ${err.stackTrace}',
+      '$loggingTag-ERROR[${err.error}] => MESSAGE: ${err.message}|| StackTrace: ${err.stackTrace} \n Body [${err.response?.data}]',
     );
     if (err.response == null) {
       handler.resolve(

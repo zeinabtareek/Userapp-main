@@ -44,8 +44,7 @@ class MsgModel extends BaseResModel<MsgModel> {
 
   factory MsgModel.fromJson(Map<String, dynamic> map) => MsgModel.fromKMap(map);
 
-bool get isSuccess=> status==200;
+  bool get isSuccess => status == 200;
   @override
-  // TODO: implement data
   MsgModel? get data => throw UnimplementedError();
 }

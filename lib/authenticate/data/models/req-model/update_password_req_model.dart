@@ -13,6 +13,8 @@ class UpdatePasswordReqModel {
   });
 
   Map<String, dynamic> toJson() {
+    phone = phone!.replaceAll(countryCode!, "");
+    countryCode = countryCode!.replaceAll("+", "00");
     return {
       'phone_code': countryCode,
       'phone': phone,

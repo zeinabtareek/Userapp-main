@@ -15,8 +15,12 @@ class LocalAuth implements ILocalAuth<User> {
   }
 
   @override
-  Future<bool?> setUser(User user) async {
-    return CacheHelper.setValue(kay: key, value: user.toJson());
+  Future<bool?> setUser(User? user) async {
+    if (user != null) {
+      return CacheHelper.setValue(kay: key, value: user.toJson());
+    } else {
+     return CacheHelper.deleteOneValue(kay: key);
+    }
   }
 
   @override

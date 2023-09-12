@@ -12,7 +12,9 @@ class _RemoteApiAuth implements RemoteApiAuth {
   _RemoteApiAuth(
     this._dio, {
     this.baseUrl,
-  });
+  }) {
+    baseUrl ??= 'http://172.16.13.16:8000//api/user/';
+  }
 
   final Dio _dio;
 
@@ -34,7 +36,7 @@ class _RemoteApiAuth implements RemoteApiAuth {
     )
             .compose(
               _dio.options,
-              '',
+              'register',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -64,7 +66,7 @@ class _RemoteApiAuth implements RemoteApiAuth {
     )
             .compose(
               _dio.options,
-              '',
+              'login',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -94,7 +96,7 @@ class _RemoteApiAuth implements RemoteApiAuth {
     )
             .compose(
               _dio.options,
-              '',
+              'login_with_otp',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -123,7 +125,7 @@ class _RemoteApiAuth implements RemoteApiAuth {
     )
             .compose(
               _dio.options,
-              '',
+              'complete_data',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -152,7 +154,7 @@ class _RemoteApiAuth implements RemoteApiAuth {
     )
             .compose(
               _dio.options,
-              '',
+              'verify_phone',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -181,7 +183,7 @@ class _RemoteApiAuth implements RemoteApiAuth {
     )
             .compose(
               _dio.options,
-              '',
+              'send_otp',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -210,7 +212,7 @@ class _RemoteApiAuth implements RemoteApiAuth {
     )
             .compose(
               _dio.options,
-              '',
+              'forget_password',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -240,7 +242,36 @@ class _RemoteApiAuth implements RemoteApiAuth {
     )
             .compose(
               _dio.options,
-              '',
+              'update_password',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = MsgModel.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<MsgModel>> changePass(ChangePasswordReqModel req) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<MsgModel>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'change_password',
               queryParameters: queryParameters,
               data: _data,
             )

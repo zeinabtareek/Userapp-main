@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../authenticate/data/models/res-models/user_model.dart';
+import '../../../authenticate/domain/use-cases/auth_cases.dart';
 import '../../../authenticate/presentation/forgot_password/reset_password_screen.dart';
+import '../../../initialize_dependencies.dart';
 import '../../../localization/localization_controller.dart';
 import '../../../theme/theme_controller.dart';
 import '../../../util/dimensions.dart';
@@ -254,9 +257,13 @@ class SettingScreen extends StatelessWidget {
                     width: 20,
                     height: 20,
                     color: Theme.of(context).primaryColor),
-                onTap: () {
-                  Get.to(() =>
-                      const ResetPasswordScreen(fromChangePassword: true));
+                onTap: ()async {
+                  // TODO: 
+                  User?  user= await sl<AuthCases>().getUserData();
+                  Get.to(() =>  ResetPasswordScreen(
+                        fromChangePassword: true,
+                        phone:user?.phone??"",
+                      ));
                 },
               ),
             ],

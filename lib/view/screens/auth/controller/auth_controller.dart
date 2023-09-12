@@ -1,17 +1,17 @@
-import 'package:country_code_picker/country_code.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../authenticate/presentation/login-with-pass/sign_in_screen.dart';
+import '../../../../authenticate/presentation/sign-up/additional_sign_up_screen.dart';
 import '../../../../helper/display_helper.dart';
 import '../../../../util/app_constants.dart';
 import '../../../../util/app_strings.dart';
 import '../../../widgets/custom_snackbar.dart';
 import '../../dashboard/bottom_menu_controller.dart';
 import '../../dashboard/dashboard_screen.dart';
-import '../additional_sign_up_screen.dart';
 import '../model/sign_up_body.dart';
 import '../repository/auth_repo.dart';
 

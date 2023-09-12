@@ -18,10 +18,8 @@ import '../login-with-pass/sign_in_screen.dart';
 import '../sign-up/sign_up_screen.dart';
 
 class OtpLoginScreen extends GetView<AuthController> {
-  final OtpState otpState;
   const OtpLoginScreen({
     Key? key,
-    required this.otpState,
   }) : super(key: key);
 
   @override
@@ -88,6 +86,8 @@ class OtpLoginScreen extends GetView<AuthController> {
                         () => VerificationScreen(
                           number: phone,
                           otpState: OtpState.loginWithOtp,
+                          countryCode:
+                              controller.otpSelectCountry.value.dialCode!,
                         ),
                       );
                     }

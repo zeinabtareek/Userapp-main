@@ -4,6 +4,7 @@ import 'package:retrofit/http.dart';
 
 import '../../../config/config.dart';
 import '../../models/base_model.dart';
+import '../../models/req-model/change_password_req_model.dart';
 import '../../models/req-model/complete_data_req_model.dart';
 import '../../models/req-model/login_with_otp_model.dart';
 import '../../models/req-model/login_with_pass_req_model.dart';
@@ -57,5 +58,10 @@ abstract class RemoteApiAuth {
   @POST(AuthLib.updatePasswordEndPoint)
   Future<HttpResponse<MsgModel>> updatePassword(
     @Body() UpdatePasswordReqModel req,
+  );
+
+   @POST(AuthLib.changePassEndPoint)
+  Future<HttpResponse<MsgModel>> changePass(
+    @Body() ChangePasswordReqModel req,
   );
 }

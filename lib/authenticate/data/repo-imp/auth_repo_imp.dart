@@ -3,6 +3,7 @@ import 'dart:io';
 import '../../data_state.dart';
 import '../../domain/repo/auth_repo.dart';
 import '../models/base_model.dart';
+import '../models/req-model/change_password_req_model.dart';
 import '../models/req-model/complete_data_req_model.dart';
 import '../models/req-model/login_with_otp_model.dart';
 import '../models/req-model/login_with_pass_req_model.dart';
@@ -127,7 +128,7 @@ class AuthRepoImp implements AuthRepo {
   }
 
   @override
-  Future<bool?> setUserDate(User user) {
+  Future<bool?> setUserDate(User? user) {
     return localAuth.setUser(user);
   }
 
@@ -161,5 +162,21 @@ class AuthRepoImp implements AuthRepo {
     } catch (e) {
       return DataFailedErrorMsg(e.toString());
     }
+  }
+
+  @override
+  Future<DataState<MsgModel>> changePass(ChangePasswordReqModel req) async {
+    try {
+  final res =await remoteApiAuth.changePass(req);
+     if (res.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(res.data);
+      } else {
+        return DataFailedErrorMsg(res.data.msg ?? "");
+      }
+} catch (e) {
+      return DataFailedErrorMsg(e.toString());
+    }
+
+
   }
 }
