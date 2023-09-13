@@ -8,9 +8,7 @@ import '../../models/res-models/user_model.dart';
 import 'i_local_auth.dart';
 
 class LocalAuth implements ILocalAuth<User> {
-  LocalAuth() {
-    CacheHelper.init();
-  }
+ 
   final String key = "user";
 
   @override
@@ -30,7 +28,7 @@ class LocalAuth implements ILocalAuth<User> {
 
   @override
   Future<bool> isAuthenticated() {
-    return Future.value(CacheHelper.instance!.containsKey(key));
+    return Future.value(CacheHelper.instance?.containsKey(key));
   }
 }
 

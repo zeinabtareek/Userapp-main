@@ -10,12 +10,12 @@ import '../../../util/app_style.dart';
 import '../../../util/dimensions.dart';
 import '../../../util/images.dart';
 import '../../../util/text_style.dart';
-import '../../../view/screens/auth/widgets/test_field_title.dart';
 import '../../../view/screens/dashboard/dashboard_screen.dart';
 import '../../../view/widgets/custom_button.dart';
 import '../../../view/widgets/custom_image.dart';
 import '../../../view/widgets/custom_text_field.dart';
 import '../controller/auth_controller.dart';
+import '../widgets/test_field_title.dart';
 
 class AdditionalSignUpScreen extends GetView<AuthController> {
   const AdditionalSignUpScreen({Key? key}) : super(key: key);

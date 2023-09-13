@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/widgets/test_field_title.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/controller/parcel_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/parcel_category_screen.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_text_field.dart';
+
+import '../../../../authenticate/presentation/widgets/test_field_title.dart';
 
 class ParcelDetailInputView extends StatefulWidget {
   const ParcelDetailInputView({Key? key}) : super(key: key);

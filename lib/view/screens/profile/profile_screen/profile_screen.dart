@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/authenticate/domain/use-cases/auth_cases.dart';
+import 'package:ride_sharing_user_app/initialize_dependencies.dart';
 import 'package:ride_sharing_user_app/localization/localization_controller.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/screens/history/history_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/controller/auth_controller.dart';
 import 'package:ride_sharing_user_app/authenticate/presentation/login-with-pass/sign_in_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/message/message_list.dart';
 import 'package:ride_sharing_user_app/view/screens/offer/offer_screen.dart';
@@ -20,9 +21,9 @@ import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_image.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../../../authenticate/presentation/controller/auth_controller.dart';
 import '../../../../util/app_strings.dart';
 import '../../../../util/app_style.dart';
-import '../../auth/repository/auth_repo.dart';
 import 'controller/user_controller.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -276,17 +277,24 @@ class ProfileScreen extends StatelessWidget {
                               description:
                                   Strings.doYouWantToLogOutThisAccount.tr,
                               onYesPressed: () {
-                                Get.lazyPut(() => FAuthController(
-                                    authRepo: FAuthRepo(
-                                        apiClient: Get.find(),
-                                        sharedPreferences: Get.find())));
-
-                                Get.find<FAuthController>()
-                                    .clearSharedData()
-                                    .then((condition) {
+                                sl<AuthCases>().setUserDate(null).then((_) {
                                   Get.back();
-                                  Get.offAll(SignInScreen());
+                                  Get.offAll(SignInScreen(),
+                                      binding: BindingsBuilder(() {
+                                    Get.lazyPut(() => AuthController(sl()));
+                                  }));
                                 });
+
+                                // Get.lazyPut(() => FAuthController(
+                                //     authRepo: FAuthRepo(
+                                //         apiClient: Get.find(),
+                                //         sharedPreferences: Get.find())));
+
+                                // Get.find<FAuthController>()
+                                //     .clearSharedData()
+                                //     .then((condition) {
+
+                                // });
                                 // Get.find<AuthController>().clearSharedData().then((condition) {
                                 //   Get.back();
                                 //   Get.offAll(  SignInScreen());

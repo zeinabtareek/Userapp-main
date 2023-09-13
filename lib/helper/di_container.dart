@@ -9,8 +9,7 @@ import '../localization/language_model.dart';
 import '../localization/localization_controller.dart';
 import '../theme/theme_controller.dart';
 import '../util/app_constants.dart';
-import '../view/screens/auth/controller/auth_controller.dart';
-import '../view/screens/auth/repository/auth_repo.dart';
+
 import '../view/screens/dashboard/bottom_menu_controller.dart';
 import '../view/screens/history/controller/activity_controller.dart';
 import '../view/screens/history/repository/history_repo.dart';
@@ -76,10 +75,9 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => ThemeController(sharedPreferences: Get.find()));
   Get.lazyPut(() => LocalizationController(sharedPreferences: Get.find()));
   Get.lazyPut(() => OnBoardController());
-  Get.lazyPut(() => FAuthController(
-      authRepo:
-          FAuthRepo(apiClient: Get.find(), sharedPreferences: Get.find())));
-  Get.lazyPut(() => NotificationController(notificationRepo: Get.find()));
+
+// TODO: un hash NotificationController line 80
+  // Get.lazyPut(() => NotificationController(notificationRepo: Get.find()));
   Get.lazyPut(() => ActivityController());
   // Get.lazyPut(() => ActivityController(activityRepo: ActivityRepo( )));
   // Get.lazyPut(() => ActivityController(activityRepo: ActivityRepo(apiClient: Get.find())));

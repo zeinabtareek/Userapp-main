@@ -20,7 +20,6 @@ import 'theme/dark_theme.dart';
 import 'theme/light_theme.dart';
 import 'theme/theme_controller.dart';
 import 'util/app_constants.dart';
-import 'view/screens/auth/controller/auth_controller.dart';
 import 'view/screens/splash/controller/config_controller.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -61,7 +60,6 @@ class MyApp extends StatelessWidget {
       Get.find<ConfigController>().initSharedData();
       _route();
     }
-    final authController = Get.find<FAuthController>();
     return GetBuilder<ThemeController>(builder: (themeController) {
       return GetBuilder<LocalizationController>(builder: (localizeController) {
         return GetBuilder<ConfigController>(builder: (configController) {

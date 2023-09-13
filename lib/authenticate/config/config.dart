@@ -9,10 +9,12 @@ import '../presentation/sign-up/sign_up_screen.dart';
 
 class AuthLib {
   AuthLib._();
+  static const String routeName = "user/";
 
-  static const String domain = "http://172.16.13.16:8000/";
+  static const String domain = "http://172.16.13.22:8000/api/";
   // end- points
-  static const String baseUrl = "$domain/api/user/";
+
+  static const String baseUrl = "$domain$routeName";
 
   static const String loginWithPassEndPoint = "login";
 
@@ -31,7 +33,6 @@ class AuthLib {
   static const String updatePasswordEndPoint = "update_password";
 
   static const String changePassEndPoint = "change_password";
-
 
   static List<GetPage> authPages = [
     GetPage(

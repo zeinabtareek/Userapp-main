@@ -10,8 +10,6 @@ import '../../../view/widgets/custom_button.dart';
 import '../../../view/widgets/custom_text_field.dart';
 import '../controller/auth_controller.dart';
 
-
-
 class ForgotPasswordScreen extends GetView<AuthController> {
   const ForgotPasswordScreen({super.key});
 
@@ -24,7 +22,7 @@ class ForgotPasswordScreen extends GetView<AuthController> {
           child: Padding(
             padding: K.fixedPadding0,
             child: Form(
-              key: controller.forgetPasswordValdteKey,
+              key: controller.forgetPasswordValidateKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,

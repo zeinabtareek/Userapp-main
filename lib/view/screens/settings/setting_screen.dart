@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../authenticate/data/models/res-models/user_model.dart';
 import '../../../authenticate/domain/use-cases/auth_cases.dart';
+import '../../../authenticate/presentation/controller/auth_controller.dart';
 import '../../../authenticate/presentation/forgot_password/reset_password_screen.dart';
 import '../../../initialize_dependencies.dart';
 import '../../../localization/localization_controller.dart';
@@ -12,7 +13,6 @@ import '../../../util/images.dart';
 import '../../../util/text_style.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_body.dart';
-import '../auth/controller/auth_controller.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -29,53 +29,54 @@ class SettingScreen extends StatelessWidget {
           padding: const EdgeInsets.all(Dimensions.paddingSizeLarge),
           child: Column(
             children: [
-              ListTile(
-                title: Text(
-                  'notification_sound'.tr,
-                  style: textRegular.copyWith(),
-                ),
-                leading: Icon(
-                  Icons.notifications_sharp,
-                  color: Theme.of(context).primaryColor,
-                ),
-                trailing: GetBuilder<FAuthController>(
-                  builder: (authController) {
-                    return GestureDetector(
-                      onTap: () => authController.toggleNotificationSound(),
-                      child: Container(
-                        height: 25,
-                        width: 45,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Theme.of(context).primaryColor),
-                        child: Row(
-                          mainAxisAlignment:
-                              authController.isNotificationActive()
-                                  ? MainAxisAlignment.start
-                                  : MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              height: 22,
-                              width: 22,
-                              margin: const EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: const Offset(0, 2),
-                                      blurRadius: 5,
-                                      color: Colors.black.withOpacity(0.3),
-                                    )
-                                  ],
-                                  color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
+              // TODO:  toggleNotificationSound
+              // ListTile(
+              //   title: Text(
+              //     'notification_sound'.tr,
+              //     style: textRegular.copyWith(),
+              //   ),
+              //   leading: Icon(
+              //     Icons.notifications_sharp,
+              //     color: Theme.of(context).primaryColor,
+              //   ),
+              //   trailing: GetBuilder<FAuthController>(
+              //     builder: (authController) {
+              //       return GestureDetector(
+              //         onTap: () => authController.toggleNotificationSound(),
+              //         child: Container(
+              //           height: 25,
+              //           width: 45,
+              //           decoration: BoxDecoration(
+              //               borderRadius: BorderRadius.circular(50),
+              //               color: Theme.of(context).primaryColor),
+              //           child: Row(
+              //             mainAxisAlignment:
+              //                 authController.isNotificationActive()
+              //                     ? MainAxisAlignment.start
+              //                     : MainAxisAlignment.end,
+              //             children: [
+              //               Container(
+              //                 height: 22,
+              //                 width: 22,
+              //                 margin: const EdgeInsets.all(2),
+              //                 decoration: BoxDecoration(
+              //                     borderRadius: BorderRadius.circular(50),
+              //                     boxShadow: [
+              //                       BoxShadow(
+              //                         offset: const Offset(0, 2),
+              //                         blurRadius: 5,
+              //                         color: Colors.black.withOpacity(0.3),
+              //                       )
+              //                     ],
+              //                     color: Colors.white),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       );
+              //     },
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: Dimensions.paddingSizeDefault,
@@ -257,13 +258,17 @@ class SettingScreen extends StatelessWidget {
                     width: 20,
                     height: 20,
                     color: Theme.of(context).primaryColor),
-                onTap: ()async {
-                  // TODO: 
-                  User?  user= await sl<AuthCases>().getUserData();
-                  Get.to(() =>  ResetPasswordScreen(
-                        fromChangePassword: true,
-                        phone:user?.phone??"",
-                      ));
+                onTap: () async {
+                  Get.to(
+                    () => const ResetPasswordScreen(
+                      fromChangePassword: true,
+                    ),
+                    binding: BindingsBuilder(
+                      () {
+                        Get.lazyPut(() => AuthController(sl()));
+                      },
+                    ),
+                  );
                 },
               ),
             ],

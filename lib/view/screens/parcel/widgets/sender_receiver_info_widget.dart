@@ -4,13 +4,13 @@ import 'package:ride_sharing_user_app/helper/display_helper.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/widgets/test_field_title.dart';
 import 'package:ride_sharing_user_app/view/screens/home/widgets/home_my_address.dart';
 import 'package:ride_sharing_user_app/view/screens/map/controller/map_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/controller/parcel_controller.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_text_field.dart';
 
+import '../../../../authenticate/presentation/widgets/test_field_title.dart';
 import '../../../../util/app_strings.dart';
 import '../../../../util/app_style.dart';
 

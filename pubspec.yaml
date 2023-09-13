@@ -49,7 +49,8 @@ dependencies:
   shared_preferences: 
   shimmer: ^3.0.0
   syncfusion_flutter_datepicker: ^22.2.12
-  url_launcher: ^6.1.14  geocoding:
+  url_launcher: ^6.1.14
+  geocoding:
 
 dependency_overrides:
   modal_bottom_sheet:

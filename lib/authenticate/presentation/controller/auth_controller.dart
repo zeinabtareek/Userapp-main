@@ -14,10 +14,12 @@ import '../../../view/screens/html/html_viewer_screen.dart';
 import '../../config/config.dart';
 import '../../data/models/req-model/change_password_req_model.dart';
 import '../../data/models/req-model/complete_data_req_model.dart';
+import '../../data/models/req-model/login_with_otp_model.dart';
 import '../../data/models/req-model/login_with_pass_req_model.dart';
 import '../../data/models/req-model/register_req_model.dart';
 import '../../data/models/req-model/send_otp_req_model.dart';
 import '../../data/models/req-model/update_password_req_model.dart';
+import '../../data/models/req-model/verify_phone_req_model.dart';
 import '../../data/models/res-models/user_model.dart';
 import '../../domain/use-cases/auth_cases.dart';
 import '../../enums/auth_enums.dart';
@@ -27,7 +29,7 @@ import '../login-with-otp/otp_log_in_screen.dart';
 import '../sign-up/additional_sign_up_screen.dart';
 import '../sign-up/sign_up_screen.dart';
 
-const String defultDailCode = "+966";
+const String defaultDailCode = "+966";
 
 class AuthController extends GetxController {
   toForgetPassScreen() {
@@ -70,11 +72,12 @@ class AuthController extends GetxController {
     super.onClose();
   }
 
-  /// login
+  /// [SignInScreen]
+
   TextEditingController loginPhoneController = TextEditingController();
   TextEditingController loginPassController = TextEditingController();
   Rx<CountryCode> loginSelectCountry =
-      CountryCode.fromDialCode(defultDailCode).obs;
+      CountryCode.fromDialCode(defaultDailCode).obs;
 
   void initLoginWithPassScreen() async {
     loginPhoneController = TextEditingController();
@@ -117,9 +120,33 @@ class AuthController extends GetxController {
             await authCases.saveAuthUserData(null);
           }
 
-          Get.find<BottomMenuController>().resetNavBar();
-          Get.offAll(() => DashboardScreen());
+          final User user = res!.user!;
+
+          await authCases.setUserDate(user);
+
+          final bool isVerifiedPhone = true;
+          _handelVerifyLoginCase(isVerifiedPhone, user);
         },
+      );
+    }
+  }
+
+  void _handelVerifyLoginCase(bool isVerifiedPhone, User user) {
+    if (isVerifiedPhone) {
+      Get.find<BottomMenuController>().resetNavBar();
+      Get.offAll(() => DashboardScreen());
+    } else {
+      Get.off(
+        VerificationScreen(
+          number: user.phone ?? "",
+          countryCode: user.phoneCode ?? "",
+          otpState: OtpState.register,
+        ),
+        binding: BindingsBuilder(
+          () {
+            Get.lazyPut(() => AuthController(sl()));
+          },
+        ),
       );
     }
   }
@@ -134,7 +161,7 @@ class AuthController extends GetxController {
     }
   }
 
-  // reg
+  /// [SignUpScreen]
 
   TextEditingController regFristNameController = TextEditingController();
   FocusNode regFristNameFocusNode = FocusNode();
@@ -149,7 +176,7 @@ class AuthController extends GetxController {
   FocusNode regNewPassFocusNode = FocusNode();
 
   Rx<CountryCode> regSelectCountry =
-      CountryCode.fromDialCode(defultDailCode).obs;
+      CountryCode.fromDialCode(defaultDailCode).obs;
 
   initSignUp() {
     regFristNameController = TextEditingController();
@@ -217,7 +244,7 @@ class AuthController extends GetxController {
     }
   }
 
-// complete data
+  /// [AdditionalSignUpScreen]
   final Rxn<File> _pickedProfileFile = Rxn(null);
   // File? _pickedProfileFile;
 
@@ -264,13 +291,13 @@ class AuthController extends GetxController {
     }
   }
 
-  // forgetPassWord
+  /// [ForgotPasswordScreen]
 
   TextEditingController forgetPasswordPhoneController = TextEditingController();
   FocusNode forgetPasswordPhoneNode = FocusNode();
   Rx<CountryCode> forgetSelectCountry =
-      CountryCode.fromDialCode(defultDailCode).obs;
-  final GlobalKey<FormState> forgetPasswordValdteKey = GlobalKey<FormState>();
+      CountryCode.fromDialCode(defaultDailCode).obs;
+  final GlobalKey<FormState> forgetPasswordValidateKey = GlobalKey<FormState>();
 
   void disposeForgetPassScreen() {
     forgetPasswordPhoneController.dispose();
@@ -285,7 +312,7 @@ class AuthController extends GetxController {
   RxBool isForgetPassLoading = false.obs;
 
   forgetPassClick() async {
-    if (!forgetPasswordValdteKey.currentState!.validate()) {
+    if (!forgetPasswordValidateKey.currentState!.validate()) {
       showCustomSnackBar(Strings.phoneIsRequired.tr);
       return;
     } else {
@@ -317,20 +344,20 @@ class AuthController extends GetxController {
     }
   }
 
-// otp login screen
+  /// [OtpLoginScreen]
 
   TextEditingController phoneControllerForOTPLogInScreen =
       TextEditingController();
   FocusNode nodeForOTPLogInScreen = FocusNode();
   Rx<CountryCode> otpSelectCountry =
-      CountryCode.fromDialCode(defultDailCode).obs;
+      CountryCode.fromDialCode(defaultDailCode).obs;
 
   RxBool otpLoginIsLoading = false.obs;
 
   initOtpScreen() {
     phoneControllerForOTPLogInScreen = TextEditingController();
     nodeForOTPLogInScreen = FocusNode();
-    otpSelectCountry = CountryCode.fromDialCode(defultDailCode).obs;
+    otpSelectCountry = CountryCode.fromDialCode(defaultDailCode).obs;
 
     otpLoginIsLoading = false.obs;
   }
@@ -340,10 +367,36 @@ class AuthController extends GetxController {
     nodeForOTPLogInScreen.dispose();
   }
 
-  // nav to vitrifaction page and put phone
-  //
+  void loginOtpClick() async {
+    if (phoneControllerForOTPLogInScreen.text.length < 8) {
+      showCustomSnackBar(Strings.invalidPhone.tr);
+      return;
+    } else if (phoneControllerForOTPLogInScreen.text.isEmpty) {
+      showCustomSnackBar(Strings.phoneIsRequired.tr);
+      return;
+    }
+    final req = OtpReqModel(
+        countryCode: otpSelectCountry.value.dialCode,
+        phone: phoneControllerForOTPLogInScreen.text);
+    final res = await authCases.sendOtp(req);
 
-  // VerificationScreen
+    checkStatus(res, onSucses: (res) {
+      Get.to(
+        () => VerificationScreen(
+          countryCode: otpSelectCountry.value.dialCode.toString(),
+          number: phoneControllerForOTPLogInScreen.text,
+          otpState: OtpState.loginWithOtp,
+        ),
+        binding: BindingsBuilder(
+          () {
+            Get.lazyPut(() => AuthController(sl()));
+          },
+        ),
+      );
+    });
+  }
+
+  /// [VerificationScreen]
 
   RxString updateVerificationCode = ''.obs;
 
@@ -409,7 +462,53 @@ class AuthController extends GetxController {
     );
   }
 
-  // reset- password- screen
+  void verifyPhone(String phone, String phoneCode) async {
+    if (updateVerificationCode.isEmpty ||
+        updateVerificationCode.value.length < 4) {
+      showCustomSnackBar(Strings.phoneIsRequired.tr);
+      return;
+    }
+
+    isVerificationIsLoading(true);
+    final req = VerifyPhoneReqModel(
+      phone: phone,
+      countryCode: phoneCode,
+      phoneConfirmationToken: updateVerificationCode.value,
+    );
+    final res = await authCases.verifyPhone(req);
+    isVerificationIsLoading(false);
+    checkStatus(
+      res,
+      onSucses: (res) {
+        Get.offAll(() => DashboardScreen());
+      },
+    );
+  }
+
+  void loginWithOtp(String phone, String phoneCode) async {
+    if (updateVerificationCode.isEmpty ||
+        updateVerificationCode.value.length < 4) {
+      showCustomSnackBar(Strings.phoneIsRequired.tr);
+      return;
+    }
+
+    isVerificationIsLoading(true);
+    final req = LoginWithOtpReqModel(
+      countryCode: phoneCode,
+      phone: phone,
+      otp: updateVerificationCode.value,
+    );
+    final res = await authCases.loginWithOtp(req);
+
+    checkStatus(
+      res,
+      onSucses: (res) {
+        Get.offAll(() => DashboardScreen());
+      },
+    );
+  }
+
+  /// [ResetPasswordScreen]
 
   TextEditingController resetOldPasswordController = TextEditingController();
   TextEditingController resetNewPasswordController = TextEditingController();

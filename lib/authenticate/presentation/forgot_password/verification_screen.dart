@@ -147,17 +147,19 @@ class VerificationScreen extends GetView<AuthController> {
                                 controller.isVerificationIsLoading.isTrue,
                             radius: 50,
                             onPressed: () {
-                              // TODO:
-                              if (otpState == OtpState.loginWithOtp ||
-                                  otpState == OtpState.register) {
+                              if (otpState == OtpState.register) {
+                                controller.verifyPhone(number, countryCode);
+                              } else if (otpState == OtpState.loginWithOtp) {
+                                // TODO:  call login with Otp Link
                                 Get.offAll(() => DashboardScreen());
-                              } else {
+                              } else if (otpState == OtpState.forgetPassword) {
                                 Get.to(
                                   () => ResetPasswordScreen(
                                     phone: number,
                                     countryCode: countryCode,
                                     otpCode:
                                         controller.updateVerificationCode.value,
+                                    fromChangePassword: false,
                                   ),
                                 );
                               }

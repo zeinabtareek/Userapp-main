@@ -55,7 +55,7 @@ class SignInScreen extends GetView<AuthController> {
                 CustomTextField(
                   hintText: Strings.phone.tr,
                   inputType: TextInputType.number,
-                  countryDialCode: defultDailCode,
+                  countryDialCode: defaultDailCode,
                   prefixHeight: 70,
                   controller: controller.loginPhoneController,
                   focusNode: null,

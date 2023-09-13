@@ -8,12 +8,14 @@ import 'authenticate/data/services/local/local_auth.dart';
 import 'authenticate/data/services/remote/remote_auth.dart';
 import 'authenticate/domain/repo/auth_repo.dart';
 
+import 'helper/cache_helper.dart';
 import 'networking/dio_client.dart';
 
 final sl = GetIt.instance;
 
 final getIt = sl();
 Future<void> initializeDependencies() async {
+   CacheHelper.init();
   sl.registerSingleton<Dio>(DioClient.instance);
 
   sl.registerLazySingleton<RemoteApiAuth>(() => RemoteApiAuth(sl()));

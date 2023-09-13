@@ -24,7 +24,6 @@ class OtpLoginScreen extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    String countryDialCode = CountryCode.fromCountryCode("BD").dialCode!;
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       body: Center(
@@ -64,7 +63,7 @@ class OtpLoginScreen extends GetView<AuthController> {
                 CustomTextField(
                   hintText: Strings.phone,
                   inputType: TextInputType.number,
-                  countryDialCode: defultDailCode ,
+                  countryDialCode: defaultDailCode ,
                   prefixHeight: 70,
                   controller: controller.phoneControllerForOTPLogInScreen,
                   focusNode: controller.nodeForOTPLogInScreen,
@@ -75,23 +74,7 @@ class OtpLoginScreen extends GetView<AuthController> {
                 K.sizedBoxH0,
                 CustomButton(
                   buttonText: Strings.sendOtp.tr,
-                  onPressed: () {
-                    String phone =
-                        controller.phoneControllerForOTPLogInScreen.text;
-
-                    if (phone.length < 8) {
-                      showCustomSnackBar(Strings.invalidPhone.tr);
-                    } else {
-                      Get.to(
-                        () => VerificationScreen(
-                          number: phone,
-                          otpState: OtpState.loginWithOtp,
-                          countryCode:
-                              controller.otpSelectCountry.value.dialCode!,
-                        ),
-                      );
-                    }
-                  },
+                  onPressed: controller.loginOtpClick,
                   radius: 50,
                 ),
                 Row(

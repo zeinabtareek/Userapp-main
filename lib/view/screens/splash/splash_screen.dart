@@ -157,13 +157,13 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/authenticate/domain/use-cases/auth_cases.dart';
+import 'package:ride_sharing_user_app/initialize_dependencies.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/controller/auth_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
 
 import '../../../authenticate/config/config.dart';
-import '../auth/repository/auth_repo.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -220,12 +220,8 @@ class _SplashScreenState extends State<SplashScreen>
     Get.find<ConfigController>().initSharedData();
     _route();
 
-    Future.delayed(const Duration(milliseconds: 2500), () {
-      Get.lazyPut(() => FAuthController(
-          authRepo:
-              FAuthRepo(apiClient: Get.find(), sharedPreferences: Get.find())));
-
-      if (Get.find<FAuthController>().isLoggedIn()) {
+    Future.delayed(const Duration(milliseconds: 2500), () async {
+      if (await sl<AuthCases>().isAuthenticated()) {
         Get.offAll(DashboardScreen());
       } else {
         // if (Get.find<ConfigController>().showIntro()) {

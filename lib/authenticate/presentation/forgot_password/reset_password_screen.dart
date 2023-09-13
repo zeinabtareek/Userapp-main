@@ -5,15 +5,17 @@ import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
 import '../../../util/dimensions.dart';
 import '../../../util/images.dart';
-import '../../../view/screens/auth/widgets/test_field_title.dart';
 import '../../../view/widgets/custom_app_bar.dart';
 import '../../../view/widgets/custom_body.dart';
 import '../../../view/widgets/custom_button.dart';
 import '../../../view/widgets/custom_text_field.dart';
 import '../controller/auth_controller.dart';
+import '../widgets/test_field_title.dart';
 
+/// for ChangePassword foe exsit user we will use token
+/// so don't need phone or countryCode or otpCode
 class ResetPasswordScreen extends GetView<AuthController> {
-  final String phone;
+  final String? phone;
   final String? countryCode;
   final bool fromChangePassword;
   final String? otpCode;
@@ -22,7 +24,7 @@ class ResetPasswordScreen extends GetView<AuthController> {
     this.fromChangePassword = false,
     this.countryCode,
     this.otpCode,
-    required this.phone,
+    this.phone,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -89,7 +91,11 @@ class ResetPasswordScreen extends GetView<AuthController> {
                           : Strings.save.tr,
                       isLoading: controller.resetPassScreenIsLoading.isTrue,
                       onPressed: () async {
-                        // await controller.confirmPassValidation();
+                        if (fromChangePassword) {
+                          await controller.changePass();
+                        } else {
+                          controller.resetPass(countryCode!, otpCode!, phone!);
+                        }
                       },
                       radius: 50,
                     )),

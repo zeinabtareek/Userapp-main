@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
 import '../../../util/images.dart';
-import '../../../view/screens/auth/widgets/test_field_title.dart';
 import '../../../view/widgets/custom_button.dart';
 import '../../../view/widgets/custom_text_field.dart';
 import '../controller/auth_controller.dart';
+import '../widgets/test_field_title.dart';
 
 class SignUpScreen extends GetView<AuthController> {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -96,7 +96,7 @@ class SignUpScreen extends GetView<AuthController> {
                 CustomTextField(
                   hintText: Strings.phone.tr,
                   inputType: TextInputType.number,
-                  countryDialCode: defultDailCode,
+                  countryDialCode: defaultDailCode,
                   controller: controller.regPhoneController,
                   focusNode: controller.regPhoneFocusNode,
                   nextFocus: controller.regPasswordFocusNode,
