@@ -6,10 +6,10 @@ import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/widgets/test_field_title.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_text_field.dart';
 
+import '../../../../authenticate/presentation/widgets/test_field_title.dart';
 import '../../../../util/app_strings.dart';
 import '../../../../util/app_style.dart';
 import '../profile_screen/controller/user_controller.dart';

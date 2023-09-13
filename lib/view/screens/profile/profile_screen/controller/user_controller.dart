@@ -39,7 +39,7 @@ class UserController extends GetxController implements GetxService {
 
   @override
   void onInit() {
-    // TODO: implement onInit
+ 
     super.onInit();
     getUserLevelInfo();
   }

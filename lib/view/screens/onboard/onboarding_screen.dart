@@ -117,7 +117,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/sign_in_screen.dart';
+import 'package:ride_sharing_user_app/authenticate/presentation/login-with-pass/sign_in_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/onboard/controller/on_board_page_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/onboard/widget/pager_content.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
