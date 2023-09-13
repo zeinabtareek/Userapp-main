@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
@@ -7,22 +10,29 @@ import 'package:ride_sharing_user_app/view/screens/history/model/activity_item_m
 import 'package:ride_sharing_user_app/view/widgets/custom_divider.dart';
 
 import '../../../../util/app_strings.dart';
+import '../controller/activity_controller.dart';
 import '../model/history_model.dart';
 
 class ActivityScreenTripDetails extends StatelessWidget {
   final HistoryData tripDetails;
-  // final TripDetails tripDetails;
-  const ActivityScreenTripDetails({Key? key,required this.tripDetails}) : super(key: key);
+  final Completer<GoogleMapController> mapCompleter;
+
+  ActivityScreenTripDetails({Key? key,    required this.mapCompleter,
+       required this.tripDetails}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    return  Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
 
-      Padding(
+    GetBuilder<ActivityController>(
+    init: ActivityController(),
+    builder: (activityController) {
+      return Padding(
         padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('trip_details'.tr,style: textBold.copyWith(fontSize: Dimensions.fontSizeDefault,color: Theme.of(context).primaryColor),),
-          const SizedBox(height: Dimensions.paddingSizeSmall,),
+          Text(Strings.tripDetails.tr,style: textBold.copyWith(fontSize: Dimensions.fontSizeDefault,color: Theme.of(context).primaryColor),),
+           const SizedBox(height: Dimensions.paddingSizeSmall,),
 
           Row(children: [
 
@@ -35,20 +45,33 @@ class ActivityScreenTripDetails extends StatelessWidget {
             const SizedBox(width: Dimensions.paddingSizeSmall,),
             Flexible(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
-                Text(tripDetails.from?.location??'',
-                  style: textRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),
-                    fontSize: Dimensions.fontSizeDefault,
+               InkWell(
+                  child: Text(tripDetails.from?.location??'',
+                    style: textRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),
+                      fontSize: Dimensions.fontSizeDefault,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                  onTap: ()async{
+                    await activityController.goToPlace(mapCompleter,lat: tripDetails.from?.lat??0.0, lng: tripDetails.from?.lng??0.0,  );
+
+                  },
                 ),
                 const SizedBox(height:10),
-                Text(tripDetails.to?.location??'',
-                  style: textRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),
-                    fontSize: Dimensions.fontSizeDefault,
+                GestureDetector(
+                  child: Text(tripDetails.to?.location??'',
+                    style: textRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),
+                      fontSize: Dimensions.fontSizeDefault,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                  onTap: ()async{
+
+                    await activityController.goToPlace(mapCompleter,lat: tripDetails.to?.lat??0.0, lng: tripDetails.to?.lng??0.0,  );
+
+                  },
                 ),
               ]),
             )
@@ -76,7 +99,7 @@ class ActivityScreenTripDetails extends StatelessWidget {
           )
           ],
         ),
-      ),
+      );}),
 
       Container(
         decoration: BoxDecoration(

@@ -40,17 +40,6 @@ class HomeSearchWidget extends StatelessWidget {
           hintStyle:  textRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.3)),
           filled: true,
           prefixIconConstraints: const BoxConstraints(minWidth: 23, maxHeight: 20),
-          // suffixIcon:  IconButton(
-          //   color: Theme.of(context).hintColor,
-          //   onPressed: () {
-          //     // if(searchController.searchController.text.trim().isNotEmpty) {
-          //     //   //searchController.clearSearchController();
-          //     // }
-          //     FocusScope.of(context).unfocus();
-          //   },
-          //   icon:Image.asset(Images.microphone,height: 25,width: 25,),
-          // ) ,
-
           prefixIcon:  IconButton(
             padding: EdgeInsets.zero,
             color: Theme.of(context).hintColor,

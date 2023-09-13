@@ -24,6 +24,8 @@ import 'package:ride_sharing_user_app/view/screens/ride/widgets/estimated_fare_a
 import 'package:ride_sharing_user_app/view/screens/ride/widgets/rise_fare_widget.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
+import '../../history/model/history_model.dart';
+
 class ParcelDetailsWidgets extends StatefulWidget {
   const ParcelDetailsWidgets({Key? key}) : super(key: key);
 
@@ -124,13 +126,12 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
                const SizedBox(height: Dimensions.paddingSizeDefault,),
 
                ActivityScreenRiderDetails(
-                 riderDetails: RiderDetails(
-                     name: "mostafizur",
-                     vehicleNumber: "DH-1234",
-                     rating: 5,
-                     vehicleType: "bike",
-                     vehicleName: "Pulser-150",
-                     image: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg"
+                 riderDetails: Driver(
+                     firstName: "mostafizur",
+                     rate: 5,
+                     img: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                     lastName: "smith"
+
                  ),
                ),
                const SizedBox(height: Dimensions.paddingSizeDefault,),
@@ -179,13 +180,12 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
                 const SizedBox(height: Dimensions.paddingSizeDefault,),
 
                 ActivityScreenRiderDetails(
-                  riderDetails: RiderDetails(
-                      name: "mostafizur",
-                      vehicleNumber: "DH-1234",
-                      rating: 5,
-                      vehicleType: "bike",
-                      vehicleName: "Pulser-150",
-                      image: ""
+                  riderDetails: Driver(
+                      firstName: "mostafizur",
+                      rate: 5,
+                      img: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                      lastName: "smith"
+
                   ),
                 ),
                 const SizedBox(height: Dimensions.paddingSizeDefault,),
@@ -229,13 +229,12 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
               ),
 
               ActivityScreenRiderDetails(
-                riderDetails: RiderDetails(
-                    name: "mostafizur",
-                    vehicleNumber: "DH-1234",
-                    rating: 5,
-                    vehicleType: "bike",
-                    vehicleName: "Pulser-150",
-                    image: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg"
+                riderDetails: Driver(
+                    firstName: "mostafizur",
+                    rate: 5,
+                    img: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                    lastName: "smith"
+
                 ),
               ),
               const SizedBox(height: Dimensions.paddingSizeDefault,),

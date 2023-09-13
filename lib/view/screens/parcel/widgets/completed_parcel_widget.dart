@@ -11,6 +11,8 @@ import 'package:ride_sharing_user_app/view/screens/parcel/widgets/otp_widget.dar
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/route_widget.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
+import '../../history/model/history_model.dart';
+
 class CompletedParcelWidget extends StatelessWidget {
   const CompletedParcelWidget({Key? key}) : super(key: key);
 
@@ -29,14 +31,21 @@ class CompletedParcelWidget extends StatelessWidget {
 
           const SizedBox(height: Dimensions.paddingSizeDefault,),
           ActivityScreenRiderDetails(
-            riderDetails: RiderDetails(
-              name: "mostafizur",
-              vehicleNumber: "DH-1234",
-              rating: 5,
-              vehicleType: "bike",
-              vehicleName: "Pulser-150",
-              image: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg"
+            riderDetails :Driver(
+                firstName: "mostafizur",
+                rate: 5,
+                img: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                lastName: "smith"
+
             ),
+            // riderDetails: RiderDetails(
+            //   name: "mostafizur",
+            //   vehicleNumber: "DH-1234",
+            //   rating: 5,
+            //   vehicleType: "bike",
+            //   vehicleName: "Pulser-150",
+            //   image: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg"
+            // ),
           ),
           const SizedBox(height: Dimensions.paddingSizeDefault,),
 
