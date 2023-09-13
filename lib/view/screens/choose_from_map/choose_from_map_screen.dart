@@ -120,12 +120,9 @@ class ChooseFromMapScreen extends StatelessWidget {
                           print(position.target);
                         },
                         onCameraIdle: userMapController.onCameraIdle,
-                        // },
                       ),
                     ),
               ),
-
-
                   Positioned(
                       top: 0,
                       bottom: 200,
@@ -144,7 +141,6 @@ class ChooseFromMapScreen extends StatelessWidget {
               );
             }),
           ),
-
           ///normal bottom sheet
           // Positioned(
           //     bottom: 0,
@@ -218,7 +214,6 @@ class ChooseFromMapScreen extends StatelessWidget {
           //       ),
           //     ))
 
-
           const AnimatedPositioned(
               left: 0,
               right: 0,
@@ -227,12 +222,7 @@ class ChooseFromMapScreen extends StatelessWidget {
               duration: Duration(milliseconds: 2000),
               curve: Curves.easeIn,
               child: SearchBottom(),
-            ),
-
-        ],
-      ),
-      ),
-      ),
+            ),],),),),
     );
   }
 }

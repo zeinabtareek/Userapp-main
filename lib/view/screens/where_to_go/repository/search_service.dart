@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:ride_sharing_user_app/util/app_constants.dart';
@@ -85,8 +86,8 @@ class SearchServices {
   }
 
 // Future<LatLng> getLatLngFromAddress(Position address) async {
-//   // List<Placemark> list = await Geolocator().placemarkFromAddress(address);
-//   List<Placemark> list = await placemarkFromCoordinates(address);
-//   return LatLng(list[0].position.latitude, list[0].position.longitude);
+  // List<Placemark> list = await Geolocator().placemarkFromAddress(address);
+  // List<Placemark> list = await placemarkFromCoordinates(address);
+  // return LatLng(list[0].position.latitude, list[0].position.longitude);
 // }
 }

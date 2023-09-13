@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
@@ -8,24 +7,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/firebase_options.dart';
-import 'package:ride_sharing_user_app/helper/network/dio_integration.dart';
 import 'package:ride_sharing_user_app/helper/notification_helper.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/additional_sign_up_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/controller/auth_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/otp_log_in_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/sign_in_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/sign_up_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/choose_from_map/choose_from_map_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/forgot_password/verify_forget_password_otp_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/home/home_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/n/test_polyline_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/profile/edit_profile_screen/edit_profile_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/profile/profile_screen/profile_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/profile/widgets/edit_profile_account_info.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
 import 'package:ride_sharing_user_app/helper/responsive_helper.dart';
 import 'package:ride_sharing_user_app/helper/di_container.dart' as di;
-import 'package:ride_sharing_user_app/helper/route_helper.dart';
 import 'package:ride_sharing_user_app/localization/localization_controller.dart';
 import 'package:ride_sharing_user_app/localization/messages.dart';
 import 'package:ride_sharing_user_app/theme/dark_theme.dart';
@@ -33,7 +21,9 @@ import 'package:ride_sharing_user_app/theme/light_theme.dart';
 import 'package:ride_sharing_user_app/theme/theme_controller.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
 
+import 'authenticate/presentation/sign-up/sign_up_screen.dart';
 import 'helper/cache_helper.dart';
+import 'helper/route_helper.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -75,7 +65,7 @@ class MyApp extends StatelessWidget {
       Get.find<ConfigController>().initSharedData();
       _route();
     }
-    final authController = Get.find<AuthController>();
+    // final authController = Get.find<AuthController>();
     return GetBuilder<ThemeController>(builder: (themeController) {
       return GetBuilder<LocalizationController>(builder: (localizeController) {
         return GetBuilder<ConfigController>(builder: (configController) {
@@ -96,9 +86,9 @@ class MyApp extends StatelessWidget {
             transitionDuration:   Duration(milliseconds: 500),
 
 
-            home: MapPage(),
+            // home: MapPage(),
             // home: TestMarkerPin(),
-            // home: SignUpScreen(),
+            home: DashboardScreen(),
           );
         });
       });

@@ -60,9 +60,67 @@ class HomeViewController extends GetxController{
     // });
 
     update();
+
+
   }
 
+  Future<Position?> determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
 
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      showDialog(
+          context: Get.context!,
+          barrierDismissible: false,
+          builder: (context) => const PermissionDialog());
+      Get.back();
+
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        showDialog(
+            context: Get.context!,
+            barrierDismissible: false,
+            builder: (context) => const PermissionDialog());
+
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      showDialog(
+          context: Get.context!,
+          barrierDismissible: false,
+          builder: (context) => const PermissionDialog());
+
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    _position = await Geolocator.getCurrentPosition();
+    print(position.latitude);
+    mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: LatLng(position.latitude ?? 0.0, position.longitude ?? 0.0),
+        zoom: 17)));
+    var marker = RippleMarker(
+        markerId: kMarkerId,
+        position: LatLng(position.latitude ?? 0.0, position.longitude ?? 0.0),
+        ripple: false,
+        icon: BitmapDescriptor.fromBytes(
+            await getBytesFromAsset(Images.carIcon, 100)),
+        onTap: () {});
+    // setState(() {
+    markers[kMarkerId] = marker;
+    // });
+    update();
+    return position;
+  }
 // convertLocation() async {
 //   GeoData data = await Geocoder2.getDataFromCoordinates(
 //       latitude: pickedPosition.value.latitude,

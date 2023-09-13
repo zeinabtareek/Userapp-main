@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/controller/auth_controller.dart';
+// import 'package:ride_sharing_user_app/view/screens/auth/controller/auth_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/bottom_menu_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/home/controller/address_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/home/controller/banner_controller.dart';
@@ -10,7 +10,7 @@ import 'package:ride_sharing_user_app/view/screens/home/repository/address_repo.
 import 'package:ride_sharing_user_app/view/screens/home/repository/banner_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/home/repository/category_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/map/controller/map_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/repository/auth_repo.dart';
+// import 'package:ride_sharing_user_app/view/screens/auth/repository/auth_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/notification/repository/notification_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/message/controller/message_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/message/repository/message_repo.dart';
@@ -76,8 +76,8 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => ThemeController(sharedPreferences: Get.find()));
   Get.lazyPut(() => LocalizationController(sharedPreferences: Get.find()));
   Get.lazyPut(() => OnBoardController());
-  Get.lazyPut(() => AuthController(authRepo: AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find())));
-  Get.lazyPut(() => NotificationController(notificationRepo: Get.find()));
+  // Get.lazyPut(() => AuthController(authRepo: AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find())));
+  // Get.lazyPut(() => NotificationController(notificationRepo: Get.find()));
   Get.lazyPut(() => ActivityController( ));
   // Get.lazyPut(() => ActivityController(activityRepo: ActivityRepo( )));
   // Get.lazyPut(() => ActivityController(activityRepo: ActivityRepo(apiClient: Get.find())));
