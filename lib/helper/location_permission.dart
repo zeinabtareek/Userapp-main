@@ -16,7 +16,7 @@ checkPermissionBeforeNavigate(context)async{
     ScaffoldMessenger.of(context)
         .showSnackBar(  SnackBar(
         content: Text(Strings.locationServicesDisabled.tr,
-          style: TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 16),
         )));
     return;
   }
@@ -48,7 +48,7 @@ checkPermissionBeforeNavigate(context)async{
       LocationPermission.always ||
       permission ==
           LocationPermission.whileInUse) {
-    Get.to(()=>ChooseFromMapScreen());
+    Get.to(()=>  ChooseFromMapScreen());
   }
 
 }

@@ -359,5 +359,9 @@
   "enter_entrance": "Enter Entrance",
   "enter_destination_route":  "Enter Destination Route",
   "enter_extra_route": "Enter Extra Route",
-  "canceled": "canceled"
+  "canceled": "canceled",
+  "no_history": "No History",
+  "pick_up_location": "Pick up Location?",
+  "searching_address": "Searching Address...."
+
 }

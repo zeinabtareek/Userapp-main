@@ -135,6 +135,11 @@ class Strings {
   static const String canceled = "canceled";
   static const String payment = "payment";
   static const String totalDistance = "total_distance";
+  static const String noHistory = "no_history";
+  static const String pickUpLocation = "pick_up_location";
+  static const String searchingAddress = "searching_address";
+  static const String search = "search";
+
 
 
 

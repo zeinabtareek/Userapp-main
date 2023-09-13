@@ -20,10 +20,37 @@ class TestPolylineController extends GetxController{
 
 
   onInit()async{
-     await  setPolylines(LatLng(originLatitude, originLongitude),LatLng(destLatitude, destLongitude));
-    await  showPinsOnMap(LatLng(originLatitude, originLongitude),LatLng(destLatitude, destLongitude));
+     // await  setPolylines(LatLng(originLatitude, originLongitude),LatLng(destLatitude, destLongitude));
+    // await  showPinsOnMap(LatLng(originLatitude, originLongitude),LatLng(destLatitude, destLongitude));
 
 
+  }
+
+
+  Polygon ?polygon;
+   Future<void> buildPolygon(List<Offset> shape) async {
+    final List<LatLng> points = <LatLng>[];
+    final devicePixelRatio = MediaQuery.of(Get.context!).devicePixelRatio;
+
+    await Future.forEach(shape, (Offset offset) async {
+      LatLng point = await mapController.getLatLng(
+        ScreenCoordinate(
+          x: (offset.dx * devicePixelRatio).round(),
+          y: (offset.dy * devicePixelRatio).round(),
+        ),
+      );
+      points.add(point);
+    });
+
+    final PolygonId polygonId = PolygonId("1");
+    polygon = Polygon(
+      polygonId: polygonId,
+      consumeTapEvents: true,
+      strokeColor: Colors.blue,
+      strokeWidth: 5,
+      fillColor: Colors.orange.withOpacity(0.2),
+      points: points,
+    );
   }
 //LatLng position, String id, BitmapDescriptor descriptor)
 //    addMarker( ){
@@ -66,7 +93,7 @@ class TestPolylineController extends GetxController{
                 }
               }
           ));
-      setPolylines(point,desPoint);
+      // setPolylines(point,desPoint);
       // calculateDistanceFunc(currentLocation!.latitude,currentLocation!.longitude);
       update();
     }catch(e){
@@ -77,7 +104,7 @@ class TestPolylineController extends GetxController{
   onMapCreated(GoogleMapController controller) async {
     mapController = controller;
     await  showPinsOnMap(LatLng(originLatitude, originLongitude),LatLng(destLatitude, destLongitude));
-    await setPolylines(LatLng(originLatitude, originLongitude),LatLng(destLatitude, destLongitude));
+    // await setPolylines(LatLng(originLatitude, originLongitude),LatLng(destLatitude, destLongitude));
   }
 
 
@@ -85,50 +112,50 @@ class TestPolylineController extends GetxController{
   final listPolyLineCoordinates =<LatLng>[].obs;
   // List<LatLng> listPolyLineCoordinates=[];
 
-  setPolylines(LatLng point, LatLng desPoint)async{
-    PolylineResult result=await polylinePoints.getRouteBetweenCoordinates(
-      'AIzaSyCzuhU5w3Ah8t2x2pIKXzsGoATsdzVNK9I',
-      // AppConstants.mapKey,
-      PointLatLng(
-        point.latitude,
-        point.longitude,
-        //  currentLocation!.latitude,
-        // currentLocation!.longitude,
-      ),
-      PointLatLng(
-        desPoint.latitude,
-        desPoint.longitude,
-        // destinationLocation!.longitude,
-      ),
-      travelMode: TravelMode.driving,
-
-    );print("my points");
-    print(result.points);
-
-    // calculateDistanceFunc(currentLocation!.latitude,currentLocation!.longitude);
-    if(result.status =='OK'&& result.points.isNotEmpty){
-      listPolyLineCoordinates.value = [];
-      result.points.forEach((PointLatLng point) {
-        listPolyLineCoordinates.add(
-            LatLng(
-              point.latitude,
-              point.longitude,
-            ));
-        polyLines.add(
-          Polyline(
-            polylineId: PolylineId('polyline'),
-            width: 10,
-            color: const Color(0xFF08A5CB),
-            points: listPolyLineCoordinates,
-            startCap: Cap.roundCap,
-            endCap: Cap.buttCap,
-          ),
-        );
-        update();
-      });
-    }else{
-      printError(info: '((((((((((((((((((((((((');
-    }
-      update();
-  }
+  // setPolylines(LatLng point, LatLng desPoint)async{
+  //   PolylineResult result=await polylinePoints.getRouteBetweenCoordinates(
+  //     'AIzaSyCzuhU5w3Ah8t2x2pIKXzsGoATsdzVNK9I',
+  //     // AppConstants.mapKey,
+  //     PointLatLng(
+  //       point.latitude,
+  //       point.longitude,
+  //       //  currentLocation!.latitude,
+  //       // currentLocation!.longitude,
+  //     ),
+  //     PointLatLng(
+  //       desPoint.latitude,
+  //       desPoint.longitude,
+  //       // destinationLocation!.longitude,
+  //     ),
+  //     travelMode: TravelMode.driving,
+  //
+  //   );print("my points");
+  //   print(result.points);
+  //
+  //   // calculateDistanceFunc(currentLocation!.latitude,currentLocation!.longitude);
+  //   if(result.status =='OK'&& result.points.isNotEmpty){
+  //     listPolyLineCoordinates.value = [];
+  //     result.points.forEach((PointLatLng point) {
+  //       listPolyLineCoordinates.add(
+  //           LatLng(
+  //             point.latitude,
+  //             point.longitude,
+  //           ));
+  //       polyLines.add(
+  //         Polyline(
+  //           polylineId: PolylineId('polyline'),
+  //           width: 10,
+  //           color: const Color(0xFF08A5CB),
+  //           points: listPolyLineCoordinates,
+  //           startCap: Cap.roundCap,
+  //           endCap: Cap.buttCap,
+  //         ),
+  //       );
+  //       update();
+  //     });
+  //   }else{
+  //     printError(info: '((((((((((((((((((((((((');
+  //   }
+  //     update();
+  // }
 }

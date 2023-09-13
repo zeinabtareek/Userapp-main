@@ -48,6 +48,7 @@ dependencies:
   geocoder2:
   flutter_polyline_points:
   geocoding:
+#  map_location_picker:
 
 dependency_overrides:
   modal_bottom_sheet:

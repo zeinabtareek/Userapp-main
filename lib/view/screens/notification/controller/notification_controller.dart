@@ -2,15 +2,15 @@ import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/data/api_checker.dart';
 import 'package:ride_sharing_user_app/helper/date_converter.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
-import 'package:ride_sharing_user_app/view/screens/auth/model/notification_model.dart';
+import 'package:ride_sharing_user_app/view/screens/notification/model/notification_model.dart';
 import 'package:ride_sharing_user_app/view/screens/notification/repository/notification_repo.dart';
 
 class NotificationController extends GetxController implements GetxService {
   final NotificationRepo notificationRepo;
   NotificationController({required this.notificationRepo});
-  
+
   List<NotificationModel>? _notificationList=[];
-  
+
   List<NotificationModel>? get notificationList => _notificationListDemo;
 
 
@@ -37,9 +37,9 @@ class NotificationController extends GetxController implements GetxService {
       update();
     }
   }
-  
 
-  
+
+
   final List<NotificationModel> _notificationListDemo = [
     NotificationModel(id: 1, data: Data(title: 'title-one',description: 'Rider canceled the trip'), createdAt: '2021-02-05T09:24:15.000000Z',  ),
     NotificationModel(id: 2, data: Data(title: 'title-one', description: 'Rider canceled the trip'), createdAt: '2021-02-05T09:24:15.000000Z'),

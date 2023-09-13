@@ -20,7 +20,7 @@ class HistoryScreen extends StatelessWidget {
   HistoryScreen({Key? key, required this.fromPage}) : super(key: key);
 
   String initialSelectItem = Get.find<ActivityController>().filterList.first;
-  final controller = Get.put(ActivityController());
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,9 @@ class HistoryScreen extends StatelessWidget {
             title: Strings.checkYourAllTrip.tr, showBackButton: false),
         body: Padding(
           padding: K.fixedPadding0,
-          child: GetBuilder<ActivityController>(builder: (activityController) {
+          child: GetBuilder<ActivityController>(
+            init: ActivityController(),
+              builder: (activityController) {
             return Column(
               children: [
                 // TextButton(onPressed: ()async{
@@ -150,22 +152,50 @@ class HistoryScreen extends StatelessWidget {
                 Divider(
                   color: Theme.of(context).primaryColor.withOpacity(0.2),
                 ),
-                Obx(() => controller.state == ViewState.busy
-                    ? const Center(
-                        child: CupertinoActivityIndicator(),
-                      )
-                    : Flexible(
-                        child: ListView.builder(
+                // FloatingActionButton(onPressed: (){
+                //   activityController.activityRepo.getAllHistoryTrips();
+                // },child: Text('ddhd'),),
+                // Obx(() => activityController.state == ViewState.busy
+                //     ? const Center(
+                //   child: CupertinoActivityIndicator(),
+                // )
+                //     : activityController.model.data!.isNotEmpty?
+                //      Flexible(
+                //   child: ListView.builder(
+                //     itemBuilder: (context, index) {
+                //       return ActivityItemView(
+                //         activityItemModel: activityController.model.data![index],
+                //         isDetailsScreen: false,
+                //       );
+                //     },
+                //     itemCount: activityController.model.data?.length,
+                //     padding: EdgeInsets.zero,
+                //   ),
+                // ): Text('data')
+                // ),
+
+                Flexible(
+                  child: Obx(() {
+                    if (activityController.state == ViewState.busy) {
+                       return const Center(child: CupertinoActivityIndicator(),);
+                    } else if (activityController.model.data == null ||
+                        activityController.model.data!.isEmpty||
+                        activityController.model.data==[]) {
+                      return   Center(child: Text(Strings.noHistory.tr));
+                    } else {
+                      return ListView.builder(
                         itemBuilder: (context, index) {
                           return ActivityItemView(
-                            activityItemModel:
-                                activityController.model.data![index],
+                            activityItemModel: activityController.model.data![index],
                             isDetailsScreen: false,
                           );
                         },
-                        itemCount: activityController.model.data?.length,
+                        itemCount: activityController.model.data!.length,
                         padding: EdgeInsets.zero,
-                      )))
+                      );
+                    }
+                  }),
+                ),
               ],
             );
           }),

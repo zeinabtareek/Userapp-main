@@ -7,6 +7,7 @@ import 'package:flutter_animarker/core/ripple_marker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ride_sharing_user_app/util/app_constants.dart';
 
 import '../../../../util/images.dart';
 import '../../../widgets/permission_dialog.dart';
@@ -32,6 +33,11 @@ class MapController extends GetxController implements GetxService {
 
   bool clickedAssistant = false;
 
+  TextEditingController searchController=TextEditingController();
+  TextEditingController searchDesTextEditing=TextEditingController();
+  String ?street;
+  String ? administrativeArea;
+
   @override
   void onInit()async {
     // TODO: implement onInit
@@ -43,6 +49,8 @@ class MapController extends GetxController implements GetxService {
     update();
   }
 
+
+  ///needs to be refactored
   StreamSubscription<ServiceStatus> serviceStatusStream = Geolocator.getServiceStatusStream().listen(
           (ServiceStatus status) async {
         try{

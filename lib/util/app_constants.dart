@@ -6,7 +6,7 @@ class AppConstants {
   static const String appName = 'Hood';
   static const bool isDevelopment = true;
 
-  static const String baseUrl = 'http://172.16.13.16:8000';
+  static const String baseUrl = 'http://172.16.13.22:8000';
   // static const String baseUrl = 'https://hood-sa.net';
   static const String getAllOrders = '/api/user/orders';
 
@@ -74,4 +74,8 @@ class AppConstants {
       "image": "assets/image/on_board_four.png"
     }
   ];
+
+  // static double pinVisiblePositions=20;
+  // static double pinInVisiblePositions=-300;
+
 }

@@ -40,8 +40,7 @@ class DioUtilNew {
       'Content-type': 'application/json',
       'Accept': 'application/json',
       // 'Authorization': "Bearer ${CacheHelper.getData(key: AppConstants.token)}",
-      'Authorization': "Bearer   eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTcyLjE2LjEzLjE2OjgwMDAvYXBpL3VzZXIvcmVnaXN0ZXIiLCJpYXQiOjE2OTQzMzU2ODQsImV4cCI6MTcyNTg3MTY4NCwibmJmIjoxNjk0MzM1Njg0LCJqdGkiOiI1SXhaVmFQZ3dZM1pJcm9RIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.wCDXGhXMEyuFeKuv13y2NqkM4GDvCGeDz0BzB0DhMPw",
-
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTcyLjE2LjEzLjIyOjgwMDAvYXBpL3VzZXIvcmVnaXN0ZXIiLCJpYXQiOjE2OTQ1MTQ5NDcsImV4cCI6MTcyNjA1MDk0NywibmJmIjoxNjk0NTE0OTQ3LCJqdGkiOiJOcjVmUnJTZmc4Y01aZVZnIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.LAYY_VZ8fqD13zjkb_fnh3omlLvegIi-1rS-0IxJp4A'
 
 
     // AppConstants.acceptLanguage: languageCode ?? AppConstants.languages[0].languageCode,

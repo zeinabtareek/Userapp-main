@@ -98,14 +98,14 @@ Future<Map<String, Map<String, String>>> init() async {
 
   // Retrieving localized data
   Map<String, Map<String, String>> languages = {};
-  for(LanguageModel languageModel in AppConstants.languages) {
-    String jsonStringValues =  await rootBundle.loadString('assets/language/${languageModel.languageCode}.json');
-    Map<String, dynamic> mappedJson = json.decode(jsonStringValues);
-    Map<String, String> languageJson = {};
-    mappedJson.forEach((key, value) {
-      languageJson[key] = value.toString();
-    });
-    languages['${languageModel.languageCode}_${languageModel.countryCode}'] = languageJson;
-  }
+  // for(LanguageModel languageModel in AppConstants.languages) {
+  //   String jsonStringValues =  await rootBundle.loadString('assets/language/${languageModel.languageCode}.json');
+  //   Map<String, dynamic> mappedJson = json.decode(jsonStringValues);
+  //   Map<String, String> languageJson = {};
+  //   mappedJson.forEach((key, value) {
+  //     languageJson[key] = value.toString();
+  //   });
+  //   languages['${languageModel.languageCode}_${languageModel.countryCode}'] = languageJson;
+  // }
   return languages;
 }

@@ -357,9 +357,9 @@
   "enter_entrance": "أدخل المدخل",
   "enter_destination_route": "أدخل طريق الوجهة",
   "enter_extra_route": "أدخل طريقًا إضافيًا",
-  "canceled": " ملغاة "
-
-
-
+  "canceled": " ملغاة ",
+  "no_history": "لا يوجد تاريخ",
+ "pick_up_location": "موقع الإستلام؟",
+  "search_address": "عنوان البحث....",
 
 }

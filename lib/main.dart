@@ -90,14 +90,14 @@ class MyApp extends StatelessWidget {
             locale: localizeController.locale,
             translations: Messages(languages: languages),
             fallbackLocale: Locale(AppConstants.languages[0].languageCode, AppConstants.languages[0].countryCode),
-            initialRoute: RouteHelper.getSplashRoute(),
-            getPages: RouteHelper.routes,
+            // initialRoute: RouteHelper.getSplashRoute(),
+            // getPages: RouteHelper.routes,
             defaultTransition: Transition.topLevel,
             transitionDuration:   Duration(milliseconds: 500),
 
 
-            // home: TestPolylineMap(),
-            // home: DashboardScreen(),
+            home: MapPage(),
+            // home: TestMarkerPin(),
             // home: SignUpScreen(),
           );
         });

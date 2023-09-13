@@ -30,7 +30,26 @@ class K {
 
   );  static TextStyle greyMediumTextStyle = textMedium.copyWith(color: Theme.of(Get.context!).textTheme.bodyMedium!.color!.withOpacity(.6));
 
+
+
+///border radius
+static BorderRadius  borderRadiusOnlyTop= const  BorderRadius.only(
+    topLeft: Radius.circular(Dimensions.paddingSizeSmall),
+    topRight: Radius.circular(Dimensions.paddingSizeSmall),
+  );
+
+///box decorations
+      ///box decoration with border primary color and background white
+  static BoxDecoration  boxDecorationWithPrimaryBorder=  BoxDecoration(
+  border: Border.all(
+  color: Theme.of(Get.context!).primaryColor, width: 1),
+  borderRadius:
+  BorderRadius.circular(Dimensions.paddingSizeSmall));
+
+
+
 static EdgeInsets  fixedPadding0= const EdgeInsets.all(Dimensions.paddingSizeLarge);
+static EdgeInsets  fixedPadding1= const EdgeInsets.all(Dimensions.paddingSizeSmall);
 static SizedBox sizedBoxH0= const SizedBox(height: Dimensions.paddingSizeDefault,);
 static SizedBox sizedBoxH1= const SizedBox(height: Dimensions.paddingSizeLarge);
 static SizedBox sizedBoxH2= const SizedBox(height: Dimensions.paddingSizeSmall,);

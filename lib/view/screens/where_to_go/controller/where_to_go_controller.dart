@@ -1,8 +1,8 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/controller/base_controller.dart';
 import 'package:ride_sharing_user_app/data/api_checker.dart';
 import 'package:ride_sharing_user_app/enum/view_state.dart';
@@ -16,7 +16,7 @@ import '../model/suggested_route_model.dart';
 import '../repository/search_service.dart';
 import '../repository/set_map_repo.dart';
 
-class WhereToGoController extends BaseController implements GetxService{
+class WhereToGoController extends BaseController implements GetxService {
   final SetMapRepo setMapRepo;
 
   WhereToGoController({required this.setMapRepo});
@@ -27,26 +27,33 @@ class WhereToGoController extends BaseController implements GetxService{
   final fromRouteController = TextEditingController();
   final toRouteController = TextEditingController();
   final extraRouteController = TextEditingController();
+  final extraRouteController2 = TextEditingController();
+  final extraRouteController3 = TextEditingController();
   final entranceController = TextEditingController();
-  final entranceNode=FocusNode();
-  final fromNode=FocusNode();
-  final extraNode=FocusNode();
-  final toRoutNode=FocusNode();
+  final entranceNode = FocusNode();
+  final fromNode = FocusNode();
+  final extraNode = FocusNode();
+  final extraNode2 = FocusNode();
+  final extraNode3 = FocusNode();
+  final toRoutNode = FocusNode();
+  final searchController=TextEditingController().obs;
+
+
   @override
   void onInit() {
-    // TODO: implement onInit
-    super.onInit();
+     super.onInit();
 
   }
-  void setExtraRoute(){
-    if(currentExtraRoute < 2){
+List <String>extraRoutes=[];
+  void setExtraRoute() {
+    if (currentExtraRoute < 2) {
       currentExtraRoute = currentExtraRoute + 1;
+      extraRoutes.add('currentExtraRoute$currentExtraRoute');
     }
-
     update();
   }
 
-  void setAddEntrance(){
+  void setAddEntrance() {
     addEntrance = !addEntrance;
     update();
   }
@@ -62,30 +69,35 @@ class WhereToGoController extends BaseController implements GetxService{
     update();
   }
 
-  checkPermissionBeforeNavigation(context)async{
-
-     await checkPermissionBeforeNavigate(context);
-
+  checkPermissionBeforeNavigation(context) async {
+    await checkPermissionBeforeNavigate(context);
   }
-
 
   /*************************SearchController*********************************/
 
-  final searchServices=SearchServices();
+  final searchServices = SearchServices();
 
+  final searchResultsFrom = <Predictions>[].obs;
 
-
-  final searchResultsFrom=<Suggestion>[].obs;
-  searchPlacesFrom(String searchTerm )async{
+  searchPlacesFrom(String searchTerm) async {
     setState(ViewState.busy);
-      searchResultsFrom.value=  await searchServices.getAutoCompleteFrom(  search:searchTerm.toString(),country: 'eg' );
-    print('data ${searchResultsFrom.value} length is ${searchResultsFrom.length}');
+    searchResultsFrom.value = await searchServices.getAutoCompleteFrom(
+        search: searchTerm.toString(), country: 'eg');
+    print(
+        'data ${searchResultsFrom.value} length is ${searchResultsFrom.length}');
     setState(ViewState.idle);
     update();
     return searchResultsFrom;
+  }
 
+
+  void handlePlaceSelection(String placeDescription ,TextEditingController input) {
+    input.text = placeDescription;
 
   }
 
 
+  getPlaceNameFromLatLng(LatLng latlng)async{
+    await searchServices.getPlaceNameFromLatLng(latlng);
+  }
 }

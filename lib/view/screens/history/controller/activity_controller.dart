@@ -43,8 +43,10 @@ class ActivityController extends BaseController implements GetxService {
 
     @override
     onInit()async {
-    await getAllHistoryTrips();
-    super.onInit();
+     super.onInit();
+     await activityRepo.getAllHistoryTrips();
+     await getAllHistoryTrips();
+
   }
 
 
@@ -78,11 +80,12 @@ class ActivityController extends BaseController implements GetxService {
   ///Api Fetch
 
   HistoryModel model =HistoryModel();
-  getAllHistoryTrips()async{
-    setState(ViewState.busy);
-     model = await activityRepo.getAllHistoryTrips( );
-    setState(ViewState.idle);
-  }
+    // final loading=false.obs;
+    getAllHistoryTrips() async {
+        setState(ViewState.busy);
+        model = await activityRepo.getAllHistoryTrips();
+        setState(ViewState.idle);
+    }
 
   ///animate camera move
   //   Future<void> goToPlace({

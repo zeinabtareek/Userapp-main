@@ -65,14 +65,14 @@ class ActivityRepo {
     try {
       final response = await dio! .get(AppConstants.getAllOrders);
 
+        print('######${response.data['data']}');
       if (response.statusCode == 200) {
         HistoryModel model = HistoryModel.fromJson(response.data);
-        print('######${response.data['data']}');
         return model;
       }
     } catch (e) {
       if (e is DioExceptionType) {
-        HandleError.handleExceptionDio(e);
+         HandleError.handleExceptionDio(e);
       }
     }
   }
