@@ -13,7 +13,7 @@ import '../../../view/widgets/custom_body.dart';
 import '../../../view/widgets/custom_button.dart';
 import '../../enums/auth_enums.dart';
 import '../controller/auth_controller.dart';
-import 'reset_password_screen.dart';
+import '../reset-password-screen/reset_password_screen.dart';
 
 class VerificationScreen extends GetView<AuthController> {
   final String number;
@@ -64,6 +64,7 @@ class VerificationScreen extends GetView<AuthController> {
                     appContext: context,
                     keyboardType: TextInputType.number,
                     animationType: AnimationType.slide,
+                    controller: controller.otpCodeController,
                     pinTheme: PinTheme(
                       shape: PinCodeFieldShape.circle,
                       fieldHeight: 40,
@@ -146,24 +147,7 @@ class VerificationScreen extends GetView<AuthController> {
                             isLoading:
                                 controller.isVerificationIsLoading.isTrue,
                             radius: 50,
-                            onPressed: () {
-                              if (otpState == OtpState.register) {
-                                controller.verifyPhone(number, countryCode);
-                              } else if (otpState == OtpState.loginWithOtp) {
-                                // TODO:  call login with Otp Link
-                                Get.offAll(() => DashboardScreen());
-                              } else if (otpState == OtpState.forgetPassword) {
-                                Get.to(
-                                  () => ResetPasswordScreen(
-                                    phone: number,
-                                    countryCode: countryCode,
-                                    otpCode:
-                                        controller.updateVerificationCode.value,
-                                    fromChangePassword: false,
-                                  ),
-                                );
-                              }
-                            },
+                            onPressed: _onCheckSuccess,
                           ),
                         )
                       : const SizedBox.shrink();
@@ -176,5 +160,31 @@ class VerificationScreen extends GetView<AuthController> {
         ),
       ),
     );
+  }
+
+
+  _onCheckSuccess() {
+    if (otpState == OtpState.register) {
+      controller.verifyPhone(number, countryCode);
+    } else if (otpState == OtpState.loginWithOtp) {
+      controller.loginWithOtp(number, countryCode);
+    } else if (otpState == OtpState.forgetPassword) {
+      controller.checkOtpCode(
+        number,
+        countryCode,
+      
+        onCheckSuccess: () {
+          Get.to(
+            () => ResetPasswordScreen(
+              phone: number,
+              countryCode: countryCode,
+              otpCode: controller.updateVerificationCode.value,
+              fromChangePassword: false,
+            ),
+          );
+        },
+
+      );
+    }
   }
 }

@@ -14,13 +14,18 @@ class CompleteDataReqModel {
     required this.img,
   });
 
-  Future<Map<String, dynamic>> toMap() async {
+  Map<String, dynamic> toMap() {
     Map<String, dynamic> data = <String, dynamic>{};
-
+    MultipartFile.fromFile(img!.path).then((value) => data['img'] = value);
     data["email"] = email;
     data['address'] = address;
     // data["identity_no"] = identityNo;
-    data['img'] = await MultipartFile.fromFile(img!.path);
+    // data['img'] = await );
     return data;
+  }
+
+  @override
+  String toString() {
+    return toMap().toString();
   }
 }

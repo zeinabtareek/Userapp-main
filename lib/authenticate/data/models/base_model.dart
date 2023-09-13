@@ -8,36 +8,40 @@ abstract class BaseResModel<T> {
     this.status,
   });
   T? get data;
+  int get statusNumber;
 
   fromMap(Map<String, dynamic> map) {
     status = map["status"];
 
     msg = map["message"];
-    print(" status $status  msg $msg");
   }
 }
 
 class MsgModel extends BaseResModel<MsgModel> {
   @override
-  String? msgg;
+  String? massage;
 
   @override
   int? status;
+
+  Map<String,dynamic>? stateData;
   MsgModel({
-    this.msgg,
+    this.massage,
     this.status,
+    this.stateData,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'msg': msgg,
+      'msg': massage,
       'status': status,
     };
   }
 
   MsgModel.fromKMap(Map<String, dynamic> map) {
-    msgg = map['msg'];
+    massage = map['message'];
     status = map['status']?.toInt();
+    stateData = map['data'];
   }
 
   String toJson() => json.encode(toMap());
@@ -46,5 +50,14 @@ class MsgModel extends BaseResModel<MsgModel> {
 
   bool get isSuccess => status == 200;
   @override
-  MsgModel? get data => throw UnimplementedError();
+  MsgModel? get data => null;
+
+  @override
+  int get statusNumber => status!;
+
+  @override
+  String toString() {
+    
+    return "MSG( msg $massage  status $status)";
+  }
 }

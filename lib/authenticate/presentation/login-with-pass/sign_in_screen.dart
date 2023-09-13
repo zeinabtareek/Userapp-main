@@ -15,7 +15,9 @@ import '../login-with-otp/otp_log_in_screen.dart';
 import '../sign-up/sign_up_screen.dart';
 
 class SignInScreen extends GetView<AuthController> {
-  const SignInScreen({super.key});
+  SignInScreen({super.key}) {
+    controller.initLoginWithPassScreen();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,17 +83,17 @@ class SignInScreen extends GetView<AuthController> {
                         onTap: controller.toggleRememberMe,
                         title: Row(
                           children: [
-                            SizedBox(
-                              width: 20.0,
-                              child: Checkbox(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                                activeColor: Theme.of(context).primaryColor,
-                                value: controller.isLoginRememberMe.value,
-                                onChanged: (bool? isChecked) =>
-                                    controller.toggleRememberMe(),
-                              ),
-                            ),
+                            Obx(() => SizedBox(
+                                  width: 20.0,
+                                  child: Checkbox(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5)),
+                                    activeColor: Theme.of(context).primaryColor,
+                                    value: controller.isLoginRememberMe.value,
+                                    onChanged: (bool? isChecked) =>
+                                        controller.toggleRememberMe(),
+                                  ),
+                                )),
                             K.sizedBoxH3,
                             Text(
                               Strings.remember.tr,

@@ -17,8 +17,8 @@ import '../../../view/widgets/custom_text_field.dart';
 import '../controller/auth_controller.dart';
 import '../widgets/test_field_title.dart';
 
-class AdditionalSignUpScreen extends GetView<AuthController> {
-  const AdditionalSignUpScreen({Key? key}) : super(key: key);
+class CompleteDataScreen extends GetView<AuthController> {
+  const CompleteDataScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -233,10 +233,8 @@ class AdditionalSignUpScreen extends GetView<AuthController> {
 
                 Obx(() => CustomButton(
                       buttonText: Strings.send.tr,
-                      isLoading:controller. isLoadingCompleteData.value,
-                      onPressed: () {
-                        Get.off(() => DashboardScreen());
-                      },
+                      isLoading: controller.isLoadingCompleteData.value,
+                      onPressed: controller.completeData,
                       radius: 50,
                     )),
 

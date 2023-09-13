@@ -65,7 +65,7 @@ class ForgotPasswordScreen extends GetView<AuthController> {
                     },
                     hintText: Strings.phone.tr,
                     inputType: TextInputType.number,
-                    countryDialCode: "+20",
+                    countryDialCode: defaultDailCode,
                     prefixHeight: 70,
                     controller: controller.forgetPasswordPhoneController,
                     focusNode: controller.forgetPasswordPhoneNode,

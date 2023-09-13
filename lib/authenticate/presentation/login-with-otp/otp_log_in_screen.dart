@@ -13,7 +13,7 @@ import '../../../view/widgets/custom_button.dart';
 import '../../../view/widgets/custom_text_field.dart';
 import '../../enums/auth_enums.dart';
 import '../controller/auth_controller.dart';
-import '../forgot_password/verification_screen.dart';
+import '../verfictaion-screen/verification_screen.dart';
 import '../login-with-pass/sign_in_screen.dart';
 import '../sign-up/sign_up_screen.dart';
 
