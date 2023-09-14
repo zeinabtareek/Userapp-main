@@ -1,9 +1,9 @@
+import '../../data/models/base_phone_req_model.dart';
 import '../../data/models/req-model/change_password_req_model.dart';
 import '../../data/models/req-model/complete_data_req_model.dart';
 import '../../data/models/req-model/login_with_otp_model.dart';
 import '../../data/models/req-model/login_with_pass_req_model.dart';
 import '../../data/models/req-model/register_req_model.dart';
-import '../../data/models/req-model/send_otp_req_model.dart';
 import '../../data/models/req-model/update_password_req_model.dart';
 import '../../data/models/req-model/verify_phone_req_model.dart';
 import '../../data/models/res-models/user_model.dart';
@@ -21,7 +21,7 @@ class AuthCases {
   }
 
   FDM forgetPassword(
-    OtpReqModel sendOtpReqModel,
+   BasePhoneReqModel sendOtpReqModel,
   ) {
     return _data.forgetPassword(sendOtpReqModel);
   }
@@ -49,7 +49,7 @@ class AuthCases {
   }
 
   FDM sendOtp(
-    OtpReqModel sendOtpReqModel,
+   BasePhoneReqModel sendOtpReqModel,
   ) {
     return _data.sendOtp(sendOtpReqModel);
   }
@@ -84,5 +84,9 @@ class AuthCases {
 
   Future<bool> isContainsAuthUserData() async {
     return _data.isContainsAuthUserData();
+  }
+
+  FDM checkOtpCode(LoginWithOtpReqModel req) async {
+    return _data.checkOtpCode(req);
   }
 }

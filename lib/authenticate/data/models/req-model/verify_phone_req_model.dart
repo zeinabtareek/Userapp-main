@@ -1,29 +1,23 @@
 // verify_phone_req_model
+import '../base_phone_req_model.dart';
+
 class VerifyPhoneReqModel {
-  String phone;
-  String countryCode;
+  BasePhoneReqModel phoneReqModel;
   String phoneConfirmationToken;
   VerifyPhoneReqModel({
-    required this.phone,
-    required this.countryCode,
+    required this.phoneReqModel,
     required this.phoneConfirmationToken,
   });
 
   Map<String, dynamic> toMap() {
-    phone = phone.replaceAll(countryCode, "");
-    countryCode = countryCode.replaceAll("+", "00");
     return {
-      'phone': phone,
-      'phone_code': countryCode,
+      ...phoneReqModel.toJson(),
       'phone_confirmation_token': phoneConfirmationToken,
     };
   }
 
-  factory VerifyPhoneReqModel.fromMap(Map<String, dynamic> map) {
-    return VerifyPhoneReqModel(
-      phone: map['phone'],
-      countryCode: map['countryCode'],
-      phoneConfirmationToken: map['phoneConfirmationToken'],
-    );
+  @override
+  String toString() {
+    return toMap().toString();
   }
 }

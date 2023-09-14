@@ -3,12 +3,12 @@ import 'dart:io';
 import '../../data_state.dart';
 import '../../domain/repo/auth_repo.dart';
 import '../models/base_model.dart';
+import '../models/base_phone_req_model.dart';
 import '../models/req-model/change_password_req_model.dart';
 import '../models/req-model/complete_data_req_model.dart';
 import '../models/req-model/login_with_otp_model.dart';
 import '../models/req-model/login_with_pass_req_model.dart';
 import '../models/req-model/register_req_model.dart';
-import '../models/req-model/send_otp_req_model.dart';
 import '../models/req-model/update_password_req_model.dart';
 import '../models/req-model/verify_phone_req_model.dart';
 import '../models/res-models/register_res_model.dart';
@@ -33,26 +33,26 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-        return DataFailedErrorMsg(res.data.msg ?? "");
+          return DataFailedErrorMsg(res.data.msg ?? "",res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString());
+      return DataFailedErrorMsg(e.toString(),null);
     }
   }
 
   @override
   Future<DataState<MsgModel>> forgetPassword(
-      OtpReqModel sendOtpReqModel) async {
+      BasePhoneReqModel sendOtpReqModel) async {
     try {
       var res = await remoteApiAuth.forgetPassword(sendOtpReqModel);
 
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-        return DataFailedErrorMsg(res.data.msgg ?? "");
+         return DataFailedErrorMsg(res.data.msg ?? "",res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString());
+      return DataFailedErrorMsg(e.toString(),null);
     }
   }
 
@@ -75,10 +75,10 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-        return DataFailedErrorMsg(res.data.msg ?? "");
+        return DataFailedErrorMsg(res.data.msg ?? "",res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString());
+      return DataFailedErrorMsg(e.toString(),null);
     }
   }
 
@@ -91,10 +91,10 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-        return DataFailedErrorMsg(res.data.msg ?? "");
+        return DataFailedErrorMsg(res.data.msg ?? "",res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString());
+      return DataFailedErrorMsg(e.toString(),null);
     }
   }
 
@@ -107,25 +107,25 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-        return DataFailedErrorMsg(res.data.msg ?? "");
+        return DataFailedErrorMsg(res.data.msg ?? "",res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString());
+      return DataFailedErrorMsg(e.toString(),null);
     }
   }
 
   @override
-  Future<DataState<MsgModel>> sendOtp(OtpReqModel sendOtpReqModel) async {
+  Future<DataState<MsgModel>> sendOtp(BasePhoneReqModel sendOtpReqModel) async {
     try {
       var res = await remoteApiAuth.sendOtp(sendOtpReqModel);
 
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-        return DataFailedErrorMsg(res.data.msgg ?? "");
+         return DataFailedErrorMsg(res.data.msg ?? "",res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString());
+      return DataFailedErrorMsg(e.toString(),null);
     }
   }
 
@@ -143,10 +143,10 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-        return DataFailedErrorMsg(res.data.msgg ?? "");
+         return DataFailedErrorMsg(res.data.msg ?? "",res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString());
+      return DataFailedErrorMsg(e.toString(),null);
     }
   }
 
@@ -159,10 +159,10 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-        return DataFailedErrorMsg(res.data.msg ?? "");
+        return DataFailedErrorMsg(res.data.msg ?? "",res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString());
+      return DataFailedErrorMsg(e.toString(),null);
     }
   }
 
@@ -173,10 +173,10 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-        return DataFailedErrorMsg(res.data.msg ?? "");
+        return DataFailedErrorMsg(res.data.msg ?? "",res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString());
+      return DataFailedErrorMsg(e.toString(),null);
     }
   }
 
@@ -194,4 +194,23 @@ class AuthRepoImp implements AuthRepo {
   Future<void> saveAuthUserData(LoginWithPassReqModel? loginWithPassReqModel) {
     return secureLocalAuth.saveAuthUserData(loginWithPassReqModel);
   }
+
+  @override
+  Future<DataState<MsgModel>> checkOtpCode(LoginWithOtpReqModel req) async {
+    try {
+      var res = await remoteApiAuth.checkOtpCode(req);
+
+      if (res.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(res.data);
+      } else {
+         return DataFailedErrorMsg(res.data.msg ?? "",res.data);
+      }
+    } catch (e) {
+      return DataFailedErrorMsg(e.toString(),null);
+    }
+  }
+
+  // @override
+  // Future<DataState<MsgModel>> checkOtpCode(LoginWithOtpReqModel req) {
+  // }
 }

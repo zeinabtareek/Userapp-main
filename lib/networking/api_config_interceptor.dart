@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:ride_sharing_user_app/authenticate/data/models/res-models/user_model.dart';
+import 'package:ride_sharing_user_app/authenticate/domain/use-cases/auth_cases.dart';
+import 'package:ride_sharing_user_app/initialize_dependencies.dart';
 
 class ApiConfigInterceptor extends InterceptorsWrapper {
   final loggingTag = "DIO_TAG";
@@ -16,6 +19,15 @@ class ApiConfigInterceptor extends InterceptorsWrapper {
     //   },
     // );
     debugPrint('interceptor $loggingTag');
+
+    if (await sl<AuthCases>().isAuthenticated()) {
+      User? user =
+          await sl<AuthCases>().getUserData();
+          
+          options.headers.addAll({
+            "Authorization":"Bearer ${user!.tkn}"
+          });
+    }
 
     debugPrint(
       '$loggingTag-REQUEST[${options.method}] => PATH: ${options.path} \n Body [${options.data}]',

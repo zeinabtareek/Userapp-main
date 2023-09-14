@@ -33,11 +33,12 @@ class AuthLib {
   static const String updatePasswordEndPoint = "update_password";
 
   static const String changePassEndPoint = "change_password";
+  static const String checkOtpEndPoint = "check_code";
 
   static List<GetPage> authPages = [
     GetPage(
       name: AuthScreenPath.loginScreenWithPassRouteName,
-      page: () => const SignInScreen(),
+      page: () =>  SignInScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => AuthController(sl()));
       }),

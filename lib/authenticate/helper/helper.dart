@@ -1,17 +1,19 @@
+import 'package:get/get.dart';
+
 import '../../helper/display_helper.dart';
 import '../data/models/base_model.dart';
 import '../data_state.dart';
 
 void checkStatus<T extends BaseResModel>(
   DataState<T> state, {
-  Function(T? res)? onSucses,
+  Function(T? res)? onSuccess,
   Function(T? error)? onError,
   bool showErrorToast = true,
-  bool showSucsesToast = false,
+  bool showSuccessToast = false,
 }) {
   if (state is DataSuccess<T>) {
     if (state.data != null && state.data!.status == 200) {
-      _handelSucses<T>(showSucsesToast, state, onSucses);
+      _handelSuccess<T>(showSuccessToast, state, onSuccess);
     } else {
       _handelError<T>(showErrorToast, state, onError);
     }
@@ -20,18 +22,18 @@ void checkStatus<T extends BaseResModel>(
   }
 }
 
-void _handelSucses<T>(
-  bool showSucsesToast,
+void _handelSuccess<T extends BaseResModel>(
+  bool showSuccessToast,
   DataSuccess<dynamic> state,
-  Function(T? res)? onSucses,
+  Function(T? res)? onSuccess,
 ) {
-  if (showSucsesToast) {
-    showCustomSnackBar(state.data?.msg ?? "", isError: false);
+  if (showSuccessToast) {
+      showCustomSnackBar(state.data?.massage ??state.data?.msg ?? "", isError: false);
   }
-  onSucses?.call(state.data);
+  onSuccess?.call(state.data);
 }
 
-void _handelError<T>(
+void _handelError<T extends BaseResModel>(
   bool showErrorToast,
   DataState<T> state,
   Function(T? error)? onError,

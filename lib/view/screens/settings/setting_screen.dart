@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../../../authenticate/data/models/res-models/user_model.dart';
 import '../../../authenticate/domain/use-cases/auth_cases.dart';
 import '../../../authenticate/presentation/controller/auth_controller.dart';
-import '../../../authenticate/presentation/forgot_password/reset_password_screen.dart';
+import '../../../authenticate/presentation/reset-password-screen/reset_password_screen.dart';
 import '../../../initialize_dependencies.dart';
 import '../../../localization/localization_controller.dart';
 import '../../../theme/theme_controller.dart';

@@ -12,22 +12,25 @@ import '../../../view/screens/dashboard/bottom_menu_controller.dart';
 import '../../../view/screens/dashboard/dashboard_screen.dart';
 import '../../../view/screens/html/html_viewer_screen.dart';
 import '../../config/config.dart';
+import '../../data/models/base_phone_req_model.dart';
 import '../../data/models/req-model/change_password_req_model.dart';
 import '../../data/models/req-model/complete_data_req_model.dart';
 import '../../data/models/req-model/login_with_otp_model.dart';
 import '../../data/models/req-model/login_with_pass_req_model.dart';
 import '../../data/models/req-model/register_req_model.dart';
-import '../../data/models/req-model/send_otp_req_model.dart';
 import '../../data/models/req-model/update_password_req_model.dart';
 import '../../data/models/req-model/verify_phone_req_model.dart';
 import '../../data/models/res-models/user_model.dart';
 import '../../domain/use-cases/auth_cases.dart';
 import '../../enums/auth_enums.dart';
 import '../../helper/helper.dart';
-import '../forgot_password/verification_screen.dart';
+import '../verfictaion-screen/verification_screen.dart';
 import '../login-with-otp/otp_log_in_screen.dart';
-import '../sign-up/additional_sign_up_screen.dart';
+import '../complete-data-screen/complete_data_screen.dart';
 import '../sign-up/sign_up_screen.dart';
+import '../forgot_password/forget_password_screen.dart';
+import '../reset-password-screen/reset_password_screen.dart';
+import '../login-with-pass/sign_in_screen.dart';
 
 const String defaultDailCode = "+966";
 
@@ -52,7 +55,7 @@ class AuthController extends GetxController {
   }
 
   toCompleteDataScreen() {
-    Get.to(() => const AdditionalSignUpScreen());
+    Get.to(() => const CompleteDataScreen());
   }
 
   AuthCases authCases;
@@ -86,7 +89,9 @@ class AuthController extends GetxController {
       LoginWithPassReqModel? req = await authCases.getAuthUserData();
       loginPassController.text = req?.password ?? "";
 
-      // TODO:  phonecode
+      loginPhoneController.text =
+          req!.phoneReqModel.phoneCode + req.phoneReqModel.phone;
+      isLoginRememberMe(true);
     }
   }
 
@@ -103,17 +108,34 @@ class AuthController extends GetxController {
       isLoginWithPassLoading(true);
 
       var req = LoginWithPassReqModel(
-        password: loginPassController.text,
-        phone: loginPhoneController.text,
-        countryCode: loginSelectCountry.value.dialCode!,
-      );
+          password: loginPassController.text,
+          phoneReqModel: BasePhoneReqModel(
+            phone: loginPhoneController.text,
+            phoneCode: loginSelectCountry.value.dialCode!,
+          ));
       final res = await authCases.loginWithPassword(req);
       isLoginWithPassLoading(false);
 
       checkStatus(
         res,
-        onError: (error) {},
-        onSucses: (res) async {
+        onError: (error) {
+          if (error!.data?.status == 403) {
+            Get.off(
+              VerificationScreen(
+                number: loginPhoneController.text,
+                countryCode:
+                    loginSelectCountry.value.dialCode ?? defaultDailCode,
+                otpState: OtpState.register,
+              ),
+              binding: BindingsBuilder(
+                () {
+                  Get.lazyPut(() => AuthController(sl()));
+                },
+              ),
+            );
+          }
+        },
+        onSuccess: (res) async {
           if (isLoginRememberMe.isTrue) {
             await authCases.saveAuthUserData(req);
           } else {
@@ -123,30 +145,12 @@ class AuthController extends GetxController {
           final User user = res!.user!;
 
           await authCases.setUserDate(user);
+          // TODO:  isNotVerifiedPhone
 
-          final bool isVerifiedPhone = true;
-          _handelVerifyLoginCase(isVerifiedPhone, user);
+          // TODO:  welcome toast
+          Get.find<BottomMenuController>().resetNavBar();
+          Get.offAll(() => DashboardScreen());
         },
-      );
-    }
-  }
-
-  void _handelVerifyLoginCase(bool isVerifiedPhone, User user) {
-    if (isVerifiedPhone) {
-      Get.find<BottomMenuController>().resetNavBar();
-      Get.offAll(() => DashboardScreen());
-    } else {
-      Get.off(
-        VerificationScreen(
-          number: user.phone ?? "",
-          countryCode: user.phoneCode ?? "",
-          otpState: OtpState.register,
-        ),
-        binding: BindingsBuilder(
-          () {
-            Get.lazyPut(() => AuthController(sl()));
-          },
-        ),
       );
     }
   }
@@ -163,8 +167,8 @@ class AuthController extends GetxController {
 
   /// [SignUpScreen]
 
-  TextEditingController regFristNameController = TextEditingController();
-  FocusNode regFristNameFocusNode = FocusNode();
+  TextEditingController regFirstNameController = TextEditingController();
+  FocusNode regFirstNameFocusNode = FocusNode();
   TextEditingController regLastNameController = TextEditingController();
   FocusNode regLastNameFocusNode = FocusNode();
 
@@ -179,8 +183,8 @@ class AuthController extends GetxController {
       CountryCode.fromDialCode(defaultDailCode).obs;
 
   initSignUp() {
-    regFristNameController = TextEditingController();
-    regFristNameFocusNode = FocusNode();
+    regFirstNameController = TextEditingController();
+    regFirstNameFocusNode = FocusNode();
     regLastNameController = TextEditingController();
     regLastNameFocusNode = FocusNode();
 
@@ -194,8 +198,8 @@ class AuthController extends GetxController {
 
   void disposeSignUp() {
     for (var element in [
-      regFristNameController,
-      regFristNameFocusNode,
+      regFirstNameController,
+      regFirstNameFocusNode,
       regLastNameController,
       regLastNameFocusNode,
       regPhoneController,
@@ -209,7 +213,7 @@ class AuthController extends GetxController {
 
   RxBool isLoadingSignUp = false.obs;
   validationSignUp() async {
-    if (regFristNameController.text.isEmpty) {
+    if (regFirstNameController.text.isEmpty) {
       showCustomSnackBar(Strings.firstNameIsRequired.tr);
     } else if (regLastNameController.text.isEmpty) {
       showCustomSnackBar(Strings.lastNameIsRequired.tr);
@@ -228,11 +232,13 @@ class AuthController extends GetxController {
     } else {
       isLoadingSignUp(true);
       HOODRegisterReqModel reqModel = HOODRegisterReqModel(
-          countryCode: regSelectCountry.value.dialCode!,
-          fName: regFristNameController.text,
-          lName: regLastNameController.text,
-          password: regPassController.text,
-          phone: regPhoneController.text);
+        phoneReqModel: BasePhoneReqModel(
+            phone: regPhoneController.text,
+            phoneCode: regSelectCountry.value.dialCode!),
+        fName: regFirstNameController.text,
+        lName: regLastNameController.text,
+        password: regPassController.text,
+      );
 
       final res = await authCases.register(reqModel);
       isLoadingSignUp(false);
@@ -244,14 +250,13 @@ class AuthController extends GetxController {
     }
   }
 
-  /// [AdditionalSignUpScreen]
+  /// [CompleteDataScreen]
   final Rxn<File> _pickedProfileFile = Rxn(null);
-  // File? _pickedProfileFile;
 
   Rxn<File> get getPickedProfileFile => _pickedProfileFile;
   set pickedProfileFile(File file) => _pickedProfileFile.value = file;
 
-  final GlobalKey<FormState> completeValdteKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> completeValidateKey = GlobalKey<FormState>();
   TextEditingController completeEmailController = TextEditingController();
   FocusNode completeEmailFocusNode = FocusNode();
 
@@ -318,15 +323,15 @@ class AuthController extends GetxController {
     } else {
       isForgetPassLoading(true);
 
-      OtpReqModel req = OtpReqModel(
-          countryCode: forgetSelectCountry.value.dialCode,
+      BasePhoneReqModel req = BasePhoneReqModel(
+          phoneCode: forgetSelectCountry.value.dialCode!,
           phone: forgetPasswordPhoneController.text);
       final res = await authCases.forgetPassword(req);
       isForgetPassLoading(false);
 
       checkStatus(
         res,
-        onSucses: (res) {
+        onSuccess: (res) {
           Get.to(
             () => VerificationScreen(
               otpState: OtpState.forgetPassword,
@@ -375,12 +380,13 @@ class AuthController extends GetxController {
       showCustomSnackBar(Strings.phoneIsRequired.tr);
       return;
     }
-    final req = OtpReqModel(
-        countryCode: otpSelectCountry.value.dialCode,
-        phone: phoneControllerForOTPLogInScreen.text);
+    final req = BasePhoneReqModel(
+      phoneCode: otpSelectCountry.value.dialCode!,
+      phone: phoneControllerForOTPLogInScreen.text,
+    );
     final res = await authCases.sendOtp(req);
 
-    checkStatus(res, onSucses: (res) {
+    checkStatus(res, onSuccess: (res) {
       Get.to(
         () => VerificationScreen(
           countryCode: otpSelectCountry.value.dialCode.toString(),
@@ -408,15 +414,18 @@ class AuthController extends GetxController {
 
   Timer? countdownTimer;
   Duration waitingDuration = const Duration(seconds: 59);
+  TextEditingController otpCodeController = TextEditingController();
 
   void disposeVerificationScreen() {
     countdownTimer?.cancel();
     waitingDuration = const Duration(seconds: 59);
     isCounting = false.obs;
     isVerificationIsLoading = false.obs;
+    otpCodeController.dispose();
   }
 
   void initVerificationScreen() {
+    otpCodeController = TextEditingController();
     countdownTimer = countdownTimer.reactive.value;
     waitingDuration = const Duration(seconds: 59);
     startTimer();
@@ -446,18 +455,54 @@ class AuthController extends GetxController {
   reSendMsg(String countryCode, String phone) async {
     if (updateVerificationCode.isEmpty ||
         updateVerificationCode.value.length < 4) {
+      // TODO: msg
       showCustomSnackBar(Strings.phoneIsRequired.tr);
       return;
     }
     isVerificationIsLoading(true);
-    var req = OtpReqModel(countryCode: countryCode, phone: phone);
+    var req = BasePhoneReqModel(phoneCode: countryCode, phone: phone);
     final res = await authCases.sendOtp(req);
     isVerificationIsLoading(false);
 
     checkStatus(
       res,
-      onSucses: (res) {
+      onSuccess: (res) {
         showCustomSnackBar(Strings.otpSentSuccessfully.tr, isError: false);
+        otpCodeController.clear();
+        waitingDuration = const Duration(seconds: 59);
+        startTimer();
+      },
+    );
+  }
+
+  checkOtpCode(
+    String phone,
+    String phoneCode, {
+    required Function() onCheckSuccess,
+  }) async {
+    if (updateVerificationCode.isEmpty ||
+        updateVerificationCode.value.length < 4) {
+      showCustomSnackBar(Strings.phoneIsRequired.tr);
+      return;
+    }
+
+    isVerificationIsLoading(true);
+    final req = LoginWithOtpReqModel(
+        phoneReqModel: BasePhoneReqModel(phone: phone, phoneCode: phoneCode),
+        otp: updateVerificationCode.value);
+
+    final res = await authCases.checkOtpCode(req);
+    isVerificationIsLoading(false);
+
+    checkStatus(
+      res,
+      onSuccess: (res) {
+        if (res!.stateData!["status"] == true) {
+          onCheckSuccess();
+        } else {
+          // TODO: tell back end to handel msg
+          showCustomSnackBar("wrong otp code try Agin ", isError: true);
+        }
       },
     );
   }
@@ -471,15 +516,14 @@ class AuthController extends GetxController {
 
     isVerificationIsLoading(true);
     final req = VerifyPhoneReqModel(
-      phone: phone,
-      countryCode: phoneCode,
+      phoneReqModel: BasePhoneReqModel(phone: phone, phoneCode: phoneCode),
       phoneConfirmationToken: updateVerificationCode.value,
     );
     final res = await authCases.verifyPhone(req);
     isVerificationIsLoading(false);
     checkStatus(
       res,
-      onSucses: (res) {
+      onSuccess: (res) {
         Get.offAll(() => DashboardScreen());
       },
     );
@@ -494,15 +538,16 @@ class AuthController extends GetxController {
 
     isVerificationIsLoading(true);
     final req = LoginWithOtpReqModel(
-      countryCode: phoneCode,
-      phone: phone,
+      phoneReqModel: BasePhoneReqModel(phone: phone, phoneCode: phoneCode),
       otp: updateVerificationCode.value,
     );
     final res = await authCases.loginWithOtp(req);
 
     checkStatus(
       res,
-      onSucses: (res) {
+      onSuccess: (res) async {
+        await authCases.setUserDate(res!.user!);
+        // TODO:  welcome toast
         Get.offAll(() => DashboardScreen());
       },
     );
@@ -563,18 +608,21 @@ class AuthController extends GetxController {
 
     resetPassScreenIsLoading(true);
     final req = UpdatePasswordReqModel(
-      countryCode: countryCode,
       forgetPasswordCode: otpCode,
       password: resetConfirmPasswordController.text,
-      phone: phone,
+      phoneReqModel: BasePhoneReqModel(phone: phone, phoneCode: countryCode),
     );
     final res = await authCases.updatePassword(req);
     resetPassScreenIsLoading(false);
 
     checkStatus(
       res,
-      onSucses: (res) {},
-      showSucsesToast: true,
+      onSuccess: (res) {
+        Get.offAll(() => SignInScreen(), binding: BindingsBuilder(() {
+          Get.lazyPut(() => AuthController(sl()));
+        }));
+      },
+      showSuccessToast: true,
     );
   }
 
@@ -603,7 +651,9 @@ class AuthController extends GetxController {
 
     checkStatus(
       res,
-      onSucses: (res) {},
+      onSuccess: (res) {
+        // TODO:
+      },
     );
   }
 }

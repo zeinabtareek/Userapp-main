@@ -1,10 +1,10 @@
 import '../../data/models/base_model.dart';
+import '../../data/models/base_phone_req_model.dart';
 import '../../data/models/req-model/change_password_req_model.dart';
 import '../../data/models/req-model/complete_data_req_model.dart';
 import '../../data/models/req-model/login_with_otp_model.dart';
 import '../../data/models/req-model/login_with_pass_req_model.dart';
 import '../../data/models/req-model/register_req_model.dart';
-import '../../data/models/req-model/send_otp_req_model.dart';
 import '../../data/models/req-model/update_password_req_model.dart';
 import '../../data/models/req-model/verify_phone_req_model.dart';
 import '../../data/models/res-models/register_res_model.dart';
@@ -31,11 +31,13 @@ abstract class AuthRepo {
   );
 
   Future<DataState<MsgModel>> sendOtp(
-    OtpReqModel sendOtpReqModel,
+    BasePhoneReqModel sendOtpReqModel,
   );
 
+  Future<DataState<MsgModel>> checkOtpCode(LoginWithOtpReqModel req);
+
   Future<DataState<MsgModel>> forgetPassword(
-    OtpReqModel sendOtpReqModel,
+    BasePhoneReqModel sendOtpReqModel,
   );
 
   Future<DataState<MsgModel>> updatePassword(
@@ -44,9 +46,7 @@ abstract class AuthRepo {
 
   Future<DataState<MsgModel>> changePass(ChangePasswordReqModel req);
 
-  Future<bool?> setUserDate(
-    User? user,
-  );
+  Future<bool?> setUserDate(User? user);
 
   Future<User?> getUserData();
 

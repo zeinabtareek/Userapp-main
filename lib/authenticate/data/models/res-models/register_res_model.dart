@@ -48,4 +48,8 @@ class HOODAuthorizedResModel extends BaseResModel<HOODAuthorizedResModel>
   String toString() => 'HOODAuthorizedResModel(user: $user)';
 
   bool get isSuccess=> user!=null&&status==200;
+  
+  @override
+  // TODO: implement statusNumber
+  int get statusNumber => this.status!;
 }
