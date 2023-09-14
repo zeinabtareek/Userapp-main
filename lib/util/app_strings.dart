@@ -24,7 +24,8 @@ class Strings {
   static const String confirmPassword = "confirm_password";
   static const String next = "next";
   static const String passwordIsMismatch = "password_is_mismatch";
-  static const String confirmPasswordIsRequired = "confirm_password_is_required";
+  static const String confirmPasswordIsRequired =
+      "confirm_password_is_required";
   static const String minPassLength = "minimum_password_length_is_8";
   static const String phoneIsRequired = "phone_is_required";
   static const String lastNameIsRequired = "last_name_is_required";
@@ -64,7 +65,8 @@ class Strings {
   static const String selectYourDate = "select_your_date";
   static const String apply = "apply";
   static const String select = "select";
-  static const String makeYourProfileToEarnPoint = "make_your_profile_to_earn_point";
+  static const String makeYourProfileToEarnPoint =
+      "make_your_profile_to_earn_point";
   static const String goldCustomer = "gold_customer";
   static const String yourRating = "your_rating";
   static const String level = "level";
@@ -77,13 +79,14 @@ class Strings {
   static const String helpSupport = "help_support";
   static const String settings = "settings";
   static const String logout = "logout";
-  static const String doYouWantToLogOutThisAccount = "do_you_want_to_log_out_this_account";
+  static const String doYouWantToLogOutThisAccount =
+      "do_you_want_to_log_out_this_account";
   static const String savedAddress = "saved_address";
   static const String hereLotsOfOfferForYou = "here_lots_of_offer_for_you";
   static const String bankInfo = "bank_info";
   static const String editInfo = "edit_info";
   static const String enterYourName = "enter_your_name";
-  static const String enterYourEmail= "enter_your_email";
+  static const String enterYourEmail = "enter_your_email";
   static const String address = "address";
   static const String email = "email";
   static const String enterYourAddress = "enter_your_address";
@@ -104,7 +107,7 @@ class Strings {
   static const String ride = "ride";
   static const String parcel = "parcel";
   static const String setLocation = "set_location";
-  static const String seTDestination  = "set_destination";
+  static const String seTDestination = "set_destination";
   static const String findRider = "find_rider";
   static const String tripDetails = "trip_details";
   static const String cancelRide = "cancel_ride";
@@ -114,19 +117,23 @@ class Strings {
   static const String yourDestination = "your_destination";
   static const String tripIsOngoing = "trip_is_ongoing";
   static const String addNote = "add_note";
-  static const String endThisTripAtYourDestination = "end_this_trip_at_your_destination";
+  static const String endThisTripAtYourDestination =
+      "end_this_trip_at_your_destination";
   static const String selectDestination = "select_destination";
   static const String locationServicesDisabled = "location_disabled";
   static const String locationDenied = "location_denied";
-  static const String locationPermanentlyDenied= "location_permanent_denied";
-  static const String youDeniedLocationPermission= "you_denied_location_permission";
-  static const String enterCurrentLocationRoute= "enter_current_location_route";
+  static const String locationPermanentlyDenied = "location_permanent_denied";
+  static const String youDeniedLocationPermission =
+      "you_denied_location_permission";
+  static const String enterCurrentLocationRoute =
+      "enter_current_location_route";
   static const String to = "to";
   static const String setFromMap = "set_from_map";
   static const String chooseFromMap = "choose_from_map";
   static const String saved = "saved";
   static const String suggestions = "suggestions";
-  static const String youCanAddMultipleRouteTo = "you_can_add_multiple_route_to";
+  static const String youCanAddMultipleRouteTo =
+      "you_can_add_multiple_route_to";
   static const String done = "done";
   static const String addEntrance = "add_entrance";
   static const String enterEntrance = "enter_entrance";
@@ -140,9 +147,6 @@ class Strings {
   static const String searchingAddress = "searching_address";
   static const String search = "search";
 
-
-
-
-
-
+  static const String invalidEmil = "email_is_not_valid";
+  static const invalidOtp = "otp_is_not_valid";
 }

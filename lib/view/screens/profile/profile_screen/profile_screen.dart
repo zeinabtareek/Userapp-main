@@ -21,6 +21,7 @@ import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_image.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../../../authenticate/config/config.dart';
 import '../../../../authenticate/presentation/controller/auth_controller.dart';
 import '../../../../util/app_strings.dart';
 import '../../../../util/app_style.dart';
@@ -277,12 +278,12 @@ class ProfileScreen extends StatelessWidget {
                               description:
                                   Strings.doYouWantToLogOutThisAccount.tr,
                               onYesPressed: () {
+                                // TODO:
+                                // print(" auth c state ${Get.isRegistered<AuthController>()} ");
                                 sl<AuthCases>().setUserDate(null).then((_) {
                                   Get.back();
-                                  Get.offAll(SignInScreen(),
-                                      binding: BindingsBuilder(() {
-                                    Get.lazyPut(() => AuthController(sl()));
-                                  }));
+                                  Get.offAllNamed(AuthScreenPath
+                                      .loginScreenWithPassRouteName);
                                 });
 
                                 // Get.lazyPut(() => FAuthController(

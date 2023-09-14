@@ -52,7 +52,7 @@ class OtpLoginScreen extends GetView<AuthController> {
                 ),
                 K.sizedBoxH0,
                 Text(
-                  Strings.otpForgetPassword.tr,
+                  Strings.otpLogin.tr,
                   style: K.primaryMediumTextStyle,
                 ),
                 Text(
@@ -63,7 +63,7 @@ class OtpLoginScreen extends GetView<AuthController> {
                 CustomTextField(
                   hintText: Strings.phone,
                   inputType: TextInputType.number,
-                  countryDialCode: defaultDailCode ,
+                  countryDialCode: defaultDailCode,
                   prefixHeight: 70,
                   controller: controller.phoneControllerForOTPLogInScreen,
                   focusNode: controller.nodeForOTPLogInScreen,
@@ -72,11 +72,12 @@ class OtpLoginScreen extends GetView<AuthController> {
                 ),
                 K.sizedBoxH0,
                 K.sizedBoxH0,
-                CustomButton(
-                  buttonText: Strings.sendOtp.tr,
-                  onPressed: controller.loginOtpClick,
-                  radius: 50,
-                ),
+                Obx(() => CustomButton(
+                      isLoading: controller.otpLoginIsLoading.isTrue,
+                      buttonText: Strings.sendOtp.tr,
+                      onPressed: controller.sendOtp,
+                      radius: 50,
+                    )),
                 Row(
                   children: [
                     const Expanded(
@@ -102,6 +103,7 @@ class OtpLoginScreen extends GetView<AuthController> {
                   transparent: true,
                   buttonText: Strings.logIn.tr,
                   onPressed: () {
+                    // TODO:
                     Get.to(() => SignInScreen());
                   },
                   radius: 50,
@@ -121,7 +123,8 @@ class OtpLoginScreen extends GetView<AuthController> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Get.to(() => const SignUpScreen());
+                        // TODO:
+                        Get.to(() => SignUpScreen());
                       },
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.zero,

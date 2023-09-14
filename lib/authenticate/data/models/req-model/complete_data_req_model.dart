@@ -7,6 +7,7 @@ class CompleteDataReqModel {
   String? address;
   // String? identityNo;
   File? img;
+  MultipartFile? uploadImg;
   CompleteDataReqModel({
     required this.email,
     required this.address,
@@ -14,18 +15,24 @@ class CompleteDataReqModel {
     required this.img,
   });
 
-  Map<String, dynamic> toMap() {
+  Future<Map<String, dynamic>> toMap() async {
     Map<String, dynamic> data = <String, dynamic>{};
-    MultipartFile.fromFile(img!.path).then((value) => data['img'] = value);
     data["email"] = email;
+    // data['email'] = 'abeerelghool@gmail.com';
+
     data['address'] = address;
-    // data["identity_no"] = identityNo;
-    // data['img'] = await );
+    // TODO: remove identity_no key
+    data["identity_no"] = "9662837498739409658";
+    data['img'] = await MultipartFile.fromFile(img!.path);
     return data;
   }
 
   @override
   String toString() {
     return toMap().toString();
+  }
+
+ Future< FormData> toForm() async{
+      return FormData.fromMap(await toMap());
   }
 }

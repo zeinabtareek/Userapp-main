@@ -32,7 +32,7 @@ class VerificationScreen extends GetView<AuthController> {
     return Scaffold(
       body: CustomBody(
         appBar: CustomAppBar(
-            title: Strings.forgetPassword.tr,
+            title: _getTitle(),
             onBackPressed: () {
               controller.disposeVerificationScreen();
               Get.back();
@@ -162,6 +162,17 @@ class VerificationScreen extends GetView<AuthController> {
     );
   }
 
+  String _getTitle() {
+    switch (otpState) {
+      case OtpState.forgetPassword:
+        return Strings.forgetPassword.tr;
+      case OtpState.loginWithOtp:
+        return Strings.otpLogin.tr;
+      case OtpState.register:
+        return Strings.signUp.tr;
+      
+    }
+  }
 
   _onCheckSuccess() {
     if (otpState == OtpState.register) {
@@ -172,7 +183,6 @@ class VerificationScreen extends GetView<AuthController> {
       controller.checkOtpCode(
         number,
         countryCode,
-      
         onCheckSuccess: () {
           Get.to(
             () => ResetPasswordScreen(
@@ -183,7 +193,6 @@ class VerificationScreen extends GetView<AuthController> {
             ),
           );
         },
-
       );
     }
   }

@@ -162,8 +162,9 @@ class SignInScreen extends GetView<AuthController> {
                     ),
                     TextButton(
                         onPressed: () {
+                          // TODO: 
                           Get.to(
-                            () => const SignUpScreen(),
+                            () =>  SignUpScreen(),
                           );
                         },
                         child: Text(Strings.signUp.tr,
