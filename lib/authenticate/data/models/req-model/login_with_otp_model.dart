@@ -1,33 +1,21 @@
 import 'dart:convert';
 
+import '../base_phone_req_model.dart';
+
 class LoginWithOtpReqModel {
-  String? countryCode;
-  String? phone;
+  BasePhoneReqModel phoneReqModel;
   String? otp;
   LoginWithOtpReqModel({
-    required this.countryCode,
-    required this.phone,
+  required this.phoneReqModel,
     required this.otp,
   });
 
   Map<String, dynamic> toJson() {
-    phone = phone!.replaceAll(countryCode!, "");
-    countryCode = countryCode!.replaceAll("+", "00");
     return {
-      'phone_code': countryCode,
-      'phone': phone,
+    ...phoneReqModel.toJson(),
       'otp': otp,
     };
   }
 
-  factory LoginWithOtpReqModel.fromMap(Map<String, dynamic> map) {
-    return LoginWithOtpReqModel(
-      countryCode: map['countryCode'],
-      phone: map['phone'],
-      otp: map['otp'],
-    );
-  }
 
-  factory LoginWithOtpReqModel.fromJson(String source) =>
-      LoginWithOtpReqModel.fromMap(json.decode(source));
 }

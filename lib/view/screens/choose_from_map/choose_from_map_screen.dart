@@ -17,7 +17,6 @@ import 'controller/choose_from_map_controller.dart';
 
 class ChooseFromMapScreen extends StatelessWidget {
    ChooseFromMapScreen({super.key});
-  GoogleMapController? mapController; // Declare the mapController variable
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +96,7 @@ class ChooseFromMapScreen extends StatelessWidget {
                     duration: const Duration(milliseconds: 2300),
                     mapId:
                     mapCompleter.future.then<int>((value) => value.mapId),
-                    markers: {}, // Add your markers here
+                    markers: {},
                     shouldAnimateCamera: false,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(Dimensions.radiusOverLarge),
@@ -111,14 +110,13 @@ class ChooseFromMapScreen extends StatelessWidget {
                           target: userMapController.initialPosition,
                           zoom: 16,
                         ),
-                        onMapCreated: (gController) {
-                          userMapController.setMapController(gController);
-                          mapController = gController; // Store the GoogleMapController instance
-                        },
+                        onMapCreated: controller.onMapCreated,
+                            // (gController) {
+                          // userMapController.setMapController(gController);
+                          // mapController = gController;
+                        // },
                         polylines: Set<Polyline>.of(userMapController.polyLines.values),
-                        onCameraMove: (CameraPosition position) {
-                          print(position.target);
-                        },
+                        onCameraMove:controller.onCameraMove,
                         onCameraIdle: userMapController.onCameraIdle,
                       ),
                     ),
@@ -218,7 +216,6 @@ class ChooseFromMapScreen extends StatelessWidget {
               left: 0,
               right: 0,
               bottom: 15,
-
               duration: Duration(milliseconds: 2000),
               curve: Curves.easeIn,
               child: SearchBottom(),

@@ -50,77 +50,7 @@ class MapController extends GetxController implements GetxService {
   }
 
 
-  ///needs to be refactored
-  StreamSubscription<ServiceStatus> serviceStatusStream = Geolocator.getServiceStatusStream().listen(
-          (ServiceStatus status) async {
-        try{
 
-          print(status);
-          LocationPermission permission;
-
-          bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-          if (!serviceEnabled) {
-            await Geolocator.openAppSettings();
-            // await Geolocator.openLocationSettings();
-            // await openLocationSettings();
-            Get.back();
-            Get.defaultDialog(content:  Text('Location services are disabled. Please enable the services.....',style: TextStyle(fontSize: 16),));
-            Get.back();
-            return ;
-          }
-          permission = await Geolocator.checkPermission();
-          if (permission == LocationPermission.denied) {
-            permission = await Geolocator.requestPermission();
-            if (permission == LocationPermission.denied) {
-              Get.back();
-              Get.defaultDialog(content: Text('Location permissions are denied',style: TextStyle(fontSize: 16),));
-              return  ;
-            }
-          }
-          if (permission == LocationPermission.deniedForever) {
-            Get.back();
-
-            Get.defaultDialog(content: Text('Location permissions are permanently denied, we cannot request permissions **.',style: TextStyle(fontSize: 16),));
-            Get.off(SetDestinationScreen( ));
-            // Get.off(AddItemScreen(address: '', apartmentNumber: '', landMark: '', lat: '', lng: '', areaNumber: ''));
-            return  ;
-          }
-          if (permission == LocationPermission.always || permission == LocationPermission.whileInUse)  {
-            // markers.clear();
-            // markers=[];
-
-            return  await Geolocator.getCurrentPosition(  desiredAccuracy: LocationAccuracy.high)
-                .then((currLocation) async{
-
-              // initialPosition = LatLng(currLocation.latitude, currLocation.longitude);
-              // currentLocation=LatLng(currLocation.latitude, currLocation.longitude);
-              // await getUserLocation(LatLng(currLocation.latitude, currLocation.longitude));
-
-
-              // await   showPinsOnMap(LatLng(currLocation.latitude, currLocation.longitude));
-              print(currLocation.longitude);
-
-              Get.to(SetDestinationScreen());
-            });
-          }
-        }     on TimeoutException {
-          Get.defaultDialog(content: Text('Location request timed out.',style: TextStyle(fontSize: 12),));
-
-
-        } on PermissionDeniedException {
-          Get.defaultDialog(content: Text('Location permissions are denied.',style: TextStyle(fontSize: 12),));
-
-
-        } on LocationServiceDisabledException {
-          Get.defaultDialog(content: Text('Location services are disabled.',style: TextStyle(fontSize: 12),));
-
-        } on PermissionRequestInProgressException {
-          Get.defaultDialog(content: Text('Location Permission Request InProgress Exception  .',style: TextStyle(fontSize: 12),));
-
-        }
-      }
-
-  );
   bool isExpanded = false;
   void toggleExpanded(){
     isExpanded = !isExpanded;

@@ -46,10 +46,13 @@ class SearchBottom extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Obx(
-                        () => controller.isDataLoading.value
+                        () => Container(
+                           width: MediaQuery.of(context).size.width/1.5,
+                          child:controller.isDataLoading.value
                         ? Text(Strings.searchingAddress.tr,style:
                     K.hintSmallTextStyle,)
                         : Text(controller.address.value.tr),
+                  ),
                   ),
                    GestureDetector(child: Text(Strings.search.tr,style: K.primaryMediumTextStyle,),
                    onTap: (){

@@ -87,8 +87,8 @@ class SearchServices {
   }
 
 // Future<LatLng> getLatLngFromAddress(Position address) async {
-  // List<Placemark> list = await Geolocator().placemarkFromAddress(address);
-  // List<Placemark> list = await placemarkFromCoordinates(address);
-  // return LatLng(list[0].position.latitude, list[0].position.longitude);
+//   List<Placemark> list = await Geolocator().placemarkFromAddress(address);
+//   List<Placemark> list = await placemarkFromCoordinates(address);
+//   return LatLng(list[0].position.latitude, list[0].position.longitude);
 // }
 }

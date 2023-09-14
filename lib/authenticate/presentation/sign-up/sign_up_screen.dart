@@ -61,8 +61,8 @@ class SignUpScreen extends GetView<AuthController> {
                           hintText: Strings.firstName.tr,
                           inputType: TextInputType.name,
                           prefixIcon: Images.person,
-                          controller: controller.regFristNameController,
-                          focusNode: controller.regFristNameFocusNode,
+                          controller: controller.regFirstNameController,
+                          focusNode: controller.regFirstNameFocusNode,
                           nextFocus: controller.regLastNameFocusNode,
                           inputAction: TextInputAction.next,
                         )

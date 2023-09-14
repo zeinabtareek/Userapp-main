@@ -16,6 +16,7 @@ import '../../../../util/images.dart';
 import '../../../widgets/permission_dialog.dart';
 import '../../home/widgets/home_map_view.dart';
 import '../../where_to_go/repository/search_service.dart';
+import '../../where_to_go/where_to_go_screen.dart';
 
 class ChooseFromMapController extends BaseController {
   final searchController = TextEditingController();
@@ -43,18 +44,12 @@ class ChooseFromMapController extends BaseController {
   void toggleContainerVisibility() {
     isContainerVisible.value = !isContainerVisible.value;
   }
-  // final checkUserBadgetSelected =false.obs;
-
-  // late AnimationController animationController;
 
   @override
   void onInit() {
     super.onInit();
   }
 
-  void setMapController(GoogleMapController mapController) {
-    _mapController = mapController;
-  }
 
   ///Get Current location
   Future<Position> getCurrentLocation({bool isAnimate = true}) async {
@@ -157,4 +152,87 @@ class ChooseFromMapController extends BaseController {
     }
     isDataLoading.value=false;
   }
+
+  ///needs to be refactored
+  StreamSubscription<ServiceStatus> serviceStatusStream = Geolocator.getServiceStatusStream().listen(
+          (ServiceStatus status) async {
+        try{
+
+          print(status);
+          LocationPermission permission;
+
+          bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+          if (!serviceEnabled) {
+            await Geolocator.openAppSettings();
+            // await Geolocator.openLocationSettings();
+            // await openLocationSettings();
+            Get.back();
+            Get.defaultDialog(content:  Text('Location services are disabled. Please enable the services.....',style: TextStyle(fontSize: 16),));
+            Get.back();
+            return ;
+          }
+          permission = await Geolocator.checkPermission();
+          if (permission == LocationPermission.denied) {
+            permission = await Geolocator.requestPermission();
+            if (permission == LocationPermission.denied) {
+              Get.back();
+              Get.defaultDialog(content: Text('Location permissions are denied',style: TextStyle(fontSize: 16),));
+              return  ;
+            }
+          }
+          if (permission == LocationPermission.deniedForever) {
+            Get.back();
+
+            Get.defaultDialog(content: Text('Location permissions are permanently denied, we cannot request permissions **.',style: TextStyle(fontSize: 16),));
+            Get.off(SetDestinationScreen( ));
+            // Get.off(AddItemScreen(address: '', apartmentNumber: '', landMark: '', lat: '', lng: '', areaNumber: ''));
+            return  ;
+          }
+          if (permission == LocationPermission.always || permission == LocationPermission.whileInUse)  {
+            // markers.clear();
+            // markers=[];
+
+            return  await Geolocator.getCurrentPosition(  desiredAccuracy: LocationAccuracy.high)
+                .then((currLocation) async{
+
+              // initialPosition = LatLng(currLocation.latitude, currLocation.longitude);
+              // currentLocation=LatLng(currLocation.latitude, currLocation.longitude);
+              // await getUserLocation(LatLng(currLocation.latitude, currLocation.longitude));
+              // await   showPinsOnMap(LatLng(currLocation.latitude, currLocation.longitude));
+              print(currLocation.longitude);
+
+              Get.to(SetDestinationScreen());
+            });
+          }
+        }     on TimeoutException {
+          Get.defaultDialog(content: Text('Location request timed out.',style: TextStyle(fontSize: 12),));
+
+
+        } on PermissionDeniedException {
+          Get.defaultDialog(content: Text('Location permissions are denied.',style: TextStyle(fontSize: 12),));
+
+
+        } on LocationServiceDisabledException {
+          Get.defaultDialog(content: Text('Location services are disabled.',style: TextStyle(fontSize: 12),));
+
+        } on PermissionRequestInProgressException {
+          Get.defaultDialog(content: Text('Location Permission Request InProgress Exception  .',style: TextStyle(fontSize: 12),));
+
+        }
+      }
+
+  );
+  void setMapController(GoogleMapController mapController) {
+    _mapController = mapController;
+  }
+
+  onMapCreated(gController){
+      setMapController(gController);
+
+  }
+
+  onCameraMove  (CameraPosition position) {
+  print(position.target);
+  }
+
 }

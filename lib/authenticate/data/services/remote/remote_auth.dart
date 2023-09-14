@@ -4,21 +4,21 @@ import 'package:retrofit/http.dart';
 
 import '../../../config/config.dart';
 import '../../models/base_model.dart';
+import '../../models/base_phone_req_model.dart';
 import '../../models/req-model/change_password_req_model.dart';
 import '../../models/req-model/complete_data_req_model.dart';
 import '../../models/req-model/login_with_otp_model.dart';
 import '../../models/req-model/login_with_pass_req_model.dart';
 import '../../models/req-model/register_req_model.dart';
-import '../../models/req-model/send_otp_req_model.dart';
 import '../../models/req-model/update_password_req_model.dart';
 import '../../models/req-model/verify_phone_req_model.dart';
 import '../../models/res-models/register_res_model.dart';
 
 part 'remote_auth.g.dart';
 
-@RestApi(baseUrl:  AuthLib.baseUrl)
+@RestApi(baseUrl: AuthLib.baseUrl)
 abstract class RemoteApiAuth {
-  factory RemoteApiAuth(Dio dio) =  _RemoteApiAuth;
+  factory RemoteApiAuth(Dio dio) = _RemoteApiAuth;
 
   @POST(AuthLib.registerEndPoint)
   Future<HttpResponse<HOODAuthorizedResModel>> register(
@@ -47,12 +47,17 @@ abstract class RemoteApiAuth {
 
   @POST(AuthLib.sendOtpEndPoint)
   Future<HttpResponse<MsgModel>> sendOtp(
-    @Body() OtpReqModel req,
+    @Body() BasePhoneReqModel req,
   );
 
   @POST(AuthLib.forgetPasswordEndPoint)
   Future<HttpResponse<MsgModel>> forgetPassword(
-    @Body() OtpReqModel req,
+    @Body() BasePhoneReqModel req,
+  );
+
+  @POST(AuthLib.checkOtpEndPoint)
+  Future<HttpResponse<MsgModel>> checkOtpCode(
+    @Body() LoginWithOtpReqModel req,
   );
 
   @POST(AuthLib.updatePasswordEndPoint)
@@ -60,7 +65,7 @@ abstract class RemoteApiAuth {
     @Body() UpdatePasswordReqModel req,
   );
 
-   @POST(AuthLib.changePassEndPoint)
+  @POST(AuthLib.changePassEndPoint)
   Future<HttpResponse<MsgModel>> changePass(
     @Body() ChangePasswordReqModel req,
   );

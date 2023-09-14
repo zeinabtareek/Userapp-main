@@ -4,16 +4,17 @@ abstract class DataState<T> {
   final T? data;
   final DioException? error;
   final String? errorMsg;
-  const DataState({this.data, this.error,this.errorMsg});
+
+  const DataState({this.data, this.error, this.errorMsg});
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is DataState<T> &&
-      other.data == data &&
-      other.error == error &&
-      other.errorMsg == errorMsg;
+        other.data == data &&
+        other.error == error &&
+        other.errorMsg == errorMsg;
   }
 
   @override
@@ -25,9 +26,12 @@ class DataSuccess<T> extends DataState<T> {
 }
 
 class DataFailed<T> extends DataState<T> {
-  const DataFailed(DioException error) : super(error: error);
+ 
+
+  const DataFailed(DioException error, T data) : super(error: error,data: data);
 }
 
 class DataFailedErrorMsg<T> extends DataState<T> {
-  const DataFailedErrorMsg(String error) : super(errorMsg: error);
+
+  const DataFailedErrorMsg(String error,T? data) : super(errorMsg: error,data: data);
 }
