@@ -42,7 +42,7 @@ class WhereToGoController extends BaseController implements GetxService {
   @override
   void onInit() {
      super.onInit();
-
+     // Get.put(WhereToGoController(setMapRepo: Get.find()));
   }
 List <String>extraRoutes=[];
   void setExtraRoute() {

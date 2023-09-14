@@ -30,7 +30,7 @@ class CategoryView extends StatelessWidget {
                   Get.find<ParcelController>().updateParcelState(ParcelDeliveryState.initial);
                   Get.to((const MapScreen(fromScreen: 'parcel',)));
                 }else{
-                  Get.to(()=> const SetDestinationScreen());
+                  Get.to(()=>   SetDestinationScreen());
                 }
               },
               child: SizedBox(height: 100, width: 100,

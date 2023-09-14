@@ -23,7 +23,7 @@ import 'controller/where_to_go_controller.dart';
 class SetDestinationScreen extends StatelessWidget {
   final String? address;
 
-  const SetDestinationScreen({Key? key, this.address}) : super(key: key);
+    SetDestinationScreen({Key? key, this.address}) : super(key: key);
 
   // @override
   // void initState() {
@@ -33,14 +33,17 @@ class SetDestinationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(WhereToGoController(setMapRepo: Get.find()));
-    return Scaffold(
+
+    return   Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
         iconTheme:
             IconThemeData(color: Theme.of(context).textTheme.bodyMedium!.color),
       ),
-      body: GetBuilder<WhereToGoController>(builder: (setMapController) {
+      body: GetBuilder<WhereToGoController>(
+        init: WhereToGoController(setMapRepo: Get.find()),
+          builder: (setMapController) {
         return SingleChildScrollView(
           child: Stack(children: [
             Padding(
@@ -104,6 +107,7 @@ class SetDestinationScreen extends StatelessWidget {
                                 padding: K.fixedPadding0,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     ///First Text Field
                                     FocusScope(
@@ -126,18 +130,15 @@ class SetDestinationScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical:
-                                              Dimensions.paddingSizeExtraSmall),
-                                      child: Text(Strings.to.tr,
+                                  Text(Strings.to.tr,
                                           style: textRegular.copyWith(
                                               color: Colors.white)),
-                                    ),
+
                                     ListView.builder(
                                       itemCount: setMapController.currentExtraRoute,
                                       shrinkWrap: true,
                                       physics: const NeverScrollableScrollPhysics(),
+
                                       itemBuilder: (context, index) {
                                         List<TextEditingController>itemControllers = [
                                           controller. extraRouteController,
@@ -152,26 +153,29 @@ class SetDestinationScreen extends StatelessWidget {
                                         TextEditingController itemController = itemControllers[index]; // Get the appropriate controller based on the index
                                         FocusNode itemFocusNode = itemFocusNodes[index]; // Get the appropriate controller based on the index
 
-                                        return Padding(
-                                          padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeDefault),
-                                          child: FocusScope(
-                                            child: Focus(
-                                              onFocusChange: (focus) {
-                                                if (focus) {
-                                                  controller.searchController.value = itemController;
-                                                }
-                                              },
-                                              child: InputField(
-                                                controller: itemController,
-                                                node: itemFocusNode,
-                                                hint: Strings.enterExtraRoute.tr,
-                                                onTap: () async => await controller.checkPermissionBeforeNavigation(context),
-                                                onChange: (v) {
-                                                  controller.searchPlacesFrom(v);
-                                                  print(v);
-                                                },
-                                              ),
-                                            ),
+                                        return  Padding(
+
+                                              padding: const EdgeInsets.only(top: Dimensions.paddingSizeExtraSmall, ),
+                                               child: FocusScope(
+                                                child: Focus(
+                                                  onFocusChange: (focus) {
+                                                    if (focus) {
+                                                      controller.searchController.value = itemController;
+                                                    }
+                                                  },
+                                                  child: InputField(
+                                                    controller: itemController,
+                                                    node: itemFocusNode,
+                                                    hint: Strings.enterExtraRoute.tr,
+                                                    onTap: () async => await controller.checkPermissionBeforeNavigation(context),
+                                                    onChange: (v) {
+                                                      controller.searchPlacesFrom(v);
+                                                      print(v);
+                                                    },
+                                                  ),
+                                                ),
+                                              // ),
+                                            // ),
                                           ),
                                         );
                                       },

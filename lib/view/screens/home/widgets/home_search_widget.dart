@@ -5,6 +5,7 @@ import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
 
 import '../../../../util/app_strings.dart';
+import '../../where_to_go/controller/where_to_go_controller.dart';
 import '../../where_to_go/where_to_go_screen.dart';
 
 class HomeSearchWidget extends StatelessWidget {
@@ -15,7 +16,11 @@ class HomeSearchWidget extends StatelessWidget {
     return SizedBox(
       height: Dimensions.searchBarSize,
       child: TextField(
-        onTap: ()=> Get.to(()=> const SetDestinationScreen()),
+        onTap: ()
+          {
+
+            Get.to(()=>   SetDestinationScreen());
+            },
         style: textRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8)),
         cursorColor: Theme.of(context).hintColor,
         autofocus: false,

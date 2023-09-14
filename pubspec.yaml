@@ -51,6 +51,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^22.2.12
   url_launcher: ^6.1.14
   geocoding:
+  flutter_spinkit:
 #  map_location_picker:
 
 dependency_overrides:

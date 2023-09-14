@@ -10,20 +10,24 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:ui' as ui;
 import '../../../../helper/location_permission.dart';
 import '../../../../util/images.dart';
+import '../../../widgets/permission_dialog.dart';
 import '../widgets/home_map_view.dart';
 
 class HomeViewController extends GetxController{
 
-  Position? position;
-  GoogleMapController? mapController;
+   GoogleMapController? mapController;
   final markers = <MarkerId, Marker>{};
   final controller = Completer<GoogleMapController>();
-
-
+    Position ?_position;
+  Position? get position => _position;
+    final googleMapController = Completer<GoogleMapController>();
+   final stream = Stream.periodic(kDuration, (count) => kLocations[count])
+       .take(kLocations.length);
+   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   onInit()async{
     super.onInit();
 
-    // await checkPermissionBeforeNavigate(Get.context!);
+    _position= await determinePosition();
   }
 
 
@@ -104,13 +108,13 @@ class HomeViewController extends GetxController{
     }
 
     _position = await Geolocator.getCurrentPosition();
-    print(position.latitude);
+    print(position?.latitude);
     mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(position.latitude ?? 0.0, position.longitude ?? 0.0),
+        target: LatLng(position?.latitude ?? 0.0, position?.longitude ?? 0.0),
         zoom: 17)));
     var marker = RippleMarker(
         markerId: kMarkerId,
-        position: LatLng(position.latitude ?? 0.0, position.longitude ?? 0.0),
+        position: LatLng(position?.latitude ?? 0.0, position?.longitude ?? 0.0),
         ripple: false,
         icon: BitmapDescriptor.fromBytes(
             await getBytesFromAsset(Images.carIcon, 100)),

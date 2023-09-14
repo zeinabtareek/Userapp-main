@@ -59,41 +59,67 @@ class SearchBottom extends StatelessWidget {
               ),
 
               K.sizedBoxH0,
-              Obx(
-                () => Row(
-                  children: [
-                    Expanded(
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 500),
-                        height: controller.isContainerVisible.value ? 50 : 0,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          // height: 50.0,
-                          decoration: getBoxShadow(),
-                          child: Center(
-                            child: TextFormField(
+           // Obx(
+           //      () => Row(
+           //        children: [
+           //          Expanded(
+           //            child: AnimatedContainer(
+           //              duration: Duration(milliseconds: 500),
+           //              height: controller.isContainerVisible.value ? 50 : 0,
+           //              child: Container(
+           //                padding: EdgeInsets.symmetric(horizontal: 10),
+           //                // height: 50.0,
+           //                decoration: getBoxShadow(),
+           //                child: Center(
+           //                  child: TextFormField(
+           //
+           //                      textCapitalization: TextCapitalization.words,
+           //                      decoration: getInoutDecoration(
+           //                        controller.isContainerVisible.value
+           //                            ? Strings.selectDestination.tr
+           //                            : null,
+           //                        controller.isContainerVisible.value
+           //                            ? Icon(Icons.location_on)
+           //                            : null,
+           //                      ),
+           //                      onChanged: (value) {
+           //                        print(value);
+           //                      }),
+           //                ),
+           //              ),
+           //            ),
+           //          ),
+           //
+           //
+           //        ],
+           //      ),
+           //    ),
+              Obx(()=> AnimatedContainer(
+                 height:controller.isContainerVisible.value ?50:0,
+                 // color: Colors.red,
+                duration: Duration(milliseconds: 500),
+                decoration: getBoxShadow(),
 
-                                textCapitalization: TextCapitalization.words,
-                                decoration: getInoutDecoration(
-                                  controller.isContainerVisible.value
-                                      ? Strings.pickUpLocation.tr
-                                      : null,
-                                  controller.isContainerVisible.value
-                                      ? Icon(Icons.location_on)
-                                      : null,
-                                ),
-                                onChanged: (value) {
-                                  print(value);
-                                }),
-                          ),
-                        ),
-                      ),
-                    ),
+                child:
 
 
-                  ],
-                ),
-              ),
+                TextFormField(
+                  decoration:  getInoutDecoration(
+                    controller.isContainerVisible.value
+                      ? Strings.selectDestination.tr : null,
+                                           controller.isContainerVisible.value
+                                               ? Icon(Icons.location_on)
+                                               : null,
+                      controller.isContainerVisible.value,
+                  ),
+
+                  // InputDecoration(
+                  //   hintText: 'hint',
+                  //   border: InputBorder.none,
+                  //   hintStyle: controller.isContainerVisible.value?K.hintSmallTextStyle:TextStyle(color: Colors.transparent),
+                  //   contentPadding: EdgeInsets.only(left: 15.0, top: 16.0),
+                  // ),
+                )),),
               K.sizedBoxH0,
               CustomButton(
                 buttonText: Strings.seTDestination.tr,
@@ -110,7 +136,7 @@ class SearchBottom extends StatelessWidget {
     );
   }
 
-  getInoutDecoration(hint, icon) {
+  getInoutDecoration(hint, icon,isContainerVisible) {
     return InputDecoration(
       icon: Container(
         margin: const EdgeInsets.only(
@@ -122,6 +148,8 @@ class SearchBottom extends StatelessWidget {
       ),
       hintText: hint,
       border: InputBorder.none,
+      hintStyle:  isContainerVisible?K.hintSmallTextStyle:TextStyle(color: Colors.transparent),
+
       contentPadding: EdgeInsets.only(left: 15.0, top: 16.0),
     );
   }
@@ -139,37 +167,5 @@ class SearchBottom extends StatelessWidget {
         ]);
   }
 
-  searchTo() {
-    return GetBuilder<ChooseFromMapController>(
-      init: ChooseFromMapController(),
-      builder: (controller) => Material(
-        child: Container(
-          margin: EdgeInsets.all(10),
-          height: 60.0,
-          width: double.infinity,
-          decoration: getBoxShadow(),
-          child: TextField(
-              keyboardType: TextInputType.text,
-              controller: controller.searchDesTextEditing,
-              cursorColor: Colors.black,
-              // textInputAction: TextInputAction.go,
-              decoration: getInoutDecoration(
-                "destination?",
-                const Icon(
-                  Icons.local_taxi,
-                  color: Colors.black,
-                ),
-              ),
-              onChanged: (value) {
-                // mapController
-                //     .searchPlacesfrom(value);
-                print(value);
-              }
-              // onChanged: (value) {}
-              // mapController.searchPlacesTo(value)
-              ),
-        ),
-      ),
-    );
-  }
+
 }

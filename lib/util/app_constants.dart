@@ -44,7 +44,7 @@ class AppConstants {
 
 //map api key
 
-  static const String mapKey = 'AIzaSyCaCSJ0BZItSyXqBv8vpD1N4WBffJeKhLQ';
+  static const String mapKey = 'AIzaSyBvK3ADi17SjO55E46KGr2RT5vSj2nyRpI';
 
 
 

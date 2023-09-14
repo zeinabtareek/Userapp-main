@@ -345,6 +345,11 @@
 
 
 
+
+
+
+
+
   "otp_forget_password": "نسيت كلمة المرور",
   "history": "الرحلات السابقة",
   "set_destination": "حدد الوجهة",
@@ -360,6 +365,6 @@
   "canceled": " ملغاة ",
   "no_history": "لا يوجد تاريخ",
  "pick_up_location": "موقع الإستلام؟",
-  "search_address": "عنوان البحث....",
+  "search_address": "عنوان البحث...."
 
 }

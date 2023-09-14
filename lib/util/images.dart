@@ -117,6 +117,7 @@ class Images {
   static const String splashBackgroundThree = 'assets/image/splash_three.png';
   static const String mapLocationIcon = 'assets/image/map_location_icon.png';
   static const String carIcon = 'assets/image/car_icon.png';
+  static const String locationFill = 'assets/image/location_fill.png';
 
 
 

@@ -20,7 +20,8 @@ class SearchServices {
   // Future<List<Suggestion>> getAutoCompleteFrom(
       {required String search, String country = 'eg'}) async {
     var url =
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&components=country:$country&key=AIzaSyCzuhU5w3Ah8t2x2pIKXzsGoATsdzVNK9I';
+        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&components=country:$country&key=${AppConstants.mapKey}';
+        // 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&components=country:$country&key=AIzaSyCzuhU5w3Ah8t2x2pIKXzsGoATsdzVNK9I';
     var response = await http.get(Uri.parse(url));
     var json = convert.jsonDecode(response.body);
     var jsnResults = json['predictions'] as List;
