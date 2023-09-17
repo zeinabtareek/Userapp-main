@@ -77,7 +77,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => LocalizationController(sharedPreferences: Get.find()));
   Get.lazyPut(() => OnBoardController());
   // Get.lazyPut(() => AuthController(authRepo: AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find())));
-  // Get.lazyPut(() => NotificationController(notificationRepo: Get.find()));
+  Get.lazyPut(() => NotificationController(notificationRepo: Get.find()));
   Get.lazyPut(() => ActivityController( ));
   // Get.lazyPut(() => ActivityController(activityRepo: ActivityRepo( )));
   // Get.lazyPut(() => ActivityController(activityRepo: ActivityRepo(apiClient: Get.find())));

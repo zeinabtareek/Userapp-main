@@ -45,7 +45,7 @@ class AuthLib {
     ),
     GetPage(
       name: AuthScreenPath.signUpScreenRouteName,
-      page: () => const SignUpScreen(),
+      page: () =>  SignUpScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => AuthController(sl()));
       }),

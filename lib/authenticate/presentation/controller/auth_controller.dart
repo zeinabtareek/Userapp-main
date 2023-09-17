@@ -35,19 +35,32 @@ import '../login-with-pass/sign_in_screen.dart';
 const String defaultDailCode = "+966";
 
 class AuthController extends GetxController {
+  var authBinding = BindingsBuilder(
+    () {
+      Get.lazyPut(() => AuthController(sl()));
+    },
+  );
   toForgetPassScreen() {
     initForgetPassScreen();
     Get.toNamed(AuthScreenPath.forgetPasswordScreenRouteName);
   }
 
+  void _toHomeScreen() {
+    Get.find<BottomMenuController>().resetNavBar();
+    Get.offAll(() => DashboardScreen());
+  }
+
   toLoginOtpScreen(OtpState otpState) {
-    Get.to(() => const OtpLoginScreen());
+    initOtpScreen();
+    Get.to(() => const OtpLoginScreen(), binding: BindingsBuilder(() {
+      Get.lazyPut(() => AuthController(sl()));
+    }));
   }
 
   toSignUpScreen() {
-    Get.to(
-      () => const SignUpScreen(),
-    );
+    Get.to(() => SignUpScreen(), binding: BindingsBuilder(() {
+      Get.lazyPut(() => AuthController(sl()));
+    }));
   }
 
   toHtmlViewer() {
@@ -148,8 +161,7 @@ class AuthController extends GetxController {
           // TODO:  isNotVerifiedPhone
 
           // TODO:  welcome toast
-          Get.find<BottomMenuController>().resetNavBar();
-          Get.offAll(() => DashboardScreen());
+          _toHomeScreen();
         },
       );
     }
@@ -242,11 +254,14 @@ class AuthController extends GetxController {
 
       final res = await authCases.register(reqModel);
       isLoadingSignUp(false);
-      if (res.data?.isSuccess ?? true) {
-        User user = res.data!.user!;
-        authCases.setUserDate(user);
-        toCompleteDataScreen();
-      }
+      checkStatus(
+        res,
+        onSuccess: (res) {
+          User user = res!.data!.user!;
+          authCases.setUserDate(user);
+          toCompleteDataScreen();
+        },
+      );
     }
   }
 
@@ -280,19 +295,46 @@ class AuthController extends GetxController {
   RxBool isLoadingCompleteData = false.obs;
 
   void completeData() async {
-    isLoadingCompleteData(true);
-    final req = CompleteDataReqModel(
-      email: completeEmailController.text,
-      address: addressCompleteController.text,
-      img: _pickedProfileFile.value,
-    );
-    final res = await authCases.completeData(req);
-    isLoadingCompleteData(false);
-    if (res.data?.isSuccess ?? true) {
-      authCases.setUserDate(null);
-      User user = res.data!.user!;
-      authCases.setUserDate(user);
-      toLoginOtpScreen(OtpState.register);
+    if (completeEmailController.text.isEmpty) {
+      showCustomSnackBar(Strings.enterYourEmail.tr);
+      return;
+    } else if (!completeEmailController.text.isEmail) {
+      showCustomSnackBar(Strings.invalidEmil.tr);
+      return;
+    } else if (addressCompleteController.text.isEmpty) {
+      showCustomSnackBar(Strings.enterYourAddress.tr);
+      return;
+    } else if (_pickedProfileFile.value == null) {
+      // TODO:
+      showCustomSnackBar(Strings.invalidEmil.tr);
+      return;
+    } else {
+      isLoadingCompleteData(true);
+      final req = CompleteDataReqModel(
+        email: completeEmailController.text,
+        address: addressCompleteController.text,
+        img: _pickedProfileFile.value,
+      );
+      final res = await authCases.completeData(req);
+      isLoadingCompleteData(false);
+      checkStatus(
+        res,
+        onSuccess: (res) async {
+          debugPrint(' completeData-- res $res data ${res?.data}');
+          await authCases.setUserDate(null);
+// TODO:  make sure user have token
+          User user = res!.data!.user!;
+          await authCases.setUserDate(user);
+          Get.to(
+            () => VerificationScreen(
+              otpState: OtpState.register,
+              number: user.phone!,
+              countryCode: user.phoneCode!,
+            ),
+            binding: authBinding,
+          );
+        },
+      );
     }
   }
 
@@ -338,11 +380,7 @@ class AuthController extends GetxController {
               number: forgetPasswordPhoneController.text,
               countryCode: forgetSelectCountry.value.dialCode!,
             ),
-            binding: BindingsBuilder(
-              () {
-                Get.lazyPut(() => AuthController(sl()));
-              },
-            ),
+            binding: authBinding,
           );
         },
       );
@@ -372,7 +410,7 @@ class AuthController extends GetxController {
     nodeForOTPLogInScreen.dispose();
   }
 
-  void loginOtpClick() async {
+  void sendOtp() async {
     if (phoneControllerForOTPLogInScreen.text.length < 8) {
       showCustomSnackBar(Strings.invalidPhone.tr);
       return;
@@ -380,12 +418,13 @@ class AuthController extends GetxController {
       showCustomSnackBar(Strings.phoneIsRequired.tr);
       return;
     }
+    otpLoginIsLoading = true.obs;
     final req = BasePhoneReqModel(
       phoneCode: otpSelectCountry.value.dialCode!,
       phone: phoneControllerForOTPLogInScreen.text,
     );
     final res = await authCases.sendOtp(req);
-
+    otpLoginIsLoading = false.obs;
     checkStatus(res, onSuccess: (res) {
       Get.to(
         () => VerificationScreen(
@@ -393,11 +432,7 @@ class AuthController extends GetxController {
           number: phoneControllerForOTPLogInScreen.text,
           otpState: OtpState.loginWithOtp,
         ),
-        binding: BindingsBuilder(
-          () {
-            Get.lazyPut(() => AuthController(sl()));
-          },
-        ),
+        binding: authBinding,
       );
     });
   }
@@ -501,7 +536,7 @@ class AuthController extends GetxController {
           onCheckSuccess();
         } else {
           // TODO: tell back end to handel msg
-          showCustomSnackBar("wrong otp code try Agin ", isError: true);
+          showCustomSnackBar(Strings.invalidOtp.tr, isError: true);
         }
       },
     );
@@ -524,7 +559,7 @@ class AuthController extends GetxController {
     checkStatus(
       res,
       onSuccess: (res) {
-        Get.offAll(() => DashboardScreen());
+        _toHomeScreen();
       },
     );
   }
@@ -542,13 +577,14 @@ class AuthController extends GetxController {
       otp: updateVerificationCode.value,
     );
     final res = await authCases.loginWithOtp(req);
+    isVerificationIsLoading(false);
 
     checkStatus(
       res,
       onSuccess: (res) async {
         await authCases.setUserDate(res!.user!);
         // TODO:  welcome toast
-        Get.offAll(() => DashboardScreen());
+        _toHomeScreen();
       },
     );
   }

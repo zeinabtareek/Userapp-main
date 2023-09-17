@@ -36,6 +36,7 @@ abstract class RemoteApiAuth {
   );
 
   @POST(AuthLib.completeDataEndPoint)
+  @MultiPart()
   Future<HttpResponse<HOODAuthorizedResModel>> completeData(
     @Body() CompleteDataReqModel req,
   );

@@ -20,7 +20,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   void initState() {
     // TODO:  un hash
-    // Get.find<NotificationController>().getNotificationList();
+    Get.find<NotificationController>().getNotificationList();
     super.initState();
   }
 
@@ -50,74 +50,74 @@ class _NotificationScreenState extends State<NotificationScreen> {
               height: Dimensions.paddingSizeDefault,
             ),
 // TODO:  unHash Expanded widget
-            // Expanded(
-            //   child: GetBuilder<NotificationController>(
-            //       builder: (notificationController) {
-            //         return notificationController.notificationList != null ?
-            //         ListView.builder(
-            //           itemCount: notificationController.notificationList?.length,
-            //           itemBuilder: (context, item) => Container(
-            //             decoration: BoxDecoration(
-            //               color: Theme.of(context).primaryColor.withOpacity(0.07),
-            //               borderRadius: const BorderRadius.all(Radius.circular(Dimensions.radiusLarge)),
-            //             ),
-            //             padding: const EdgeInsets.symmetric(
-            //               horizontal: Dimensions.paddingSizeDefault,
-            //               vertical: Dimensions.paddingSizeLarge,
-            //             ),
-            //             margin: const EdgeInsets.symmetric(vertical: 2),
-            //             child: Row(
-            //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //               crossAxisAlignment: CrossAxisAlignment.start,
-            //               children: [
-            //                 IntrinsicHeight(
-            //                   child: Row(
-            //                     children: [
-            //                       const CustomImage(
-            //                         image: '',
-            //                         radius: Dimensions.radiusDefault,
-            //                         height: 35, width: 35,
-            //                         placeholder: Images.carPlaceholder,
-            //                       ),
-            //                       const SizedBox(width: Dimensions.paddingSizeSmall,),
+            Expanded(
+              child: GetBuilder<NotificationController>(
+                  builder: (notificationController) {
+                    return notificationController.notificationList != null ?
+                    ListView.builder(
+                      itemCount: notificationController.notificationList?.length,
+                      itemBuilder: (context, item) => Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor.withOpacity(0.07),
+                          borderRadius: const BorderRadius.all(Radius.circular(Dimensions.radiusLarge)),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Dimensions.paddingSizeDefault,
+                          vertical: Dimensions.paddingSizeLarge,
+                        ),
+                        margin: const EdgeInsets.symmetric(vertical: 2),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            IntrinsicHeight(
+                              child: Row(
+                                children: [
+                                  const CustomImage(
+                                    image: '',
+                                    radius: Dimensions.radiusDefault,
+                                    height: 35, width: 35,
+                                    placeholder: Images.carPlaceholder,
+                                  ),
+                                  const SizedBox(width: Dimensions.paddingSizeSmall,),
 
-            //                       Column(crossAxisAlignment: CrossAxisAlignment.start,
-            //                         children: [
-            //                           Text(
-            //                             notificationController.notificationList?[item].data.title ?? '',
-            //                             style: textBold.copyWith(fontSize: Dimensions.fontSizeLarge),
-            //                           ),
+                                  Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        notificationController.notificationList?[item].data.title ?? '',
+                                        style: textBold.copyWith(fontSize: Dimensions.fontSizeLarge),
+                                      ),
 
-            //                           Text(notificationController.notificationList?[item].data.description ?? ''),
-            //                         ],
-            //                       ),
-            //                     ],
-            //                   ),
-            //                 ),
+                                      Text(notificationController.notificationList?[item].data.description ?? ''),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
 
-            //                 Padding(
-            //                   padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
-            //                   child: Row(
-            //                     children: [
-            //                      const Text('30 min ago',
-            //                       ),
-            //                       const SizedBox(width: Dimensions.paddingSizeExtraSmall,),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
+                              child: Row(
+                                children: [
+                                 const Text('30 min ago',
+                                  ),
+                                  const SizedBox(width: Dimensions.paddingSizeExtraSmall,),
 
-            //                       Icon(
-            //                         Icons.alarm,
-            //                         size: Dimensions.fontSizeLarge,
-            //                         color: Theme.of(context).hintColor.withOpacity(0.5),
-            //                       ),
-            //                     ],
-            //                   ),
-            //                 ),
-            //               ],
-            //             ),
-            //           ),
-            //         ) : const NotificationShimmer();
-            //       }
-            //   ),
-            // ),
+                                  Icon(
+                                    Icons.alarm,
+                                    size: Dimensions.fontSizeLarge,
+                                    color: Theme.of(context).hintColor.withOpacity(0.5),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ) : const NotificationShimmer();
+                  }
+              ),
+            ),
 
             Container(height: 70),
           ],

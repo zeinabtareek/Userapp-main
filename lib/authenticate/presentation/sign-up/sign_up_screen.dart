@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +11,15 @@ import '../controller/auth_controller.dart';
 import '../widgets/test_field_title.dart';
 
 class SignUpScreen extends GetView<AuthController> {
-  const SignUpScreen({Key? key}) : super(key: key);
+  SignUpScreen({Key? key}) : super(key: key) {
+    if (kDebugMode) {
+      controller.regFirstNameController.text = "aaa";
+      controller.regLastNameController.text = 'jjj';
+      controller.regNewPassController.text = '12345678';
+      // controller.regPhoneController
+      controller.regPassController.text = '12345678';
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,13 +140,14 @@ class SignUpScreen extends GetView<AuthController> {
                 K.sizedBoxH0,
                 K.sizedBoxH0,
                 K.sizedBoxH0,
-                CustomButton(
-                  buttonText: Strings.next.tr,
-                  onPressed: () async {
-                    await controller.validationSignUp();
-                  },
-                  radius: 50,
-                ),
+                Obx(() => CustomButton(
+                      isLoading: controller.isLoadingSignUp.isTrue,
+                      buttonText: Strings.next.tr,
+                      onPressed: () async {
+                        await controller.validationSignUp();
+                      },
+                      radius: 50,
+                    )),
                 K.sizedBoxH2
               ],
             ),

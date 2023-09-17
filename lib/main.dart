@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/authenticate/domain/use-cases/auth_cases.dart';
 import 'package:ride_sharing_user_app/firebase_options.dart';
 import 'package:ride_sharing_user_app/helper/notification_helper.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
@@ -20,12 +21,15 @@ import 'package:ride_sharing_user_app/theme/dark_theme.dart';
 import 'package:ride_sharing_user_app/theme/light_theme.dart';
 import 'package:ride_sharing_user_app/theme/theme_controller.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
+import 'package:ride_sharing_user_app/view/screens/splash/splash_screen.dart';
 
 import 'authenticate/presentation/sign-up/sign_up_screen.dart';
 import 'helper/cache_helper.dart';
 import 'helper/route_helper.dart';
+import 'initialize_dependencies.dart';
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
 
@@ -103,6 +107,8 @@ class MyApp extends StatelessWidget {
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

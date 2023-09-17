@@ -224,12 +224,9 @@ class _SplashScreenState extends State<SplashScreen>
       if (await sl<AuthCases>().isAuthenticated()) {
         Get.offAll(DashboardScreen());
       } else {
-        // if (Get.find<ConfigController>().showIntro()) {
-        //   Get.offAll(const OnBoardingScreen());
-        // }
-        // else {
+    
         Get.offAllNamed(AuthScreenPath.loginScreenWithPassRouteName);
-        // }
+ 
       }
     });
   }

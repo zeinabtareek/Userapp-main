@@ -81,24 +81,24 @@ class ForgotPasswordScreen extends GetView<AuthController> {
                       radius: 50,
                     ),
                   ),
-                  K.sizedBoxH1,
-                  Center(
-                    child: Text(
-                      Strings.or.tr,
-                      style: K.hintMediumTextStyle,
-                    ),
-                  ),
-                  K.sizedBoxH1,
-                  CustomButton(
-                    showBorder: true,
-                    borderWidth: 1,
-                    transparent: true,
-                    buttonText: Strings.logIn.tr,
-                    onPressed: () {
-                      Get.back();
-                    },
-                    radius: 50,
-                  ),
+                  // K.sizedBoxH1,
+                  // Center(
+                  //   child: Text(
+                  //     Strings.or.tr,
+                  //     style: K.hintMediumTextStyle,
+                  //   ),
+                  // ),
+                  // K.sizedBoxH1,
+                  // CustomButton(
+                  //   showBorder: true,
+                  //   borderWidth: 1,
+                  //   transparent: true,
+                  //   buttonText: Strings.logIn.tr,
+                  //   onPressed: () {
+                  //     Get.back();
+                  //   },
+                  //   radius: 50,
+                  // ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.1,
                   ),
