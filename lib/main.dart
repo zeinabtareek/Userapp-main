@@ -32,14 +32,13 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
-
-
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.dark, // dark text for status bar
-      statusBarColor: Colors.transparent),
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark, // dark text for status bar
+        statusBarColor: Colors.transparent),
   );
 
-  if(ResponsiveHelper.isMobilePhone) {
+  if (ResponsiveHelper.isMobilePhone) {
     HttpOverrides.global = MyHttpOverrides();
   }
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,7 +47,7 @@ Future<void> main() async {
 
   await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
   FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
-
+ await initializeDependencies();
   runApp(MyApp(languages: languages));
 }
 
@@ -58,51 +57,55 @@ class MyApp extends StatelessWidget {
 
   void _route() async {
     bool isSuccess = await Get.find<ConfigController>().getConfigData();
-    if (isSuccess) {
-
-    }
+    if (isSuccess) {}
   }
 
   @override
   Widget build(BuildContext context) {
-    if(GetPlatform.isWeb) {
+    if (GetPlatform.isWeb) {
       Get.find<ConfigController>().initSharedData();
       _route();
     }
     return GetBuilder<ThemeController>(builder: (themeController) {
       return GetBuilder<LocalizationController>(builder: (localizeController) {
         return GetBuilder<ConfigController>(builder: (configController) {
-          return (GetPlatform.isWeb && configController.config == null) ? const SizedBox() :Listener(
-              onPointerUp: (_) {
-            FocusScopeNode currentFocus = FocusScope.of(context);
-            if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-              currentFocus.focusedChild!.unfocus();
-            }
-          },
-          child:  GetMaterialApp(
-            title: AppConstants.appName,
-            debugShowCheckedModeBanner: false,
-            navigatorKey: Get.key,
-            scrollBehavior: const MaterialScrollBehavior().copyWith(
-              dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
-            ),
-            theme: themeController.darkTheme ? darkTheme : lightTheme,
-            locale: localizeController.locale,
-            translations: Messages(languages: languages),
-            fallbackLocale: Locale(AppConstants.languages[0].languageCode, AppConstants.languages[0].countryCode),
-            // initialRoute: RouteHelper.getSplashRoute(),
-            // getPages: RouteHelper.routes,
-            defaultTransition: Transition.topLevel,
-            transitionDuration:   Duration(milliseconds: 500),
-            home: DashboardScreen(),
-          ));
+          return (GetPlatform.isWeb && configController.config == null)
+              ? const SizedBox()
+              : Listener(
+                  onPointerUp: (_) {
+                    FocusScopeNode currentFocus = FocusScope.of(context);
+                    if (!currentFocus.hasPrimaryFocus &&
+                        currentFocus.focusedChild != null) {
+                      currentFocus.focusedChild!.unfocus();
+                    }
+                  },
+                  child: GetMaterialApp(
+                    title: AppConstants.appName,
+                    debugShowCheckedModeBanner: false,
+                    navigatorKey: Get.key,
+                    scrollBehavior: const MaterialScrollBehavior().copyWith(
+                      dragDevices: {
+                        PointerDeviceKind.mouse,
+                        PointerDeviceKind.touch
+                      },
+                    ),
+                    theme: themeController.darkTheme ? darkTheme : lightTheme,
+                    locale: localizeController.locale,
+                    translations: Messages(languages: languages),
+                    fallbackLocale: Locale(
+                        AppConstants.languages[0].languageCode,
+                        AppConstants.languages[0].countryCode),
+                    initialRoute: RouteHelper.getSplashRoute(),
+                    getPages: RouteHelper.routes,
+                    defaultTransition: Transition.topLevel,
+                    transitionDuration: Duration(milliseconds: 500),
+                    home: SplashScreen(),
+                  ));
         });
       });
     });
   }
 }
-
-
 
 class MyHttpOverrides extends HttpOverrides {
   @override
