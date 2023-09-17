@@ -52,15 +52,11 @@ class AuthController extends GetxController {
 
   toLoginOtpScreen(OtpState otpState) {
     initOtpScreen();
-    Get.to(() => const OtpLoginScreen(), binding: BindingsBuilder(() {
-      Get.lazyPut(() => AuthController(sl()));
-    }));
+    Get.to(() => const OtpLoginScreen(), binding: authBinding);
   }
 
   toSignUpScreen() {
-    Get.to(() => SignUpScreen(), binding: BindingsBuilder(() {
-      Get.lazyPut(() => AuthController(sl()));
-    }));
+    Get.to(() => SignUpScreen(), binding: authBinding);
   }
 
   toHtmlViewer() {
@@ -68,7 +64,14 @@ class AuthController extends GetxController {
   }
 
   toCompleteDataScreen() {
-    Get.to(() => const CompleteDataScreen());
+    Get.to(() => const CompleteDataScreen(), binding: authBinding);
+  }
+
+  void toSignInScreen() {
+    Get.offAll(
+      () => SignInScreen(),
+      binding: authBinding,
+    );
   }
 
   AuthCases authCases;
@@ -654,13 +657,13 @@ class AuthController extends GetxController {
     checkStatus(
       res,
       onSuccess: (res) {
-        Get.offAll(() => SignInScreen(), binding: BindingsBuilder(() {
-          Get.lazyPut(() => AuthController(sl()));
-        }));
+        toSignInScreen();
       },
       showSuccessToast: true,
     );
   }
+
+
 
   changePass() async {
     if (resetNewPasswordController.text.trim().isEmpty ||
@@ -688,8 +691,9 @@ class AuthController extends GetxController {
     checkStatus(
       res,
       onSuccess: (res) {
-        // TODO:
+        toSignInScreen();
       },
+      showSuccessToast: true,
     );
   }
 }
