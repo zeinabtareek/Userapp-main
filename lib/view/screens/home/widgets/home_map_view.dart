@@ -147,9 +147,8 @@ class HomeMapViewState extends State<HomeMapView> {
   final markers = <MarkerId, Marker>{};
   final controller = Completer<GoogleMapController>();
   late CameraPosition cameraPosition ;
-  final stream = Stream.periodic(kDuration, (count) => kLocations[count])
-      .take(kLocations.length);
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+  final stream = Stream.periodic(kDuration, (count) => kLocations[count]).take(kLocations.length);
+   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
 
   @override
     initState()  {
@@ -206,10 +205,8 @@ class HomeMapViewState extends State<HomeMapView> {
             },
             initialCameraPosition: cameraPosition,
             onMapCreated: (gController) async {
-              // stream.forEach((value) => newLocati //onUpdate(value));
               controller.complete(gController);
                 stream.forEach((value) => _determinePosition());
-              //Complete the future GoogleMapController
             }
 
           )
@@ -300,6 +297,9 @@ class HomeMapViewState extends State<HomeMapView> {
     });
     return position;
   }
+
+
+
 // convertLocation() async {
 //   GeoData data = await Geocoder2.getDataFromCoordinates(
 //       latitude: pickedPosition.value.latitude,

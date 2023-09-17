@@ -4,31 +4,26 @@ import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/screens/notification/controller/notification_controller.dart';
+import 'package:ride_sharing_user_app/view/screens/notification/widgets/notification_list_tile.dart';
 import 'package:ride_sharing_user_app/view/screens/notification/widgets/notification_shimmer.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_image.dart';
 
-class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({Key? key}) : super(key: key);
+import '../../../util/app_strings.dart';
 
-  @override
-  State<NotificationScreen> createState() => _NotificationScreenState();
-}
-
-class _NotificationScreenState extends State<NotificationScreen> {
-  @override
-  void initState() {
-    // TODO:  un hash
+class NotificationScreen extends StatelessWidget {
+    NotificationScreen({Key? key}) : super(key: key){
     Get.find<NotificationController>().getNotificationList();
-    super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
     return CustomBody(
       appBar: CustomAppBar(
-        title: 'you_have_lots_of_notification'.tr,
+        title: Strings.youHaveLotsOfNotification.tr,
         showBackButton: false,
       ),
       body: Padding(
@@ -40,7 +35,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               padding: const EdgeInsets.symmetric(
                   horizontal: Dimensions.paddingSizeExtraSmall),
               child: Text(
-                'your_notification'.tr,
+                Strings.yourNotification.tr,
                 style: textBold.copyWith(
                     color: Theme.of(context).primaryColor,
                     fontSize: Dimensions.fontSizeExtraLarge),
@@ -66,53 +61,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           vertical: Dimensions.paddingSizeLarge,
                         ),
                         margin: const EdgeInsets.symmetric(vertical: 2),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            IntrinsicHeight(
-                              child: Row(
-                                children: [
-                                  const CustomImage(
-                                    image: '',
-                                    radius: Dimensions.radiusDefault,
-                                    height: 35, width: 35,
-                                    placeholder: Images.carPlaceholder,
-                                  ),
-                                  const SizedBox(width: Dimensions.paddingSizeSmall,),
-
-                                  Column(crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        notificationController.notificationList?[item].data.title ?? '',
-                                        style: textBold.copyWith(fontSize: Dimensions.fontSizeLarge),
-                                      ),
-
-                                      Text(notificationController.notificationList?[item].data.description ?? ''),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
-                              child: Row(
-                                children: [
-                                 const Text('30 min ago',
-                                  ),
-                                  const SizedBox(width: Dimensions.paddingSizeExtraSmall,),
-
-                                  Icon(
-                                    Icons.alarm,
-                                    size: Dimensions.fontSizeLarge,
-                                    color: Theme.of(context).hintColor.withOpacity(0.5),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                        child: NotificationListTile(
+                          title:
+                          notificationController.notificationList?[item].data.title ?? '',
+                          desc: notificationController.notificationList?[item].data.description??'', timer: '30 min ago', image: '',
+                        )
                       ),
                     ) : const NotificationShimmer();
                   }

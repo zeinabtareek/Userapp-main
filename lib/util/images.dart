@@ -118,6 +118,11 @@ class Images {
   static const String mapLocationIcon = 'assets/image/map_location_icon.png';
   static const String carIcon = 'assets/image/car_icon.png';
   static const String locationFill = 'assets/image/location_fill.png';
+  static const String onBoarding = 'assets/image/onboardinag_arrow.png';
+  static const String onboard1 = 'assets/image/onboard1.png';
+  static const String onboard2 = 'assets/image/onboard2.png';
+  static const String onboard3 = 'assets/image/onboard3.png';
+  static const String chat = 'assets/image/chat.png';
 
 
 

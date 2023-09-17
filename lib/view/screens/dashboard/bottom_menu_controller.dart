@@ -19,7 +19,7 @@ class BottomMenuController extends GetxController implements GetxService{
   final List<Widget> screen = [
     const HomeScreen(),
     HistoryScreen(fromPage: Strings.home,),
-    const NotificationScreen(),
+      NotificationScreen(),
     const ProfileScreen(),
   ];
   Widget _currentScreen = const HomeScreen();
@@ -50,7 +50,7 @@ onInit() async {
   }
 
   selectNotificationScreen() {
-    _currentScreen = const NotificationScreen();
+    _currentScreen =   NotificationScreen();
     _currentTab = 2;
     update();
   }

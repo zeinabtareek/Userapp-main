@@ -24,13 +24,23 @@ class K {
   static TextStyle hintMediumTextStyle = textMedium.copyWith(
       color: Theme.of(Get.context!).hintColor,
       fontSize: Dimensions.fontSizeDefault);
+    static TextStyle hintLargeTextStyle = textMedium.copyWith(
+      color: Theme.of(Get.context!).hintColor,
+
+      fontSize: Dimensions.fontSizeLarge);
+
   static TextStyle hintSmallTextStyle = textMedium.copyWith(
     fontSize: Dimensions.fontSizeSmall,
     color: Theme.of(Get.context!).hintColor,
 
   );  static TextStyle greyMediumTextStyle = textMedium.copyWith(color: Theme.of(Get.context!).textTheme.bodyMedium!.color!.withOpacity(.6));
 
-
+/// black color text
+  static TextStyle boldBlackTextStyle =  textBold.copyWith(
+  fontSize:Dimensions.fontSizeOverLarge,
+  fontWeight:FontWeight.w600,
+  color: Colors.black,
+  );
 
 ///border radius
 static BorderRadius  borderRadiusOnlyTop= const  BorderRadius.only(

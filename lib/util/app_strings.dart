@@ -149,4 +149,14 @@ class Strings {
 
   static const String invalidEmil = "email_is_not_valid";
   static const invalidOtp = "otp_is_not_valid";
+  static const onBoardTitle1 = "on_board_title1";
+  static const onBoardTitle2 = "on_board_title2";
+  static const onBoardTitle3 = "on_board_title3";
+
+  static const onBoardSubTitle1 = "on_board_sub_title1";
+  static const onBoardSubTitle2 = "on_board_sub_title2";
+  static const onBoardSubTitle3 = "on_board_sub_title3";
+  static const youHaveLotsOfNotification = "you_have_lots_of_notification";
+  static const yourNotification = "your_notification";
+
 }

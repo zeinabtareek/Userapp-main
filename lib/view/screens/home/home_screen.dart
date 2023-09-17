@@ -16,6 +16,7 @@ import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
 
 import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
+import '../../../util/images.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -65,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+
     );
   }
   // void _checkPermission(BuildContext context) async {

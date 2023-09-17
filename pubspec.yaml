@@ -54,7 +54,8 @@ dependencies:
   geocoding:
   flutter_spinkit:
 #  map_location_picker:
-
+  fl_chart:
+  flutter_staggered_animations:
 dependency_overrides:
   modal_bottom_sheet:
     git:

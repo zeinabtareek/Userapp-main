@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/authenticate/domain/use-cases/auth_cases.dart';
 import 'package:ride_sharing_user_app/firebase_options.dart';
@@ -12,6 +13,8 @@ import 'package:ride_sharing_user_app/helper/notification_helper.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/home/home_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/n/test_polyline_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/onboard/onboarding_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/onboarding/onboarding.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
 import 'package:ride_sharing_user_app/helper/responsive_helper.dart';
 import 'package:ride_sharing_user_app/helper/di_container.dart' as di;
@@ -22,6 +25,7 @@ import 'package:ride_sharing_user_app/theme/light_theme.dart';
 import 'package:ride_sharing_user_app/theme/theme_controller.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/splash_screen.dart';
+import 'package:ride_sharing_user_app/view/widgets/animated_widget.dart';
 
 import 'authenticate/presentation/sign-up/sign_up_screen.dart';
 import 'helper/cache_helper.dart';
@@ -94,7 +98,9 @@ class MyApp extends StatelessWidget {
             // getPages: RouteHelper.routes,
             defaultTransition: Transition.topLevel,
             transitionDuration:   Duration(milliseconds: 500),
-            home: DashboardScreen(),
+            // home: Test(),
+            home: OnBoardingScreen2(),
+            // home: DashboardScreen(),
           ));
         });
       });
@@ -112,3 +118,23 @@ class MyHttpOverrides extends HttpOverrides {
           (X509Certificate cert, String host, int port) => true;
   }
 }
+class Test extends StatelessWidget {
+  const Test({super.key});
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Animated Row Example'),
+      ),
+      body: Scaffold(
+        body: Column(
+          children: [
+            animatedWidget(widget: Text('data'),limit: 6)
+          ],
+        ),
+      )
+    );
+  }
+}
+
+
