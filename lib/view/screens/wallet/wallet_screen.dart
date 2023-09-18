@@ -8,6 +8,9 @@ import 'package:ride_sharing_user_app/view/screens/wallet/widget/wallet_money_sc
 import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
 
+import '../../../util/app_strings.dart';
+import '../../../util/app_style.dart';
+
 class WalletScreen extends StatefulWidget {
   const WalletScreen({Key? key}) : super(key: key);
 
@@ -37,29 +40,31 @@ class _WalletScreenState extends State<WalletScreen> with SingleTickerProviderSt
 
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
-                child: TabBar(
-                  controller: tabController,
-                  unselectedLabelColor: Colors.grey,
-                  labelColor: Get.isDarkMode ? Colors.white : Theme.of(context).primaryColor,
-                  labelStyle: textMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge),
-                  isScrollable: true,
-                  indicatorColor: Theme.of(context).primaryColor,
-                  padding: const EdgeInsets.all(0),
-                  tabs:  [
-                    SizedBox(height: 30,child: Tab(text: 'wallet_money'.tr)),
-                    SizedBox(height: 30,child: Tab(text: 'loyalty_point'.tr)),
-                  ],
-                ),
+                child:
+                // TabBar(
+                //   controller: tabController,
+                //   unselectedLabelColor: Colors.grey,
+                //   labelColor: Get.isDarkMode ? Colors.white : Theme.of(context).primaryColor,
+                //   labelStyle: textMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge),
+                //   isScrollable: true,
+                //   indicatorColor: Theme.of(context).primaryColor,
+                //   padding: const EdgeInsets.all(0),
+                //   tabs:  [
+                    SizedBox(height: 30,child:Text( Strings.walletMoney.tr, style: K.primaryMediumTextStyle,)),
+                    // SizedBox(height: 30,child: Tab(text: Strings.loyaltyPoint.tr)),
+                  // ],
+                // ),
               ),
 
-              Expanded(
-                child: TabBarView(
-                  controller: tabController,
-                  children:  const [
+              const Expanded(
+                child:
+                // TabBarView(
+                //   controller: tabController,
+                //   children:  const [
                     WalletMoneyScreen(),
-                    LoyaltyPointScreen(),
-                  ],
-                ),
+                    // LoyaltyPointScreen(),
+                  // ],
+                // ),
               )
             ],);
           }),

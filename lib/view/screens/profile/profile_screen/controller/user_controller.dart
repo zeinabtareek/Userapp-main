@@ -1,3 +1,4 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,7 +9,7 @@ import 'package:ride_sharing_user_app/view/screens/profile/repository/uer_repo.d
 class UserController extends GetxController implements GetxService {
   final UserRepo userRepo;
   UserController({required this.userRepo});
-
+    String defaultDailCode = "+966";
   XFile? _pickedProfileFile ;
   XFile? get pickedProfileFile => _pickedProfileFile;
 
@@ -39,7 +40,7 @@ class UserController extends GetxController implements GetxService {
 
   @override
   void onInit() {
- 
+
     super.onInit();
     getUserLevelInfo();
   }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/data/api_checker.dart';
@@ -10,7 +11,7 @@ import '../../../../controller/base_controller.dart';
 import '../../../../enum/view_state.dart';
 import '../model/history_model.dart';
 
-class ActivityController extends BaseController implements GetxService {
+class ActivityController extends BaseController with SingleGetTickerProviderMixin implements GetxService{
   // final ActivityRepo activityRepo;
   // ActivityController({required this.activityRepo});
     ActivityRepo activityRepo=ActivityRepo();
@@ -28,6 +29,7 @@ class ActivityController extends BaseController implements GetxService {
   String _filterEndDate ='';
   String get filterEndDate => _filterEndDate;
 
+    late TabController tabController;
 
   late   LatLng _initialPosition = const LatLng(23.83721, 90.363715);
   LatLng get initialPosition => _initialPosition;
@@ -44,6 +46,8 @@ class ActivityController extends BaseController implements GetxService {
     @override
     onInit()async {
      super.onInit();
+     tabController = TabController(length: 2, vsync: this);
+
      await activityRepo.getAllHistoryTrips();
      await getAllHistoryTrips();
 
@@ -54,16 +58,6 @@ class ActivityController extends BaseController implements GetxService {
     _mapController = mapController;
   }
 
-  //  getRewardList() async {
-  //   Response response = await activityRepo.getActivityList();
-  //   if (response.statusCode == 200) {
-  //     activityItemList = [];
-  //     activityItemList.addAll(response.body);
-  //   } else {
-  //     ApiChecker.checkApi(response);
-  //   }
-  //   update();
-  // }
 
   void updateShowCustomDateState(bool state){
     _showCustomDate = state;

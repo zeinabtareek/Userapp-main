@@ -8,6 +8,7 @@ import 'package:ride_sharing_user_app/view/screens/dashboard/bottom_menu_control
 import 'package:ride_sharing_user_app/view/widgets/confirmation_dialog.dart';
 
 import '../../../util/app_strings.dart';
+import '../../widgets/custom_float_action_btn.dart';
 
 
 
@@ -84,21 +85,7 @@ class DashboardScreen extends StatelessWidget {
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
           //
-          floatingActionButton: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              FloatingActionButton(
-                backgroundColor: const Color(0xffB9E5D1),//0xff41,
-                onPressed: (){
-                  // Get.to(SupportScreen());
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(Images.chat,color:Theme.of(Get.context!).primaryColor  ),
-                ),  ),
-              SizedBox(height: Dimensions.identityImageHeight,)
-            ],
-          ),
+          floatingActionButton: customFloatActionButton(image:Images.chat,onPressed: (){})
 
         );
       }),

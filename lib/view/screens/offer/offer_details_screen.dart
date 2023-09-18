@@ -7,6 +7,7 @@ import 'package:ride_sharing_user_app/view/screens/offer/widgets/offer_other_det
 import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_image.dart';
 
+import '../../../util/app_strings.dart';
 import '../profile/profile_screen/controller/user_controller.dart';
 
 
@@ -18,7 +19,7 @@ class OfferDetailsScreen extends StatelessWidget {
 
     return Scaffold(
       body: CustomBody(
-        appBar: CustomAppBar(title: 'here_lots_of_offer_for_you'.tr),
+        appBar: CustomAppBar(title: Strings.hereLotsOfOfferForYou.tr),
         body: GetBuilder<UserController>(
           builder: (userController) {
             return SingleChildScrollView(

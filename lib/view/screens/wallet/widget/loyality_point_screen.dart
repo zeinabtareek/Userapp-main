@@ -35,7 +35,7 @@ class LoyaltyPointScreen extends StatelessWidget {
               shrinkWrap: true,
 
               itemBuilder: (context, index){
-                return MyEarnCardWidget(myEarnModel: walletController.myEarnList[index]);
+                return MyEarnCardWidget(myEarnModel: walletController.myEarnList[index], onTap: () {  },);
               }),
         ): Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.end,
           children: [

@@ -42,30 +42,25 @@ class EditProfileOtherInfo extends StatelessWidget {
                 ),
               ),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: Dimensions.paddingSizeSmall),
-                child: TextFieldTitle(title: Strings.home.tr),
-              ),
-              CustomTextField(
-                  prefixIcon: Images.editProfileHome,
-                  borderRadius: 10,
-                  showBorder: false,
-                  hintText: Strings.enterYourAddress.tr,
-                  fillColor: Theme.of(context).primaryColor.withOpacity(0.04)),
+                  TextFieldTitle(title: Strings.home.tr),
+                  CustomTextField(
+                    hintText: Strings.enterYourHomeAddress.tr,
+                    inputType: TextInputType.text,
+                    prefixIcon: Images.location,
+                    inputAction: TextInputAction.next,
+                  ),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: Dimensions.paddingSizeSmall),
-                child: TextFieldTitle(title: Strings.office.tr),
-              ),
-              CustomTextField(
-                  prefixIcon: Images.editProfilePhone,
-                  borderRadius: 10,
-                  showBorder: false,
-                  hintText: Strings.enterYourAddress.tr,
-                  fillColor: Theme.of(context).primaryColor.withOpacity(0.04)),
-              ///removed data
+                  TextFieldTitle(title: Strings.office.tr),
+                  CustomTextField(
+                    hintText: Strings.enterYourOfficeAddress.tr,
+                    inputType: TextInputType.text,
+                    prefixIcon: Images.location,
+                    inputAction: TextInputAction.next,
+                  ),
+
+
+
+                  ///removed data
               // TextFieldTitle(title: 'identification_number'.tr,textOpacity: 0.8,),
               // CustomTextField(
               //     prefixIcon: Images.editProfileIdentity,

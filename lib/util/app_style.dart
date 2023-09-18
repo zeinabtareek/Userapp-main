@@ -41,6 +41,11 @@ class K {
   fontWeight:FontWeight.w600,
   color: Colors.black,
   );
+  static TextStyle semiBoldBlackTextStyle =  textBold.copyWith(
+  fontSize:Dimensions.fontSizeDefault,
+  fontWeight:FontWeight.w500,
+  color: Colors.black,
+  );
 
 ///border radius
 static BorderRadius  borderRadiusOnlyTop= const  BorderRadius.only(

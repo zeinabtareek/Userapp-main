@@ -158,5 +158,28 @@ class Strings {
   static const onBoardSubTitle3 = "on_board_sub_title3";
   static const youHaveLotsOfNotification = "you_have_lots_of_notification";
   static const yourNotification = "your_notification";
+  static const doYouNeedHelp = "do_you_need_help";
+  static const offer = "offer";
+  static const enterYourOfficeAddress = "enter_your_office_address";
+  static const enterYourHomeAddress = "enter_your_home_address";
+  static const ridersAreSayingToYou = "riders_are_saying_to_you";
+  static const admin = "admin";
+  static const driver = "driver";
+  static const loyaltyPoint = "loyalty_point";
+  static const checkPaymentMethod = "check_payment_method";
+  static const tripId = "trip_id";
+  static const ticketDetails = "ticket_details";
+  static const complains = "complains";
+  static const yourFeedBack = "your_feedback";
+  static const submit = "submit";
+  static const yourLocation = "your_location";
+  static const trackYourPackage = "track_your_package";
+  static const pleaseEnterYourTrackingNumber = "please_enter_your_tracking_number";
+  static const pickUp = "pick-up";//Pick-Up
+  static const checkRates = "check_rates";//Check Rates
+  static const specialOffers = "special_offers";//Check Rates
+  static const viewAll = "view_all";
+  static const statusPackage = "status_package";
+
 
 }

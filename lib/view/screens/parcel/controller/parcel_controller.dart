@@ -4,6 +4,8 @@ import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/view/screens/home/model/categoty_model.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/repository/parcel_repo.dart';
 
+import '../../../../util/app_strings.dart';
+
 enum ParcelDeliveryState{initial,parcelInfoDetails,addOtherParcelDetails,riseFare,findingRider,suggestVehicle,acceptRider,otpSent,parcelOngoing,parcelComplete}
 
 class ParcelController extends GetxController with GetSingleTickerProviderStateMixin implements GetxService {
@@ -24,7 +26,10 @@ class ParcelController extends GetxController with GetSingleTickerProviderStateM
     receiverAddressController.text ="Bidadari Park Drive Singapore - 1 Wallich St Singapore";
 
   }
-
+List optionsList=[
+  {'image':Images.locationTrack,'title':Strings.pickUp.tr},
+  {'image': Images.deliveryTruck,'title':Strings.checkRates.tr}
+];
   List<CategoryModel> parcelCategoryList = [
     CategoryModel(categoryImage: Images.parcelGift, categoryTitle:"gift",),
     CategoryModel(categoryImage: Images.parcelFragile, categoryTitle:"fragile"),

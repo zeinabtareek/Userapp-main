@@ -1,16 +1,24 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/data/api_checker.dart';
 import 'package:ride_sharing_user_app/helper/date_converter.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'package:ride_sharing_user_app/view/screens/notification/repository/notification_repo.dart';
 
-class NotificationController extends GetxController implements GetxService {
+class NotificationController extends GetxController  with SingleGetTickerProviderMixin  implements GetxService {
   final NotificationRepo notificationRepo;
   NotificationController({required this.notificationRepo});
 
   List<NotificationModel>? _notificationList = [];
+  late TabController tabController;
 
   List<NotificationModel>? get notificationList => _notificationListDemo;
+
+  @override
+  void onInit() {
+    tabController = TabController(length: 2, vsync: this);
+
+  }
 
   Future<void> getNotificationList({bool reload = false}) async {
     if (reload) {

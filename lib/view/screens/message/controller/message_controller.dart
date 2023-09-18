@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 
 
 
-class MessageController extends GetxController implements GetxService{
+class MessageController extends GetxController  with SingleGetTickerProviderMixin  implements GetxService{
   final MessageRepo messageRepo;
   MessageController({required this.messageRepo});
 
@@ -18,6 +18,7 @@ class MessageController extends GetxController implements GetxService{
 
   FilePickerResult? _otherFile;
   FilePickerResult? get otherFile => _otherFile;
+  late TabController tabController;
 
   File? _file;
   PlatformFile? objFile;
@@ -55,6 +56,8 @@ class MessageController extends GetxController implements GetxService{
   @override
   void onInit(){
     super.onInit();
+    tabController = TabController(length: 2, vsync: this);
+
     conversationController.text = '';
   }
 

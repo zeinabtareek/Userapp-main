@@ -15,6 +15,7 @@ import 'package:ride_sharing_user_app/view/screens/home/home_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/n/test_polyline_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/onboard/onboarding_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/onboarding/onboarding.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/parcel_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
 import 'package:ride_sharing_user_app/helper/responsive_helper.dart';
 import 'package:ride_sharing_user_app/helper/di_container.dart' as di;
@@ -38,10 +39,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 Future<void> main() async {
 
 
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.dark, // dark text for status bar
-      statusBarColor: Colors.transparent),
-  );
+
 
   if(ResponsiveHelper.isMobilePhone) {
     HttpOverrides.global = MyHttpOverrides();
@@ -69,6 +67,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
     if(GetPlatform.isWeb) {
       Get.find<ConfigController>().initSharedData();
       _route();
@@ -99,7 +100,9 @@ class MyApp extends StatelessWidget {
             defaultTransition: Transition.topLevel,
             transitionDuration:   Duration(milliseconds: 500),
             // home: Test(),
-            home: OnBoardingScreen2(),
+
+            home: ParcelHomeScreen(),
+            // home: OnBoardingScreen2(),
             // home: DashboardScreen(),
           ));
         });
@@ -136,5 +139,8 @@ class Test extends StatelessWidget {
     );
   }
 }
+
+
+//            ...List.generate(999, (index) =>Text('Scroll Alert Example $index'),)
 
 

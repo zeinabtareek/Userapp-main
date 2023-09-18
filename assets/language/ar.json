@@ -375,5 +375,21 @@
 
   "on_board_sub_title1": "يمكنك بيع المنازل بسهولة بمساعدة برنامج الاستماع Oryx ولجعل هذا الخط كبيرًا\nأنا أكتب المزيد.",
   "on_board_sub_title2": "قم ببيع المنازل بسهولة بمساعدة Listoryx ولجعل هذا الخط كبيرًا، فأنا أكتب المزيد.",
-  "on_board_sub_title3": "قم ببيع المنازل بسهولة بمساعدة Listoryx ولجعل هذا الخط كبيرًا، فأنا أكتب المزيد."
+  "on_board_sub_title3": "قم ببيع المنازل بسهولة بمساعدة Listoryx ولجعل هذا الخط كبيرًا، فأنا أكتب المزيد.",
+  "enter_your_office_address": "أدخل عنوان مكتبك",
+  "enter_your_home_address": "أدخل عنوان منزلك",
+  "admin": "المسؤول",
+  "complains": "الشكاوى",
+  "your_location": "موقعك",
+  "track_your_package": "تتبع الحزمة الخاصة بك !",
+  "Please_enter_your_tracking_number ": "الرجاء إدخال رقم التتبع الخاص بك ",
+  "pick-up": "البيك اب",
+  "check_rates": "التحقق من الأسعار",
+  "special_offers": "عروض خاصة",
+  "view_all": "عرض الكل",
+  "status_package": "حزمة الحالة",
+  "in_delivery": "قيد التسليم",
+  "status_order": "ترتيب الحالة",
+  "return": "العودة",
+  "delivered": "تم التسليم"
 }

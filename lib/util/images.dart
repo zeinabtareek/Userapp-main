@@ -123,6 +123,15 @@ class Images {
   static const String onboard2 = 'assets/image/onboard2.png';
   static const String onboard3 = 'assets/image/onboard3.png';
   static const String chat = 'assets/image/chat.png';
+  static const String package = 'assets/image/package.png';
+  static const String scanner = 'assets/image/Scaner.png';
+  static const String search = 'assets/image/search.png';
+  static const String close = 'assets/image/close.png';
+  static const String deliveryTruck = 'assets/image/delivery_truck.png';
+  static const String  locationTrack = 'assets/image/location_track.png';
+  static const String  banner = 'assets/image/Banner.png';
+  static const String  package2 = 'assets/image/package2.png';
+  static const String  doc = 'assets/image/document-text.png';
 
 
 

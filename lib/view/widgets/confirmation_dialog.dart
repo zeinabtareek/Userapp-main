@@ -19,7 +19,7 @@ class ConfirmationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimensions.radiusSmall)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge)),
       insetPadding: const EdgeInsets.all(30),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: SizedBox(width: 500, child: Padding(
@@ -50,7 +50,7 @@ class ConfirmationDialog extends StatelessWidget {
               onPressed: () => isLogOut ? onYesPressed() : onNoPressed != null ? onNoPressed!() : Get.back(),
               style: TextButton.styleFrom(
                 backgroundColor: Theme.of(context).disabledColor.withOpacity(0.3), minimumSize: const Size(Dimensions.webMaxWidth, 40),
-                padding: EdgeInsets.zero, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimensions.radiusSmall)),
+                padding: EdgeInsets.zero, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge)),
               ),
               child: Text(
                 isLogOut ? Strings.yes.tr :Strings.no.tr , textAlign: TextAlign.center,
@@ -62,7 +62,7 @@ class ConfirmationDialog extends StatelessWidget {
             Expanded(child: CustomButton(
               buttonText: isLogOut ? Strings.no.tr :Strings.yes.tr,
               onPressed: () => isLogOut ? Get.back() : onYesPressed(),
-              radius: Dimensions.radiusSmall, height: 40,
+              radius: Dimensions.radiusExtraLarge, height: 40,
             )),
           ]),
 

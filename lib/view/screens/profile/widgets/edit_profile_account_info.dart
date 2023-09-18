@@ -6,60 +6,67 @@ import 'package:ride_sharing_user_app/view/widgets/custom_text_field.dart';
 
 import '../../../../authenticate/presentation/widgets/test_field_title.dart';
 import '../../../../util/app_strings.dart';
+import '../profile_screen/controller/user_controller.dart';
 
 class EditProfileAccountInfo extends StatelessWidget {
   const EditProfileAccountInfo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(child: SingleChildScrollView(
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
-            TextFieldTitle(title: Strings.name.tr,textOpacity: 0.8,),
-            CustomTextField(
-                prefixIcon: Images.editProfileName,
-                borderRadius: 10,
-                showBorder: false,
+
+    return GetBuilder<UserController>(builder: (userController) {
+      return Column(
+        children: [
+          Expanded(child: SingleChildScrollView(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start, children: [
+              TextFieldTitle(title: Strings.name.tr, textOpacity: 0.8,),
+
+              CustomTextField(
                 hintText: Strings.enterYourName.tr,
-                fillColor: Theme.of(context).primaryColor.withOpacity(0.04)
-            ),
+                inputType: TextInputType.name,
+                prefixIcon: Images.person,
+                inputAction: TextInputAction.next,
+              ),
 
-            TextFieldTitle(title: Strings.profile.tr,textOpacity: 0.8,),
-            CustomTextField(
-                prefixIcon: Images.editProfilePhone,
-                borderRadius: 10,
-                showBorder: false,
+
+              TextFieldTitle(
+                title: Strings.phone.tr,
+              ),
+              CustomTextField(
                 hintText: Strings.enterYourPhoneNumber.tr,
-                fillColor: Theme.of(context).primaryColor.withOpacity(0.04)
-            ),
+                inputType: TextInputType.number,
+                countryDialCode: userController.defaultDailCode,
+                inputAction: TextInputAction.next,
+              ),
+              TextFieldTitle(title: Strings.email.tr, textOpacity: 0.8,),
 
-            TextFieldTitle(title: Strings.email.tr,textOpacity: 0.8,),
-            CustomTextField(
-                prefixIcon: Images.editProfileEmail,
-                borderRadius: 10,
-                showBorder: false,
+              CustomTextField(
                 hintText: Strings.enterYourEmail.tr,
-                fillColor: Theme.of(context).primaryColor.withOpacity(0.04)
-            ),
+                inputType: TextInputType.emailAddress,
+                prefixIcon: Images.email,
+                inputAction: TextInputAction.next,
+              ),  TextFieldTitle(title: Strings.address.tr, textOpacity: 0.8,),
 
-            TextFieldTitle(title: Strings.address.tr,textOpacity: 0.8,),
-            CustomTextField(
-                prefixIcon: Images.editProfileLocation,
-                borderRadius: 10,
-                showBorder: false,
+              CustomTextField(
                 hintText: Strings.enterYourAddress.tr,
-                fillColor: Theme.of(context).primaryColor.withOpacity(0.04)
-            ),
-          ]),
-        )),
+                inputType: TextInputType.text,
+                prefixIcon: Images.location,
+                inputAction: TextInputAction.next,
+              ),
 
-        const SizedBox(height:30),
-        CustomButton (
-          buttonText:Strings.updateProfile.tr,
-          onPressed: ()=> Get.back(),
-        )
-      ],
+
+            ]),
+          )),
+
+          const SizedBox(height: 30),
+          CustomButton(  radius: 50,
+            buttonText: Strings.updateProfile.tr,
+            onPressed: () => Get.back(),
+          )
+        ],
+      );
+    }
     );
   }
 }

@@ -16,11 +16,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function()? onBackPressed;
   final bool centerTitle;
   final bool isHome;
+  final double? height;
   const CustomAppBar({
     super.key,
     required this.title,
     this.showBackButton = true,
     this.onBackPressed,
+    this.height,
     this.centerTitle= false,
     this.showActionButton= true,  
     this.isHome = false});
@@ -28,9 +30,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(150.0),
+      preferredSize:   Size.fromHeight( 150.0),
       child: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height/12,
+        toolbarHeight: height??MediaQuery.of(context).size.height/12,
         automaticallyImplyLeading: false,
         title: Column(
           mainAxisAlignment: MainAxisAlignment.start,

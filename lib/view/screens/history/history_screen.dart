@@ -5,6 +5,7 @@ import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/screens/history/controller/activity_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/history/widgets/activity_item_view.dart';
+import 'package:ride_sharing_user_app/view/screens/history/widgets/current_trips_page.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_calender.dart';
@@ -13,6 +14,7 @@ import 'package:ride_sharing_user_app/view/widgets/custom_drop_down.dart';
 import '../../../enum/view_state.dart';
 import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
+import '../../widgets/custom_tap_bar.dart';
 
 class HistoryScreen extends StatelessWidget {
   final String fromPage;
@@ -35,11 +37,12 @@ class HistoryScreen extends StatelessWidget {
               builder: (activityController) {
             return Column(
               children: [
-                // TextButton(onPressed: ()async{
-                //   await  controller.activityRepo.getAllHistoryTrips();
-                // }, child: Text('click')),
 
-                Row(
+                CustomTapBar(
+                  tabController: activityController.tabController,
+                  firstTap: Strings.helpSupport.tr,
+                  secondTap:Strings.termsAndCondition.tr,
+                ),    Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
@@ -152,50 +155,15 @@ class HistoryScreen extends StatelessWidget {
                 Divider(
                   color: Theme.of(context).primaryColor.withOpacity(0.2),
                 ),
-                // FloatingActionButton(onPressed: (){
-                //   activityController.activityRepo.getAllHistoryTrips();
-                // },child: Text('ddhd'),),
-                // Obx(() => activityController.state == ViewState.busy
-                //     ? const Center(
-                //   child: CupertinoActivityIndicator(),
-                // )
-                //     : activityController.model.data!.isNotEmpty?
-                //      Flexible(
-                //   child: ListView.builder(
-                //     itemBuilder: (context, index) {
-                //       return ActivityItemView(
-                //         activityItemModel: activityController.model.data![index],
-                //         isDetailsScreen: false,
-                //       );
-                //     },
-                //     itemCount: activityController.model.data?.length,
-                //     padding: EdgeInsets.zero,
-                //   ),
-                // ): Text('data')
-                // ),
+                Expanded(child: TabBarView(
+                  controller:activityController. tabController,
+                  children:  const [
+                    CurrentTripsPage(),
+                    CurrentTripsPage(),
+                   ],
+                ))
 
-                Flexible(
-                  child: Obx(() {
-                    if (activityController.state == ViewState.busy) {
-                       return const Center(child: CupertinoActivityIndicator(),);
-                    } else if (activityController.model.data == null ||
-                        activityController.model.data!.isEmpty||
-                        activityController.model.data==[]) {
-                      return   Center(child: Text(Strings.noHistory.tr));
-                    } else {
-                      return ListView.builder(
-                        itemBuilder: (context, index) {
-                          return ActivityItemView(
-                            activityItemModel: activityController.model.data![index],
-                            isDetailsScreen: false,
-                          );
-                        },
-                        itemCount: activityController.model.data!.length,
-                        padding: EdgeInsets.zero,
-                      );
-                    }
-                  }),
-                ),
+
               ],
             );
           }),
@@ -204,3 +172,4 @@ class HistoryScreen extends StatelessWidget {
     );
   }
 }
+

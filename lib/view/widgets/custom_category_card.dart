@@ -8,17 +8,26 @@ class CustomCategoryCard extends StatelessWidget {
   final String image;
   final String title;
   final bool isClicked;
+  final Color ?color;
+  final double ?height;
+  final double ?width;
+
+
 
   const CustomCategoryCard({
     super.key,
     required this.image,
     required this.title,
+      this.color,
+      this.width,
+      this.height,
+
     required this.isClicked,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(height: 100, width: 100,
+    return SizedBox(height: height??100, width:width?? 100,
     child:Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -27,7 +36,7 @@ class CustomCategoryCard extends StatelessWidget {
           width: 90,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-            color: isClicked?Theme.of(context).primaryColor : Theme.of(context).hintColor.withOpacity(0.1),
+            color: isClicked?Theme.of(context).primaryColor : color != null?color:Theme.of(context).hintColor.withOpacity(0.1),
           ),
           padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
           child: Image.asset(image),

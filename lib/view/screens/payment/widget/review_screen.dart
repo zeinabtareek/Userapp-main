@@ -9,6 +9,9 @@ import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
+import '../../../../util/app_strings.dart';
+import '../../../widgets/notes_text_field.dart';
+
 class ReviewScreen extends StatefulWidget {
   const ReviewScreen({Key? key}) : super(key: key);
 
@@ -60,29 +63,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
                       padding: const EdgeInsets.only(top: 45, bottom: Dimensions.paddingSizeSmall),
                       child: Text('leave_us_a_comment'.tr, style: textRegular.copyWith(),),
                     ),
-                    TextFormField(
-                      controller: reviewController,
-                      maxLines: 5,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Theme.of(context).hintColor.withOpacity(.1),
-                        hintText: 'your_feedback'.tr,
-                        hintStyle: textRegular.copyWith(color: Theme.of(context).hintColor.withOpacity(.5)),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
-                          borderSide:  BorderSide(width: 0.5,
-                              color: Theme.of(context).hintColor.withOpacity(0.5)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
-                          borderSide:  BorderSide(width: 0.5,
-                              color: Theme.of(context).primaryColor.withOpacity(0.5)),
-                        ),
+                    NotesTextField(textEditingController: reviewController,
+                      hint:Strings.yourFeedBack.tr
 
-
-                      ),
 
                     ),
 
@@ -105,6 +88,8 @@ class _ReviewScreenState extends State<ReviewScreen> {
     );
   }
 }
+
+
 
 
 class ReviewItem extends StatelessWidget {
