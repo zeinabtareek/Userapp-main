@@ -397,6 +397,9 @@
   "live_tracking": "التتبع المباشر",
   "package_weight": "وزن الحزمة",
   "pick_up_point": "نقطة الالتقاط - نقطة",
-  "drop_off_point": "نقطة التسليم - النقطة"
+  "drop_off_point": "نقطة التسليم - النقطة",
+  "add_shipment": "إضافة شحنة",
+  "shipping_from": "الشحن من",
+  "shipping_to": "يتم الشحن إلى"
 
 }

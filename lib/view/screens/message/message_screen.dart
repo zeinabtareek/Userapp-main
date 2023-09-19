@@ -21,69 +21,71 @@ class MessageScreen extends StatelessWidget {
         body:  GetBuilder<MessageController>(builder: (messageController){
           return Column(
             children: [
+            ///real chat
+              // Expanded(
+              //   child: ListView.builder(
+              //     padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+              //     //itemCount: messageController.conversationList.length,
+              //     itemCount: 15,
+              //     reverse: true,
+              //     itemBuilder: (context, index) {
+              //
+              //       return ConversationBubble(
+              //         isRightMessage: Random().nextBool(),
+              //       );
+              //     },
+              //   ),
+              // ),
+              // messageController.pickedImageFile != null && messageController.pickedImageFile!.isNotEmpty ?
+              // Container(height: 90, width: Get.width,
+              //   padding: const EdgeInsets.symmetric(horizontal: 10),
+              //   child: ListView.builder(scrollDirection: Axis.horizontal,
+              //     itemBuilder: (context,index){
+              //       return  Stack(
+              //         children: [
+              //           Padding(padding: const EdgeInsets.symmetric(horizontal: 5),
+              //             child: ClipRRect(
+              //               borderRadius: BorderRadius.circular(10),
+              //               child: SizedBox(height: 80, width: 80,
+              //                 child: Image.file(
+              //                   File(messageController.pickedImageFile![index].path),
+              //                   fit: BoxFit.cover,
+              //                 ),
+              //               ),
+              //             ),
+              //           ),
+              //           Positioned(
+              //             right: 5,
+              //             child: InkWell(
+              //               child: const Icon(Icons.cancel_outlined, color: Colors.red),
+              //               onTap: () => messageController.pickMultipleImage(true,index: index),
+              //             ),
+              //           ),
+              //         ],
+              //       );},
+              //     itemCount: messageController.pickedImageFile!.length,
+              //   ),
+              // ) : const SizedBox(),
+              //
+              // messageController.otherFile != null ?
+              // Stack(children: [
+              //   Container(
+              //     padding: const EdgeInsets.symmetric(horizontal: 25),
+              //     height: 25,
+              //     child: Text(
+              //       messageController.otherFile!.names.toString(),
+              //     ),
+              //   ),
+              //   Positioned(top: 0, right: 0,
+              //       child: InkWell(child: const Icon(Icons.cancel_outlined,
+              //           color: Colors.red),
+              //           onTap: () => messageController.pickOtherFile(true)
+              //       )
+              //   )
+              // ],) : const SizedBox(),
 
-              Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-                  //itemCount: messageController.conversationList.length,
-                  itemCount: 15,
-                  reverse: true,
-                  itemBuilder: (context, index) {
-
-                    return ConversationBubble(
-                      isRightMessage: Random().nextBool(),
-                    );
-                  },
-                ),
-              ),
-              messageController.pickedImageFile != null && messageController.pickedImageFile!.isNotEmpty ?
-              Container(height: 90, width: Get.width,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: ListView.builder(scrollDirection: Axis.horizontal,
-                  itemBuilder: (context,index){
-                    return  Stack(
-                      children: [
-                        Padding(padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: SizedBox(height: 80, width: 80,
-                              child: Image.file(
-                                File(messageController.pickedImageFile![index].path),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          right: 5,
-                          child: InkWell(
-                            child: const Icon(Icons.cancel_outlined, color: Colors.red),
-                            onTap: () => messageController.pickMultipleImage(true,index: index),
-                          ),
-                        ),
-                      ],
-                    );},
-                  itemCount: messageController.pickedImageFile!.length,
-                ),
-              ) : const SizedBox(),
-
-              messageController.otherFile != null ?
-              Stack(children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  height: 25,
-                  child: Text(
-                    messageController.otherFile!.names.toString(),
-                  ),
-                ),
-                Positioned(top: 0, right: 0,
-                    child: InkWell(child: const Icon(Icons.cancel_outlined,
-                        color: Colors.red),
-                        onTap: () => messageController.pickOtherFile(true)
-                    )
-                )
-              ],) : const SizedBox(),
-
+              /// placeHolder
+             noChatPlaceHolder(),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Container(
                   margin: const EdgeInsets.only(left: Dimensions.paddingSizeSmall,
@@ -187,4 +189,12 @@ class MessageScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+
+
+
+
+noChatPlaceHolder(){
+  return   Expanded(child: Image.asset(Images.chatGif));
 }

@@ -15,6 +15,7 @@ import 'package:ride_sharing_user_app/view/screens/home/home_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/n/test_polyline_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/onboard/onboarding_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/onboarding/onboarding.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/add_shipment.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/parcel_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
 import 'package:ride_sharing_user_app/helper/responsive_helper.dart';
@@ -26,6 +27,7 @@ import 'package:ride_sharing_user_app/theme/light_theme.dart';
 import 'package:ride_sharing_user_app/theme/theme_controller.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/splash_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/support/support.dart';
 import 'package:ride_sharing_user_app/view/widgets/animated_widget.dart';
 
 import 'authenticate/presentation/sign-up/sign_up_screen.dart';
@@ -101,7 +103,9 @@ class MyApp extends StatelessWidget {
             transitionDuration:   Duration(milliseconds: 500),
             // home: Test(),
 
-            home: ParcelHomeScreen(),
+            // home: HelpAndSupportScreen(),
+            // home: ParcelHomeScreen(),
+            home: AddShipmenScreen(),
             // home: OnBoardingScreen2(),
             // home: DashboardScreen(),
           ));

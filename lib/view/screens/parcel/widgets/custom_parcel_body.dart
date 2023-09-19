@@ -22,7 +22,7 @@ class CustomParcelBody extends StatelessWidget {
           Stack(
             children: [
               Container(
-                  height: MediaQuery.of(context).size.height / 1.9,
+                  // height: MediaQuery.of(context).size.height / 1.9,
                   width: context.width,
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.only(

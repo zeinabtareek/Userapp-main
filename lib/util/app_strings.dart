@@ -189,6 +189,10 @@ class Strings {
   static const packageWeight = "package_weight";
   static const dropOffPoint = "drop_off_point";
   static const pickUpPoint = "pick_up_point";
+  static const addShipment = "add_shipment";//Add Shipment
+  static const shippingFrom = "shipping_from";
+  static const shippingTo = "shipping_to";
+
 
 
 }

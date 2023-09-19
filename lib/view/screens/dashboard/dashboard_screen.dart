@@ -9,6 +9,7 @@ import 'package:ride_sharing_user_app/view/widgets/confirmation_dialog.dart';
 
 import '../../../util/app_strings.dart';
 import '../../widgets/custom_float_action_btn.dart';
+import '../message/message_screen.dart';
 
 
 
@@ -85,7 +86,9 @@ class DashboardScreen extends StatelessWidget {
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
           //
-          floatingActionButton: customFloatActionButton(image:Images.chat,onPressed: (){})
+          floatingActionButton: customFloatActionButton(image:Images.chat,onPressed: (){
+            Get.to(MessageScreen());
+          })
 
         );
       }),

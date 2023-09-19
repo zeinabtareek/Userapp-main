@@ -393,7 +393,10 @@
   "live_tracking": "Live Tracking",
   "package_weight": "Package Weight",
   "pick_up_point": "Pickup - Point",
-  "drop_off_point": "Drop Off - Point"
+  "drop_off_point": "Drop Off - Point",
+  "add_shipment": "Add Shipment",
+  "shipping_from": "Shipping From",
+  "shipping_to": "Shipping To"
 
 
 

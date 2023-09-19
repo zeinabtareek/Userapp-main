@@ -93,12 +93,14 @@ class ParcelHomeScreen extends StatelessWidget {
                     ),
                     CustomOvel(
                       Image.asset(Images.notificationOutline),
+                      // Image.asset(Images.notificationOutline),
                     ),
                     K.sizedBoxW0,
                   ],
                 ),
                 K.sizedBoxH2,
                 Image.asset(
+                  // Images.packageGif,
                   Images.package,
                   height: 200,
                   fit: BoxFit.cover,
