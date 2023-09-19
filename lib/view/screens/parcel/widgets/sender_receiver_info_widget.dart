@@ -18,76 +18,78 @@ class SenderReceiverInfoWidget extends StatefulWidget {
   const SenderReceiverInfoWidget({Key? key}) : super(key: key);
 
   @override
-  State<SenderReceiverInfoWidget> createState() => _SenderReceiverInfoWidgetState();
+  State<SenderReceiverInfoWidget> createState() =>
+      _SenderReceiverInfoWidgetState();
 }
-class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget> with SingleTickerProviderStateMixin {
 
+class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget>
+    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-
-
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
-      child: GetBuilder<ParcelController>(builder: (parcelController){
+      padding:
+          const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+      child: GetBuilder<ParcelController>(builder: (parcelController) {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: MediaQuery.of(context).size.width*0.7,
+              width: MediaQuery.of(context).size.width * 0.7,
               height: 45,
               decoration: BoxDecoration(
                 border: Border.all(color: Theme.of(context).primaryColor),
-                borderRadius: BorderRadius.circular(Dimensions.radiusDefault+2),
+                borderRadius:
+                    BorderRadius.circular(Dimensions.radiusDefault + 2),
               ),
               child: TabBar(
                 controller: parcelController.tabController,
                 unselectedLabelColor: Colors.grey,
-                labelColor:  Colors.white ,
+                labelColor: Colors.white,
                 labelStyle: textMedium.copyWith(),
                 indicatorColor: Theme.of(context).primaryColor,
-                indicator:  BoxDecoration(
+                indicator: BoxDecoration(
                   color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-
                 ),
-                tabs:  [
-                  SizedBox(height: 30,child: Tab(text: 'sender_info'.tr)),
-                  SizedBox(height: 30,child: Tab(text: 'receiver_info'.tr)),
+                tabs: [
+                  SizedBox(height: 30, child: Tab(text: 'sender_info'.tr)),
+                  SizedBox(height: 30, child: Tab(text: 'receiver_info'.tr)),
                 ],
-                onTap: (index){
+                onTap: (index) {
                   parcelController.updateTabControllerIndex(index);
                 },
               ),
             ),
-
-            parcelController.tabController.index==0
-                ?_senderInfo(parcelController)
-                :_receiverInfo(parcelController),
-
+            parcelController.tabController.index == 0
+                ? _senderInfo(parcelController)
+                : _receiverInfo(parcelController),
             CustomButton(
               buttonText: "next".tr,
-              onPressed: (){
-                if(parcelController.tabController.index==0){
-                  if(parcelController.senderContactController.text.isEmpty){
+              onPressed: () {
+                if (parcelController.tabController.index == 0) {
+                  if (parcelController.senderContactController.text.isEmpty) {
                     showCustomSnackBar('enter_sender_contact_number'.tr);
-                  }else if(parcelController.senderNameController.text.isEmpty){
+                  } else if (parcelController
+                      .senderNameController.text.isEmpty) {
                     showCustomSnackBar('enter_sender_name'.tr);
-                  } else if(parcelController.senderNameController.text.isEmpty){
+                  } else if (parcelController
+                      .senderNameController.text.isEmpty) {
                     showCustomSnackBar('enter_sender_address'.tr);
-                  }else{
+                  } else {
                     parcelController.updateTabControllerIndex(1);
                   }
-                }
-
-                else{
-                  if(parcelController.receiverContactController.text.isEmpty){
+                } else {
+                  if (parcelController.receiverContactController.text.isEmpty) {
                     showCustomSnackBar('enter_receiver_contact_number'.tr);
-                  }else if(parcelController.receiverNameController.text.isEmpty){
+                  } else if (parcelController
+                      .receiverNameController.text.isEmpty) {
                     showCustomSnackBar('enter_receiver_name'.tr);
-                  } else if(parcelController.receiverNameController.text.isEmpty){
+                  } else if (parcelController
+                      .receiverNameController.text.isEmpty) {
                     showCustomSnackBar('enter_receiver_address'.tr);
-                  }else{
-                    parcelController.updateParcelState(ParcelDeliveryState.parcelInfoDetails);
+                  } else {
+                    parcelController.updateParcelState(
+                        ParcelDeliveryState.parcelInfoDetails);
                   }
                 }
                 Get.find<MapController>().notifyMapController();
@@ -103,7 +105,10 @@ class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget> wit
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextFieldTitle(title: 'contact'.tr,textOpacity: 0.8,),
+        TextFieldTitle(
+          title: 'contact'.tr,
+          textOpacity: 0.8,
+        ),
         CustomTextField(
           prefix: false,
           borderRadius: 10,
@@ -115,8 +120,10 @@ class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget> wit
           nextFocus: parcelController.senderNameNode,
           inputType: TextInputType.phone,
         ),
-
-        TextFieldTitle(title: 'name'.tr,textOpacity: 0.8,),
+        TextFieldTitle(
+          title: 'name'.tr,
+          textOpacity: 0.8,
+        ),
         CustomTextField(
           prefixIcon: Images.editProfilePhone,
           borderRadius: 10,
@@ -129,9 +136,10 @@ class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget> wit
           nextFocus: parcelController.senderAddressNode,
           inputType: TextInputType.text,
         ),
-
-
-        TextFieldTitle(title: 'address'.tr,textOpacity: 0.8,),
+        TextFieldTitle(
+          title: 'address'.tr,
+          textOpacity: 0.8,
+        ),
         CustomTextField(
           prefix: false,
           suffixIcon: Images.addLocation,
@@ -143,24 +151,26 @@ class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget> wit
           focusNode: parcelController.senderAddressNode,
           inputType: TextInputType.text,
           inputAction: TextInputAction.done,
-          onPressedSuffix: (){
-
-          },
+          onPressedSuffix: () {},
         ),
-
-
-        HomeMyAddress(title: 'saved_address'.tr,fromPage: 'parcel',),
+        HomeMyAddress(
+          title: 'saved_address'.tr,
+          fromPage: 'parcel',
+        ),
         K.sizedBoxH0,
         K.sizedBoxH0,
       ],
     );
   }
 
-  Widget  _receiverInfo(ParcelController parcelController) {
+  Widget _receiverInfo(ParcelController parcelController) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextFieldTitle(title: Strings.contact.tr,textOpacity: 0.8,),
+        TextFieldTitle(
+          title: Strings.contact.tr,
+          textOpacity: 0.8,
+        ),
         CustomTextField(
           borderRadius: 10,
           showBorder: false,
@@ -172,8 +182,10 @@ class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget> wit
           nextFocus: parcelController.receiverNameNode,
           inputType: TextInputType.phone,
         ),
-
-        TextFieldTitle(title: Strings.contact.tr,textOpacity: 0.8,),
+        TextFieldTitle(
+          title: Strings.contact.tr,
+          textOpacity: 0.8,
+        ),
         CustomTextField(
           prefixIcon: Images.editProfilePhone,
           borderRadius: 10,
@@ -186,9 +198,10 @@ class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget> wit
           nextFocus: parcelController.receiverAddressNode,
           inputType: TextInputType.text,
         ),
-
-
-        TextFieldTitle(title: 'address'.tr,textOpacity: 0.8,),
+        TextFieldTitle(
+          title: 'address'.tr,
+          textOpacity: 0.8,
+        ),
         CustomTextField(
           suffixIcon: Images.addLocation,
           borderRadius: 10,
@@ -201,8 +214,10 @@ class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget> wit
           inputType: TextInputType.text,
           inputAction: TextInputAction.done,
         ),
-
-        HomeMyAddress(title: 'saved_address'.tr,fromPage: 'parcel',),
+        HomeMyAddress(
+          title: 'saved_address'.tr,
+          fromPage: 'parcel',
+        ),
         K.sizedBoxH0,
         K.sizedBoxH0,
       ],

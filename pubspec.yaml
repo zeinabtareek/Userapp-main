@@ -53,7 +53,7 @@ dependencies:
   url_launcher: ^6.1.14
   geocoding:
   flutter_spinkit:
-#  map_location_picker:
+  another_stepper: ^1.2.2
   fl_chart:
   flutter_staggered_animations:
 dependency_overrides:

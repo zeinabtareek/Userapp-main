@@ -390,6 +390,13 @@
   "status_package": "حزمة الحالة",
   "in_delivery": "قيد التسليم",
   "status_order": "ترتيب الحالة",
-  "return": "العودة",
-  "delivered": "تم التسليم"
+  "returned": "  تم إرجاعه",
+  "delivered": "تم التسليم",
+  "delivery_status": "حالة التسليم",
+  "estimated_delivery_date": "تاريخ التسليم المقدر",
+  "live_tracking": "التتبع المباشر",
+  "package_weight": "وزن الحزمة",
+  "pick_up_point": "نقطة الالتقاط - نقطة",
+  "drop_off_point": "نقطة التسليم - النقطة"
+
 }

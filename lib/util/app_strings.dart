@@ -180,6 +180,15 @@ class Strings {
   static const specialOffers = "special_offers";//Check Rates
   static const viewAll = "view_all";
   static const statusPackage = "status_package";
+  static const statusOrder = "status_order";
+  static const delivered = "delivered";
+  static const returned = "returned";
+  static const deliveryStatus = "delivery_status";
+  static const estimatedDeliveryDate = "estimated_delivery_date";
+  static const liveTracking = "live_tracking";
+  static const packageWeight = "package_weight";
+  static const dropOffPoint = "drop_off_point";
+  static const pickUpPoint = "pick_up_point";
 
 
 }

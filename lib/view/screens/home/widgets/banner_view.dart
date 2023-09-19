@@ -18,31 +18,31 @@ class _BannerViewState extends State<BannerView> {
     Get.find<BannerController>().getBannerList();
     return GetBuilder<BannerController>(
       builder: (bannerController) {
-        return  SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: 130,
-          child: CarouselSlider.builder(
-            options: CarouselOptions(
-              autoPlay: true,
-              enlargeCenterPage: false,
-              viewportFraction: 1,
-              disableCenter: true,
-              autoPlayInterval: const Duration(seconds: 7),
-              onPageChanged: (index, reason) {
+        return SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 130,
+            child: CarouselSlider.builder(
+              options: CarouselOptions(
+                autoPlay: true,
+                enlargeCenterPage: false,
+                viewportFraction: 1,
+                disableCenter: true,
+                autoPlayInterval: const Duration(seconds: 7),
+                onPageChanged: (index, reason) {},
+              ),
+              itemCount: bannerController.banners.length,
+              itemBuilder: (context, index, _) {
+                return ClipRRect(
+                  borderRadius:
+                      BorderRadius.circular(Dimensions.radiusOverLarge),
+                  child: const CustomImage(
+                    image:
+                        "https://img.freepik.com/premium-vector/luxury-car-rental-promotion-facebook-cover-banner-web-banner-template_621071-62.jpg?w=2000",
+                    fit: BoxFit.cover,
+                  ),
+                );
               },
-            ),
-            itemCount: bannerController.banners.length,
-            itemBuilder: (context, index, _) {
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(Dimensions.radiusOverLarge),
-                child:  const CustomImage(
-                  image: "https://img.freepik.com/premium-vector/luxury-car-rental-promotion-facebook-cover-banner-web-banner-template_621071-62.jpg?w=2000",
-                  fit: BoxFit.cover,
-                ),
-              );
-            },
-          )
-        );
+            ));
       },
     );
   }

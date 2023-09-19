@@ -6,20 +6,25 @@ import 'package:ride_sharing_user_app/view/screens/parcel/controller/parcel_cont
 
 import '../../where_to_go/where_to_go_screen.dart';
 
-
 class AddressItemCard extends StatelessWidget {
   final AddressModel addressModel;
   final String fromPage;
-  const AddressItemCard({Key? key, required this.addressModel, required this.fromPage}) : super(key: key);
+
+  const AddressItemCard(
+      {Key? key, required this.addressModel, required this.fromPage})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-        if(fromPage=="home"){
-          Get.to(()=>SetDestinationScreen(address: addressModel.address,));
-        }else{
-          Get.find<ParcelController>().setParcelAddress(addressModel.address??"");
+      onTap: () {
+        if (fromPage == "home") {
+          Get.to(() => SetDestinationScreen(
+                address: addressModel.address,
+              ));
+        } else {
+          Get.find<ParcelController>()
+              .setParcelAddress(addressModel.address ?? "");
         }
       },
       child: Container(
@@ -30,14 +35,18 @@ class AddressItemCard extends StatelessWidget {
         ),
         decoration: BoxDecoration(
             color: Theme.of(context).primaryColor.withOpacity(0.05),
-            border: Border.all(color:Theme.of(context).primaryColor.withOpacity(0.4),width:0.5),
-            borderRadius: BorderRadius.circular(Dimensions.radiusOverLarge)
-        ),
-        child: Row(children: [
-          Image.asset(addressModel.addressIcon!, width: 20),
-          const SizedBox(width: 5,),
-          Text(addressModel.addressType!.tr),
-        ],
+            border: Border.all(
+                color: Theme.of(context).primaryColor.withOpacity(0.4),
+                width: 0.5),
+            borderRadius: BorderRadius.circular(Dimensions.radiusOverLarge)),
+        child: Row(
+          children: [
+            Image.asset(addressModel.addressIcon!, width: 20),
+            const SizedBox(
+              width: 5,
+            ),
+            Text(addressModel.addressType!.tr),
+          ],
         ),
       ),
     );

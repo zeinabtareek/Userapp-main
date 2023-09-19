@@ -13,24 +13,23 @@ import '../../../../util/images.dart';
 import '../../../widgets/permission_dialog.dart';
 import '../widgets/home_map_view.dart';
 
-class HomeViewController extends GetxController{
-
-   GoogleMapController? mapController;
+class HomeViewController extends GetxController {
+  GoogleMapController? mapController;
   final markers = <MarkerId, Marker>{};
   final controller = Completer<GoogleMapController>();
-    Position ?_position;
+  Position? _position;
+
   Position? get position => _position;
-    final googleMapController = Completer<GoogleMapController>();
-   final stream = Stream.periodic(kDuration, (count) => kLocations[count])
-       .take(kLocations.length);
-   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
-  onInit()async{
+  final googleMapController = Completer<GoogleMapController>();
+  final stream = Stream.periodic(kDuration, (count) => kLocations[count])
+      .take(kLocations.length);
+  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+
+  onInit() async {
     super.onInit();
 
-    _position= await determinePosition();
+    _position = await determinePosition();
   }
-
-
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
@@ -41,7 +40,6 @@ class HomeViewController extends GetxController{
         .buffer
         .asUint8List();
   }
-
 
   void newLocationUpdate(LatLng latLng) async {
     var marker = RippleMarker(
@@ -59,13 +57,11 @@ class HomeViewController extends GetxController{
             await getBytesFromAsset(Images.carIcon, 100)),
         onTap: () {});
     // setState(() {
-      markers[kMarkerId] = marker;
-      markers[kMarkerId2] = marker2;
+    markers[kMarkerId] = marker;
+    markers[kMarkerId2] = marker2;
     // });
 
     update();
-
-
   }
 
   Future<Position?> determinePosition() async {

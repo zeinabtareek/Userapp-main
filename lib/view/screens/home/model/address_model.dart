@@ -1,9 +1,8 @@
-class AddressModel{
+class AddressModel {
   String? addressType;
   String? addressIcon;
   String? address;
   String? id;
 
-  AddressModel({this.addressType, this.addressIcon, this.id,this.address});
-
+  AddressModel({this.addressType, this.addressIcon, this.id, this.address});
 }

@@ -135,7 +135,9 @@ const kLocations = [
 ];
 
 class HomeMapView extends StatefulWidget {
-  const HomeMapView({super.key});
+  double? height;
+
+  HomeMapView({super.key, this.height});
 
   @override
   HomeMapViewState createState() => HomeMapViewState();
@@ -146,14 +148,16 @@ class HomeMapViewState extends State<HomeMapView> {
   GoogleMapController? mapController;
   final markers = <MarkerId, Marker>{};
   final controller = Completer<GoogleMapController>();
-  late CameraPosition cameraPosition ;
-  final stream = Stream.periodic(kDuration, (count) => kLocations[count]).take(kLocations.length);
-   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+  late CameraPosition cameraPosition;
+
+  final stream = Stream.periodic(kDuration, (count) => kLocations[count])
+      .take(kLocations.length);
+  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
 
   @override
-    initState()  {
+  initState() {
     super.initState();
-      _determinePosition();
+    _determinePosition();
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
@@ -166,14 +170,12 @@ class HomeMapViewState extends State<HomeMapView> {
         .asUint8List();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault),
+      padding: EdgeInsets.only(top: Dimensions.paddingSizeDefault),
       child: Container(
-        height: 180,
+        height: widget.height ?? 180,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
             border: Border.all(
@@ -181,43 +183,39 @@ class HomeMapViewState extends State<HomeMapView> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
           child: Animarker(
-            curve: Curves.bounceOut,
-            rippleRadius: 0.2,
-            useRotation: false,
-            duration: const Duration(milliseconds: 2300),
-            mapId: controller.future.then<int>((value) => value.mapId),
-            //Grab Google Map Id
-            markers: markers.values.toSet(),
-            child: position==null?
-            SpinKitThreeInOut(color:  Theme.of(context).primaryColor,size: 40,)
-
-                : GoogleMap(
-            mapType: MapType.normal,
-            myLocationEnabled: true,
-            zoomControlsEnabled: false,
-            myLocationButtonEnabled: true,
-
-            onTap: (p) {
-              print(p);
-            },
-            onCameraMove: (poistion) {
-              print(poistion);
-            },
-            initialCameraPosition: cameraPosition,
-            onMapCreated: (gController) async {
-              controller.complete(gController);
-                stream.forEach((value) => _determinePosition());
-            }
-
-          )
-
-          ),
+              curve: Curves.bounceOut,
+              rippleRadius: 0.2,
+              useRotation: false,
+              duration: const Duration(milliseconds: 2300),
+              mapId: controller.future.then<int>((value) => value.mapId),
+              //Grab Google Map Id
+              markers: markers.values.toSet(),
+              child: position == null
+                  ? SpinKitThreeInOut(
+                      color: Theme.of(context).primaryColor,
+                      size: 40,
+                    )
+                  : GoogleMap(
+                      mapType: MapType.normal,
+                      myLocationEnabled: true,
+                      zoomControlsEnabled: false,
+                      myLocationButtonEnabled: true,
+                      onTap: (p) {
+                        print(p);
+                      },
+                      onCameraMove: (poistion) {
+                        print(poistion);
+                      },
+                      initialCameraPosition: cameraPosition,
+                      onMapCreated: (gController) async {
+                        controller.complete(gController);
+                        stream.forEach((value) => _determinePosition());
+                      })),
         ),
         // ),
       ),
     );
   }
-
 
   void newLocationUpdate(LatLng latLng) async {
     var marker = RippleMarker(
@@ -280,10 +278,11 @@ class HomeMapViewState extends State<HomeMapView> {
 
     position = await Geolocator.getCurrentPosition();
     print(position?.latitude);
-     cameraPosition= await CameraPosition(
+    cameraPosition = await CameraPosition(
         target: LatLng(position?.latitude ?? 0.0, position?.longitude ?? 0.0),
         zoom: 17);
-    mapController?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+    mapController
+        ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
     var marker = RippleMarker(
         markerId: kMarkerId,
@@ -297,8 +296,6 @@ class HomeMapViewState extends State<HomeMapView> {
     });
     return position;
   }
-
-
 
 // convertLocation() async {
 //   GeoData data = await Geocoder2.getDataFromCoordinates(

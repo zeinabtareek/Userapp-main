@@ -19,25 +19,27 @@ class CompletedParcelWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+      padding:
+          const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
       child: Column(
         children: [
-          TollTipWidget(title: "rider_details".tr,),
-
-          const OtpWidget(fromPage: 'parcel',),
-
+          TollTipWidget(
+            title: "rider_details".tr,
+          ),
+          const OtpWidget(
+            fromPage: 'parcel',
+          ),
           ContactWidget(),
-
-
-          const SizedBox(height: Dimensions.paddingSizeDefault,),
+          const SizedBox(
+            height: Dimensions.paddingSizeDefault,
+          ),
           ActivityScreenRiderDetails(
-            riderDetails :Driver(
+            riderDetails: Driver(
                 firstName: "mostafizur",
                 rate: 5,
-                img: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
-                lastName: "smith"
-
-            ),
+                img:
+                    "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                lastName: "smith"),
             // riderDetails: RiderDetails(
             //   name: "mostafizur",
             //   vehicleNumber: "DH-1234",
@@ -47,24 +49,29 @@ class CompletedParcelWidget extends StatelessWidget {
             //   image: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg"
             // ),
           ),
-          const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-          const RouteWidget(),
-          const SizedBox(height: Dimensions.paddingSizeDefault,),
-
+          const SizedBox(
+            height: Dimensions.paddingSizeDefault,
+          ),
+          RouteWidget(),
+          const SizedBox(
+            height: Dimensions.paddingSizeDefault,
+          ),
           const DistanceCalculatedWidget(),
-          const SizedBox(height: Dimensions.paddingSizeDefault,),
-
+          const SizedBox(
+            height: Dimensions.paddingSizeDefault,
+          ),
           const ProductDetailsWidget(),
-          const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-          CustomButton(buttonText: 'cancel_ride'.tr,
+          const SizedBox(
+            height: Dimensions.paddingSizeDefault,
+          ),
+          CustomButton(
+            buttonText: 'cancel_ride'.tr,
             transparent: true,
             borderWidth: 1,
             showBorder: true,
             radius: Dimensions.paddingSizeSmall,
             borderColor: Theme.of(Get.context!).primaryColor,
-            onPressed: (){
+            onPressed: () {
               // showDialog(context: Get.context!, builder: (_)=> BiddingDialog(index: index,));
             },
           )

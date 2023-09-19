@@ -26,7 +26,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   void initState() {
     printDeviceToken();
@@ -43,55 +42,51 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: CustomBody(
-        appBar:  CustomAppBar(title: '${Strings.goodMorning.tr} ${'John'}', showBackButton: false,isHome: true,),
+        appBar: CustomAppBar(
+          title: '${Strings.goodMorning.tr} ${'John'}',
+          showBackButton: false,
+          isHome: true,
+        ),
         body: Padding(
           padding: K.fixedPadding0,
-          child: const SingleChildScrollView(
-            child: Column(children:  [
-
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
                 BannerView(),
-
                 CategoryView(),
-
                 HomeSearchWidget(),
-
-                HomeMyAddress(fromPage: Strings.home,),
-
+                HomeMyAddress(
+                  fromPage: Strings.home,
+                ),
                 HomeMapView()
               ],
             ),
           ),
         ),
       ),
-
     );
   }
-  // void _checkPermission(BuildContext context) async {
-  //   LocationPermission permission = await Geolocator.checkPermission();
-  //   if(permission == LocationPermission.denied) {
-  //     permission = await Geolocator.requestPermission();
-  //   }
-  //   if(permission == LocationPermission.denied) {
-  //     // showDialog(context: context, barrierDismissible: false, builder: (context) => PermissionDialog(isDenied: true,
-  //     //     onPressed: () async {
-  //     //       Navigator.pop(context);
-  //     //       await Geolocator.requestPermission();
-  //     //
-  //     //     }));
-  //   }else if(permission == LocationPermission.deniedForever) {
-  //     // showDialog(context: context, barrierDismissible: false, builder: (context) => PermissionDialog(isDenied: false,
-  //     //     onPressed: () async {
-  //     //       Navigator.pop(context);
-  //     //       await Geolocator.openAppSettings();
-  //     //
-  //     //     }));
-  //   }
-  // }
+// void _checkPermission(BuildContext context) async {
+//   LocationPermission permission = await Geolocator.checkPermission();
+//   if(permission == LocationPermission.denied) {
+//     permission = await Geolocator.requestPermission();
+//   }
+//   if(permission == LocationPermission.denied) {
+//     // showDialog(context: context, barrierDismissible: false, builder: (context) => PermissionDialog(isDenied: true,
+//     //     onPressed: () async {
+//     //       Navigator.pop(context);
+//     //       await Geolocator.requestPermission();
+//     //
+//     //     }));
+//   }else if(permission == LocationPermission.deniedForever) {
+//     // showDialog(context: context, barrierDismissible: false, builder: (context) => PermissionDialog(isDenied: false,
+//     //     onPressed: () async {
+//     //       Navigator.pop(context);
+//     //       await Geolocator.openAppSettings();
+//     //
+//     //     }));
+//   }
+// }
 }
-
-
-
-
