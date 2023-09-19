@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:get/get.dart';
 
 class NetworkInfo {
 
-  Future<bool> isConnected() async {
+static  Future<bool> isConnected(  {bool showToast= true}) async {
     ConnectivityResult result = await Connectivity().checkConnectivity();
-    return result != ConnectivityResult.none;
+    bool isConnected= result != ConnectivityResult.none;
+
+    if (!isConnected && showToast) {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(const SnackBar(
+        backgroundColor:  Colors.red ,
+        duration: Duration(seconds: 3),
+        content: Text(
+          'no_connection' ,
+          textAlign: TextAlign.center,
+        ),
+      ));
+    }
+    return   isConnected ;
   }
 
   static void checkConnectivity(BuildContext context) {

@@ -51,11 +51,12 @@ class AuthController extends GetxController {
   }
 
   toLoginOtpScreen(OtpState otpState) {
-    initOtpScreen();
-    Get.to(() => const OtpLoginScreen(), binding: authBinding);
+    initOtpLoginScreen();
+    Get.to(() => OtpLoginScreen(), binding: authBinding);
   }
 
   toSignUpScreen() {
+    initSignUp();
     Get.to(() => SignUpScreen(), binding: authBinding);
   }
 
@@ -68,6 +69,7 @@ class AuthController extends GetxController {
   }
 
   void toSignInScreen() {
+    initLoginWithPassScreen();
     Get.offAll(
       () => SignInScreen(),
       binding: authBinding,
@@ -85,7 +87,7 @@ class AuthController extends GetxController {
     disposeCompleteDataScreen();
     disposeForgetPassScreen();
     disposeLogin();
-    disposeOtpScreen();
+    disposeOtpLoginScreen();
     disposeResetScreen();
     disposeSignUp();
     super.onClose();
@@ -264,6 +266,7 @@ class AuthController extends GetxController {
           authCases.setUserDate(user);
           toCompleteDataScreen();
         },
+        showErrorToast: true,
       );
     }
   }
@@ -377,7 +380,8 @@ class AuthController extends GetxController {
       checkStatus(
         res,
         onSuccess: (res) {
-          Get.to(
+          disposeForgetPassScreen();
+          Get.off(
             () => VerificationScreen(
               otpState: OtpState.forgetPassword,
               number: forgetPasswordPhoneController.text,
@@ -400,7 +404,7 @@ class AuthController extends GetxController {
 
   RxBool otpLoginIsLoading = false.obs;
 
-  initOtpScreen() {
+  initOtpLoginScreen() {
     phoneControllerForOTPLogInScreen = TextEditingController();
     nodeForOTPLogInScreen = FocusNode();
     otpSelectCountry = CountryCode.fromDialCode(defaultDailCode).obs;
@@ -408,7 +412,7 @@ class AuthController extends GetxController {
     otpLoginIsLoading = false.obs;
   }
 
-  void disposeOtpScreen() {
+  void disposeOtpLoginScreen() {
     phoneControllerForOTPLogInScreen.dispose();
     nodeForOTPLogInScreen.dispose();
   }
@@ -429,8 +433,9 @@ class AuthController extends GetxController {
     final res = await authCases.sendOtp(req);
     otpLoginIsLoading = false.obs;
     checkStatus(res, onSuccess: (res) {
-      Get.to(
-        () => VerificationScreen(
+      disposeOtpLoginScreen();
+      Get.off(
+        VerificationScreen(
           countryCode: otpSelectCountry.value.dialCode.toString(),
           number: phoneControllerForOTPLogInScreen.text,
           otpState: OtpState.loginWithOtp,
@@ -662,8 +667,6 @@ class AuthController extends GetxController {
       showSuccessToast: true,
     );
   }
-
-
 
   changePass() async {
     if (resetNewPasswordController.text.trim().isEmpty ||

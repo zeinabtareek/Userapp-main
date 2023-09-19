@@ -26,9 +26,11 @@ void _handelSuccess<T extends BaseResModel>(
   bool showSuccessToast,
   DataSuccess<dynamic> state,
   Function(T? res)? onSuccess,
-) {
+) async {
   if (showSuccessToast) {
-      showCustomSnackBar(state.data?.massage ??state.data?.msg ?? "", isError: false);
+    await Future.delayed(Duration.zero);
+    showCustomSnackBar(state.data?.massage ?? state.data?.msg ?? "",
+        isError: false);
   }
   onSuccess?.call(state.data);
 }
@@ -37,8 +39,9 @@ void _handelError<T extends BaseResModel>(
   bool showErrorToast,
   DataState<T> state,
   Function(T? error)? onError,
-) {
+) async {
   if (showErrorToast) {
+    await Future.delayed(Duration.zero);
     showCustomSnackBar(state.errorMsg ?? "");
   }
   onError?.call(state.data);

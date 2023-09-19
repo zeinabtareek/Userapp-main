@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/data/api_checker.dart';
+import 'package:ride_sharing_user_app/helper/map-helpers/map_view_helper.dart';
 import 'package:ride_sharing_user_app/view/screens/history/model/activity_item_model.dart';
 import 'package:ride_sharing_user_app/view/screens/history/repository/history_repo.dart';
 
@@ -13,45 +14,45 @@ import '../model/history_model.dart';
 class ActivityController extends BaseController implements GetxService {
   // final ActivityRepo activityRepo;
   // ActivityController({required this.activityRepo});
-    ActivityRepo activityRepo=ActivityRepo();
+  ActivityRepo activityRepo = ActivityRepo();
 
- final List<String> _filterList = ['all', 'today', 'yesterday', 'custom'];
+  final List<String> _filterList = ['all', 'today', 'yesterday', 'custom'];
 
- List<String> get filterList => _filterList;
+  List<String> get filterList => _filterList;
 
   List<ActivityItemModel> activityItemList = [];
   bool _showCustomDate = false;
   bool get showCustomDate => _showCustomDate;
-  String _filterStartDate ='';
+  String _filterStartDate = '';
   String get filterStartDate => _filterStartDate;
 
-  String _filterEndDate ='';
+  String _filterEndDate = '';
   String get filterEndDate => _filterEndDate;
 
-
-  late   LatLng _initialPosition = const LatLng(23.83721, 90.363715);
+  late LatLng _initialPosition = const LatLng(23.83721, 90.363715);
   LatLng get initialPosition => _initialPosition;
 
   GoogleMapController? _mapController;
   GoogleMapController? get mapController => _mapController;
-     Completer<GoogleMapController> mapCompleter = Completer<GoogleMapController>();
+  Completer<GoogleMapController> mapCompleter =
+      Completer<GoogleMapController>();
+
   ///polyline and marker
   Map<PolylineId, Polyline> polyLines = {};
-  Set<Marker> markers =Set<Marker>();
+  Set<Marker> markers = Set<Marker>();
 
+  late MapViewHelper mapViewHelper;
 
-
-    @override
-    onInit()async {
-     super.onInit();
-     await activityRepo.getAllHistoryTrips();
-     await getAllHistoryTrips();
-
+  @override
+  onInit() async {
+    super.onInit();
+    await activityRepo.getAllHistoryTrips();
+    await getAllHistoryTrips();
   }
-
 
   void setMapController(GoogleMapController mapController) {
     _mapController = mapController;
+    mapViewHelper = MapViewHelper(mapCompleter);
   }
 
   //  getRewardList() async {
@@ -65,27 +66,26 @@ class ActivityController extends BaseController implements GetxService {
   //   update();
   // }
 
-  void updateShowCustomDateState(bool state){
+  void updateShowCustomDateState(bool state) {
     _showCustomDate = state;
     update();
   }
 
-  void setFilterDateRangeValue({String? start, String? end}){
-    _filterStartDate = start??"";
-    _filterEndDate = end??"";
+  void setFilterDateRangeValue({String? start, String? end}) {
+    _filterStartDate = start ?? "";
+    _filterEndDate = end ?? "";
     update();
   }
 
-
   ///Api Fetch
 
-  HistoryModel model =HistoryModel();
-    // final loading=false.obs;
-    getAllHistoryTrips() async {
-        setState(ViewState.busy);
-        model = await activityRepo.getAllHistoryTrips();
-        setState(ViewState.idle);
-    }
+  HistoryModel model = HistoryModel();
+  // final loading=false.obs;
+  getAllHistoryTrips() async {
+    setState(ViewState.busy);
+    model = await activityRepo.getAllHistoryTrips();
+    setState(ViewState.idle);
+  }
 
   ///animate camera move
   //   Future<void> goToPlace({
@@ -101,47 +101,44 @@ class ActivityController extends BaseController implements GetxService {
   //     );
   //   }
 
-    Future<void> goToPlace(  Completer<GoogleMapController> _controller  ,{
-      required double lat,
-      required double lng, }) async {
-      final GoogleMapController controller = await _controller.future;
-      await controller.animateCamera(CameraUpdate.newCameraPosition( CameraPosition(
-            bearing: 192.8334901395799,
-            target: LatLng(lat, lng),
-            zoom: 19)
-      ));
-      showPinsOnMap(LatLng(lat, lng),LatLng(lat, lng));
-update();
-    }
-    ///show pins on the map
-    showPinsOnMap(LatLng sourcePoint ,LatLng desPoint  ){
-      try {
-        markers.add(
-            Marker(
-                markerId: MarkerId('sourcePin'),
-                position: sourcePoint,
-                onTap: () { }
-            )
-        );
-        markers.add(
-            Marker(
-                markerId: MarkerId('destination',),
-                position: desPoint,
-                onTap: () {}
-            ));
-        // setPolylines(point,desPoint);
+  Future<void> goToPlace(
+    Completer<GoogleMapController> _controller, {
+    required double lat,
+    required double lng,
+  }) async {
+    mapViewHelper.goToPlace(() => update(), lat: lat, lng: lng);
+//       showPinsOnMap(LatLng(lat, lng),LatLng(lat, lng));
+// update();
+  }
+
+  ///show pins on the map
+  showPinsOnMap(LatLng sourcePoint, LatLng desPoint) {
+    try {
+      var m1 = Marker(
+          markerId: const MarkerId('sourcePin'),
+          position: sourcePoint,
+          onTap: () {});
+      var m2 = Marker(
+          markerId: const MarkerId(
+            'destination',
+          ),
+          position: desPoint,
+          onTap: () {});
+      mapViewHelper.addListMarker(() {
+        markers = mapViewHelper.markers;
         update();
-      }catch(e){
-        printError(info: '############no#########');
-      }
+      }, markers: [m1, m2], isRequestUpdateUiAfterAddedALL: true);
+    } catch (e) {
+      printError(info: '############no#########');
     }
-    ///set Polylines on a map
-    setPolylines(LatLng sourcePoint ,LatLng desPoint ){  }
-    ///on Camera Move
-    onCameraMove(CameraPosition position) {
-      _initialPosition = position.target;
-      update();
-    }
+  }
 
+  ///set Polylines on a map
+  setPolylines(LatLng sourcePoint, LatLng desPoint) {}
 
- }
+  ///on Camera Move
+  onCameraMove(CameraPosition position) {
+    _initialPosition = position.target;
+    update();
+  }
+}

@@ -5,7 +5,8 @@ import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/screens/map/map_screen.dart';
 
-import '../model/suggested_route_model.dart';
+import '../../../../services/search_on_map_services/models/suggested_route_model.dart';
+
 
 
 class SuggestedRouteCard extends StatelessWidget {

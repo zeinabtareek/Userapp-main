@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 
+import '../../../../services/search_on_map_services/models/search_suggestion_model.dart';
 import '../../../../util/app_style.dart';
 import '../controller/where_to_go_controller.dart';
-import '../model/search_suggestion_model.dart';
 
 class SearchListWidget extends StatelessWidget {
   RxList<Predictions> listOfSearchedPlaces;

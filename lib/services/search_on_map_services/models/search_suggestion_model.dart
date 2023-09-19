@@ -1,6 +1,5 @@
 
 
-import 'geometry_model.dart';
 
 // class Suggestion {
 //    final String  placeId;
@@ -19,6 +18,8 @@ import 'geometry_model.dart';
 //
 //
 // }
+import 'geometry_model.dart';
+
 class Suggestion {
   List<Predictions>? predictions;
   String? status;

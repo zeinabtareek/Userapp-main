@@ -117,6 +117,8 @@ import 'package:geocoder2/geocoder2.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ride_sharing_user_app/helper/map-helpers/map_helper.dart';
+import 'package:ride_sharing_user_app/helper/map-helpers/map_view_helper.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 
@@ -124,12 +126,12 @@ import 'dart:ui' as ui;
 
 import 'package:ride_sharing_user_app/view/widgets/permission_dialog.dart';
 
-const kStartPosition = LatLng(18.488213, -69.959186);
-const kSantoDomingo = CameraPosition(target: kStartPosition, zoom: 15);
+var kStartPosition = LatLng(18.488213, -69.959186);
+var kSantoDomingo = CameraPosition(target: kStartPosition, zoom: 15);
 const kMarkerId = MarkerId('MarkerId1');
 const kMarkerId2 = MarkerId('MarkerId2');
 const kDuration = Duration(seconds: 2);
-const kLocations = [
+var kLocations = [
   kStartPosition,
   LatLng(23.837689, 90.370076),
 ];
@@ -145,16 +147,37 @@ class HomeMapViewState extends State<HomeMapView> {
   Position? position;
   GoogleMapController? mapController;
   final markers = <MarkerId, Marker>{};
+
   final controller = Completer<GoogleMapController>();
-  late CameraPosition cameraPosition ;
+  late CameraPosition cameraPosition;
   final stream = Stream.periodic(kDuration, (count) => kLocations[count])
       .take(kLocations.length);
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+  late MapViewHelper mapViewHelper;
+  trackLiveLocation() {
+    MapHelper.getPositionWhenMove(
+      
+      distanceFilter: 10,
+      
+      onChangeLocation: (pos) {
+      print(" pos :::: $pos ");
+      LatLng target = LatLng(pos.latitude, pos.longitude);
+      mapViewHelper.goToPlace(
+        () {
+          setState(() {});
+        },
+        lat: target.latitude,
+        lng: target.longitude,
+        isAnimate: false,
+      );
+    });
+  }
 
   @override
-    initState()  {
+  initState() {
     super.initState();
-      _determinePosition();
+    _determinePosition();
+    trackLiveLocation();
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
@@ -166,8 +189,6 @@ class HomeMapViewState extends State<HomeMapView> {
         .buffer
         .asUint8List();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -189,38 +210,38 @@ class HomeMapViewState extends State<HomeMapView> {
             mapId: controller.future.then<int>((value) => value.mapId),
             //Grab Google Map Id
             markers: markers.values.toSet(),
-            child: position==null?
-            SpinKitThreeInOut(color:  Theme.of(context).primaryColor,size: 40,)
-
+            child: position == null
+                ? SpinKitThreeInOut(
+                    color: Theme.of(context).primaryColor,
+                    size: 40,
+                  )
                 : GoogleMap(
-            mapType: MapType.normal,
-            myLocationEnabled: true,
-            zoomControlsEnabled: false,
-            myLocationButtonEnabled: true,
+                    mapType: MapType.normal,
+                    myLocationEnabled: true,
+                    zoomControlsEnabled: false,
+                    myLocationButtonEnabled: true,
+                    onTap: (p) {
+                      print(p);
+                    },
+                    onCameraMove: (poistion) {
+                      print(poistion);
+                    },
+                    initialCameraPosition: cameraPosition,
+                    onMapCreated: (gController) async {
+                      // stream.forEach((value) => newLocati //onUpdate(value));
+                      controller.complete(gController);
+                      stream.forEach((value) => _determinePosition());
+                      mapViewHelper = MapViewHelper(controller);
 
-            onTap: (p) {
-              print(p);
-            },
-            onCameraMove: (poistion) {
-              print(poistion);
-            },
-            initialCameraPosition: cameraPosition,
-            onMapCreated: (gController) async {
-              // stream.forEach((value) => newLocati //onUpdate(value));
-              controller.complete(gController);
-                stream.forEach((value) => _determinePosition());
-              //Complete the future GoogleMapController
-            }
-
-          )
-
+                      //Complete the future GoogleMapController
+                    },
+                  ),
           ),
         ),
         // ),
       ),
     );
   }
-
 
   void newLocationUpdate(LatLng latLng) async {
     var marker = RippleMarker(
@@ -283,10 +304,11 @@ class HomeMapViewState extends State<HomeMapView> {
 
     position = await Geolocator.getCurrentPosition();
     print(position?.latitude);
-     cameraPosition= await CameraPosition(
+    cameraPosition = CameraPosition(
         target: LatLng(position?.latitude ?? 0.0, position?.longitude ?? 0.0),
         zoom: 17);
-    mapController?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+    mapController
+        ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
     var marker = RippleMarker(
         markerId: kMarkerId,

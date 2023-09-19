@@ -52,14 +52,14 @@ class AuthLib {
     ),
     GetPage(
       name: AuthScreenPath.forgetPasswordScreenRouteName,
-      page: () => const ForgotPasswordScreen(),
+      page: () =>  ForgotPasswordScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => AuthController(sl()));
       }),
     ),
     GetPage(
       name: AuthScreenPath.loginScreenOtpRouteName,
-      page: () => const OtpLoginScreen(),
+      page: () =>  OtpLoginScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => AuthController(sl()));
       }),

@@ -9,10 +9,11 @@ import 'package:ride_sharing_user_app/enum/view_state.dart';
 
 import '../../../../helper/display_helper.dart';
 import '../../../../helper/location_permission.dart';
+import '../../../../services/search_on_map_services/models/search_suggestion_model.dart';
+import '../../../../services/search_on_map_services/models/suggested_route_model.dart';
 import '../../../../util/app_strings.dart';
 import '../../choose_from_map/choose_from_map_screen.dart';
-import '../model/search_suggestion_model.dart';
-import '../model/suggested_route_model.dart';
+
 import '../repository/search_service.dart';
 import '../repository/set_map_repo.dart';
 

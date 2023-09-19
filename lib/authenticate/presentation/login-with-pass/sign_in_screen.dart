@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/authenticate/enums/auth_enums.dart';
 
 import '../../../util/app_constants.dart';
 import '../../../util/app_strings.dart';
@@ -148,7 +149,7 @@ class SignInScreen extends GetView<AuthController> {
                   isLoading: false,
                   buttonText: Strings.otpLogin.tr,
                   onPressed: () {
-                    Get.to(() => const OtpLoginScreen());
+                    controller.toLoginOtpScreen(OtpState.loginWithOtp);
                   },
                   radius: 50,
                 ),
@@ -161,12 +162,7 @@ class SignInScreen extends GetView<AuthController> {
                       style: K.hintSmallTextStyle,
                     ),
                     TextButton(
-                        onPressed: () {
-                          // TODO: 
-                          Get.to(
-                            () =>  SignUpScreen(),
-                          );
-                        },
+                        onPressed: controller.toSignUpScreen,
                         child: Text(Strings.signUp.tr,
                             style: K.primaryWithUnderLineSmallTextStyle))
                   ],

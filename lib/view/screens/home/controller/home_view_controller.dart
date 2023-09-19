@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,8 +7,7 @@ import 'package:flutter_animarker/core/ripple_marker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'dart:ui' as ui;
-import '../../../../helper/location_permission.dart';
+
 import '../../../../util/images.dart';
 import '../../../widgets/permission_dialog.dart';
 import '../widgets/home_map_view.dart';

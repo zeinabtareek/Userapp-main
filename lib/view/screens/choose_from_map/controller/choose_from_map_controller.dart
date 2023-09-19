@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'dart:ui' as ui;
 
 import 'package:carousel_slider/carousel_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,9 +9,8 @@ import 'package:flutter_animarker/core/ripple_marker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:ride_sharing_user_app/controller/base_controller.dart';
-import 'dart:ui' as ui;
-import '../../../../util/app_constants.dart';
+
+import '../../../../controller/base_controller.dart';
 import '../../../../util/images.dart';
 import '../../../widgets/permission_dialog.dart';
 import '../../home/widgets/home_map_view.dart';
@@ -201,7 +200,7 @@ class ChooseFromMapController extends BaseController {
               // await   showPinsOnMap(LatLng(currLocation.latitude, currLocation.longitude));
               print(currLocation.longitude);
 
-              Get.to(SetDestinationScreen());
+              Get.to(()=>  SetDestinationScreen());
             });
           }
         }     on TimeoutException {

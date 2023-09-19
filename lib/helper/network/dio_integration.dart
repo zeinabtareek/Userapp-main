@@ -8,6 +8,8 @@ class DioUtilNew {
   static DioUtilNew? _instance;
   static Dio? _dio;
 
+  DioUtilNew._();
+
   static DioUtilNew? getInstance() {
     if (_instance == null) {
       _dio = Dio(_getOptions());
@@ -40,12 +42,12 @@ class DioUtilNew {
       'Content-type': 'application/json',
       'Accept': 'application/json',
       // 'Authorization': "Bearer ${CacheHelper.getData(key: AppConstants.token)}",
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTcyLjE2LjEzLjIyOjgwMDAvYXBpL3VzZXIvcmVnaXN0ZXIiLCJpYXQiOjE2OTQ1MTQ5NDcsImV4cCI6MTcyNjA1MDk0NywibmJmIjoxNjk0NTE0OTQ3LCJqdGkiOiJOcjVmUnJTZmc4Y01aZVZnIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.LAYY_VZ8fqD13zjkb_fnh3omlLvegIi-1rS-0IxJp4A'
+      'Authorization':
+          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTcyLjE2LjEzLjIyOjgwMDAvYXBpL3VzZXIvcmVnaXN0ZXIiLCJpYXQiOjE2OTQ1MTQ5NDcsImV4cCI6MTcyNjA1MDk0NywibmJmIjoxNjk0NTE0OTQ3LCJqdGkiOiJOcjVmUnJTZmc4Y01aZVZnIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.LAYY_VZ8fqD13zjkb_fnh3omlLvegIi-1rS-0IxJp4A'
 
+      // AppConstants.acceptLanguage: languageCode ?? AppConstants.languages[0].languageCode,
 
-    // AppConstants.acceptLanguage: languageCode ?? AppConstants.languages[0].languageCode,
-
-    //     CacheHelper.getData(key: AppConstants.languageCode) == "en"
+      //     CacheHelper.getData(key: AppConstants.languageCode) == "en"
       //         ? "en-US"
       //         : "ar-EG"
     };

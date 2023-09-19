@@ -47,7 +47,7 @@ Future<void> main() async {
 
   await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
   FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
- await initializeDependencies();
+  await initializeDependencies();
   runApp(MyApp(languages: languages));
 }
 
@@ -95,12 +95,14 @@ class MyApp extends StatelessWidget {
                     fallbackLocale: Locale(
                         AppConstants.languages[0].languageCode,
                         AppConstants.languages[0].countryCode),
-                    initialRoute: RouteHelper.getSplashRoute(),
+                    // initialRoute: RouteHelper.getSplashRoute(),
                     getPages: RouteHelper.routes,
                     defaultTransition: Transition.topLevel,
-                    transitionDuration: Duration(milliseconds: 500),
-                    home: SplashScreen(),
-                  ));
+                    transitionDuration: const Duration(milliseconds: 500),
+                    // home: const SplashScreen(),
+                    home: DashboardScreen(),
+                  ),
+                );
         });
       });
     });

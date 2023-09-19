@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:ride_sharing_user_app/helper/network_info.dart';
 
 class LoggingInterceptor extends InterceptorsWrapper {
   int maxCharactersPerLine = 200;
@@ -6,9 +10,20 @@ class LoggingInterceptor extends InterceptorsWrapper {
   @override
   Future onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    print("--> ${options.method} ${options.path}");
-    print("Headers: ${options.headers.toString()}");
-    print("<-- END HTTP");
+    if (kDebugMode) {
+      print("--> ${options.method} ${options.path}");
+    }
+    if (kDebugMode) {
+      print("Headers: ${options.headers.toString()}");
+    }
+    if (kDebugMode) {
+      print("<-- END HTTP");
+    }
+
+    if (!await NetworkInfo.isConnected()) {
+      throw DioException.connectionError(
+          reason: "No Internet connection ", requestOptions: options);
+    }
 
     return super.onRequest(options, handler);
   }
@@ -16,8 +31,10 @@ class LoggingInterceptor extends InterceptorsWrapper {
   @override
   Future onResponse(
       Response response, ResponseInterceptorHandler handler) async {
-    print(
-        "<-- ${response.statusCode} ${response.requestOptions.method} ${response.requestOptions.path}");
+    if (kDebugMode) {
+      print(
+          "<-- ${response.statusCode} ${response.requestOptions.method} ${response.requestOptions.path}");
+    }
 
     String responseAsString = response.data.toString();
 
@@ -28,22 +45,30 @@ class LoggingInterceptor extends InterceptorsWrapper {
         if (endingIndex > responseAsString.length) {
           endingIndex = responseAsString.length;
         }
-        print(
-            responseAsString.substring(i * maxCharactersPerLine, endingIndex));
+        if (kDebugMode) {
+          print(responseAsString.substring(
+              i * maxCharactersPerLine, endingIndex));
+        }
       }
     } else {
-      print(response.data);
+      if (kDebugMode) {
+        print(response.data);
+      }
     }
 
-    print("<-- END HTTP");
+    if (kDebugMode) {
+      print("<-- END HTTP");
+    }
 
     return super.onResponse(response, handler);
   }
 
   @override
   Future onError(DioError err, ErrorInterceptorHandler handler) async {
-    print(
-        "ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}");
+    if (kDebugMode) {
+      print(
+          "ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}");
+    }
     return super.onError(err, handler);
   }
 }
