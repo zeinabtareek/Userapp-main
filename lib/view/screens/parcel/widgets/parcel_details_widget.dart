@@ -36,209 +36,267 @@ class ParcelDetailsWidgets extends StatefulWidget {
 class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ParcelController>(builder: (parcelController){
-      return Padding(padding: const EdgeInsets.symmetric(horizontal:Dimensions.paddingSizeDefault),
-        child: Column(mainAxisSize: MainAxisSize.min, children:  [
-
-          if(parcelController.currentParcelState==ParcelDeliveryState.initial)
-            Column(children: const [
-              SenderReceiverInfoWidget()
-            ]),
-
-
-          if(parcelController.currentParcelState==ParcelDeliveryState.parcelInfoDetails)
-            Column(children:  [
-              const TollTipWidget(title: "delivery_details",),
-              const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-              const RouteWidget(),
-              const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-
-              const DistanceCalculatedWidget(),
-              const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-              parcelController.parcelDetailsAvailable==false?
-              const AddParcelDetailsButton(): const ProductDetailsWidget(),
-
-              const WhoWillPayButton(),
-              const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-              const TollTipWidget(title: "terms_and_policy",),
-              const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-              const FareInputWidget(fromPage: 'parcel',)
-
-            ]),
-
-
-          if(parcelController.currentParcelState==ParcelDeliveryState.addOtherParcelDetails)
-            Column(children: const [
-              ParcelDetailInputView()
-            ],),
-
-          if(parcelController.currentParcelState==ParcelDeliveryState.riseFare)
-            Column(children: [
-              const TollTipWidget(title: "delivery_details",),
-              const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-              const RouteWidget(),
-              const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-
-              const DistanceCalculatedWidget(),
-              const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-              parcelController.parcelDetailsAvailable==false?
-              const AddParcelDetailsButton(): const ProductDetailsWidget(),
-
-              const WhoWillPayButton(),
-              const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-              const TollTipWidget(title: "terms_and_policy",),
-              const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-              const RiseFareWidget(fromPage: 'parcel'),
-            ],),
-
-          if(parcelController.currentParcelState==ParcelDeliveryState.suggestVehicle)
-            Column(children: const [
-              ChooseEfficientVehicleWidget()
-            ],),
-
-
-          if(parcelController.currentParcelState==ParcelDeliveryState.findingRider)
-            Column(children: const [
-              FindingRiderWidget(fromPage: 'parcel',)
-            ],),
-
-
-          if(parcelController.currentParcelState==ParcelDeliveryState.acceptRider)
-           GestureDetector(
-             onTap: (){
-               Get.find<ParcelController>().updateParcelState(ParcelDeliveryState.otpSent);
-             },
-             child:  Column(children:  [
-               const TollTipWidget(title: "rider_details",),
-               const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-               ContactWidget(),
-               const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-               ActivityScreenRiderDetails(
-                 riderDetails: Driver(
-                     firstName: "mostafizur",
-                     rate: 5,
-                     img: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
-                     lastName: "smith"
-
-                 ),
-               ),
-               const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-
-               const EstimatedFareAndDistance(),
-               const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-               const RouteWidget(),
-               const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-               CustomButton(buttonText: 'cancel_ride'.tr,
-                 transparent: true,
-                 borderWidth: 1,
-                 showBorder: true,
-                 radius: Dimensions.paddingSizeSmall,
-                 borderColor: Theme.of(Get.context!).primaryColor,
-                 onPressed: (){
-                   parcelController.updateParcelState(ParcelDeliveryState.initial);
-                   Get.find<MapController>().notifyMapController();
-                 },
-               )
-
-             ],),
-           ),
-
-
-          if(parcelController.currentParcelState == ParcelDeliveryState.otpSent)
-            GestureDetector(
-              onTap: () async {
-                Get.dialog(const ConfirmationTripDialog(isStartedTrip: true,), barrierDismissible: false);
-                await Future.delayed( const Duration(seconds: 5));
-                parcelController.updateParcelState(ParcelDeliveryState.parcelOngoing);
-                Get.find<MapController>().notifyMapController();
-                Get.back();
-
-              },
-              child: Column(children: [
-                TollTipWidget(title: 'rider_details'.tr),
-                const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-                const OtpWidget(fromPage: 'bike',),
-                const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-                ContactWidget(),
-                const SizedBox(height: Dimensions.paddingSizeDefault,),
-
+    return GetBuilder<ParcelController>(builder: (parcelController) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.paddingSizeDefault),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (parcelController.currentParcelState ==
+                ParcelDeliveryState.initial)
+              Column(children: const [SenderReceiverInfoWidget()]),
+            if (parcelController.currentParcelState ==
+                ParcelDeliveryState.parcelInfoDetails)
+              Column(children: [
+                const TollTipWidget(
+                  title: "delivery_details",
+                ),
+                const SizedBox(
+                  height: Dimensions.paddingSizeDefault,
+                ),
+                RouteWidget(),
+                const SizedBox(
+                  height: Dimensions.paddingSizeDefault,
+                ),
+                const DistanceCalculatedWidget(),
+                const SizedBox(
+                  height: Dimensions.paddingSizeDefault,
+                ),
+                parcelController.parcelDetailsAvailable == false
+                    ? const AddParcelDetailsButton()
+                    : const ProductDetailsWidget(),
+                const WhoWillPayButton(),
+                const SizedBox(
+                  height: Dimensions.paddingSizeDefault,
+                ),
+                const TollTipWidget(
+                  title: "terms_and_policy",
+                ),
+                const SizedBox(
+                  height: Dimensions.paddingSizeDefault,
+                ),
+                const FareInputWidget(
+                  fromPage: 'parcel',
+                )
+              ]),
+            if (parcelController.currentParcelState ==
+                ParcelDeliveryState.addOtherParcelDetails)
+              Column(
+                children: const [ParcelDetailInputView()],
+              ),
+            if (parcelController.currentParcelState ==
+                ParcelDeliveryState.riseFare)
+              Column(
+                children: [
+                  const TollTipWidget(
+                    title: "delivery_details",
+                  ),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
+                  RouteWidget(),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
+                  const DistanceCalculatedWidget(),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
+                  parcelController.parcelDetailsAvailable == false
+                      ? const AddParcelDetailsButton()
+                      : const ProductDetailsWidget(),
+                  const WhoWillPayButton(),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
+                  const TollTipWidget(
+                    title: "terms_and_policy",
+                  ),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
+                  const RiseFareWidget(fromPage: 'parcel'),
+                ],
+              ),
+            if (parcelController.currentParcelState ==
+                ParcelDeliveryState.suggestVehicle)
+              Column(
+                children: const [ChooseEfficientVehicleWidget()],
+              ),
+            if (parcelController.currentParcelState ==
+                ParcelDeliveryState.findingRider)
+              Column(
+                children: const [
+                  FindingRiderWidget(
+                    fromPage: 'parcel',
+                  )
+                ],
+              ),
+            if (parcelController.currentParcelState ==
+                ParcelDeliveryState.acceptRider)
+              GestureDetector(
+                onTap: () {
+                  Get.find<ParcelController>()
+                      .updateParcelState(ParcelDeliveryState.otpSent);
+                },
+                child: Column(
+                  children: [
+                    const TollTipWidget(
+                      title: "rider_details",
+                    ),
+                    const SizedBox(
+                      height: Dimensions.paddingSizeDefault,
+                    ),
+                    ContactWidget(),
+                    const SizedBox(
+                      height: Dimensions.paddingSizeDefault,
+                    ),
+                    ActivityScreenRiderDetails(
+                      riderDetails: Driver(
+                          firstName: "mostafizur",
+                          rate: 5,
+                          img:
+                              "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                          lastName: "smith"),
+                    ),
+                    const SizedBox(
+                      height: Dimensions.paddingSizeDefault,
+                    ),
+                    const EstimatedFareAndDistance(),
+                    const SizedBox(
+                      height: Dimensions.paddingSizeDefault,
+                    ),
+                    RouteWidget(),
+                    const SizedBox(
+                      height: Dimensions.paddingSizeDefault,
+                    ),
+                    CustomButton(
+                      buttonText: 'cancel_ride'.tr,
+                      transparent: true,
+                      borderWidth: 1,
+                      showBorder: true,
+                      radius: Dimensions.paddingSizeSmall,
+                      borderColor: Theme.of(Get.context!).primaryColor,
+                      onPressed: () {
+                        parcelController
+                            .updateParcelState(ParcelDeliveryState.initial);
+                        Get.find<MapController>().notifyMapController();
+                      },
+                    )
+                  ],
+                ),
+              ),
+            if (parcelController.currentParcelState ==
+                ParcelDeliveryState.otpSent)
+              GestureDetector(
+                onTap: () async {
+                  Get.dialog(
+                      const ConfirmationTripDialog(
+                        isStartedTrip: true,
+                      ),
+                      barrierDismissible: false);
+                  await Future.delayed(const Duration(seconds: 5));
+                  parcelController
+                      .updateParcelState(ParcelDeliveryState.parcelOngoing);
+                  Get.find<MapController>().notifyMapController();
+                  Get.back();
+                },
+                child: Column(children: [
+                  TollTipWidget(title: 'rider_details'.tr),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
+                  const OtpWidget(
+                    fromPage: 'bike',
+                  ),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
+                  ContactWidget(),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
+                  ActivityScreenRiderDetails(
+                    riderDetails: Driver(
+                        firstName: "mostafizur",
+                        rate: 5,
+                        img:
+                            "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                        lastName: "smith"),
+                  ),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
+                  const EstimatedFareAndDistance(),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
+                  RouteWidget(),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
+                  CustomButton(
+                    buttonText: 'cancel_ride'.tr,
+                    transparent: true,
+                    borderWidth: 1,
+                    showBorder: true,
+                    radius: Dimensions.paddingSizeSmall,
+                    borderColor: Theme.of(Get.context!).primaryColor,
+                    onPressed: () {
+                      parcelController
+                          .updateParcelState(ParcelDeliveryState.initial);
+                      Get.find<MapController>().notifyMapController();
+                    },
+                  )
+                ]),
+              ),
+            if (parcelController.currentParcelState ==
+                ParcelDeliveryState.parcelOngoing)
+              Column(children: [
+                TollTipWidget(title: 'trip_is_ongoing'.tr),
+                const SizedBox(
+                  height: Dimensions.paddingSizeDefault,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: Dimensions.paddingSizeDefault),
+                  child: Text.rich(
+                    TextSpan(
+                      style: textRegular.copyWith(
+                          fontSize: Dimensions.fontSizeLarge,
+                          color: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .color!
+                              .withOpacity(0.8)),
+                      children: [
+                        TextSpan(
+                            text: "the_car_just_arrived_at".tr,
+                            style: textRegular.copyWith(
+                                fontSize: Dimensions.fontSizeDefault)),
+                        TextSpan(text: " ".tr),
+                        TextSpan(
+                            text: "your_destination".tr,
+                            style: textMedium.copyWith(
+                                fontSize: Dimensions.fontSizeDefault,
+                                color: Theme.of(context).primaryColor)),
+                      ],
+                    ),
+                  ),
+                ),
                 ActivityScreenRiderDetails(
                   riderDetails: Driver(
                       firstName: "mostafizur",
                       rate: 5,
-                      img: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
-                      lastName: "smith"
-
-                  ),
+                      img:
+                          "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                      lastName: "smith"),
                 ),
-                const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-                const EstimatedFareAndDistance(),
-                const SizedBox(height: Dimensions.paddingSizeDefault,),
-
-                const RouteWidget(),
-                const SizedBox(height: Dimensions.paddingSizeDefault,),
-                CustomButton(buttonText: 'cancel_ride'.tr,
-                  transparent: true,
-                  borderWidth: 1,
-                  showBorder: true,
-                  radius: Dimensions.paddingSizeSmall,
-                  borderColor: Theme.of(Get.context!).primaryColor,
-                  onPressed: (){
-                    parcelController.updateParcelState(ParcelDeliveryState.initial);
-                    Get.find<MapController>().notifyMapController();
-                  },
-                )
-              ]),
-            ),
-
-          if(parcelController.currentParcelState == ParcelDeliveryState.parcelOngoing)
-            Column(children: [
-              TollTipWidget(title: 'trip_is_ongoing'.tr),
-              const SizedBox(height: Dimensions.paddingSizeDefault,),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
-                child: Text.rich(TextSpan(
-                  style: textRegular.copyWith(fontSize: Dimensions.fontSizeLarge,
-                      color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8)
-                  ),
-                  children:  [
-                    TextSpan(text: "the_car_just_arrived_at".tr,style: textRegular.copyWith(fontSize: Dimensions.fontSizeDefault)),
-                    TextSpan(text: " ".tr),
-                    TextSpan(text: "your_destination".tr,style: textMedium.copyWith(fontSize: Dimensions.fontSizeDefault,color: Theme.of(context).primaryColor)),
-                  ],
+                const SizedBox(
+                  height: Dimensions.paddingSizeDefault,
                 ),
-                ),
-              ),
-
-              ActivityScreenRiderDetails(
-                riderDetails: Driver(
-                    firstName: "mostafizur",
-                    rate: 5,
-                    img: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
-                    lastName: "smith"
-
-                ),
-              ),
-              const SizedBox(height: Dimensions.paddingSizeDefault,),
-            ])
+              ])
           ],
         ),
       );

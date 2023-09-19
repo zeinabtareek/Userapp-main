@@ -10,34 +10,51 @@ class ChooseEfficientVehicleWidget extends StatefulWidget {
   const ChooseEfficientVehicleWidget({Key? key}) : super(key: key);
 
   @override
-  State<ChooseEfficientVehicleWidget> createState() => _ChooseEfficientVehicleWidgetState();
+  State<ChooseEfficientVehicleWidget> createState() =>
+      _ChooseEfficientVehicleWidgetState();
 }
 
-class _ChooseEfficientVehicleWidgetState extends State<ChooseEfficientVehicleWidget> {
+class _ChooseEfficientVehicleWidgetState
+    extends State<ChooseEfficientVehicleWidget> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ParcelController>(builder: (parcelController){
+    return GetBuilder<ParcelController>(builder: (parcelController) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraLarge),
+        padding: const EdgeInsets.symmetric(
+            horizontal: Dimensions.paddingSizeExtraLarge),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
-              child: Text('find_your_best_parcel_delivery_vehicles'.tr,style: textMedium.copyWith(color: Theme.of(context).primaryColor),),
+              padding: const EdgeInsets.symmetric(
+                  vertical: Dimensions.paddingSizeDefault),
+              child: Text(
+                'find_your_best_parcel_delivery_vehicles'.tr,
+                style:
+                    textMedium.copyWith(color: Theme.of(context).primaryColor),
+              ),
             ),
-            Text('find_your_best_parcel_delivery_vehicles_hint'.tr,style: textMedium.copyWith(color: Theme.of(context).hintColor),textAlign: TextAlign.center,),
-
+            Text(
+              'find_your_best_parcel_delivery_vehicles_hint'.tr,
+              style: textMedium.copyWith(color: Theme.of(context).hintColor),
+              textAlign: TextAlign.center,
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
-              child: Text('or'.tr,style: textMedium.copyWith(color: Theme.of(context).hintColor,fontSize: Dimensions.fontSizeLarge),),
+              padding: const EdgeInsets.symmetric(
+                  vertical: Dimensions.paddingSizeSmall),
+              child: Text(
+                'or'.tr,
+                style: textMedium.copyWith(
+                    color: Theme.of(context).hintColor,
+                    fontSize: Dimensions.fontSizeLarge),
+              ),
             ),
-
             CustomButton(
               buttonText: 'choose_the_efficient_vehicles'.tr,
               fontSize: Dimensions.fontSizeDefault,
-              onPressed: (){
-                Get.find<ParcelController>().updateParcelState(ParcelDeliveryState.findingRider);
+              onPressed: () {
+                Get.find<ParcelController>()
+                    .updateParcelState(ParcelDeliveryState.findingRider);
                 Get.find<MapController>().notifyMapController();
               },
             ),

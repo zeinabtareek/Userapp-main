@@ -3,14 +3,15 @@ import 'package:ride_sharing_user_app/data/api_checker.dart';
 import 'package:ride_sharing_user_app/view/screens/home/model/banner_model.dart';
 import 'package:ride_sharing_user_app/view/screens/home/repository/banner_repo.dart';
 
-
 class BannerController extends GetxController implements GetxService {
   final BannerRepo bannerRepo;
+
   BannerController({required this.bannerRepo});
 
-  List<BannerModel> banners =[];
+  List<BannerModel> banners = [];
 
   int? _currentIndex = 0;
+
   int? get currentIndex => _currentIndex;
 
   Future<void> getBannerList() async {
@@ -26,7 +27,7 @@ class BannerController extends GetxController implements GetxService {
 
   void setCurrentIndex(int index, bool notify) {
     _currentIndex = index;
-    if(notify) {
+    if (notify) {
       update();
     }
   }

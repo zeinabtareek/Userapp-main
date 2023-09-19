@@ -15,20 +15,24 @@ class ParcelDetailInputView extends StatefulWidget {
   @override
   State<ParcelDetailInputView> createState() => _ParcelDetailInputViewState();
 }
-class _ParcelDetailInputViewState extends State<ParcelDetailInputView> with SingleTickerProviderStateMixin {
 
+class _ParcelDetailInputViewState extends State<ParcelDetailInputView>
+    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
-      child: GetBuilder<ParcelController>(builder: (parcelController){
+      padding:
+          const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+      child: GetBuilder<ParcelController>(builder: (parcelController) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             const ParcelCategoryView(),
-
-            TextFieldTitle(title: 'category'.tr,textOpacity: 0.8,),
+            TextFieldTitle(
+              title: 'category'.tr,
+              textOpacity: 0.8,
+            ),
             CustomTextField(
               prefixIcon: Images.editProfilePhone,
               borderRadius: 10,
@@ -39,23 +43,25 @@ class _ParcelDetailInputViewState extends State<ParcelDetailInputView> with Sing
               controller: parcelController.parcelTypeController,
               prefix: false,
             ),
-
-            TextFieldTitle(title: 'parcel_dimension'.tr,textOpacity: 0.8,),
+            TextFieldTitle(
+              title: 'parcel_dimension'.tr,
+              textOpacity: 0.8,
+            ),
             CustomTextField(
               prefixIcon: Images.editProfilePhone,
               borderRadius: 10,
               showBorder: false,
               hintText: 'parcel_dimension'.tr,
-
               fillColor: Theme.of(context).primaryColor.withOpacity(0.04),
               controller: parcelController.parcelDimensionController,
               focusNode: parcelController.parcelDimensionNode,
               nextFocus: parcelController.parcelWeightNode,
               inputType: TextInputType.text,
             ),
-
-
-            TextFieldTitle(title: 'parcel_weight'.tr,textOpacity: 0.8,),
+            TextFieldTitle(
+              title: 'parcel_weight'.tr,
+              textOpacity: 0.8,
+            ),
             CustomTextField(
               prefixIcon: Images.editProfilePhone,
               borderRadius: 10,
@@ -68,13 +74,14 @@ class _ParcelDetailInputViewState extends State<ParcelDetailInputView> with Sing
               inputAction: TextInputAction.done,
               prefix: false,
             ),
-
-            const SizedBox(height: Dimensions.paddingSizeDefault,),
-            
+            const SizedBox(
+              height: Dimensions.paddingSizeDefault,
+            ),
             CustomButton(
               buttonText: "save_details".tr,
-              onPressed: (){
-                parcelController.updateParcelState(ParcelDeliveryState.parcelInfoDetails);
+              onPressed: () {
+                parcelController
+                    .updateParcelState(ParcelDeliveryState.parcelInfoDetails);
                 parcelController.updateParcelDetailsStatus();
               },
             ),

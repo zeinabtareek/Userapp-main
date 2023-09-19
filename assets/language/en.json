@@ -386,8 +386,16 @@
   "status_package": "Status Package",
   "in_delivery": "In Delivery",
   "status_order": "Status Order",
-  "return": "Return",
-  "delivered": "Delivered"
+  "returned": "Return",
+  "delivered": "Delivered",
+  "delivery_status": "Delivery Status",
+  "estimated_delivery_date": "Estimated Delivery Date",
+  "live_tracking": "Live Tracking",
+  "package_weight": "Package Weight",
+  "pick_up_point": "Pickup - Point",
+  "drop_off_point": "Drop Off - Point"
+
+
 
 
 

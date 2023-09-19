@@ -3,8 +3,7 @@ import 'package:ride_sharing_user_app/data/api_client.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/view/screens/home/model/categoty_model.dart';
 
-
-class CategoryRepo{
+class CategoryRepo {
   final ApiClient apiClient;
 
   CategoryRepo({required this.apiClient});
@@ -13,11 +12,22 @@ class CategoryRepo{
     List<CategoryModel> categoryList = [];
     try {
       categoryList = [
-        CategoryModel(categoryImage: Images.car, categoryTitle:"car" ,discountType: "promotional"),
-        CategoryModel(categoryImage: Images.bike, categoryTitle:"bike" ,discountType: "promotional"),
-        CategoryModel(categoryImage: Images.parcel, categoryTitle:"parcel" ,discountType: "promotional"),
-        CategoryModel(categoryImage: Images.luxuryCar, categoryTitle:"luxury" ,discountType: "promotional"),
-
+        CategoryModel(
+            categoryImage: Images.car,
+            categoryTitle: "car",
+            discountType: "promotional"),
+        CategoryModel(
+            categoryImage: Images.bike,
+            categoryTitle: "bike",
+            discountType: "promotional"),
+        CategoryModel(
+            categoryImage: Images.parcel,
+            categoryTitle: "parcel",
+            discountType: "promotional"),
+        CategoryModel(
+            categoryImage: Images.luxuryCar,
+            categoryTitle: "luxury",
+            discountType: "promotional"),
       ];
       Response response = Response(body: categoryList, statusCode: 200);
       return response;
@@ -26,5 +36,4 @@ class CategoryRepo{
           statusCode: 404, statusText: 'on boarding data not found');
     }
   }
-
 }

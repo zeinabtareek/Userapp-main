@@ -6,7 +6,6 @@ import 'package:ride_sharing_user_app/util/text_style.dart';
 
 import '../../../../util/app_style.dart';
 
-
 class EstimatedFareAndDistance extends StatelessWidget {
   const EstimatedFareAndDistance({Key? key}) : super(key: key);
 
@@ -15,28 +14,39 @@ class EstimatedFareAndDistance extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
-          color: Theme.of(context).primaryColor.withOpacity(0.15)
-      ),
+          color: Theme.of(context).primaryColor.withOpacity(0.15)),
       padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
-         customDistanceItem(context,false,"0.4 km","distance_away"),
-         customDistanceItem(context,false,"3 min","estimated_time"),
-         customDistanceItem(context,true,"34","fare_price"),
-      ],
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          customDistanceItem(context, false, "0.4 km", "distance_away"),
+          customDistanceItem(context, false, "3 min", "estimated_time"),
+          customDistanceItem(context, true, "34", "fare_price"),
+        ],
       ),
-
     );
   }
 
-  Widget customDistanceItem(BuildContext context,bool isAmount,String title,String subTitle) {
+  Widget customDistanceItem(
+      BuildContext context, bool isAmount, String title, String subTitle) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(isAmount?PriceConverter.convertPrice(context, double.tryParse(title)!):title,style: textBold.copyWith(color: Theme.of(context).primaryColor,fontSize: Dimensions.fontSizeLarge),),
-
-          SizedBox(height: Dimensions.paddingSizeThree,),
-
-        Text(subTitle.tr,style:   K.hintMediumTextStyle,)
+        Text(
+          isAmount
+              ? PriceConverter.convertPrice(context, double.tryParse(title)!)
+              : title,
+          style: textBold.copyWith(
+              color: Theme.of(context).primaryColor,
+              fontSize: Dimensions.fontSizeLarge),
+        ),
+        SizedBox(
+          height: Dimensions.paddingSizeThree,
+        ),
+        Text(
+          subTitle.tr,
+          style: K.hintMediumTextStyle,
+        )
       ],
     );
   }

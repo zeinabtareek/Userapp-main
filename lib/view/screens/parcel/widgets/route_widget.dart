@@ -6,62 +6,114 @@ import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/controller/parcel_controller.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_divider.dart';
 
-class RouteWidget extends StatefulWidget {
+import '../../../../util/app_style.dart';
 
-  const RouteWidget({Key? key}) : super(key: key);
+class RouteWidget extends StatelessWidget {
+  bool? showTotalDistance = true;
+  bool? isParcel = false;
+  Color? colorText;
 
-  @override
-  State<RouteWidget> createState() => _RouteWidgetState();
-}
+  RouteWidget(
+      {Key? key, this.showTotalDistance, this.isParcel, this.colorText});
 
-class _RouteWidgetState extends State<RouteWidget> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ParcelController>(
-      builder: (parcelController) {
-        return Column(
-          children: [
-            Row(crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraSmall),
-                  child: Column(children:  [
-                    SizedBox(width: Dimensions.iconSizeMedium,child: Image.asset(Images.currentLocation)),
-                    SizedBox(height:45 ,width: 10,child: CustomDivider(height: 2,dashWidth: 1,axis: Axis.vertical,color: Theme.of(context).primaryColor,)),
-                    SizedBox(width: Dimensions.iconSizeMedium,child: Image.asset(Images.activityDirection)),
-                  ],),
-                ),
-
-                Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+    return GetBuilder<ParcelController>(builder: (parcelController) {
+      return Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimensions.paddingSizeExtraSmall),
+                child: Column(
                   children: [
-                    Text(parcelController.senderAddressController.text, style: textRegular.copyWith(),),
-                    const SizedBox(height: Dimensions.paddingSizeSmall),
-
-                    Text('to'.tr,style: textRegular.copyWith(color: Theme.of(context).primaryColor),),
-
-                    const SizedBox(height: Dimensions.paddingSizeSmall),
-                    Text(parcelController.receiverAddressController.text),
-                  ],
-                )),
-              ],),
-            const SizedBox(height: Dimensions.paddingSizeDefault,),
-            Padding(
-              padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
-                Row(
-                  children: [
-                    SizedBox(width: Dimensions.iconSizeMedium,child: Image.asset(Images.distanceCalculated)),
-                    const SizedBox(width: Dimensions.paddingSizeSmall),
-                    Text("total_distance".tr, style: textRegular.copyWith(),),
+                    SizedBox(
+                        width: Dimensions.iconSizeMedium,
+                        child: Image.asset(isParcel == true
+                            ? Images.package2
+                            : Images.currentLocation)),
+                    SizedBox(
+                        height: 45,
+                        width: 10,
+                        child: colorText == null
+                            ? CustomDivider(
+                                height: 2,
+                                dashWidth: 1,
+                                axis: Axis.vertical,
+                                color: Theme.of(context).primaryColor,
+                              )
+                            : CustomDivider(
+                                height: 2,
+                                dashWidth: 1,
+                                axis: Axis.vertical,
+                                color: colorText ?? Colors.black,
+                              )),
+                    SizedBox(
+                        width: Dimensions.iconSizeMedium,
+                        child: Image.asset(Images.activityDirection,
+                            color:
+                                colorText ?? Theme.of(context).primaryColor)),
                   ],
                 ),
-                const SizedBox(width: Dimensions.paddingSizeSmall),
-                const Text('12 km'),
-              ],),
-            )
-          ],
-        );
-      }
-    );
+              ),
+              Expanded(
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    parcelController.senderAddressController.text,
+                    style:
+                        textRegular.copyWith(color: colorText ?? Colors.black),
+                  ),
+                  const SizedBox(height: Dimensions.paddingSizeSmall),
+                  Text(
+                    'to'.tr,
+                    style: textRegular.copyWith(
+                        color: colorText?.withOpacity(.5) ??
+                            Theme.of(context).primaryColor),
+                  ),
+                  const SizedBox(height: Dimensions.paddingSizeSmall),
+                  Text(
+                    parcelController.receiverAddressController.text,
+                    style:
+                        textRegular.copyWith(color: colorText ?? Colors.black),
+                  ),
+                ],
+              )),
+            ],
+          ),
+          const SizedBox(
+            height: Dimensions.paddingSizeDefault,
+          ),
+          showTotalDistance != false
+              ? Padding(
+                  padding:
+                      const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(
+                              width: Dimensions.iconSizeMedium,
+                              child: Image.asset(Images.distanceCalculated)),
+                          const SizedBox(width: Dimensions.paddingSizeSmall),
+                          Text(
+                            "total_distance".tr,
+                            style: textRegular.copyWith(),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: Dimensions.paddingSizeSmall),
+                      const Text('12 km'),
+                    ],
+                  ),
+                )
+              : SizedBox()
+        ],
+      );
+    });
   }
 }

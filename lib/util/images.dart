@@ -132,6 +132,7 @@ class Images {
   static const String  banner = 'assets/image/Banner.png';
   static const String  package2 = 'assets/image/package2.png';
   static const String  doc = 'assets/image/document-text.png';
+  static const String  timer = 'assets/image/Time_circle.png';
 
 
 

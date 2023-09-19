@@ -7,32 +7,34 @@ import 'package:ride_sharing_user_app/view/screens/wallet/widget/custom_title.da
 class HomeMyAddress extends StatelessWidget {
   final String? title;
   final String? fromPage;
+
   const HomeMyAddress({Key? key, this.title, this.fromPage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AddressController>(
-      initState: (_){
-        Get.find<AddressController>().getAddressList();
-      },
-      builder: (addressController){
-        return Column(
-          children: [
-            CustomTitle(title: title??'my_address'.tr, color: Theme.of(context).textTheme.displayLarge!.color),
-            SizedBox(
-              height: 35,
-              child: ListView.builder(
+    return GetBuilder<AddressController>(initState: (_) {
+      Get.find<AddressController>().getAddressList();
+    }, builder: (addressController) {
+      return Column(
+        children: [
+          CustomTitle(
+              title: title ?? 'my_address'.tr,
+              color: Theme.of(context).textTheme.displayLarge!.color),
+          SizedBox(
+            height: 35,
+            child: ListView.builder(
                 itemCount: addressController.addressList.length,
                 padding: EdgeInsets.zero,
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (context,index){
-                  return AddressItemCard(addressModel: addressController.addressList[index], fromPage: fromPage!,);
-                }
-              ),
-            ),
-          ],
-        );
-      }
-    );
+                itemBuilder: (context, index) {
+                  return AddressItemCard(
+                    addressModel: addressController.addressList[index],
+                    fromPage: fromPage!,
+                  );
+                }),
+          ),
+        ],
+      );
+    });
   }
 }
