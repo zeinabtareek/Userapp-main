@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/parcel_screen.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
 import '../../../util/app_strings.dart';
@@ -87,15 +88,10 @@ class AddShipmenScreen extends StatelessWidget {
                 ),
                 K.sizedBoxH0, K.sizedBoxH0, K.sizedBoxH0,
                 CustomButton(
-                  // showBorder: false,
-                  // borderWidth: 1,
-                  // transparent: true,
-                  // isLoading: false,
                   width: Get.width,
-
-                  // height: 55,
                   buttonText: Strings.next.tr,
                   onPressed: () {
+                    Get.to(()=>ParcelScreen());
                    },
                   radius: 50,
                 ),

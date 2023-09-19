@@ -400,6 +400,14 @@
   "drop_off_point": "نقطة التسليم - النقطة",
   "add_shipment": "إضافة شحنة",
   "shipping_from": "الشحن من",
-  "shipping_to": "يتم الشحن إلى"
+  "shipping_to": "يتم الشحن إلى",
+  "shipment_type": "نوع الشحنة",
+  "delivery_option": "خيار التسليم",
+  "package_name": "اسم الحزمة",
+  "quantity": "الكمية",
+  "regular": "عادي",
+  "standard": "قياسي",
+  "express": "أكسبرس",
+  "sameDay": "نفس اليوم"
 
 }

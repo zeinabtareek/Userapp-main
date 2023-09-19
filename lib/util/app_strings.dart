@@ -192,6 +192,13 @@ class Strings {
   static const addShipment = "add_shipment";//Add Shipment
   static const shippingFrom = "shipping_from";
   static const shippingTo = "shipping_to";
+  static const shipmentType = "shipment_type";
+  static const express = "express";
+  static const standard = "standard";
+  static const regular = "regular";
+  static const quantity = "quantity";
+  static const packageName = "package_name";
+  static const sameDay = "sameDay";
 
 
 

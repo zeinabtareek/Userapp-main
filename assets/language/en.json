@@ -396,7 +396,16 @@
   "drop_off_point": "Drop Off - Point",
   "add_shipment": "Add Shipment",
   "shipping_from": "Shipping From",
-  "shipping_to": "Shipping To"
+  "shipping_to": "Shipping To",
+  "shipment_type": "Shipment Type",
+  "delivery_option": "Delivery Option",
+  "package_name": "Package Name",
+  "quantity": "Quantity",
+  "regular": "Regular",
+  "standard": "Standard",
+  "express": "Express",
+   "sameDay": "Sameday"
+
 
 
 
