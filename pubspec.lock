@@ -937,6 +937,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  maps_toolkit:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: "70608b9bd31ca2d0fe7cf73f9b251a705b2ed8d5"
+      url: "https://github.com/Alaabadr44/maps_toolkit.git"
+    source: git
+    version: "3.0.0"
   matcher:
     dependency: transitive
     description:

@@ -15,7 +15,13 @@ dependencies:
     git:
       url: https://github.com/Alaabadr44/CountryCodePicker.git
       ref: main
+
+      
   cupertino_icons: ^1.0.2
+  maps_toolkit:
+     git:
+      url: https://github.com/Alaabadr44/maps_toolkit.git
+      ref: master 
   dio: ^5.3.2
   dotted_border: ^2.0.0+2
   expandable_bottom_sheet: ^1.1.1+1
