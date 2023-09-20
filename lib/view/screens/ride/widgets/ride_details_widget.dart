@@ -27,9 +27,16 @@ import 'package:ride_sharing_user_app/view/widgets/custom_text_field.dart';
 
 import '../../../../util/app_strings.dart';
 import '../../../../util/app_style.dart';
+import '../../../widgets/custom_category_card.dart';
+import '../../map/map_screen.dart';
+import '../../parcel/controller/parcel_controller.dart';
 
 class BikeRideDetailsWidgets extends StatelessWidget {
-  const BikeRideDetailsWidgets({Key? key}) : super(key: key);
+  String image;
+  String title;
+
+  BikeRideDetailsWidgets({Key? key, required this.image, required this.title})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +48,30 @@ class BikeRideDetailsWidgets extends StatelessWidget {
           children: [
             if (rideController.currentRideState == RideState.initial)
               Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const RideCategoryWidget(),
-                  const SizedBox(
-                    height: Dimensions.paddingSizeDefault,
+                  // RideCategoryWidget(),
+                  // const SizedBox(
+                  //   height: Dimensions.paddingSizeDefault,
+                  // ),
+
+                  Text('your selected car type is :$title',style: textRegular.copyWith(
+                      color: Theme.of(context).primaryColor,fontWeight: FontWeight.w600),),
+                  K.sizedBoxH0,
+
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: CustomCategoryCard(
+                        height: MediaQuery.of(context).size.height/7,
+                        image: image,
+                        title: title,
+                        isClicked: false,
+                      ),
+                    ),
                   ),
+                  K.sizedBoxH0,
                   RouteWidget(),
                   const SizedBox(
                     height: Dimensions.paddingSizeDefault,
@@ -56,7 +82,7 @@ class BikeRideDetailsWidgets extends StatelessWidget {
                   ),
                   CustomTextField(
                     prefix: false,
-                    borderRadius: Dimensions.radiusSmall,
+                    borderRadius: Dimensions.radiusLarge,
                     hintText: Strings.addNote.tr,
                   ),
                   const SizedBox(

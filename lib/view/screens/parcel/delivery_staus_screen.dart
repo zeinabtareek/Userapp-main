@@ -32,7 +32,7 @@ class DeliveryStatusScreen extends StatelessWidget {
         body: CustomBody(
       appBar: CustomAppBar(
         title: Strings.deliveryStatus.tr,
-        showBackButton: false,
+        showBackButton: true,
         centerTitle: true,
       ),
       body: SingleChildScrollView(

@@ -8,10 +8,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/view/screens/map/map_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/status_package_screen.dart';
 
 import 'custom_category_card.dart';
 
-animatedWidget({required Widget widget ,required int limit,List ?list ,void Function()? onTap}) {
+animatedWidget({required Widget widget ,required int limit,List ?list ,  Function()? onTap,bool ?isNavigate, List? screensList,}) {
   return Container(
     width: MediaQuery.of(Get.context!).size.width,
     // color: Colors.red,
@@ -23,7 +25,8 @@ animatedWidget({required Widget widget ,required int limit,List ?list ,void Func
           crossAxisAlignment: WrapCrossAlignment.center,
           runSpacing: 10,
           children: AnimationConfiguration.toStaggeredList(
-            duration: const Duration(milliseconds: 375),
+            duration: const Duration(milliseconds: 500),
+            // duration: const Duration(milliseconds: 375),
             childAnimationBuilder: (widget) => SlideAnimation(
               horizontalOffset: MediaQuery.of(Get.context!).size.width / 2,
               child: FadeInAnimation(child: widget),
@@ -31,13 +34,20 @@ animatedWidget({required Widget widget ,required int limit,List ?list ,void Func
             children: [
               for (var i = 0; i <  limit;i++)
                list!=null?GestureDetector(
-                 onTap: onTap,
+                 // onTap: isNavigate == true
+                 //     ? () => Get.to(() => list[i]['onTap'] ?? Container()) // Replace Container() with a valid default widget
+                 //     : onTap,
+                 //
+                 // onTap: (){
+                 //   Get.to(()=>StatusPackageScreen());  },
+                 onTap: ()=> Get.off( list[i]['onTap']??{} ),
+                 // onTap: ()=> Get.to(() => list[i]['onTap']??{} ),
+                 // onTap: ()=> Get.to(() => MapScreen(fromScreen: 'ride')),
                  child: Padding(
                    padding: const EdgeInsets.all(8.0),
                    child: Card(
                      shape:   RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-      ),
+            borderRadius: BorderRadius.circular(15.0),  ),
                      elevation: 4,
                      child: CustomCategoryCard(
                        width: MediaQuery.of(Get.context!).size.width/3,
@@ -58,3 +68,31 @@ animatedWidget({required Widget widget ,required int limit,List ?list ,void Func
     ),
   );
 }
+
+// animatedWidget2({required List yourDynamicList, required Widget widget}) {
+//   return Container(
+//     width: MediaQuery.of(Get.context!).size.width,
+//     // color: Colors.red,
+//     child: Center(
+//       child: AnimationLimiter(
+//         child: ListView.builder(
+//           shrinkWrap: true,
+//           physics: const NeverScrollableScrollPhysics(),
+//           itemCount: yourDynamicList.length,
+//           itemBuilder: (context, index) {
+//             return AnimationConfiguration.staggeredList(
+//               position: index,
+//               duration: const Duration(milliseconds: 500),
+//               child: SlideAnimation(
+//                 horizontalOffset: MediaQuery.of(Get.context!).size.width / 2,
+//                 child: FadeInAnimation(
+//                   child: widget
+//                 ),
+//               ),
+//             );
+//           },
+//         ),
+//       ),
+//     ),
+//   );
+// }

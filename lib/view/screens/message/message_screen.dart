@@ -10,6 +10,8 @@ import 'package:ride_sharing_user_app/view/screens/message/widget/message_bubble
 import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
 
+import '../../../util/app_style.dart';
+
 class MessageScreen extends StatelessWidget {
   const MessageScreen({Key? key}) : super(key: key);
 
@@ -196,5 +198,8 @@ class MessageScreen extends StatelessWidget {
 
 
 noChatPlaceHolder(){
-  return   Expanded(child: Image.asset(Images.chatGif));
+  return   Expanded(child: Padding(
+    padding: K.fixedPadding0,
+    child: Image.asset(Images.chatGif),
+  ));
 }

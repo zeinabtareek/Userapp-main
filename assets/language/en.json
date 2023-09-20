@@ -378,7 +378,7 @@
   "complains": "Complains",
   "your_location": "Your Location",
   "track_your_package": "Track Your Package!",
-  "please_enter_your_tracking_number ": "Please enter your tracking number ",
+  "please_enter_your_tracking_number": "Please enter your tracking number ",
   "pick-up":"Pick-Up",
   "check_rates":"Check Rates",
   "special_offers": "Special Offers",
@@ -407,7 +407,8 @@
    "sameDay": "Sameday",
    "shipment_details": "Shipment Details",
   "rate": "Rate",
-  "resent_search": "Resent Search"
+  "resent_search": "Resent Search",
+  "most_recent": "Most Recent"
 
 
 

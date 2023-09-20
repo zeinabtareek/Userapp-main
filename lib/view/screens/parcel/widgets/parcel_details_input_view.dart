@@ -78,7 +78,7 @@ class _ParcelDetailInputViewState extends State<ParcelDetailInputView>
               height: Dimensions.paddingSizeDefault,
             ),
             CustomButton(
-              buttonText: "save_details".tr,
+              buttonText: "save_details".tr,radius: Dimensions.radiusOverLarge,
               onPressed: () {
                 parcelController
                     .updateParcelState(ParcelDeliveryState.parcelInfoDetails);

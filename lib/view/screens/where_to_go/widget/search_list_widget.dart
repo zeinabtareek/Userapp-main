@@ -15,7 +15,7 @@ class SearchListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller=Get.put(WhereToGoController(setMapRepo: Get.find()));
+    final controller=Get.put(WhereToGoController( ));
     return Container(
       height: MediaQuery.of(context).size.height,
       padding: const EdgeInsets.all(Dimensions.iconSizeSmall),

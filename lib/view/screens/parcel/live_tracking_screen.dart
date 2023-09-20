@@ -26,7 +26,7 @@ class LiveTrackingScreenForParcel extends StatelessWidget {
       body: CustomBody(
           appBar: CustomAppBar(
             title: Strings.liveTracking.tr,
-            showBackButton: false,
+            showBackButton: true,
             centerTitle: true,
           ),
           body: SingleChildScrollView(

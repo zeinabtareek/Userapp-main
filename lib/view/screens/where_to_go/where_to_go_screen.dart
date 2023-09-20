@@ -18,6 +18,7 @@ import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
 import '../choose_from_map/choose_from_map_screen.dart';
 import '../choose_from_map/controller/choose_from_map_controller.dart';
+import '../map/map_screen.dart';
 import 'controller/where_to_go_controller.dart';
 
 class SetDestinationScreen extends StatelessWidget {
@@ -32,7 +33,8 @@ class SetDestinationScreen extends StatelessWidget {
   // }
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(WhereToGoController(setMapRepo: Get.find()));
+    final controller = Get.put(WhereToGoController( ));
+    // final controller = Get.put(WhereToGoController(setMapRepo: Get.find()));
 
     return   Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
@@ -42,7 +44,7 @@ class SetDestinationScreen extends StatelessWidget {
             IconThemeData(color: Theme.of(context).textTheme.bodyMedium!.color),
       ),
       body: GetBuilder<WhereToGoController>(
-        init: WhereToGoController(setMapRepo: Get.find()),
+        init: WhereToGoController( ),
           builder: (setMapController) {
         return SingleChildScrollView(
           child: Stack(children: [
@@ -138,25 +140,23 @@ class SetDestinationScreen extends StatelessWidget {
                                       itemCount: setMapController.currentExtraRoute,
                                       shrinkWrap: true,
                                       physics: const NeverScrollableScrollPhysics(),
+                                      padding: EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
 
                                       itemBuilder: (context, index) {
                                         List<TextEditingController>itemControllers = [
                                           controller. extraRouteController,
                                           controller.    extraRouteController2,
-                                          controller.  extraRouteController3,
+                                          // controller.  extraRouteController3,
                                         ];
                                         List<FocusNode>itemFocusNodes = [
                                           controller. extraNode,
                                           controller.    extraNode2,
-                                          controller.  extraNode3,
+                                          // controller.  extraNode3,
                                         ];
-                                        TextEditingController itemController = itemControllers[index]; // Get the appropriate controller based on the index
-                                        FocusNode itemFocusNode = itemFocusNodes[index]; // Get the appropriate controller based on the index
+                                        TextEditingController itemController = itemControllers[index];
+                                        FocusNode itemFocusNode = itemFocusNodes[index];
 
-                                        return  Padding(
-
-                                              padding: const EdgeInsets.only(top: Dimensions.paddingSizeExtraSmall, ),
-                                               child: FocusScope(
+                                        return   FocusScope(
                                                 child: Focus(
                                                   onFocusChange: (focus) {
                                                     if (focus) {
@@ -176,7 +176,7 @@ class SetDestinationScreen extends StatelessWidget {
                                                 ),
                                               // ),
                                             // ),
-                                          ),
+
                                         );
                                       },
                                     ),
@@ -225,58 +225,59 @@ class SetDestinationScreen extends StatelessWidget {
                                         )
                                       ],
                                     ),
-                                    const SizedBox(
-                                        height: Dimensions.paddingSizeDefault),
-                                    setMapController.addEntrance
-                                        ? SizedBox(
-                                            width: 200,
-                                            child: InputField(
-                                                controller: controller
-                                                    .entranceController,
-                                                node: controller.entranceNode,
-                                                hint: Strings.enterEntrance.tr, onTap: () async => await controller.checkPermissionBeforeNavigation(context),
-                                                onChange: (v) {
-                                                  controller
-                                                      .searchPlacesFrom(v);
-                                                  print(v);
-                                                }))
-                                        : GestureDetector(
-                                            onTap: () => setMapController
-                                                .setAddEntrance(),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                SizedBox(
-                                                    height: 25,
-                                                    child: Image.asset(
-                                                        Images.curvedArrow)),
-                                                const SizedBox(
-                                                    width: Dimensions
-                                                        .paddingSizeSmall),
-                                                Container(
-                                                  transform:
-                                                      Matrix4.translationValues(
-                                                          0, 10, 0),
-                                                  child: Row(
-                                                    children: [
-                                                      const Icon(Icons.add,
-                                                          color: Colors.white),
-                                                      Text(
-                                                        Strings.addEntrance.tr,
-                                                        style: textMedium.copyWith(
-                                                            color: Colors.white
-                                                                .withOpacity(
-                                                                    .75),
-                                                            fontSize: Dimensions
-                                                                .fontSizeLarge),
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          )
+                                    ///add entrance
+                                    // const SizedBox(
+                                    //     height: Dimensions.paddingSizeDefault),
+                                    // setMapController.addEntrance
+                                    //     ? SizedBox(
+                                    //         width: 200,
+                                    //         child: InputField(
+                                    //             controller: controller
+                                    //                 .entranceController,
+                                    //             node: controller.entranceNode,
+                                    //             hint: Strings.enterEntrance.tr, onTap: () async => await controller.checkPermissionBeforeNavigation(context),
+                                    //             onChange: (v) {
+                                    //               controller
+                                    //                   .searchPlacesFrom(v);
+                                    //               print(v);
+                                    //             }))
+                                    //     : GestureDetector(
+                                    //         onTap: () => setMapController
+                                    //             .setAddEntrance(),
+                                    //         child: Row(
+                                    //           crossAxisAlignment:
+                                    //               CrossAxisAlignment.end,
+                                    //           children: [
+                                    //             SizedBox(
+                                    //                 height: 25,
+                                    //                 child: Image.asset(
+                                    //                     Images.curvedArrow)),
+                                    //             const SizedBox(
+                                    //                 width: Dimensions
+                                    //                     .paddingSizeSmall),
+                                    //             Container(
+                                    //               transform:
+                                    //                   Matrix4.translationValues(
+                                    //                       0, 10, 0),
+                                    //               child: Row(
+                                    //                 children: [
+                                    //                   const Icon(Icons.add,
+                                    //                       color: Colors.white),
+                                    //                   Text(
+                                    //                     Strings.addEntrance.tr,
+                                    //                     style: textMedium.copyWith(
+                                    //                         color: Colors.white
+                                    //                             .withOpacity(
+                                    //                                 .75),
+                                    //                         fontSize: Dimensions
+                                    //                             .fontSizeLarge),
+                                    //                   )
+                                    //                 ],
+                                    //               ),
+                                    //             )
+                                    //           ],
+                                    //         ),
+                                    //       )
                                   ],
                                 ),
                               ),
@@ -300,7 +301,8 @@ class SetDestinationScreen extends StatelessWidget {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Get.to(() => const SuggestedRouteScreen());
+                                  Get.to(() =>   MapScreen(fromScreen: 'ride',));
+                                  // Get.to(() => const SuggestedRouteScreen());
                                   Get.find<RideController>()
                                       .updateRideCurrentState(
                                           RideState.initial);
@@ -404,45 +406,45 @@ class SetDestinationScreen extends StatelessWidget {
                                 );
                               }),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(
-                              Dimensions.paddingSizeDefault),
-                          child: Text(
-                            Strings.setFromMap.tr,
-                            style: textMedium.copyWith(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: Dimensions.fontSizeLarge),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Padding(
-                            padding: K.fixedPadding0,
-                            child: Row(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .hintColor
-                                          .withOpacity(.08),
-                                      borderRadius: BorderRadius.circular(
-                                          Dimensions.paddingSizeExtraSmall)),
-                                  child: SizedBox(
-                                      width: Dimensions.iconSizeMedium,
-                                      child: Image.asset(Images.setFromMap)),
-                                ),
-                                K.sizedBoxW0,
-                                Text(
-                                  Strings.chooseFromMap.tr,
-                                  style: textRegular.copyWith(
-                                      color: Theme.of(context).primaryColor),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
+                        // Padding(
+                        //   padding: const EdgeInsets.all(
+                        //       Dimensions.paddingSizeDefault),
+                        //   child: Text(
+                        //     Strings.setFromMap.tr,
+                        //     style: textMedium.copyWith(
+                        //         color: Theme.of(context).primaryColor,
+                        //         fontSize: Dimensions.fontSizeLarge),
+                        //   ),
+                        // ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     Get.back();
+                        //   },
+                        //   child: Padding(
+                        //     padding: K.fixedPadding0,
+                        //     child: Row(
+                        //       children: [
+                        //         Container(
+                        //           decoration: BoxDecoration(
+                        //               color: Theme.of(context)
+                        //                   .hintColor
+                        //                   .withOpacity(.08),
+                        //               borderRadius: BorderRadius.circular(
+                        //                   Dimensions.paddingSizeExtraSmall)),
+                        //           child: SizedBox(
+                        //               width: Dimensions.iconSizeMedium,
+                        //               child: Image.asset(Images.setFromMap)),
+                        //         ),
+                        //         K.sizedBoxW0,
+                        //         Text(
+                        //           Strings.chooseFromMap.tr,
+                        //           style: textRegular.copyWith(
+                        //               color: Theme.of(context).primaryColor),
+                        //         )
+                        //       ],
+                        //     ),
+                        //   ),
+                        // )
                       ],
                     ),
                   ),

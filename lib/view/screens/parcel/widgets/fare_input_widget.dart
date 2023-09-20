@@ -9,6 +9,8 @@ import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controll
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
 import '../../../../util/app_style.dart';
+import '../../payment/payment_screen.dart';
+import '../../ride/widgets/confirmation_trip_dialog.dart';
 
 class FareInputWidget extends StatelessWidget {
   final String fromPage;
@@ -62,13 +64,109 @@ class FareInputWidget extends StatelessWidget {
                             RideType.luxury
                     ? "find_driver".tr
                     : "find_deliveryman".tr,
-            onPressed: () {
+            onPressed: () async {
               if (fromPage == 'ride') {
                 Get.find<RideController>()
                     .updateRideCurrentState(RideState.findingRider);
               } else {
-                Get.find<ParcelController>()
-                    .updateParcelState(ParcelDeliveryState.suggestVehicle);
+                print('555555');
+                ///previous code
+                // Get.find<ParcelController>()
+                //     .updateParcelState(ParcelDeliveryState.suggestVehicle);
+                    {
+                  // if (fromNotification) {
+                  //   Get.back();
+                  // }
+                  if (Get.find<RideController>().selectedCategory !=
+                      RideType.parcel) {
+                    Get.find<RideController>()
+                        .updateRideCurrentState(RideState.afterAcceptRider);
+
+                    await Future.delayed(const Duration(seconds: 2))
+                        .then((value) {
+                      Get.find<RideController>()
+                          .updateRideCurrentState(RideState.otpSent);
+                      Get.find<MapController>().notifyMapController();
+                    });
+
+                    await Future.delayed(const Duration(seconds: 2))
+                        .then((value) async {
+                      Get.dialog(
+                          const ConfirmationTripDialog(
+                            isStartedTrip: true,
+                          ),
+                          barrierDismissible: false);
+                      await Future.delayed(const Duration(seconds: 5));
+                      Get.find<RideController>()
+                          .updateRideCurrentState(RideState.ongoingRide);
+                      Get.find<MapController>().notifyMapController();
+                      Get.back();
+                    });
+
+                    await Future.delayed(const Duration(seconds: 2))
+                        .then((value) async {
+                      Get.dialog(
+                          const ConfirmationTripDialog(
+                            isStartedTrip: false,
+                          ),
+                          barrierDismissible: false);
+                      await Future.delayed(const Duration(seconds: 2));
+                      Get.find<RideController>()
+                          .updateRideCurrentState(RideState.completeRide);
+                      //Get.back();
+                      Get.find<MapController>().notifyMapController();
+                      Get.back();
+                    });
+                    await Future.delayed(const Duration(seconds: 0))
+                        .then((value) async {
+                      Get.off(() => const PaymentScreen());
+                    });
+                  } else {
+                    Get.find<ParcelController>()
+                        .updateParcelState(ParcelDeliveryState.acceptRider);
+
+                    await Future.delayed(const Duration(seconds: 2))
+                        .then((value) {
+                      Get.find<ParcelController>()
+                          .updateParcelState(ParcelDeliveryState.otpSent);
+                      Get.find<MapController>().notifyMapController();
+                    });
+
+                    await Future.delayed(const Duration(seconds: 2))
+                        .then((value) async {
+                      Get.dialog(
+                          const ConfirmationTripDialog(
+                            isStartedTrip: true,
+                          ),
+                          barrierDismissible: false);
+                      await Future.delayed(const Duration(seconds: 5));
+                      Get.find<ParcelController>()
+                          .updateParcelState(ParcelDeliveryState.parcelOngoing);
+                      Get.find<MapController>().notifyMapController();
+                      Get.back();
+                    });
+
+                    await Future.delayed(const Duration(seconds: 2))
+                        .then((value) async {
+                      Get.dialog(
+                          const ConfirmationTripDialog(
+                            isStartedTrip: false,
+                          ),
+                          barrierDismissible: false);
+                      await Future.delayed(const Duration(seconds: 2));
+                      Get.find<ParcelController>()
+                          .updateParcelState(ParcelDeliveryState.parcelComplete);
+                      //Get.back();
+                      Get.find<MapController>().notifyMapController();
+                      Get.back();
+                    });
+                    await Future.delayed(const Duration(seconds: 0))
+                        .then((value) async {
+                      Get.off(() => const PaymentScreen());
+                    });
+                  }
+
+              }
               }
               Get.find<MapController>().notifyMapController();
             },

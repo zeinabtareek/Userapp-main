@@ -11,9 +11,6 @@ class CustomCategoryCard extends StatelessWidget {
   final Color ?color;
   final double ?height;
   final double ?width;
-
-
-
   const CustomCategoryCard({
     super.key,
     required this.image,
@@ -39,7 +36,7 @@ class CustomCategoryCard extends StatelessWidget {
             color: isClicked?Theme.of(context).primaryColor : color != null?color:Theme.of(context).hintColor.withOpacity(0.1),
           ),
           padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-          child: Image.asset(image),
+          child: Image.asset(image,fit: BoxFit.contain,),
         ),
         const SizedBox(
           height: Dimensions.paddingSizeExtraSmall,

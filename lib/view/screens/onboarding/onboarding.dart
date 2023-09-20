@@ -28,6 +28,7 @@ class OnBoardingScreen2 extends StatelessWidget {
       appBar: AppBar(backgroundColor: Colors.white,elevation: 0,actions:[ InkWell(
           onTap: () {
             Get.offAll(DashboardScreen());
+            // Get.offAll(DashboardScreen());
           },
           child: Padding(
             padding: K.fixedPadding1,

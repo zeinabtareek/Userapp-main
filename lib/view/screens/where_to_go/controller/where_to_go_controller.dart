@@ -17,9 +17,10 @@ import '../repository/search_service.dart';
 import '../repository/set_map_repo.dart';
 
 class WhereToGoController extends BaseController implements GetxService {
-  final SetMapRepo setMapRepo;
+  // final SetMapRepo setMapRepo;
 
-  WhereToGoController({required this.setMapRepo});
+  WhereToGoController( );
+  // WhereToGoController({required this.setMapRepo});
 
   List<SuggestedRouteModel> suggestedRouteList = [];
   int currentExtraRoute = 0;
@@ -46,7 +47,8 @@ class WhereToGoController extends BaseController implements GetxService {
   }
 List <String>extraRoutes=[];
   void setExtraRoute() {
-    if (currentExtraRoute < 2) {
+    if (currentExtraRoute < 1) {
+    // if (currentExtraRoute < 2) {
       currentExtraRoute = currentExtraRoute + 1;
       extraRoutes.add('currentExtraRoute$currentExtraRoute');
     }
@@ -59,14 +61,14 @@ List <String>extraRoutes=[];
   }
 
   void getSuggestedRouteList() async {
-    Response response = await setMapRepo.getSuggestedRouteList();
-    if (response.statusCode == 200) {
-      suggestedRouteList = [];
-      suggestedRouteList.addAll(response.body);
-    } else {
-      ApiChecker.checkApi(response);
-    }
-    update();
+    // Response response = await setMapRepo.getSuggestedRouteList();
+    // if (response.statusCode == 200) {
+    //   suggestedRouteList = [];
+    //   suggestedRouteList.addAll(response.body);
+    // } else {
+    //   ApiChecker.checkApi(response);
+    // }
+    // update();
   }
 
   checkPermissionBeforeNavigation(context) async {

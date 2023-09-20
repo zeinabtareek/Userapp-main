@@ -34,11 +34,22 @@ class RideController extends GetxController implements GetxService {
   TextEditingController senderContactController = TextEditingController();
 
   FocusNode parcelWeightNode = FocusNode();
-
+     double heightOfTypes=0.0;  bool isExpanded = false;
   @override
   void onInit() {
     super.onInit();
     inputFarePriceController.text = "0.00";
+  }
+  @override
+  void onClose() {
+    super.onClose();
+    heightOfTypes = 0.0;
+    isExpanded = false;
+  }
+
+  void vehicleToggle(RideType newType){
+    isExpanded = !isExpanded;
+    heightOfTypes = isExpanded ? 110.0 : 0.0;    update();
   }
 
   void updateRideCurrentState(RideState newState) {
@@ -60,6 +71,8 @@ class RideController extends GetxController implements GetxService {
     currentRideState = RideState.initial;
     selectedCategory = RideType.car;
     rideCategoryIndex = 0;
+    isExpanded=false;
+     heightOfTypes=0;
     update();
   }
 

@@ -80,7 +80,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
         color: Theme.of(context).cardColor,
         child: Padding(
           padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-          child: CustomButton(buttonText: 'submit'.tr, onPressed: (){
+          child: CustomButton(buttonText: 'submit'.tr,
+            radius: 25,
+            onPressed: (){
             Get.to(()=> const SuccessfullyReviewedScreen());
           },),
         ),),

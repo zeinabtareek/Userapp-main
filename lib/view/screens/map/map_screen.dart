@@ -8,6 +8,7 @@ import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/view/screens/map/controller/map_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/parcel_expendable_bottom_sheet.dart';
+import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/widgets/ride_expendable_bottom_sheet.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
@@ -27,7 +28,10 @@ class MapScreen extends StatelessWidget {
       body: Stack(
         children: [
           CustomBody(
-            appBar: CustomAppBar(title: Strings.theDeliverymanNeedYou.tr),
+            appBar: CustomAppBar(title: Strings.theDeliverymanNeedYou.tr,onBackPressed: (){
+
+              Get.find<RideController>()
+                  .resetControllerValue();   Get.back();},),
             body: GetBuilder<MapController>(builder: (userMapController) {
               Completer<GoogleMapController> mapCompleter =
                   Completer<GoogleMapController>();
@@ -110,6 +114,7 @@ class MapScreen extends StatelessWidget {
                     padding:
                         const EdgeInsets.all(Dimensions.paddingSizeDefault),
                     child: CustomButton(
+                      radius: Dimensions.iconSizeExtraLarge,
                       buttonText: Strings.setLocation.tr,
                       onPressed: () {
                         Get.back();

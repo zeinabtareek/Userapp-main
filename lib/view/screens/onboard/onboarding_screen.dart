@@ -124,6 +124,7 @@ import 'package:ride_sharing_user_app/view/screens/splash/controller/config_cont
 
 import '../../../util/app_strings.dart';
 import '../../../util/text_style.dart';
+import '../home/controller/category_controller.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -185,7 +186,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                   Get.offAll(()=>   SignInScreen());
                                 }else{
                                   onBoardController.onPageIncrement();
-
                                 }
                               },
                               icon: const Icon(Icons.arrow_forward,color: Colors.white60,),

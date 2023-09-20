@@ -3,8 +3,11 @@ import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/view/screens/home/model/categoty_model.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/repository/parcel_repo.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/status_package_screen.dart';
 
 import '../../../../util/app_strings.dart';
+import '../../map/map_screen.dart';
+import '../rate/check_rates_screen.dart';
 
 enum ParcelDeliveryState {
   initial,
@@ -43,10 +46,16 @@ class ParcelController extends GetxController
   }
 
   List optionsList = [
-    {'image': Images.locationTrack, 'title': Strings.pickUp.tr},
-    {'image': Images.deliveryTruck, 'title': Strings.checkRates.tr}
+ {'image': Images.locationTrack,  'title': Strings.pickUp.tr,'onTap':  const MapScreen(fromScreen: Strings.parcel,)},
+ {'image': Images.doc, 'title': Strings.statusOrder.tr,'onTap':  const StatusPackageScreen() }
   ];
-  List<CategoryModel> parcelCategoryList = [
+
+
+  List<Widget> navigationOptions=[
+ const CheckRatesScreen(),
+ const MapScreen(fromScreen: 'ride'),
+  ]
+;  List<CategoryModel> parcelCategoryList = [
     CategoryModel(
       categoryImage: Images.parcelGift,
       categoryTitle: "gift",

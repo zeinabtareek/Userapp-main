@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
+import 'package:ride_sharing_user_app/view/screens/map/map_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/parcel_notification_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/parcel_tracking.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/status_package_screen.dart';
@@ -13,7 +14,9 @@ import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
 import '../../../util/images.dart';
 import '../../widgets/animated_widget.dart';
+import '../../widgets/custom_category_card.dart';
 import '../../widgets/custom_float_action_btn.dart';
+import '../profile/profile_screen/profile_screen.dart';
 import 'rate/check_rates_screen.dart';
 import 'controller/parcel_controller.dart';
 
@@ -64,7 +67,10 @@ class ParcelHomeScreen extends StatelessWidget {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             color: Colors.white,
-            onPressed: () {},
+            onPressed: () {
+
+              Get.back();
+            },
           ),
         ),
         body: SafeArea(
@@ -75,8 +81,10 @@ class ParcelHomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     K.sizedBoxW0,
-                    CustomOvel(
+                    GestureDetector(
+                      child:  CustomOvel(
                       Image.asset(Images.profileOutline),
+                    ),onTap: ()=>Get.to(()=>const ProfileScreen()),
                     ),
                     Column(
                       mainAxisSize: MainAxisSize.min,
@@ -96,8 +104,7 @@ class ParcelHomeScreen extends StatelessWidget {
                     GestureDetector(
                       child: CustomOvel(
                         Image.asset(Images.notificationOutline),
-                        // Image.asset(Images.notificationOutline),
-                      ),onTap: ()=>Get.to(()=>ParcelNotificationScreen()),
+                       ),onTap: ()=>Get.to(()=>const ParcelNotificationScreen()),
                     ),
                     K.sizedBoxW0,
                   ],
@@ -130,7 +137,7 @@ class ParcelHomeScreen extends StatelessWidget {
                       Expanded(
                       child: GestureDetector(
                         child:   CustomTextField(
-                          hintText: 'ddd',
+                          hintText: '',
                           inputType: TextInputType.name,
                           suffixIcon: Images.close,
                           prefixIcon: Images.search,
@@ -148,9 +155,9 @@ class ParcelHomeScreen extends StatelessWidget {
                   ],
                 ),
                 K.sizedBoxH0,
+                //CheckRatesScreen
               ],
-            ),
-            body: GetBuilder<ParcelController>(builder: (controller) {
+            ), body: GetBuilder<ParcelController>(builder: (controller) {
               return Container(
                 color: Colors.white,
                 padding: K.fixedPadding0,
@@ -158,13 +165,43 @@ class ParcelHomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    animatedWidget(onTap: (){
-                      Get.to(CheckRatesScreen());
-                    },
-                        widget: SizedBox(),
+                    animatedWidget(
+                        widget: Card(
+                              shape:   RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),  ),
+                              elevation: 4,
+                              child: CustomCategoryCard(
+                                width: MediaQuery.of(Get.context!).size.width/3,
+                                height: 140,
+                                color: Colors.white,
+                                image:controller.optionsList[0]['image']??'',
+                                title:controller.optionsList[0]['title'],
+                                isClicked: false,
+                              ),
+                            ),isNavigate:true,
                         list: controller.optionsList,
                         limit: controller.optionsList.length),
                     K.sizedBoxH0,
+
+                    // animatedWidget2(widget: TextButton(onPressed: (){}, child:  Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Card(
+                    //     shape:   RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(15.0),  ),
+                    //     elevation: 4,
+                    //     child: CustomCategoryCard(
+                    //       width: MediaQuery.of(Get.context!).size.width/3,
+                    //       height: 140,
+                    //       color: Colors.white,
+                    //       image:list[i]['image'],
+                    //       title:list[i]['title'],
+                    //       isClicked: false,
+                    //     ),
+                    //   ),
+                    // )
+                    //  ),
+                    //   yourDynamicList : controller.optionsList,),
+
                     Text(
                       Strings.specialOffers.tr,
                       style: K.semiBoldBlackTextStyle,

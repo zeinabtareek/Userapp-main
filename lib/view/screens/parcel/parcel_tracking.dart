@@ -34,45 +34,48 @@ class ParcelTrackingScreen extends StatelessWidget {
           child: CustomBody(
             appBar: CustomAppBar(title: Strings.trackYourPackage.tr,showBackButton: true,centerTitle: false,),
 
-            body:   Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // K.sizedBoxH0,
-
-                    Row(
+            body:   SingleChildScrollView(
+              child: Padding(
+                padding: K.fixedPadding0,
+                child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        K.sizedBoxW0,
-                        K.sizedBoxW0,
-                          Expanded(
-                          child: CustomTextField(
-                            hintText: '',
-                            inputType: TextInputType.name,
-                            suffixIcon: Images.close,
-                            prefixIcon: Images.search,
-                            fillColor: K.lightGreen,
-                            inputAction: TextInputAction.next,
-                          ),
-                        ),
-                        K.sizedBoxW0,
-                        CustomOvel(Image.asset(Images.scanner,color: Colors.white,),
-                            color: Theme.of(context).primaryColor),
-                        K.sizedBoxW0,
-                        K.sizedBoxW0,
-                      ],
-                    ),
-                    K.sizedBoxH0,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          Strings.resentSearch.tr,
-                          style: K.semiBoldBlackTextStyle,
-                        ),
+                        // K.sizedBoxH0,
 
-                      ],
-                    ),
-                    K.sizedBoxH0,
+                        Row(
+                          children: [
+                            // K.sizedBoxW0,
+                            // K.sizedBoxW0,
+                              Expanded(
+                              child: CustomTextField(
+                                hintText: '',
+                                inputType: TextInputType.name,
+                                suffixIcon: Images.close,
+                                prefixIcon: Images.search,
+                                fillColor: K.lightGreen,
+                                inputAction: TextInputAction.next,
+                              ),
+                            ),
+                            K.sizedBoxW0,
+                            CustomOvel(Image.asset(Images.scanner,color: Colors.white,),
+                                color: Theme.of(context).primaryColor),
+                            // K.sizedBoxW0,
+                            // K.sizedBoxW0,
+                          ],
+                        ),
+                        K.sizedBoxH0,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              Strings.resentSearch.tr,
+                              style: K.semiBoldBlackTextStyle,
+                            ),
+
+                          ],
+                        ),
+                        K.sizedBoxH0,
     // animatedWidget(onTap: (){
     // // Get.to(CheckRatesScreen());
     // },
@@ -82,16 +85,18 @@ class ParcelTrackingScreen extends StatelessWidget {
     // trackHistoryList([2, 2, 2, 3]),
 
 
-                    animatedWidget(
-                        widget:  itemTrackHistory(onTap: (){
-                          Get.to(()=>OrderDetails());},
-                            title: 'Nintendo Swich Oled',
-                            subTitle: 'Order ID: JB39029910020'),
+                        animatedWidget(
+                            widget:  itemTrackHistory(onTap: (){
+                              Get.to(()=>OrderDetails());},
+                                title: 'Nintendo Swich Oled',
+                                subTitle: 'Order ID: JB39029910020'),
 
 
-                        limit: 4),
-                  ],
-                ),
+                            limit: 4),
+                      ],
+                    ),
+              ),
+            ),
               ),
           )
 

@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/authenticate/presentation/login-with-pass/sign_in_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
 
+import '../../../../authenticate/config/config.dart';
+import '../../../../authenticate/presentation/controller/auth_controller.dart';
+import '../../../../initialize_dependencies.dart';
 import '../../../../util/app_strings.dart';
 import '../../../../util/images.dart';
 import '../model/onboard_model.dart';
@@ -17,7 +21,8 @@ class OnBoardingController extends GetxController {
     next.value = 100 - prev.value;
   }
 
-  onTap() {
+  onTap() async {
+
     if (prev.value < 100 && currentIndex.value !=2) {
       prev.value += fixedIncrease.value;
       next.value -= fixedIncrease.value;
@@ -25,7 +30,13 @@ class OnBoardingController extends GetxController {
         currentIndex.value=currentIndex.value+1, duration: Duration(milliseconds: 500),
         curve: Curves.easeIn,);
     } else {
-      Get.offAll(DashboardScreen());
+      // Get.offAll(SignInScreen(),binding:  BindingsBuilder(
+      //       () {
+      //     Get.put( AuthController(sl()));
+      //   },
+      // ));
+      Get.offAllNamed(AuthScreenPath.loginScreenWithPassRouteName);
+      // Get.offAll(DashboardScreen());
     }
     print(prev.value);
   }

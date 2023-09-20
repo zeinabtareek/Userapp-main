@@ -16,13 +16,13 @@ class CategoryRepo {
             categoryImage: Images.car,
             categoryTitle: "car",
             discountType: "promotional"),
-        CategoryModel(
-            categoryImage: Images.bike,
-            categoryTitle: "bike",
-            discountType: "promotional"),
+
         CategoryModel(
             categoryImage: Images.parcel,
             categoryTitle: "parcel",
+            discountType: "promotional"),     CategoryModel(
+            categoryImage: Images.bike,
+            categoryTitle: "bike",
             discountType: "promotional"),
         CategoryModel(
             categoryImage: Images.luxuryCar,

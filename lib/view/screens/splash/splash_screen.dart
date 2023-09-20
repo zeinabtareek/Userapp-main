@@ -161,6 +161,7 @@ import 'package:ride_sharing_user_app/authenticate/domain/use-cases/auth_cases.d
 import 'package:ride_sharing_user_app/initialize_dependencies.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/onboarding/onboarding.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
 
 import '../../../authenticate/config/config.dart';
@@ -225,8 +226,9 @@ class _SplashScreenState extends State<SplashScreen>
         Get.offAll(DashboardScreen());
       } else {
     
-        Get.offAllNamed(AuthScreenPath.loginScreenWithPassRouteName);
- 
+       Get.off(const OnBoardingScreen2());
+        // Get.offAllNamed(AuthScreenPath.loginScreenWithPassRouteName);
+
       }
     });
   }

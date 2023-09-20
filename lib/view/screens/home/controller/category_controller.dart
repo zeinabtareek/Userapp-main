@@ -9,7 +9,7 @@ class CategoryController extends GetxController implements GetxService {
   CategoryController({required this.categoryRepo});
 
   List<CategoryModel> categoryList = [];
-
+  int heightOfTypes=0;
   Future<void> getCategoryList() async {
     Response response = await categoryRepo.getCategoryList();
     if (response.statusCode == 200) {
@@ -20,4 +20,5 @@ class CategoryController extends GetxController implements GetxService {
     }
     update();
   }
+
 }

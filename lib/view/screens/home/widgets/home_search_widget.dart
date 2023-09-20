@@ -14,7 +14,7 @@ class HomeSearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Dimensions.searchBarSize,
+      // height: Dimensions.identityImageHeight,
       child: TextField(
         onTap: () {
           Get.to(() => SetDestinationScreen());
@@ -31,9 +31,9 @@ class HomeSearchWidget extends StatelessWidget {
         textInputAction: TextInputAction.search,
         decoration: InputDecoration(
           contentPadding:
-              const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+              const EdgeInsets.symmetric(vertical: Dimensions.iconSizeSmall, horizontal: 5),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(Dimensions.menuIconSize),
             borderSide: BorderSide(
                 width: 0.5,
                 color: Theme.of(context).hintColor.withOpacity(0.5)),

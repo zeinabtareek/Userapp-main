@@ -126,10 +126,11 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
               ),
               CustomButton(
                 buttonText: 'cancel_searching'.tr,
+                radius: Dimensions.radiusOverLarge,
                 transparent: true,
                 borderWidth: 1,
                 showBorder: true,
-                radius: Dimensions.paddingSizeSmall,
+                // radius: Dimensions.paddingSizeSmall,
                 borderColor: Theme.of(Get.context!).primaryColor,
                 onPressed: () {
                   if (Get.find<RideController>().currentRideState !=

@@ -31,7 +31,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
       body: GetBuilder<PaymentController>(
         builder: (paymentController) {
           return CustomBody(
-            appBar: CustomAppBar(title: 'here_is_your_payment'.tr,),
+            appBar: CustomAppBar(title: 'here_is_your_payment'.tr,onBackPressed: (){
+              if(Navigator.canPop(context))
+              Get.back();
+            }, ),
             body: SingleChildScrollView(child: Column(children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeExtraLarge),
@@ -165,7 +168,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
         color: Theme.of(context).cardColor,
         padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeDefault),
         height: 80,
+
         child: CustomButton(buttonText: 'pay_now'.tr,
+        radius: 25,
         onPressed: (){
           Get.off(()=> const ReviewScreen());
         })),

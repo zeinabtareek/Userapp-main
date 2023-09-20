@@ -4,6 +4,8 @@ import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/widgets/ride_details_widget.dart';
 
+import '../../../../util/images.dart';
+
 class RideExpendableBottomSheet extends StatefulWidget {
   const RideExpendableBottomSheet({Key? key}) : super(key: key);
 
@@ -59,7 +61,12 @@ class _RideExpendableBottomSheetState extends State<RideExpendableBottomSheet> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       ),
                     ),
-                    const BikeRideDetailsWidgets()
+                      BikeRideDetailsWidgets(image: Images.car
+
+
+                      // 'https://www.mitsubishicars.com/content/dam/mitsubishi-motors-us/images/siteimages/cars/eclipse-cross/my24/overview/2023-2024-mitsubishi-eclipse-cross-length-height-dimensions.png'
+
+                        , title: 'SUV',)
                   ])),
             ),
           ],

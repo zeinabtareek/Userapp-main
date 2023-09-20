@@ -65,6 +65,7 @@ class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget>
                 : _receiverInfo(parcelController),
             CustomButton(
               buttonText: "next".tr,
+              radius: Dimensions.iconSizeExtraLarge,
               onPressed: () {
                 if (parcelController.tabController.index == 0) {
                   if (parcelController.senderContactController.text.isEmpty) {

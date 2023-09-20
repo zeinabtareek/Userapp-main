@@ -17,6 +17,9 @@ import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
 import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
 import '../../../util/images.dart';
+import '../ride/controller/ride_controller.dart';
+import '../ride/widgets/ride_category.dart';
+import 'controller/category_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -28,10 +31,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
+    Get.find<CategoryController>().getCategoryList();
     printDeviceToken();
     super.initState();
     Get.find<BannerController>().getBannerList();
     Get.find<PaymentController>().getDigitalPaymentMethodList();
+
+    Get.find<RideController>().resetControllerValue();
+
+    // Get.back();
     // _checkPermission(context);
   }
 
@@ -55,9 +63,17 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 BannerView(),
-                CategoryView(),
-                HomeSearchWidget(),
-                HomeMyAddress(
+                K.sizedBoxH0,
+
+                GetBuilder<CategoryController>(
+                    initState: (_) =>
+                        Get.find<CategoryController>().getCategoryList(),
+                    builder: (categoryController) {
+                      return RideCategoryWidget();
+                    }), K.sizedBoxH0,
+                // const CategoryView(),
+                const HomeSearchWidget(),
+                const HomeMyAddress(
                   fromPage: Strings.home,
                 ),
                 HomeMapView()

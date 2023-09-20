@@ -55,8 +55,10 @@ class _SuccessfullyReviewedScreenState extends State<SuccessfullyReviewedScreen>
         color: Theme.of(context).cardColor,
         child: Padding(
           padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-          child: CustomButton(buttonText: 'home'.tr, onPressed: (){
-            Get.find<RideController>().resetControllerValue();
+          child: CustomButton(buttonText: 'home'.tr,
+            radius: 25,
+            onPressed: (){
+            // Get.find<RideController>().resetControllerValue();
             Get.offAll(()=>  DashboardScreen());
           },),
         ),),

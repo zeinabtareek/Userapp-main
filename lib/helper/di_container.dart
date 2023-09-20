@@ -72,6 +72,8 @@ Future<Map<String, Map<String, String>>> init() async {
 
 
   // Controller
+
+  Get.lazyPut(() => CategoryController(categoryRepo: Get.find()));
   Get.lazyPut(() => ConfigController(configRepo: Get.find()));
   Get.lazyPut(() => ThemeController(sharedPreferences: Get.find()));
   Get.lazyPut(() => LocalizationController(sharedPreferences: Get.find()));
@@ -86,16 +88,15 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => WalletController(walletRepo: Get.find()));
   Get.lazyPut(() => OfferController(offerRepo: Get.find()));
   Get.lazyPut(() => BannerController(bannerRepo: Get.find()));
-  Get.lazyPut(() => CategoryController(categoryRepo: Get.find()));
   Get.lazyPut(() => AddressController(addressRepo: Get.find()));
   Get.lazyPut(() => MapController());
   Get.lazyPut(() => ParcelController(parcelRepo: Get.find()));
-  Get.lazyPut(() => WhereToGoController(setMapRepo: Get.find()));
+  Get.lazyPut(() => WhereToGoController(  ));
   Get.lazyPut(() => RideController(rideRepo: Get.find()));
   Get.lazyPut(() => PaymentController(paymentRepo: Get.find()));
   Get.lazyPut(() => BottomMenuController());
 
-
+  //
   // Retrieving localized data
   Map<String, Map<String, String>> languages = {};
   for(LanguageModel languageModel in AppConstants.languages) {

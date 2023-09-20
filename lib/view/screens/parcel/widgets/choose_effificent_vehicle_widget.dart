@@ -49,7 +49,7 @@ class _ChooseEfficientVehicleWidgetState
                     fontSize: Dimensions.fontSizeLarge),
               ),
             ),
-            CustomButton(
+            CustomButton( radius: Dimensions.radiusOverLarge,
               buttonText: 'choose_the_efficient_vehicles'.tr,
               fontSize: Dimensions.fontSizeDefault,
               onPressed: () {
