@@ -14,6 +14,7 @@ import '../../../util/app_style.dart';
 import '../../../util/images.dart';
 import '../../widgets/animated_widget.dart';
 import '../../widgets/custom_float_action_btn.dart';
+import '../profile/profile_screen/profile_screen.dart';
 import 'rate/check_rates_screen.dart';
 import 'controller/parcel_controller.dart';
 
@@ -64,7 +65,9 @@ class ParcelHomeScreen extends StatelessWidget {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             color: Colors.white,
-            onPressed: () {},
+            onPressed: () {
+              Get.back();
+            },
           ),
         ),
         body: SafeArea(
@@ -75,8 +78,10 @@ class ParcelHomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     K.sizedBoxW0,
-                    CustomOvel(
+                    GestureDetector(
+                      child:  CustomOvel(
                       Image.asset(Images.profileOutline),
+                    ),onTap: ()=>Get.to(()=>const ProfileScreen()),
                     ),
                     Column(
                       mainAxisSize: MainAxisSize.min,
@@ -96,8 +101,7 @@ class ParcelHomeScreen extends StatelessWidget {
                     GestureDetector(
                       child: CustomOvel(
                         Image.asset(Images.notificationOutline),
-                        // Image.asset(Images.notificationOutline),
-                      ),onTap: ()=>Get.to(()=>ParcelNotificationScreen()),
+                       ),onTap: ()=>Get.to(()=>const ParcelNotificationScreen()),
                     ),
                     K.sizedBoxW0,
                   ],
@@ -130,7 +134,7 @@ class ParcelHomeScreen extends StatelessWidget {
                       Expanded(
                       child: GestureDetector(
                         child:   CustomTextField(
-                          hintText: 'ddd',
+                          hintText: '',
                           inputType: TextInputType.name,
                           suffixIcon: Images.close,
                           prefixIcon: Images.search,

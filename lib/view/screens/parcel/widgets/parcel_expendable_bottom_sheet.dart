@@ -50,8 +50,8 @@ class _ParcelExpendableBottomSheetState
                             Dimensions.paddingSizeExtraSmall),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(
                           Dimensions.paddingSizeDefault,
                           Dimensions.paddingSizeSmall,
                           Dimensions.paddingSizeDefault,

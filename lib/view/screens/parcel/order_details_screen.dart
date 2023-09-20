@@ -15,6 +15,7 @@ import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_body.dart';
 import '../../widgets/custom_button.dart';
 import 'delivery_staus_screen.dart';
+import 'live_tracking_screen.dart';
 
 class OrderDetails extends StatelessWidget {
   const OrderDetails({super.key});
@@ -100,7 +101,9 @@ class OrderDetails extends StatelessWidget {
                             height: 35,
                             buttonText: Strings.liveTracking.tr,
                             width: Get.width,
-                            onPressed: () {   },
+                            onPressed: () {
+                              Get.to(LiveTrackingScreenForParcel());
+                            },
                             radius: 50,
                           ),
                         ),

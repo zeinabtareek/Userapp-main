@@ -39,15 +39,15 @@ class TodayNotificationWidget extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [Text(
-                        '2 Feb 2023 • 7:40 pm',
-                        style: K.hintSmallTextStyle,
+                        ' 2 Feb 2023 • 7:40 pm',
+                        style: TextStyle(color: Colors.black45,fontSize: Dimensions.fontSizeExtraSmall)
                       ),
                         Text('Cristofer George',
                             style: K.semiBoldBlackTextStyle),
 
                         K.sizedBoxH0,
                         Text('Our package has been delivered and left at your designated delivery location.',
-                            style: K.hintMediumTextStyle),
+                            style: K.hintSmallTextStyle,),
 
                         K.sizedBoxH0,
                       ],

@@ -27,7 +27,7 @@ class StatusPackageScreen extends StatelessWidget {
         body: CustomBody(
       appBar: CustomAppBar(
         title: Strings.statusPackage.tr,
-        showBackButton: false,
+        showBackButton: true,
         centerTitle: true,
       ),
       body: SingleChildScrollView(

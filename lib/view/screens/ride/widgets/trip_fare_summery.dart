@@ -21,38 +21,38 @@ class TripFareSummery extends StatelessWidget {
       padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
       child: Column(
         children: [
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Row(children: [
-              Image.asset(
-                Images.profileMyWallet,
-                height: 15,
-                width: 15,
-              ),
-              const SizedBox(
-                width: Dimensions.paddingSizeSmall,
-              ),
-              Text(
-                'fare_price'.tr,
-                style: textRegular.copyWith(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: Dimensions.fontSizeSmall),
-              ),
-            ]),
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                  color: Theme.of(context).primaryColor.withOpacity(0.2)),
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.paddingSizeSmall,
-                  vertical: Dimensions.paddingSizeExtraSmall),
-              child: Text(
-                PriceConverter.convertPrice(context, 150),
-                style: textBold.copyWith(
-                    fontSize: Dimensions.fontSizeSmall,
-                    color: Theme.of(context).primaryColor),
-              ),
-            )
-          ]),
+          // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          //   Row(children: [
+          //     Image.asset(
+          //       Images.profileMyWallet,
+          //       height: 15,
+          //       width: 15,
+          //     ),
+          //     const SizedBox(
+          //       width: Dimensions.paddingSizeSmall,
+          //     ),
+          //     Text(
+          //       'fare_price'.tr,
+          //       style: textRegular.copyWith(
+          //           color: Theme.of(context).primaryColor,
+          //           fontSize: Dimensions.fontSizeSmall),
+          //     ),
+          //   ]),
+          //   Container(
+          //     decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+          //         color: Theme.of(context).primaryColor.withOpacity(0.2)),
+          //     padding: const EdgeInsets.symmetric(
+          //         horizontal: Dimensions.paddingSizeSmall,
+          //         vertical: Dimensions.paddingSizeExtraSmall),
+          //     child: Text(
+          //       PriceConverter.convertPrice(context, 150),
+          //       style: textBold.copyWith(
+          //           fontSize: Dimensions.fontSizeSmall,
+          //           color: Theme.of(context).primaryColor),
+          //     ),
+          //   )
+          // ]),
           const SizedBox(
             height: Dimensions.paddingSizeExtraSmall,
           ),

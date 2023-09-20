@@ -106,10 +106,11 @@ class MyApp extends StatelessWidget {
             // home: Test(),
 
             // home: HelpAndSupportScreen(),
-            home: ParcelHomeScreen(),
+            // home: AnimatedContainerExample(),
+            // home: ParcelHomeScreen(),
             // home: ParcelNotificationScreen(),
             // home: AddShipmenScreen(),
-            // home: OnBoardingScreen2(),
+            home: OnBoardingScreen2(),
             // home: DashboardScreen(),
           ));
         });
@@ -128,24 +129,77 @@ class MyHttpOverrides extends HttpOverrides {
           (X509Certificate cert, String host, int port) => true;
   }
 }
-class Test extends StatelessWidget {
-  const Test({super.key});
 
+
+
+
+
+
+class AnimatedContainerExample extends StatefulWidget {
+  @override
+  _AnimatedContainerExampleState createState() =>
+      _AnimatedContainerExampleState();
+}
+
+class _AnimatedContainerExampleState extends State<AnimatedContainerExample> {
+  double _containerHeight = 0.0;
+  bool _isExpanded = false;
+
+  void _toggleContainer() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+      _containerHeight = _isExpanded ? 80.0 : 0.0;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Animated Row Example'),
+        title: Text('Animated Container Example'),
       ),
-      body: Scaffold(
-        body: Column(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            animatedWidget(widget: Text('data'),limit: 6)
+            AnimatedContainer(
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+              width: 200,
+              height: _containerHeight,
+              color: Colors.blue,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _toggleContainer,
+              child: Text(_isExpanded ? 'Collapse' : 'Expand'),
+            ),
           ],
         ),
-      )
+      ),
     );
   }
 }
+
+
+// class Test extends StatelessWidget {
+//   const Test({super.key});
+//
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Animated Row Example'),
+//       ),
+//       body: Scaffold(
+//         body: Column(
+//           children: [
+//             animatedWidget(widget: Text('data'),limit: 6)
+//           ],
+//         ),
+//       )
+//     );
+//   }
+// }
 
 
 //            ...List.generate(999, (index) =>Text('Scroll Alert Example $index'),)

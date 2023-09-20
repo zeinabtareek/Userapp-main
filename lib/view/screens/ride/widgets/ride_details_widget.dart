@@ -42,7 +42,7 @@ class BikeRideDetailsWidgets extends StatelessWidget {
             if (rideController.currentRideState == RideState.initial)
               Column(
                 children: [
-                  const RideCategoryWidget(),
+                    RideCategoryWidget(),
                   const SizedBox(
                     height: Dimensions.paddingSizeDefault,
                   ),

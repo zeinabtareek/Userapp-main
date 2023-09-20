@@ -18,6 +18,7 @@ import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
 import '../choose_from_map/choose_from_map_screen.dart';
 import '../choose_from_map/controller/choose_from_map_controller.dart';
+import '../map/map_screen.dart';
 import 'controller/where_to_go_controller.dart';
 
 class SetDestinationScreen extends StatelessWidget {
@@ -300,7 +301,8 @@ class SetDestinationScreen extends StatelessWidget {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Get.to(() => const SuggestedRouteScreen());
+                                  Get.to(() =>   MapScreen(fromScreen: 'ride',));
+                                  // Get.to(() => const SuggestedRouteScreen());
                                   Get.find<RideController>()
                                       .updateRideCurrentState(
                                           RideState.initial);

@@ -6,7 +6,7 @@ import 'package:ride_sharing_user_app/view/screens/home/controller/category_cont
 import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
 
 class RideCategoryWidget extends StatelessWidget {
-  const RideCategoryWidget({Key? key}) : super(key: key);
+   RideCategoryWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +28,7 @@ class RideCategoryWidget extends StatelessWidget {
                       onTap: () {
                         if (index == 0) {
                           rideController.updateSelectedRideType(RideType.car);
+                          ...
                         } else if (index == 1) {
                           rideController.updateSelectedRideType(RideType.bike);
                         } else if (index == 2) {
