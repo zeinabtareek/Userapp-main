@@ -31,6 +31,7 @@ animatedWidget({required Widget widget ,required int limit,List ?list ,void Func
             children: [
               for (var i = 0; i <  limit;i++)
                list!=null?GestureDetector(
+                 onTap: onTap,
                  child: Padding(
                    padding: const EdgeInsets.all(8.0),
                    child: Card(
@@ -47,8 +48,7 @@ animatedWidget({required Widget widget ,required int limit,List ?list ,void Func
                        isClicked: false,
                      ),
                    ),
-                 ),
-                 onTap: onTap
+                 )
                ): widget,
 
             ],

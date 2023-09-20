@@ -73,12 +73,6 @@ class ParcelRouteWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Text(
-                      //   parcelController.senderAddressController.text,
-                      //   style:
-                      //   textRegular.copyWith(color: colorText ?? Colors.black),
-                      // ),
-                      K.sizedBoxH0,
                       Text(Strings.pickUpPoint.tr,
                         style:
                         textRegular.copyWith(color: colorText ?? Colors.black),
@@ -94,12 +88,6 @@ class ParcelRouteWidget extends StatelessWidget {
 
                       ),
                       const SizedBox(height: Dimensions.paddingSizeSmall),
-                      // Text(Strings.dropOffPoint.tr,
-                      //   style: textRegular.copyWith(
-                      //       color: colorText?.withOpacity(.5) ??
-                      //           Theme.of(context).primaryColor),
-                      // ),
-                      K.sizedBoxH0,
                       Text(Strings.dropOffPoint.tr,
                         style:
                         textRegular.copyWith(color: colorText ?? Colors.black),
@@ -114,7 +102,6 @@ class ParcelRouteWidget extends StatelessWidget {
                         inputAction: TextInputAction.next,
 
                       ),
-                      const SizedBox(height: Dimensions.paddingSizeSmall),
 
                     ],
                   )),

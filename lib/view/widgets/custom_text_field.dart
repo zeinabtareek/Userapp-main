@@ -32,12 +32,13 @@ class CustomTextField extends StatefulWidget {
   final bool suffix;
   final Function()? onPressedSuffix;
   final Function(CountryCode countryCode)? onCountryChanged;
-
+  final Function()? onTap;
   const CustomTextField({
     super.key,
     this.hintText = 'Write something...',
     this.controller,
     this.focusNode,
+    this.onTap,
     this.nextFocus,
     this.isEnabled = true,
     this.inputType = TextInputType.text,
@@ -78,7 +79,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return TextFormField(onTap: widget.onTap,
       validator: widget.validator,
       maxLines: widget.maxLines,
       controller: widget.controller,

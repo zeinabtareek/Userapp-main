@@ -135,6 +135,7 @@ class Images {
   static const String  timer = 'assets/image/Time_circle.png';
   static const String  chatGif= 'assets/image/chat.gif';
   static const String  packageGif= 'assets/image/package.gif';
+  static const String  parcelIcon= 'assets/image/parcel_icon.png';
 
 
 

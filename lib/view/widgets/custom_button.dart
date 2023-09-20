@@ -17,10 +17,12 @@ class CustomButton extends StatelessWidget {
   final Color? borderColor;
   final Color? textColor;
   final Color? backgroundColor;
+  final Color? iconColor;
   final bool boldText;
   final bool isLoading;
+  final Widget ? image;
   const CustomButton({super.key, this.onPressed, required this.buttonText, this.isLoading =false,this.transparent = false, this.margin = EdgeInsets.zero,
-    this.width = Dimensions.webMaxWidth, this.height = 45, this.fontSize, this.radius = 5, this.icon,this.showBorder = false,this.borderWidth=1, this.borderColor, this.textColor, this.backgroundColor,this.boldText = true});
+    this.width = Dimensions.webMaxWidth, this.height = 45, this.fontSize, this.iconColor, this.radius = 5, this.icon,this.image,this.showBorder = false,this.borderWidth=1, this.borderColor, this.textColor, this.backgroundColor,this.boldText = true});
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +48,9 @@ class CustomButton extends StatelessWidget {
           child: CircularProgressIndicator.adaptive(backgroundColor: backgroundColor??Colors.white,),
         ): Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           icon != null ? Padding(
-            padding: const EdgeInsets.only(right: Dimensions.paddingSizeExtraSmall),
-            child: Icon(icon, color: transparent ? Theme.of(context).primaryColor : Colors.white),
-          ) : const SizedBox(),
+            padding:   EdgeInsets.only(right: Dimensions.paddingSizeExtraSmall),
+            child: Icon(icon, color: transparent ? Theme.of(context).primaryColor : iconColor?? Colors.white),
+          ) :image ?? const SizedBox(),
           Text(buttonText, textAlign: TextAlign.center, style: boldText? textBold.copyWith(
             color: textColor ?? (transparent ? Theme.of(context).primaryColor : Colors.white),
             fontSize: fontSize ?? Dimensions.fontSizeDefault,

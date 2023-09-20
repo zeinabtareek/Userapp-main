@@ -404,7 +404,13 @@
   "regular": "Regular",
   "standard": "Standard",
   "express": "Express",
-   "sameDay": "Sameday"
+   "sameDay": "Sameday",
+   "shipment_details": "Shipment Details",
+  "rate": "Rate",
+  "resent_search": "Resent Search"
+
+
+
 
 
 

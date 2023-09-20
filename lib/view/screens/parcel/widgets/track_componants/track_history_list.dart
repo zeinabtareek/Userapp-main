@@ -12,7 +12,7 @@ Widget trackHistoryList(List list) {
         return animatedWidget(
             widget: itemTrackHistory(
                 title: 'Nintendo Swich Oled',
-                subTitle: 'Order ID: JB39029910020'),
+                subTitle: 'Order ID: JB39029910020', onTap: () {  }),
             limit: list.length);
       });
 }

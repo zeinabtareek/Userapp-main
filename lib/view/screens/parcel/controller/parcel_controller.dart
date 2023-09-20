@@ -23,12 +23,13 @@ class ParcelController extends GetxController
     with GetSingleTickerProviderStateMixin
     implements GetxService {
   final ParcelRepo parcelRepo;
-
+  final isBtnTapped=false.obs;
+  final isSelected=1.obs;
   ParcelController({required this.parcelRepo});
 
   var currentParcelState = ParcelDeliveryState.initial;
   late TabController tabController;
-
+  int counter=1;
   @override
   void onInit() async {
     super.onInit();
@@ -124,6 +125,21 @@ class ParcelController extends GetxController
 
   void updatePaymentPerson(bool newValue) {
     payReceiver = newValue;
+    update();
+  }
+
+  List kilosList=['1kg','1kg','1kg','1kg','1kg','1kg',];
+  add(){
+    counter++;
+    update();
+  }  minimize(){
+    counter>1?
+    counter--:counter=1;
+    update();
+  }
+
+  void isTapped(int index) {
+    isSelected.value = index;
     update();
   }
 }

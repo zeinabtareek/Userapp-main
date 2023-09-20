@@ -61,6 +61,19 @@ class K {
   static BoxDecoration boxDecorationWithPrimaryBorder = BoxDecoration(
       border: Border.all(color: Theme.of(Get.context!).primaryColor, width: 1),
       borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall));
+
+
+  static BoxDecoration lightGreenBoxDecoration =  BoxDecoration(
+    color:
+    Theme.of(Get.context!).primaryColor.withOpacity(0.06),
+    borderRadius:
+    BorderRadius.circular(Dimensions.iconSizeLarge),
+    border: Border.all(
+      width: 1,
+      color:
+      Theme.of(Get.context!).primaryColor.withOpacity(0.2),
+    ),
+  );
   static BoxDecoration shadowBoxDecoration = BoxDecoration(
       borderRadius: BorderRadius.circular(Dimensions.fontSizeExtraLarge),
       color: Colors.white,

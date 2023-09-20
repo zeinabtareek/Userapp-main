@@ -199,6 +199,15 @@ class Strings {
   static const quantity = "quantity";
   static const packageName = "package_name";
   static const sameDay = "sameDay";
+  static const weight = "Weight";
+  static const deliveryOptions = "delivery_option";
+  static const today = "today";
+  static const mostRecent = "most_recent";
+  static const rate = "rate";
+  static const shipmentDetails = "shipment_details";
+  static const resentSearch = "resent_search";
+
+
 
 
 

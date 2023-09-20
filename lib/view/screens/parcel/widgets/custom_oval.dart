@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../../util/app_style.dart';
 
 Widget CustomOvel(image,
-    {Color? color, Color? borderColor, void Function()? onTap}) {
+    {Color? color, Color? borderColor, void Function()? onTap ,height ,width}) {
   return Container(
     decoration: BoxDecoration(
       shape: BoxShape.circle,
@@ -22,8 +22,8 @@ Widget CustomOvel(image,
             onTap: onTap,
             // splashColor: Colors.red, // inkwell color
             child: SizedBox(
-              width: 46,
-              height: 46,
+              width: width??46,
+              height:height?? 46,
               child: Padding(padding: K.fixedPadding1, child: image),
             )),
       ),

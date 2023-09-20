@@ -15,7 +15,7 @@ Widget trackOrderWithStatus({onpressed, text, isReturned}) {
           ),
           title: 'New York, NY, 10016, USA',
           subTitle: 'Order ID: JB390299191242',
-          elevated: 0),
+          elevated: 0, onTap: () {  }),
       orderStatusWidget(onpressed, isReturned: isReturned, text: text),
     ],
   );

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/parcel_notification_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/parcel_tracking.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/status_package_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/custom_oval.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/custom_parcel_body.dart';
@@ -12,7 +14,7 @@ import '../../../util/app_style.dart';
 import '../../../util/images.dart';
 import '../../widgets/animated_widget.dart';
 import '../../widgets/custom_float_action_btn.dart';
-import 'check_rates_screen.dart';
+import 'rate/check_rates_screen.dart';
 import 'controller/parcel_controller.dart';
 
 // class ParcelScreen extends StatelessWidget {
@@ -91,9 +93,11 @@ class ParcelHomeScreen extends StatelessWidget {
                         )
                       ],
                     ),
-                    CustomOvel(
-                      Image.asset(Images.notificationOutline),
-                      // Image.asset(Images.notificationOutline),
+                    GestureDetector(
+                      child: CustomOvel(
+                        Image.asset(Images.notificationOutline),
+                        // Image.asset(Images.notificationOutline),
+                      ),onTap: ()=>Get.to(()=>ParcelNotificationScreen()),
                     ),
                     K.sizedBoxW0,
                   ],
@@ -123,14 +127,17 @@ class ParcelHomeScreen extends StatelessWidget {
                   children: [
                     K.sizedBoxW0,
                     K.sizedBoxW0,
-                    const Expanded(
-                      child: CustomTextField(
-                        hintText: '',
-                        inputType: TextInputType.name,
-                        suffixIcon: Images.close,
-                        prefixIcon: Images.search,
-                        fillColor: Colors.white,
-                        inputAction: TextInputAction.next,
+                      Expanded(
+                      child: GestureDetector(
+                        child:   CustomTextField(
+                          hintText: 'ddd',
+                          inputType: TextInputType.name,
+                          suffixIcon: Images.close,
+                          prefixIcon: Images.search,
+                          fillColor: Colors.white,onTap:  ( )=>Get.to(()=>ParcelTrackingScreen()),
+                          inputAction: TextInputAction.next,
+                        ),
+
                       ),
                     ),
                     K.sizedBoxW0,

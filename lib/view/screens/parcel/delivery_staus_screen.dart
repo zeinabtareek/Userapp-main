@@ -41,14 +41,12 @@ class DeliveryStatusScreen extends StatelessWidget {
           child: Column(
             children: [
               K.sizedBoxH2,
-
               Text(Strings.estimatedDeliveryDate.tr,
                   style: textBold.copyWith(
                     fontSize: Dimensions.fontSizeExtraLarge,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
                   )),
-              // K.sizedBoxH2,
               Text(
                 '6:30 pm • Feb 2th 2023',
                 style: K.hintMediumTextStyle,
@@ -63,7 +61,7 @@ class DeliveryStatusScreen extends StatelessWidget {
                   ),
                   title: 'New York, NY, 10016, USA',
                   subTitle: 'Order ID: JB390299191242',
-                  elevated: 0),
+                  elevated: 0, onTap: () {  }),
               K.sizedBoxH2,
 
               orderStatusWidget(() {},

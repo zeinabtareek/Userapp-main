@@ -408,6 +408,10 @@
   "regular": "عادي",
   "standard": "قياسي",
   "express": "أكسبرس",
-  "sameDay": "نفس اليوم"
+  "sameDay": "نفس اليوم",
+  "shipment_details": "تفاصيل الشحنة"
+,
+  "rate": "معدل",
+  "resent_search": "البحث الأخير"
 
 }

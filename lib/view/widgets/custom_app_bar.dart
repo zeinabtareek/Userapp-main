@@ -77,7 +77,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
           child: Image.asset(Images.icon),
         ),),
-        actions: [
+        actions: const [
           // showActionButton?
           // InkWell(
           //   onTap: (){

@@ -16,6 +16,8 @@ import 'package:ride_sharing_user_app/view/screens/n/test_polyline_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/onboard/onboarding_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/onboarding/onboarding.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/add_shipment.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/parcel_home_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/parcel_notification_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/parcel_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
 import 'package:ride_sharing_user_app/helper/responsive_helper.dart';
@@ -104,8 +106,9 @@ class MyApp extends StatelessWidget {
             // home: Test(),
 
             // home: HelpAndSupportScreen(),
-            // home: ParcelHomeScreen(),
-            home: AddShipmenScreen(),
+            home: ParcelHomeScreen(),
+            // home: ParcelNotificationScreen(),
+            // home: AddShipmenScreen(),
             // home: OnBoardingScreen2(),
             // home: DashboardScreen(),
           ));
