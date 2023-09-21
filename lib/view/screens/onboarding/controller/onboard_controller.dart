@@ -35,8 +35,8 @@ class OnBoardingController extends GetxController {
       //     Get.put( AuthController(sl()));
       //   },
       // ));
-      Get.offAllNamed(AuthScreenPath.loginScreenWithPassRouteName);
-      // Get.offAll(DashboardScreen());
+      // Get.offAllNamed(AuthScreenPath.loginScreenWithPassRouteName);
+      Get.offAll(DashboardScreen());
     }
     print(prev.value);
   }

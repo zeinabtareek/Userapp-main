@@ -31,7 +31,8 @@ class MapScreen extends StatelessWidget {
             appBar: CustomAppBar(title: Strings.theDeliverymanNeedYou.tr,onBackPressed: (){
 
               Get.find<RideController>()
-                  .resetControllerValue();   Get.back();},),
+                  .resetControllerValue();
+              Get.back();},),
             body: GetBuilder<MapController>(builder: (userMapController) {
               Completer<GoogleMapController> mapCompleter =
                   Completer<GoogleMapController>();

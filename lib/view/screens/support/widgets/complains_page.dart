@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
 
 import '../../../../authenticate/presentation/widgets/test_field_title.dart';
 import '../../../../util/app_strings.dart';
@@ -30,7 +31,8 @@ class ComplainsPage extends StatelessWidget {
         K.sizedBoxH0,
         Container(
           width: MediaQuery.of(context).size.width/1,
-          height: 35,
+          height: Dimensions.iconSizeDoubleExtraLarge,
+          padding: EdgeInsets.only(left: 10),
           decoration: BoxDecoration(
             color: Theme.of(context)
                 .primaryColor
@@ -61,7 +63,7 @@ class ComplainsPage extends StatelessWidget {
                   CustomDropdownMenuItem<String>(
                     value: item,
                     child: Text(
-                      item.tr,
+                      '\t${item.tr}',
                       style: textRegular.copyWith(
                           color:
                           item != controller.initialSelectItem
@@ -94,14 +96,14 @@ class ComplainsPage extends StatelessWidget {
         K.sizedBoxH0,
 
         NotesTextField(textEditingController: controller.feedBackController,
-            hint:Strings.yourFeedBack   ),
+            hint:Strings.yourFeedBack .tr  ),
 
 Spacer(),
         CustomButton(
           buttonText: Strings.submit.tr,
           radius: 25,
           onPressed: () {
-
+Get.offAll(DashboardScreen());
             // Get.back();
           },
         ),
