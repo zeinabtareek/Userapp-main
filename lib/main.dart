@@ -16,9 +16,11 @@ import 'package:ride_sharing_user_app/view/screens/n/test_polyline_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/onboard/onboarding_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/onboarding/onboarding.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/add_shipment.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/order_details_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/parcel_home_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/parcel_notification_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/parcel_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/widgets/item_track_history_card.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
 import 'package:ride_sharing_user_app/helper/responsive_helper.dart';
 import 'package:ride_sharing_user_app/helper/di_container.dart' as di;
@@ -102,9 +104,18 @@ class MyApp extends StatelessWidget {
             initialRoute: RouteHelper.getSplashRoute(),
             getPages: RouteHelper.routes,
             defaultTransition: Transition.topLevel,
-            transitionDuration:   Duration(milliseconds: 500),
-            // home: Test(),
-
+            transitionDuration:   const Duration(milliseconds: 500),
+            // home:
+            // ParcelHomeScreen(),
+            // AnimatedWidget(items:['2','3','4','5','6'] ,isVertical: false,widget:  itemTrackHistory(onTap: (){
+            //   Get.to(()=>OrderDetails());},
+            //     title: 'Nintendo Swich Oled',
+            //     subTitle: 'Order ID: JB39029910020'),),
+            // AnimatedWidget(
+            //   items: myList,
+            //   isVertical: isVertical,
+            //   widget: myWidget,
+            // ),
             // home: HelpAndSupportScreen(),
             // home: AnimatedContainerExample(),
             // home: ParcelHomeScreen(),

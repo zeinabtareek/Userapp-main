@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/view/screens/map/map_screen.dart';
@@ -68,7 +69,6 @@ class ParcelHomeScreen extends StatelessWidget {
             icon: const Icon(Icons.arrow_back),
             color: Colors.white,
             onPressed: () {
-
               Get.back();
             },
           ),
@@ -82,9 +82,10 @@ class ParcelHomeScreen extends StatelessWidget {
                   children: [
                     K.sizedBoxW0,
                     GestureDetector(
-                      child:  CustomOvel(
-                      Image.asset(Images.profileOutline),
-                    ),onTap: ()=>Get.to(()=>const ProfileScreen()),
+                      child: CustomOvel(
+                        Image.asset(Images.profileOutline),
+                      ),
+                      onTap: () => Get.to(() => const ProfileScreen()),
                     ),
                     Column(
                       mainAxisSize: MainAxisSize.min,
@@ -104,7 +105,9 @@ class ParcelHomeScreen extends StatelessWidget {
                     GestureDetector(
                       child: CustomOvel(
                         Image.asset(Images.notificationOutline),
-                       ),onTap: ()=>Get.to(()=>const ParcelNotificationScreen()),
+                      ),
+                      onTap: () =>
+                          Get.to(() => const ParcelNotificationScreen()),
                     ),
                     K.sizedBoxW0,
                   ],
@@ -134,22 +137,22 @@ class ParcelHomeScreen extends StatelessWidget {
                   children: [
                     K.sizedBoxW0,
                     K.sizedBoxW0,
-                      Expanded(
+                    Expanded(
                       child: GestureDetector(
-                        child:   CustomTextField(
+                        child: CustomTextField(
                           hintText: '',
                           inputType: TextInputType.name,
                           suffixIcon: Images.close,
                           prefixIcon: Images.search,
-                          fillColor: Colors.white,onTap:  ( )=>Get.to(()=>ParcelTrackingScreen()),
+                          fillColor: Colors.white,
+                          onTap: () => Get.to(() => ParcelTrackingScreen()),
                           inputAction: TextInputAction.next,
                         ),
-
                       ),
                     ),
-                    K.sizedBoxW0,
-                    CustomOvel(Image.asset(Images.scanner),
-                        color: Colors.white),
+                    // K.sizedBoxW0,
+                    // CustomOvel(Image.asset(Images.scanner),
+                    //     color: Colors.white),
                     K.sizedBoxW0,
                     K.sizedBoxW0,
                   ],
@@ -157,7 +160,8 @@ class ParcelHomeScreen extends StatelessWidget {
                 K.sizedBoxH0,
                 //CheckRatesScreen
               ],
-            ), body: GetBuilder<ParcelController>(builder: (controller) {
+            ),
+            body: GetBuilder<ParcelController>(builder: (controller) {
               return Container(
                 color: Colors.white,
                 padding: K.fixedPadding0,
@@ -165,42 +169,69 @@ class ParcelHomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    animatedWidget(
-                        widget: Card(
-                              shape:   RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),  ),
-                              elevation: 4,
-                              child: CustomCategoryCard(
-                                width: MediaQuery.of(Get.context!).size.width/3,
-                                height: 140,
-                                color: Colors.white,
-                                image:controller.optionsList[0]['image']??'',
-                                title:controller.optionsList[0]['title'],
-                                isClicked: false,
-                              ),
-                            ),isNavigate:true,
-                        list: controller.optionsList,
-                        limit: controller.optionsList.length),
+                    // AnimatedWidget(  items:controller.optionsList ,isVertical: false,widget:
+                    // Card(
+                    //   shape:   RoundedRectangleBorder(
+                    //     borderRadius: BorderRadius.circular(15.0),  ),
+                    //   elevation: 4,
+                    //   child: CustomCategoryCard(
+                    //     width: MediaQuery.of(Get.context!).size.width/3,
+                    //     height: 140,
+                    //     color: Colors.white,
+                    //     image:controller.optionsList[0]['image']??'',
+                    //     title:controller.optionsList[0]['title'],
+                    //     isClicked: false,
+                    //   ),
+                    // ),
+                    // itemTrackHistory(onTap: (){
+                    //       Get.to(()=>OrderDetails());},
+                    //         title: 'Nintendo Swich Oled',
+                    //         subTitle: 'Order ID: JB39029910020'),
+
+
+                    AnimationLimiter(
+                      child: GridView.builder(physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisSpacing: 10,
+                          childAspectRatio: 1.2,
+                          crossAxisCount: 2,
+                        ),
+                        itemCount: controller.optionsList.length,
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          return AnimationConfiguration.staggeredGrid(
+                              position: index,
+                              duration: const Duration(milliseconds: 500),
+                              columnCount: 2,
+                              // Set the same value as crossAxisCount
+                              child: SlideAnimation(
+                                  horizontalOffset:
+                                      MediaQuery.of(context).size.width / 2,
+                                  // verticalOffset:   50.0 ,
+                                  child: Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                      ),
+                                      elevation: 4,
+                                      child: CustomCategoryCard(
+                                        height: 140,
+                                        color: Colors.white,
+                                        image: controller.optionsList[index]
+                                                ['image'] ??
+                                            '',
+                                        title: controller.optionsList[index]
+                                            ['title'],
+                                        isClicked: false,
+                                      ))));
+                        },
+                      ),
+                    ),
+
+
                     K.sizedBoxH0,
 
-                    // animatedWidget2(widget: TextButton(onPressed: (){}, child:  Padding(
-                    //   padding: const EdgeInsets.all(8.0),
-                    //   child: Card(
-                    //     shape:   RoundedRectangleBorder(
-                    //       borderRadius: BorderRadius.circular(15.0),  ),
-                    //     elevation: 4,
-                    //     child: CustomCategoryCard(
-                    //       width: MediaQuery.of(Get.context!).size.width/3,
-                    //       height: 140,
-                    //       color: Colors.white,
-                    //       image:list[i]['image'],
-                    //       title:list[i]['title'],
-                    //       isClicked: false,
-                    //     ),
-                    //   ),
-                    // )
-                    //  ),
-                    //   yourDynamicList : controller.optionsList,),
 
                     Text(
                       Strings.specialOffers.tr,

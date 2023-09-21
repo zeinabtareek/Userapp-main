@@ -206,6 +206,7 @@ class Strings {
   static const rate = "rate";
   static const shipmentDetails = "shipment_details";
   static const resentSearch = "resent_search";
+  static const go = "go";
 
 
 
