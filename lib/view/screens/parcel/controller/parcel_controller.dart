@@ -46,8 +46,8 @@ class ParcelController extends GetxController
   }
 
   List optionsList = [
- {'image': Images.locationTrack,  'title': Strings.pickUp.tr,'onTap':  const MapScreen(fromScreen: Strings.parcel,)},
- {'image': Images.doc, 'title': Strings.statusOrder.tr,'onTap':  const StatusPackageScreen() }
+ {'image': Images.statusIcon,  'title': Strings.pickUp.tr,'onTap':  const MapScreen(fromScreen: Strings.parcel,)},
+ {'image': Images.deliveryTruck, 'title': Strings.statusOrder.tr,'onTap':  const StatusPackageScreen() }
   ];
 
 

@@ -69,30 +69,105 @@ animatedWidget({required Widget widget ,required int limit,List ?list ,  Functio
   );
 }
 
-// animatedWidget2({required List yourDynamicList, required Widget widget}) {
-//   return Container(
-//     width: MediaQuery.of(Get.context!).size.width,
-//     // color: Colors.red,
-//     child: Center(
-//       child: AnimationLimiter(
+
+
+
+// class AnimatedWidget extends StatelessWidget {
+//   AnimatedWidget({super.key, required this.items,required this.isVertical,required this.widget});
+//
+//
+//
+//     @override
+//     Widget build(BuildContext context) {
+//       return AnimationLimiter(
 //         child: ListView.builder(
-//           shrinkWrap: true,
-//           physics: const NeverScrollableScrollPhysics(),
-//           itemCount: yourDynamicList.length,
-//           itemBuilder: (context, index) {
+//           itemCount: items.length,
+//           itemBuilder: (BuildContext context, int index) {
 //             return AnimationConfiguration.staggeredList(
 //               position: index,
 //               duration: const Duration(milliseconds: 500),
 //               child: SlideAnimation(
-//                 horizontalOffset: MediaQuery.of(Get.context!).size.width / 2,
+//                 // verticalOffset:  50.0,
+//                 // horizontalOffset: MediaQuery.of(Get.context!).size.width / 2,
+//                 verticalOffset:isVertical? 50.0:0,
+//                 horizontalOffset:isVertical?0: MediaQuery.of(Get.context!).size.width / 2,
 //                 child: FadeInAnimation(
-//                   child: widget
+//                     child: widget
+//                   // ListTile(
+//                   //   title: Text(items[index]),
+//                   // ),
 //                 ),
 //               ),
 //             );
 //           },
 //         ),
-//       ),
-//     ),
-//   );
+//       );
+//     }
+//
 // }
+
+class AnimatedWidget1 extends StatelessWidget {
+  final List<dynamic> items;
+  final bool isVertical;
+  final bool isGrid;
+  final Widget widget;
+  const AnimatedWidget1({super.key ,required this.widget,required this.isVertical, required  this.items, required  this.isGrid});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimationLimiter(
+      child:
+
+       isGrid?     GridView.builder(
+         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+           crossAxisSpacing: 10, // Adjust the spacing between items
+           childAspectRatio: 1.2, // Adjust the aspect ratio of items
+           crossAxisCount: 2, // Set the number of columns as per your requirement
+         ),
+         itemCount: items.length,
+         shrinkWrap: true,
+         itemBuilder: (BuildContext context, int index) {
+           return AnimationConfiguration.staggeredGrid(
+             position: index,
+             duration: const Duration(milliseconds: 500),
+             columnCount: 2, // Set the same value as crossAxisCount
+             child: SlideAnimation(
+               // verticalOffset: 50.0,
+               // horizontalOffset: MediaQuery.of(context).size.width / 2,
+               verticalOffset: isVertical ? 50.0 : 0,
+               horizontalOffset: isVertical ? 0 : MediaQuery.of(context).size.width / 2,
+               child: FadeInAnimation(
+                 child: widget,
+                 // ListTile(
+                 //   title: Text(items[index]),
+                 // ),
+               ),
+             ),
+           );
+         },
+       ):
+      ListView.builder(
+        itemCount: items.length,
+        shrinkWrap: true,
+        itemBuilder: (BuildContext context, int index) {
+          return AnimationConfiguration.staggeredList(
+            position: index,
+            duration: const Duration(milliseconds: 500),
+            child: SlideAnimation(
+              // verticalOffset:  50.0,
+              // horizontalOffset: MediaQuery.of(Get.context!).size.width / 2,
+              verticalOffset:isVertical? 50.0:0,
+              horizontalOffset:isVertical?0: MediaQuery.of(Get.context!).size.width / 2,
+              child: FadeInAnimation(
+                  child: widget
+                // ListTile(
+                //   title: Text(items[index]),
+                // ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}

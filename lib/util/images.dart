@@ -119,9 +119,9 @@ class Images {
   static const String carIcon = 'assets/image/car_icon.png';
   static const String locationFill = 'assets/image/location_fill.png';
   static const String onBoarding = 'assets/image/onboardinag_arrow.png';
-  static const String onboard1 = 'assets/image/onboard1.png';
-  static const String onboard2 = 'assets/image/onboard2.png';
-  static const String onboard3 = 'assets/image/onboard3.png';
+  // static const String onboard1 = 'assets/image/onboard1.png';
+  // static const String onboard2 = 'assets/image/onboard2.png';
+  // static const String onboard3 = 'assets/image/onboard3.png';
   static const String chat = 'assets/image/chat.png';
   static const String package = 'assets/image/package.png';
   static const String scanner = 'assets/image/Scaner.png';
@@ -136,6 +136,8 @@ class Images {
   static const String  chatGif= 'assets/image/chat.gif';
   static const String  packageGif= 'assets/image/package.gif';
   static const String  parcelIcon= 'assets/image/parcel_icon.png';
+  static const String  statusIcon= 'assets/image/status.png';
+  // static const String  statusIcon= 'assets/image/delivery_truck.png';
 
 
 
@@ -148,5 +150,9 @@ class Images {
   static const String onBoardTwo = 'assets/svg/on_board_two.svg';
   static const String onBoardThree = 'assets/svg/on_board_three.svg';
   static const String onBoardFour = 'assets/svg/on_board_four.svg';
+
+  static const String onboard1 = 'assets/svg/onboard1.svg';
+  static const String onboard2 = 'assets/svg/onboard2.svg';
+  static const String onboard3 = 'assets/svg/onboard3.svg';
 
 }

@@ -22,12 +22,14 @@ class RideController extends GetxController implements GetxService {
 
   var currentRideState = RideState.initial;
   var selectedCategory = RideType.car;
+  var selectedSubCategory = RideType.car;
 
   bool isBiddingOn = true;
 
   double currentFarePrice = 0;
 
   int rideCategoryIndex = 0;
+  int rideSubCategoryIndex = 0;
 
   TextEditingController inputFarePriceController = TextEditingController();
 
@@ -49,7 +51,10 @@ class RideController extends GetxController implements GetxService {
 
   void vehicleToggle(RideType newType){
     isExpanded = !isExpanded;
-    heightOfTypes = isExpanded ? 110.0 : 0.0;    update();
+    heightOfTypes = isExpanded ? 110.0 : 0.0;
+    rideSubCategoryIndex = 0;
+
+    update();
   }
 
   void updateRideCurrentState(RideState newState) {
@@ -60,17 +65,25 @@ class RideController extends GetxController implements GetxService {
   void updateSelectedRideType(RideType newType) {
     selectedCategory = newType;
     update();
+  }  void updateSelectedSubRideType(RideType newType) {
+    selectedSubCategory = newType;
+    update();
   }
 
   void setRideCategoryIndex(int newIndex) {
     rideCategoryIndex = newIndex;
+    update();
+  }  void setSubRideCategoryIndex(int newIndex) {
+    rideSubCategoryIndex = newIndex;
     update();
   }
 
   void resetControllerValue() {
     currentRideState = RideState.initial;
     selectedCategory = RideType.car;
+    selectedSubCategory = RideType.car;
     rideCategoryIndex = 0;
+    rideSubCategoryIndex = 0;
     isExpanded=false;
      heightOfTypes=0;
     update();

@@ -38,12 +38,15 @@ class RideSubCategoryWidget extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
 
+
     if (categoryName == RideType.car) {
+      rideController.updateSelectedSubRideType(RideType.car);
     Get.to(SetDestinationScreen());
+
     }
       else {
+      rideController.updateSelectedSubRideType(RideType.parcel);
       Get.to(ParcelHomeScreen());
-
 
     }                        // if (index == 0) {
                         //   rideController.updateSelectedRideType(RideType.car);
@@ -57,7 +60,7 @@ class RideSubCategoryWidget extends StatelessWidget {
                         //   rideController
                         //       .updateSelectedRideType(RideType.luxury);
 
-                        // rideController.setRideCategoryIndex(index);
+                        rideController.setSubRideCategoryIndex(index);
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -68,7 +71,7 @@ class RideSubCategoryWidget extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(
                                   Dimensions.radiusDefault),
-                              color: rideController.rideCategoryIndex == index
+                              color: rideController.rideSubCategoryIndex == index
                                   ? Theme.of(context)
                                       .primaryColor
                                       .withOpacity(0.8)
@@ -151,8 +154,6 @@ class RideCategoryWidget extends StatelessWidget {
                                   rideController.updateSelectedRideType(RideType.car);
                                   rideController.vehicleToggle(RideType.car);
 
-
-
                                 } else if (index == 1) {
 
                                   rideController
@@ -173,6 +174,7 @@ class RideCategoryWidget extends StatelessWidget {
                               }else{
                                   rideController.resetControllerValue();
                                 }
+
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,

@@ -28,7 +28,6 @@ class OnBoardingScreen2 extends StatelessWidget {
       appBar: AppBar(backgroundColor: Colors.white,elevation: 0,actions:[ InkWell(
           onTap: () {
             Get.offAll(DashboardScreen());
-            // Get.offAll(DashboardScreen());
           },
           child: Padding(
             padding: K.fixedPadding1,
@@ -68,7 +67,7 @@ class OnBoardingScreen2 extends StatelessWidget {
                 next: controller.prev.value,
                 previous: controller.next.value,
                 isLast: controller.currentIndex.value==2?true:false,
-                text: 'Go'
+                text: Strings.go.tr
               ),
             ),
           ],
