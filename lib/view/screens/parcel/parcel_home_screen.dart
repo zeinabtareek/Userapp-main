@@ -209,22 +209,26 @@ class ParcelHomeScreen extends StatelessWidget {
                                   horizontalOffset:
                                       MediaQuery.of(context).size.width / 2,
                                   // verticalOffset:   50.0 ,
-                                  child: Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                      ),
-                                      elevation: 4,
-                                      child: CustomCategoryCard(
-                                        height: 140,
-                                        color: Colors.white,
-                                        image: controller.optionsList[index]
-                                                ['image'] ??
-                                            '',
-                                        title: controller.optionsList[index]
-                                            ['title'],
-                                        isClicked: false,
-                                      ))));
+                                  child: GestureDetector(
+                                    onTap: ()=> Get.off(controller.optionsList[index]
+                                    ['onTap']??{} ),
+                                    child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
+                                        elevation: 4,
+                                        child: CustomCategoryCard(
+                                          height: 140,
+                                          color: Colors.white,
+                                          image: controller.optionsList[index]
+                                                  ['image'] ??
+                                              '',
+                                          title: controller.optionsList[index]
+                                              ['title'],
+                                          isClicked: false,
+                                        )),
+                                  )));
                         },
                       ),
                     ),

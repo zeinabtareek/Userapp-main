@@ -33,6 +33,10 @@ import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/splash_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/support/support.dart';
 import 'package:ride_sharing_user_app/view/widgets/animated_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'authenticate/presentation/sign-up/sign_up_screen.dart';
 import 'helper/cache_helper.dart';
@@ -105,7 +109,7 @@ class MyApp extends StatelessWidget {
             getPages: RouteHelper.routes,
             defaultTransition: Transition.topLevel,
             transitionDuration:   const Duration(milliseconds: 500),
-            // home:
+            // home:MapView(),
             // ParcelHomeScreen(),
             // AnimatedWidget(items:['2','3','4','5','6'] ,isVertical: false,widget:  itemTrackHistory(onTap: (){
             //   Get.to(()=>OrderDetails());},
@@ -147,74 +151,97 @@ class MyHttpOverrides extends HttpOverrides {
 
 
 
-
-class AnimatedContainerExample extends StatefulWidget {
-  @override
-  _AnimatedContainerExampleState createState() =>
-      _AnimatedContainerExampleState();
-}
-
-class _AnimatedContainerExampleState extends State<AnimatedContainerExample> {
-  double _containerHeight = 0.0;
-  bool _isExpanded = false;
-
-  void _toggleContainer() {
-    setState(() {
-      _isExpanded = !_isExpanded;
-      _containerHeight = _isExpanded ? 80.0 : 0.0;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Animated Container Example'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AnimatedContainer(
-              duration: Duration(milliseconds: 500),
-              curve: Curves.easeInOut,
-              width: 200,
-              height: _containerHeight,
-              color: Colors.blue,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _toggleContainer,
-              child: Text(_isExpanded ? 'Collapse' : 'Expand'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-
-// class Test extends StatelessWidget {
-//   const Test({super.key});
 //
+//
+// class MapView extends StatefulWidget {
+//   @override
+//   _MapViewState createState() => _MapViewState();
+// }
+//
+// class _MapViewState extends State<MapView> {
+//   GoogleMapController? _mapController;
+//   Position? _currentPosition;
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     _getCurrentLocation();
+//   }
+//
+//   _getCurrentLocation() async {
+//     try {
+//       Position position = await Geolocator.getCurrentPosition(
+//         desiredAccuracy: LocationAccuracy.high,
+//       );
+//       setState(() {
+//         _currentPosition = position;
+//       });
+//       _goToCurrentLocation();
+//     } catch (e) {
+//       print(e);
+//     }
+//   }
+//
+//   _goToCurrentLocation() {
+//     if (_currentPosition != null && _mapController != null) {
+//       _mapController!.animateCamera(
+//         CameraUpdate.newCameraPosition(
+//           CameraPosition(
+//             target: LatLng(
+//               _currentPosition!.latitude,
+//               _currentPosition!.longitude,
+//             ),
+//             zoom: 15,
+//           ),
+//         ),
+//       );
+//     } else {
+//       // Handle the case when the current position is not available
+//       // Show an error message or perform other actions.
+//     }
+//   }
+//
+//   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       appBar: AppBar(
-//         title: Text('Animated Row Example'),
+//         title: Text('Map View'),
 //       ),
-//       body: Scaffold(
-//         body: Column(
-//           children: [
-//             animatedWidget(widget: Text('data'),limit: 6)
-//           ],
-//         ),
-//       )
+//       body: Stack(
+//         children: [
+//           GoogleMap(
+//             onMapCreated: (controller) {
+//               setState(() {
+//                 _mapController = controller;
+//               });
+//               _goToCurrentLocation(); // Set initial location here
+//             },
+//             initialCameraPosition: CameraPosition(
+//               target: LatLng(0.0, 0.0), // Placeholder initial location
+//               zoom: 15,
+//             ),
+//             markers: _currentPosition != null
+//                 ? {
+//               Marker(
+//                 markerId: MarkerId('currentLocation'),
+//                 position: LatLng(
+//                   _currentPosition!.latitude,
+//                   _currentPosition!.longitude,
+//                 ),
+//               ),
+//             }
+//                 : {},
+//           ),
+//           Positioned(
+//             bottom: 16,
+//             right: 16,
+//             child: FloatingActionButton(
+//               onPressed: _goToCurrentLocation,
+//               child: Icon(Icons.my_location),
+//             ),
+//           ),
+//         ],
+//       ),
 //     );
 //   }
 // }
-
-
-//            ...List.generate(999, (index) =>Text('Scroll Alert Example $index'),)
-
-

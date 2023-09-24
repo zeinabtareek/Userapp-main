@@ -43,6 +43,7 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
 
     if (Get.find<RideController>().isBiddingOn) {
       Future.delayed(const Duration(seconds: 3), () {
+        print('object is called');
         showGeneralDialog(
           context: context,
           barrierDismissible: true,

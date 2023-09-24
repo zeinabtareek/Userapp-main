@@ -22,7 +22,7 @@ class NotesTextField extends StatelessWidget {
       controller: textEditingController,
       maxLines: 5,
       textInputAction: TextInputAction.done,
-      keyboardType: TextInputType.number,
+      keyboardType: TextInputType.text,
       decoration: InputDecoration(
           filled: true,
           fillColor: Theme.of(context).hintColor.withOpacity(.1),

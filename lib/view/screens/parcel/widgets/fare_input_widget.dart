@@ -10,12 +10,15 @@ import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
 import '../../../../util/app_style.dart';
 import '../../payment/payment_screen.dart';
+import '../../payment/widget/review_screen.dart';
 import '../../ride/widgets/confirmation_trip_dialog.dart';
 
 class FareInputWidget extends StatelessWidget {
   final String fromPage;
+  final bool whoWillPay;
 
-  const FareInputWidget({Key? key, required this.fromPage}) : super(key: key);
+  const FareInputWidget({Key? key, required this.fromPage, required this.whoWillPay}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -84,19 +87,22 @@ class FareInputWidget extends StatelessWidget {
 
                     await Future.delayed(const Duration(seconds: 2))
                         .then((value) {
+                          print('####first');
                       Get.find<RideController>()
                           .updateRideCurrentState(RideState.otpSent);
                       Get.find<MapController>().notifyMapController();
                     });
 
                     await Future.delayed(const Duration(seconds: 2))
-                        .then((value) async {
-                      Get.dialog(
+                        .then((value) async {                          print('####second');
+
+                    Get.dialog(
                           const ConfirmationTripDialog(
                             isStartedTrip: true,
                           ),
                           barrierDismissible: false);
                       await Future.delayed(const Duration(seconds: 5));
+                    print('####third');
                       Get.find<RideController>()
                           .updateRideCurrentState(RideState.ongoingRide);
                       Get.find<MapController>().notifyMapController();
@@ -104,13 +110,14 @@ class FareInputWidget extends StatelessWidget {
                     });
 
                     await Future.delayed(const Duration(seconds: 2))
-                        .then((value) async {
+                        .then((value) async {  print('####forth');
                       Get.dialog(
                           const ConfirmationTripDialog(
                             isStartedTrip: false,
                           ),
                           barrierDismissible: false);
                       await Future.delayed(const Duration(seconds: 2));
+                    print('####fifth');
                       Get.find<RideController>()
                           .updateRideCurrentState(RideState.completeRide);
                       //Get.back();
@@ -119,6 +126,7 @@ class FareInputWidget extends StatelessWidget {
                     });
                     await Future.delayed(const Duration(seconds: 0))
                         .then((value) async {
+                      print('####six');
                       Get.off(() => const PaymentScreen());
                     });
                   } else {
@@ -126,34 +134,40 @@ class FareInputWidget extends StatelessWidget {
                         .updateParcelState(ParcelDeliveryState.acceptRider);
 
                     await Future.delayed(const Duration(seconds: 2))
-                        .then((value) {
+                        .then((value) { print('####seven');
                       Get.find<ParcelController>()
                           .updateParcelState(ParcelDeliveryState.otpSent);
                       Get.find<MapController>().notifyMapController();
                     });
+                    if( whoWillPay==false)//parcelController.payReceiver
+                        {
+                      await Future.delayed(const Duration(seconds: 2))
+                          .then((value) async {
+                        print('####eight');
+                        Get.dialog(
+                            const ConfirmationTripDialog( //calculation ConfirmationTripDialog
+                              isStartedTrip: true,
+                            ),
+                            barrierDismissible: false);
+                        await Future.delayed(const Duration(seconds: 5));
+                        Get.find<ParcelController>()
+                            .updateParcelState(
+                            ParcelDeliveryState.parcelOngoing);
+                        Get.find<MapController>().notifyMapController();
+                        Get.back();
+                      });
+                    }
 
                     await Future.delayed(const Duration(seconds: 2))
                         .then((value) async {
-                      Get.dialog(
-                          const ConfirmationTripDialog(
-                            isStartedTrip: true,
-                          ),
-                          barrierDismissible: false);
-                      await Future.delayed(const Duration(seconds: 5));
-                      Get.find<ParcelController>()
-                          .updateParcelState(ParcelDeliveryState.parcelOngoing);
-                      Get.find<MapController>().notifyMapController();
-                      Get.back();
-                    });
-
-                    await Future.delayed(const Duration(seconds: 2))
-                        .then((value) async {
+                      print('####nine');
                       Get.dialog(
                           const ConfirmationTripDialog(
                             isStartedTrip: false,
                           ),
                           barrierDismissible: false);
                       await Future.delayed(const Duration(seconds: 2));
+                      print('####ten');
                       Get.find<ParcelController>()
                           .updateParcelState(ParcelDeliveryState.parcelComplete);
                       //Get.back();
@@ -161,8 +175,17 @@ class FareInputWidget extends StatelessWidget {
                       Get.back();
                     });
                     await Future.delayed(const Duration(seconds: 0))
-                        .then((value) async {
-                      Get.off(() => const PaymentScreen());
+                        .then((value) async { print('####eleven');
+
+
+                          if( whoWillPay==true)//parcelController.payReceiver
+                            {
+                            Get.off(()=> const ReviewScreen());
+
+                          }
+                          else if( whoWillPay==false){
+                            Get.off(() => const PaymentScreen());
+                          }
                     });
                   }
 

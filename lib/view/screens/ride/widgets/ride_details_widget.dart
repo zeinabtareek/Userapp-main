@@ -89,7 +89,7 @@ class BikeRideDetailsWidgets extends StatelessWidget {
                     height: Dimensions.paddingSizeDefault,
                   ),
                   rideController.isBiddingOn
-                      ? const FareInputWidget(fromPage: Strings.ride)
+                      ?   FareInputWidget(fromPage: Strings.ride, whoWillPay: true,)
                       : CustomButton(
                           buttonText: Strings.findRider.tr,
                           onPressed: () {

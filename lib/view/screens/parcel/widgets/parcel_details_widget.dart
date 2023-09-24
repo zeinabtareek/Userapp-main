@@ -66,6 +66,7 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
                 parcelController.parcelDetailsAvailable == false
                     ? const AddParcelDetailsButton()
                     : const ProductDetailsWidget(),
+                ///update
                 const WhoWillPayButton(),
                 const SizedBox(
                   height: Dimensions.paddingSizeDefault,
@@ -76,8 +77,9 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
                 const SizedBox(
                   height: Dimensions.paddingSizeDefault,
                 ),
-                const FareInputWidget(
+                  FareInputWidget(
                   fromPage: 'parcel',
+                  whoWillPay: parcelController.payReceiver
                 )
               ]),
             if (parcelController.currentParcelState ==

@@ -58,7 +58,7 @@ class _SuccessfullyReviewedScreenState extends State<SuccessfullyReviewedScreen>
           child: CustomButton(buttonText: 'home'.tr,
             radius: 25,
             onPressed: (){
-            // Get.find<RideController>().resetControllerValue();
+            Get.find<RideController>().resetControllerValue();
             Get.offAll(()=>  DashboardScreen());
           },),
         ),),
