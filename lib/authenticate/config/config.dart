@@ -10,8 +10,9 @@ import '../presentation/sign-up/sign_up_screen.dart';
 class AuthLib {
   AuthLib._();
   static const String routeName = "user/";
-
-  static const String domain = "http://172.16.13.22:8000/api/";
+// http://hoodbackend.develobug.com/
+  // static const String domain = "http://172.16.13.22:8000/api/";
+  static const String domain = "http://hoodbackend.develobug.com/api/";
   // end- points
 
   static const String baseUrl = "$domain$routeName";

@@ -13,7 +13,7 @@ class _RemoteApiAuth implements RemoteApiAuth {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://172.16.13.22:8000/api/user/';
+    baseUrl ??= 'http://hoodbackend.develobug.com/api/user/';
   }
 
   final Dio _dio;
@@ -118,13 +118,12 @@ class _RemoteApiAuth implements RemoteApiAuth {
     final _headers = <String, dynamic>{};
     final _data = await req.toForm();
     final _result = await _dio.fetch<Map<String, dynamic>>(
-      _setStreamType<HttpResponse<HOODAuthorizedResModel>>(
-        Options(
-          method: 'POST',
-          headers: _headers,
-          extra: _extra,
-          contentType: 'multipart/form-data',
-        )
+        _setStreamType<HttpResponse<HOODAuthorizedResModel>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+      contentType: 'multipart/form-data',
+    )
             .compose(
               _dio.options,
               'complete_data',
@@ -132,13 +131,10 @@ class _RemoteApiAuth implements RemoteApiAuth {
               data: _data,
             )
             .copyWith(
-              baseUrl: _combineBaseUrls(
-                _dio.options.baseUrl,
-                baseUrl,
-              ),
-            ),
-      ),
-    );
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = HOODAuthorizedResModel.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
