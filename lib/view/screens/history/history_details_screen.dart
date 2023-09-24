@@ -95,7 +95,8 @@ import 'model/history_model.dart';
 class HistoryDetailsScreen extends StatelessWidget {
   final HistoryData activityItemModel;
   final ActivityController activityController = ActivityController();
-  Completer<GoogleMapController> mapCompleter=Completer<GoogleMapController>();
+  Completer<GoogleMapController> mapCompleter =
+      Completer<GoogleMapController>();
 
   HistoryDetailsScreen({Key? key, required this.activityItemModel})
       : super(key: key);
@@ -127,29 +128,36 @@ class HistoryDetailsScreen extends StatelessWidget {
                     Divider(
                       color: Theme.of(context).primaryColor.withOpacity(0.2),
                     ),
-                    Obx(() => activityController.state == ViewState.busy
+                    Obx(
+                      () => activityController.state == ViewState.busy
                           ? const Center(
-                        child: CupertinoActivityIndicator(), )
+                              child: CupertinoActivityIndicator(),
+                            )
                           : ActivityItemView(
-                        activityItemModel: activityItemModel,
-                        isDetailsScreen: true,
-                      ),
-                    ),K.sizedBoxH0,
+                              activityItemModel: activityItemModel,
+                              isDetailsScreen: true,
+                            ),
+                    ),
+                    K.sizedBoxH0,
                     ActivityScreenMapView(
                       sourcePosition: LatLng(
                         activityItemModel.from?.lat ?? 0.0,
                         activityItemModel.from?.lng ?? 0.0,
-                      ), destinationPosition: LatLng(
+                      ),
+                      destinationPosition: LatLng(
                         activityItemModel.to?.lat ?? 0.0,
                         activityItemModel.to?.lng ?? 0.0,
                       ),
                       activityController: activityController,
                       mapCompleter: mapCompleter,
                     ),
-                    if(activityItemModel.tip!=null)
-                    ActivityScreenTripDetails(tripDetails: activityItemModel,  mapCompleter: mapCompleter,),
-                    if(activityItemModel.driver!=null)
-                    ActivityScreenRiderDetails(riderDetails: activityItemModel.driver!),
+                    if (activityItemModel.tip != null)
+                      ActivityScreenTripDetails(
+                        tripDetails: activityItemModel,
+                        mapCompleter: mapCompleter,
+                      ),
+                    // if(activityItemModel.driver!=null)
+                    // ActivityScreenRiderDetails(riderDetails: activityItemModel.driver!),
                   ],
                 ),
               );

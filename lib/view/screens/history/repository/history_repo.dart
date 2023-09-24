@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/view/screens/history/model/activity_item_model.dart';
@@ -61,24 +62,22 @@ class ActivityRepo {
   // }
 
   ///Apis fetch
-  getAllHistoryTrips( ) async {
+  Future<HistoryModel> getAllHistoryTrips() async {
     try {
-      final response = await dio! .get(AppConstants.getAllOrders);
+      final response = await dio!.get(AppConstants.getAllOrders);
 
-        print('######${response.data['data']}');
+      debugPrint('######${response.data['data']}');
       if (response.statusCode == 200) {
         HistoryModel model = HistoryModel.fromJson(response.data);
         return model;
+      } else {
+        throw UnimplementedError();
       }
     } catch (e) {
       if (e is DioExceptionType) {
-         HandleError.handleExceptionDio(e);
+        HandleError.handleExceptionDio(e);
       }
+      throw UnimplementedError();
     }
   }
-
-
-
-
-
 }

@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/util/dimensions.dart';
-import 'package:ride_sharing_user_app/util/text_style.dart';
-import 'package:ride_sharing_user_app/view/screens/history/controller/activity_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/history/widgets/activity_item_view.dart';
-import 'package:ride_sharing_user_app/view/screens/history/widgets/current_trips_page.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_calender.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_drop_down.dart';
+import '../../../util/dimensions.dart';
+import '../../../util/text_style.dart';
+import 'controller/activity_controller.dart';
+import 'widgets/activity_item_view.dart';
+import 'widgets/current_trips_page.dart';
+import '../../widgets/custom_app_bar.dart';
+import '../../widgets/custom_body.dart';
+import '../../widgets/custom_calender.dart';
+import '../../widgets/custom_drop_down.dart';
 
 import '../../../enum/view_state.dart';
 import '../../../util/app_strings.dart';
@@ -157,7 +157,7 @@ class HistoryScreen extends StatelessWidget {
                 ),
                 Expanded(child: TabBarView(
                   controller:activityController. tabController,
-                  children:  const [
+                  children:   [
                     CurrentTripsPage(),
                     CurrentTripsPage(),
                    ],
