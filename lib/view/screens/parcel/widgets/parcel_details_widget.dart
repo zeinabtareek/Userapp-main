@@ -152,14 +152,15 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
                     const SizedBox(
                       height: Dimensions.paddingSizeDefault,
                     ),
-                    ActivityScreenRiderDetails(
-                      riderDetails: Driver(
-                          firstName: "mostafizur",
-                          rate: 5,
-                          img:
-                              "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
-                          lastName: "smith"),
-                    ),
+            // TODO: 
+                    // ActivityScreenRiderDetails(
+                    //   riderDetails: Driver(
+                    //       firstName: "mostafizur",
+                    //       rate: 5,
+                    //       img:
+                    //           "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                    //       lastName: "smith"),
+                    // ),
                     const SizedBox(
                       height: Dimensions.paddingSizeDefault,
                     ),
@@ -217,14 +218,16 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
                   const SizedBox(
                     height: Dimensions.paddingSizeDefault,
                   ),
-                  ActivityScreenRiderDetails(
-                    riderDetails: Driver(
-                        firstName: "mostafizur",
-                        rate: 5,
-                        img:
-                            "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
-                        lastName: "smith"),
-                  ),
+
+                  // ActivityScreenRiderDetails(
+                  //   riderDetails: Driver(
+                  //       firstName: "mostafizur",
+                  //       rate: 5,
+                  //       img:
+                  //           "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                  //       lastName: "smith"),
+                  // ),
+                
                   const SizedBox(
                     height: Dimensions.paddingSizeDefault,
                   ),
@@ -285,14 +288,15 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
                     ),
                   ),
                 ),
-                ActivityScreenRiderDetails(
-                  riderDetails: Driver(
-                      firstName: "mostafizur",
-                      rate: 5,
-                      img:
-                          "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
-                      lastName: "smith"),
-                ),
+                // ActivityScreenRiderDetails(
+                //   riderDetails: Driver(
+                //       firstName: "mostafizur",
+                //       rate: 5,
+                //       img:
+                //           "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                //       lastName: "smith"),
+                // ),
+            
                 const SizedBox(
                   height: Dimensions.paddingSizeDefault,
                 ),

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/util/dimensions.dart';
-import 'package:ride_sharing_user_app/util/text_style.dart';
-import 'package:ride_sharing_user_app/view/screens/history/model/activity_item_model.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_image.dart';
+import '../../../../util/dimensions.dart';
+import '../../../../util/text_style.dart';
+import '../model/activity_item_model.dart';
+import '../../../widgets/custom_image.dart';
 
 import '../../../../util/app_strings.dart';
 import '../model/history_model.dart';
-
+// TODO: Driver info
 class ActivityScreenRiderDetails extends StatelessWidget {
   final Driver riderDetails;
   // final RiderDetails riderDetails;

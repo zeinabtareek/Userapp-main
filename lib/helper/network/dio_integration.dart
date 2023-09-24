@@ -28,6 +28,7 @@ class DioUtilNew {
   }
 
   static BaseOptions _getOptions() {
+    String dummyTokken="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vaG9vZGJhY2tlbmQuZGV2ZWxvYnVnLmNvbS9hcGkvdXNlci9sb2dpbiIsImlhdCI6MTY5NTU0NTk0NSwiZXhwIjoxNzI3MDgxOTQ1LCJuYmYiOjE2OTU1NDU5NDUsImp0aSI6IkpyTVpyeXhlaVpmQU5lZWoiLCJzdWIiOiIzIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.vem5d-pGU0ag9UlAISo4Z08ilarnkDX4N_fFAN2Df4A";
     BaseOptions options = BaseOptions(
       followRedirects: false,
       validateStatus: (status) => status! <= 500,
@@ -40,7 +41,7 @@ class DioUtilNew {
       'Content-type': 'application/json',
       'Accept': 'application/json',
       // 'Authorization': "Bearer ${CacheHelper.getData(key: AppConstants.token)}",
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTcyLjE2LjEzLjIyOjgwMDAvYXBpL3VzZXIvcmVnaXN0ZXIiLCJpYXQiOjE2OTQ1MTQ5NDcsImV4cCI6MTcyNjA1MDk0NywibmJmIjoxNjk0NTE0OTQ3LCJqdGkiOiJOcjVmUnJTZmc4Y01aZVZnIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.LAYY_VZ8fqD13zjkb_fnh3omlLvegIi-1rS-0IxJp4A'
+      'Authorization': 'Bearer $dummyTokken'
 
 
     // AppConstants.acceptLanguage: languageCode ?? AppConstants.languages[0].languageCode,

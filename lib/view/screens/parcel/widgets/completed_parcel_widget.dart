@@ -33,22 +33,24 @@ class CompletedParcelWidget extends StatelessWidget {
           const SizedBox(
             height: Dimensions.paddingSizeDefault,
           ),
-          ActivityScreenRiderDetails(
-            riderDetails: Driver(
-                firstName: "mostafizur",
-                rate: 5,
-                img:
-                    "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
-                lastName: "smith"),
-            // riderDetails: RiderDetails(
-            //   name: "mostafizur",
-            //   vehicleNumber: "DH-1234",
-            //   rating: 5,
-            //   vehicleType: "bike",
-            //   vehicleName: "Pulser-150",
-            //   image: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg"
-            // ),
-          ),
+          // TODO: 
+          // ActivityScreenRiderDetails(
+          //   riderDetails: Driver(
+          //       firstName: "mostafizur",
+          //       rate: 5,
+          //       img:
+          //           "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+          //       lastName: "smith"),
+          //   // riderDetails: RiderDetails(
+          //   //   name: "mostafizur",
+          //   //   vehicleNumber: "DH-1234",
+          //   //   rating: 5,
+          //   //   vehicleType: "bike",
+          //   //   vehicleName: "Pulser-150",
+          //   //   image: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg"
+          //   // ),
+          // ),
+       
           const SizedBox(
             height: Dimensions.paddingSizeDefault,
           ),
