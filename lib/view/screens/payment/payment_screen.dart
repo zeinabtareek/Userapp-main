@@ -16,6 +16,8 @@ import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
+import '../wallet/widget/use_voucher_code.dart';
+
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({Key? key}) : super(key: key);
 
@@ -34,7 +36,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             appBar: CustomAppBar(title: 'here_is_your_payment'.tr,onBackPressed: (){
               if(Navigator.canPop(context))
               Get.back();
-            }, ),
+            },showBackButton: false,),
             body: SingleChildScrollView(child: Column(children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeExtraLarge),
@@ -172,7 +174,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
         child: CustomButton(buttonText: 'pay_now'.tr,
         radius: 25,
         onPressed: (){
+          // Get.off(()=> const UseCouponScreen());
           Get.off(()=> const ReviewScreen());
+      // Get.off(()=> const  ());
         })),
     );
   }

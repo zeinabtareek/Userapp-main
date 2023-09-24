@@ -11,6 +11,8 @@ import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
+import '../../payment/widget/review_screen.dart';
+
 class UseCouponScreen extends StatefulWidget {
   const UseCouponScreen({Key? key}) : super(key: key);
 
@@ -34,7 +36,8 @@ class _UseCouponScreenState extends State<UseCouponScreen> {
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeOverLarge),
-                      child: Text('voucher_code'.tr, style: textSemiBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
+                      child: Text('offer'.tr, style: textSemiBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
+                      // child: Text('voucher_code'.tr, style: textSemiBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
                     ),
 
 
@@ -55,7 +58,7 @@ class _UseCouponScreenState extends State<UseCouponScreen> {
                                 color: Theme.of(context).hintColor.withOpacity(0.5)),
                           ),
                           focusedBorder: UnderlineInputBorder(
-                            borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
+                            borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraLarge),
                             borderSide:  BorderSide(width: 0.5,
                                 color: Theme.of(context).primaryColor.withOpacity(0.5)),
                           ),
@@ -81,7 +84,9 @@ class _UseCouponScreenState extends State<UseCouponScreen> {
         color: Theme.of(context).cardColor,
         child: Padding(
           padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-          child: CustomButton(buttonText: 'continue'.tr, onPressed: (){
+          child: CustomButton(buttonText: 'continue'.tr,
+            radius: 50,
+            onPressed: (){
             String coupon = couponController.text;
             if (coupon.isEmpty){
               showCustomSnackBar('coupon_code_is_required'.tr);
@@ -89,7 +94,8 @@ class _UseCouponScreenState extends State<UseCouponScreen> {
               showDialog(context: context, builder: (_){
                 return  CouponUserResultDialog(icon: Images.success,
                   title: 'your_code_is_applied_for_next_trip'.tr,
-                  onTap: ()=> Get.back(),
+                  onTap: ()=> Get.off(()=> const ReviewScreen())
+                  // onTap: ()=> Get.back(),
 
                 );
               });

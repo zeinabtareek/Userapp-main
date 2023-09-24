@@ -414,7 +414,13 @@
   "most_recent": "الأحدث",
   "rate": "معدل",
   "resent_search": "البحث الأخير",
-  "go": "أبدأ"
+  "go": "أبدأ",
+  "offer": "العرض",
+  "get_price": "أحصل على السعر",
+  "your_price_after_discount": "سعرك بعد الخصم",
+  "promo_code": "الرمز الترويجي",
+  "do_you_have_any_promo_code": "هل لديك أي رمز ترويجي؟",
+  "price": "السعر "
 
 
 }

@@ -26,6 +26,7 @@ class MapScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
           CustomBody(
             appBar: CustomAppBar(title: Strings.theDeliverymanNeedYou.tr,onBackPressed: (){
@@ -96,7 +97,7 @@ class MapScreen extends StatelessWidget {
                       ])
                     : fromScreen == Strings.ride
                         ? Column(children: [
-                            const RideExpendableBottomSheet(),
+                            const RideExpendableBottomSheet(isGetPrice: false,),
                             SizedBox(
                               height: MediaQuery.of(context).viewInsets.bottom,
                             ),
@@ -107,6 +108,7 @@ class MapScreen extends StatelessWidget {
           ),
           if (fromScreen == Strings.location)
             Positioned(
+              bottom: 0,
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: SizedBox(

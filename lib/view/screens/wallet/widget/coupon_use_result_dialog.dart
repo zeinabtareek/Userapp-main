@@ -21,7 +21,7 @@ class CouponUserResultDialog extends StatelessWidget {
       ),child: Column(mainAxisSize: MainAxisSize.min,children: [
         Padding(
           padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeExtraLarge, top: Dimensions.paddingSizeOverLarge),
-          child: SizedBox(width: Dimensions.iconSizeDoubleExtraLarge, child: Image.asset(icon)),
+          child:    Image.asset(icon,fit: BoxFit.fill,height: 60, ),
         ),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
@@ -33,7 +33,7 @@ class CouponUserResultDialog extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraLarge),
         child: SizedBox(width: 80,child: CustomButton(buttonText: 'ok'.tr,
-            radius: 10,
+            radius: 50,height: 35,
             onPressed: onTap)),
       )
     ],),

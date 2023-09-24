@@ -21,6 +21,7 @@ class _ParcelExpendableBottomSheetState
         color: Theme.of(context).cardColor,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               width: MediaQuery.of(context).size.width,

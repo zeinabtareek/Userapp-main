@@ -85,6 +85,7 @@ class Images {
   static const String parcelBox = 'assets/image/parcel_box.png';
   static const String parcelDeliveryman = 'assets/image/parcel_deliveryman.png';
   static const String findingDeliveryman = 'assets/image/finding_deliveryman.png';
+  static const String findinDeliveryman = 'assets/image/findin_delivery_man.png';
   static const String distanceCalculated = 'assets/image/distance_calculated_icon.png';
   static const String parcelDetails = 'assets/image/parcel_details.png';
   static const String pickLocation = 'assets/image/pick_location.png';

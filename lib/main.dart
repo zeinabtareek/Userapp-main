@@ -12,6 +12,8 @@ import 'package:ride_sharing_user_app/firebase_options.dart';
 import 'package:ride_sharing_user_app/helper/notification_helper.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/home/home_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/message/message_list.dart';
+import 'package:ride_sharing_user_app/view/screens/message/message_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/n/test_polyline_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/onboard/onboarding_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/onboarding/onboarding.dart';
@@ -32,6 +34,8 @@ import 'package:ride_sharing_user_app/theme/theme_controller.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/splash_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/support/support.dart';
+import 'package:ride_sharing_user_app/view/screens/wallet/widget/payment_method_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/wallet/widget/use_voucher_code.dart';
 import 'package:ride_sharing_user_app/view/widgets/animated_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -105,8 +109,8 @@ class MyApp extends StatelessWidget {
             locale: localizeController.locale,
             translations: Messages(languages: languages),
             fallbackLocale: Locale(AppConstants.languages[0].languageCode, AppConstants.languages[0].countryCode),
-            initialRoute: RouteHelper.getSplashRoute(),
-            getPages: RouteHelper.routes,
+            // initialRoute: RouteHelper.getSplashRoute(),
+            // getPages: RouteHelper.routes,
             defaultTransition: Transition.topLevel,
             transitionDuration:   const Duration(milliseconds: 500),
             // home:MapView(),
@@ -127,7 +131,10 @@ class MyApp extends StatelessWidget {
             // home: AddShipmenScreen(),
             // home: AddShipmenScreen(),
             // home: SplashScreen()/**/,
-            // home: OnBoardingScreen2()/**/,
+            // home: const MessageListScreen()/**/,
+            // home: const MessageScreen()/**/,
+            // home: const UseCouponScreen()/**/,
+            home: const OnBoardingScreen2()/**/,
             // home: DashboardScreen(),
           ));
         });

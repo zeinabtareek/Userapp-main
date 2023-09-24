@@ -10,6 +10,7 @@ import 'package:ride_sharing_user_app/view/screens/map/controller/map_controller
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/contact_widget.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/fare_input_widget.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/finding_rider_widget.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/widgets/get_price.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/otp_widget.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/route_widget.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/tolltip_widget.dart';
@@ -18,6 +19,7 @@ import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controll
 import 'package:ride_sharing_user_app/view/screens/ride/widgets/confirmation_trip_dialog.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/widgets/estimated_fare_and_distance.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/widgets/ride_category.dart';
+import 'package:ride_sharing_user_app/view/screens/ride/widgets/ride_expendable_bottom_sheet.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/widgets/rider_details_widget.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/widgets/rise_fare_widget.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/widgets/trip_fare_summery.dart';
@@ -30,6 +32,7 @@ import '../../../../util/app_style.dart';
 import '../../../widgets/custom_category_card.dart';
 import '../../map/map_screen.dart';
 import '../../parcel/controller/parcel_controller.dart';
+import 'get_price_widget.dart';
 
 class BikeRideDetailsWidgets extends StatelessWidget {
   String image;
@@ -45,18 +48,15 @@ class BikeRideDetailsWidgets extends StatelessWidget {
         padding: const EdgeInsets.symmetric(
             horizontal: Dimensions.paddingSizeDefault),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             if (rideController.currentRideState == RideState.initial)
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // RideCategoryWidget(),
-                  // const SizedBox(
-                  //   height: Dimensions.paddingSizeDefault,
-                  // ),
-
-                  Text('your selected car type is :$title',style: textRegular.copyWith(
+                  Text('your selected car type is : $title',style: textRegular.copyWith(
                       color: Theme.of(context).primaryColor,fontWeight: FontWeight.w600),),
                   K.sizedBoxH0,
 
@@ -89,11 +89,24 @@ class BikeRideDetailsWidgets extends StatelessWidget {
                     height: Dimensions.paddingSizeDefault,
                   ),
                   rideController.isBiddingOn
-                      ?   FareInputWidget(fromPage: Strings.ride, whoWillPay: true,)
-                      : CustomButton(
+                      ?
+                  ///TODO :this code zeinab removed it to apply the getPrice screen
+                  //
+                  // const FindDriverCustomBtn(fromPage: Strings.ride, whoWillPay: true,)
+
+                  CustomButton(
+                  buttonText: Strings.getPrice.tr,
+      radius: 50,
+      onPressed: () {
+        // Get.to(()=> RideExpendableBottomSheet(isGetPrice: true,));
+      rideController
+          .updateRideCurrentState(RideState.getPrice);
+      // rideController
+      //     .updateRideCurrentState(RideState.acceptingRider);
+      })   : CustomButton(
                           buttonText: Strings.findRider.tr,
                           onPressed: () {
-                            rideController
+                           rideController
                                 .updateRideCurrentState(RideState.findingRider);
                           }),
                   K.sizedBoxH0,
@@ -111,9 +124,12 @@ class BikeRideDetailsWidgets extends StatelessWidget {
                 const RiseFareWidget(fromPage: Strings.ride),
                 K.sizedBoxH0,
               ]),
-            if (rideController.currentRideState == RideState.findingRider)
-              Column(children: const [
+            if (rideController.currentRideState == RideState.findingRider)///
+              const Column(children: [
                 FindingRiderWidget(fromPage: Strings.ride),
+              ]),if (rideController.currentRideState == RideState.getPrice)///
+              Column(children:   [
+                GetPriceWidget(image: Images.car,title: 'Suv.',),
               ]),
             if (rideController.currentRideState == RideState.acceptingRider)
               const Column(children: [

@@ -6,8 +6,8 @@ class AppConstants {
   static const String appName = 'Hood';
   static const bool isDevelopment = true;
 
-  static const String baseUrl = 'http://172.16.13.22:8000';
-  // static const String baseUrl = 'https://hood-sa.net';
+  // static const String baseUrl = 'http://172.16.13.22:8000';
+  static const String baseUrl = 'http://hoodbackend.develobug.com';
   static const String getAllOrders = '/api/user/orders';
 
 ///****************

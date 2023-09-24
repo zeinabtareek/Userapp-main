@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
-import 'package:ride_sharing_user_app/util/text_style.dart';
-import 'package:ride_sharing_user_app/view/screens/support/terms_and_conditions.dart';
 import 'package:ride_sharing_user_app/view/screens/support/widgets/complains_page.dart';
 import 'package:ride_sharing_user_app/view/screens/support/widgets/help_and_support.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';

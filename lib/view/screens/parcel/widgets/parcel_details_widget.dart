@@ -12,6 +12,7 @@ import 'package:ride_sharing_user_app/view/screens/parcel/widgets/contact_widget
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/distance_caculated_widget.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/fare_input_widget.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/finding_rider_widget.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/widgets/get_price.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/otp_widget.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/parcel_details_input_view.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/product_details_widget.dart';
@@ -24,6 +25,7 @@ import 'package:ride_sharing_user_app/view/screens/ride/widgets/estimated_fare_a
 import 'package:ride_sharing_user_app/view/screens/ride/widgets/rise_fare_widget.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
+import '../../../../util/images.dart';
 import '../../history/model/history_model.dart';
 
 class ParcelDetailsWidgets extends StatefulWidget {
@@ -77,7 +79,7 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
                 const SizedBox(
                   height: Dimensions.paddingSizeDefault,
                 ),
-                  FareInputWidget(
+                FindDriverCustomBtn(
                   fromPage: 'parcel',
                   whoWillPay: parcelController.payReceiver
                 )
@@ -128,13 +130,28 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
               ),
             if (parcelController.currentParcelState ==
                 ParcelDeliveryState.findingRider)
-              Column(
-                children: const [
+              const Column(
+                children: [
                   FindingRiderWidget(
                     fromPage: 'parcel',
                   )
                 ],
               ),
+
+             if (parcelController.currentParcelState ==
+                ParcelDeliveryState.findingRider)
+              Column(
+                children:   [
+                  GetPrice(image: Images.car, title: 'Suv',
+                   )
+                ],
+              ),
+
+
+
+
+
+
             if (parcelController.currentParcelState ==
                 ParcelDeliveryState.acceptRider)
               GestureDetector(
@@ -154,14 +171,15 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
                     const SizedBox(
                       height: Dimensions.paddingSizeDefault,
                     ),
-                    ActivityScreenRiderDetails(
-                      riderDetails: Driver(
-                          firstName: "mostafizur",
-                          rate: 5,
-                          img:
-                              "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
-                          lastName: "smith"),
-                    ),
+            // TODO: 
+                    // ActivityScreenRiderDetails(
+                    //   riderDetails: Driver(
+                    //       firstName: "mostafizur",
+                    //       rate: 5,
+                    //       img:
+                    //           "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                    //       lastName: "smith"),
+                    // ),
                     const SizedBox(
                       height: Dimensions.paddingSizeDefault,
                     ),
@@ -219,14 +237,16 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
                   const SizedBox(
                     height: Dimensions.paddingSizeDefault,
                   ),
-                  ActivityScreenRiderDetails(
-                    riderDetails: Driver(
-                        firstName: "mostafizur",
-                        rate: 5,
-                        img:
-                            "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
-                        lastName: "smith"),
-                  ),
+
+                  // ActivityScreenRiderDetails(
+                  //   riderDetails: Driver(
+                  //       firstName: "mostafizur",
+                  //       rate: 5,
+                  //       img:
+                  //           "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                  //       lastName: "smith"),
+                  // ),
+                
                   const SizedBox(
                     height: Dimensions.paddingSizeDefault,
                   ),
@@ -287,14 +307,15 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
                     ),
                   ),
                 ),
-                ActivityScreenRiderDetails(
-                  riderDetails: Driver(
-                      firstName: "mostafizur",
-                      rate: 5,
-                      img:
-                          "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
-                      lastName: "smith"),
-                ),
+                // ActivityScreenRiderDetails(
+                //   riderDetails: Driver(
+                //       firstName: "mostafizur",
+                //       rate: 5,
+                //       img:
+                //           "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                //       lastName: "smith"),
+                // ),
+            
                 const SizedBox(
                   height: Dimensions.paddingSizeDefault,
                 ),

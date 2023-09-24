@@ -13,6 +13,8 @@ import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controll
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
 import '../../../../util/app_style.dart';
+import '../../payment/payment_screen.dart';
+import '../../ride/widgets/confirmation_trip_dialog.dart';
 
 class FindingRiderWidget extends StatefulWidget {
   final String fromPage;
@@ -42,34 +44,176 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
     });
 
     if (Get.find<RideController>().isBiddingOn) {
-      Future.delayed(const Duration(seconds: 3), () {
+      Future.delayed(const Duration(seconds: 3), () async {
         print('object is called');
-        showGeneralDialog(
-          context: context,
-          barrierDismissible: true,
-          transitionDuration: const Duration(milliseconds: 500),
-          barrierLabel: MaterialLocalizations.of(context).dialogLabel,
-          barrierColor: Colors.black.withOpacity(0.5),
-          pageBuilder: (context, _, __) {
-            return DriverRideRequestDialog(
-              fromPage: widget.fromPage,
-            );
-          },
-          transitionBuilder: (context, animation, secondaryAnimation, child) {
-            return SlideTransition(
-              position: CurvedAnimation(
-                parent: animation,
-                curve: Curves.easeOut,
-              ).drive(Tween<Offset>(
-                begin: const Offset(0, -1.0),
-                end: Offset.zero,
-              )),
-              child: child,
-            );
-          },
-        );
+
+
+        // showGeneralDialog(
+        //   context: context,
+        //   barrierDismissible: true,
+        //   transitionDuration: const Duration(milliseconds: 500),
+        //   barrierLabel: MaterialLocalizations.of(context).dialogLabel,
+        //   barrierColor: Colors.black.withOpacity(0.5),
+        //   pageBuilder: (context, _, __) {
+        //     return DriverRideRequestDialog(
+        //       fromPage: widget.fromPage,
+        //     );
+        //   },
+        //   transitionBuilder: (context, animation, secondaryAnimation, child) {
+        //     return SlideTransition(
+        //       position: CurvedAnimation(
+        //         parent: animation,
+        //         curve: Curves.easeOut,
+        //       ).drive(Tween<Offset>(
+        //         begin: const Offset(0, -1.0),
+        //         end: Offset.zero,
+        //       )),
+        //       child: child,
+        //     );
+        //   },
+        // );
+///
+        if (Get.find<RideController>().selectedCategory !=
+            RideType.parcel) {
+          Get.find<RideController>()
+              .updateRideCurrentState(RideState.afterAcceptRider);
+
+          await Future.delayed(const Duration(seconds: 2))
+              .then((value) {
+            Get.find<RideController>()
+                .updateRideCurrentState(RideState.otpSent);
+            Get.find<MapController>().notifyMapController();
+          });
+
+          await Future.delayed(const Duration(seconds: 2))
+              .then((value) async {
+            Get.dialog(
+                const ConfirmationTripDialog(
+                  isStartedTrip: true,
+                ),
+                barrierDismissible: false);
+            await Future.delayed(const Duration(seconds: 5));
+            Get.find<RideController>()
+                .updateRideCurrentState(RideState.ongoingRide);
+            Get.find<MapController>().notifyMapController();
+            Get.back();
+          });
+
+          await Future.delayed(const Duration(seconds: 2))
+              .then((value) async {
+            Get.dialog(
+                const ConfirmationTripDialog(
+                  isStartedTrip: false,
+                ),
+                barrierDismissible: false);
+            await Future.delayed(const Duration(seconds: 2));
+            Get.find<RideController>()
+                .updateRideCurrentState(RideState.completeRide);
+            //Get.back();
+            Get.find<MapController>().notifyMapController();
+            Get.back();
+          });
+          await Future.delayed(const Duration(seconds: 0))
+              .then((value) async {
+            Get.offAll(() => const PaymentScreen());
+          });
+        } else {
+          Get.find<ParcelController>()
+              .updateParcelState(ParcelDeliveryState.acceptRider);
+
+            Future.delayed(const Duration(seconds: 2))
+              .then((value) {
+            Get.find<ParcelController>()
+                .updateParcelState(ParcelDeliveryState.otpSent);
+            Get.find<MapController>().notifyMapController();
+          });
+
+            Future.delayed(const Duration(seconds: 2))
+              .then((value) async {
+            Get.dialog(
+                const ConfirmationTripDialog(
+                  isStartedTrip: true,
+                ),
+                barrierDismissible: false);
+            await Future.delayed(const Duration(seconds: 5));
+            Get.find<ParcelController>()
+                .updateParcelState(ParcelDeliveryState.parcelOngoing);
+            Get.find<MapController>().notifyMapController();
+            Get.back();
+          });
+
+            Future.delayed(const Duration(seconds: 2))
+              .then((value) async {
+            Get.dialog(
+                const ConfirmationTripDialog(
+                  isStartedTrip: false,
+                ),
+                barrierDismissible: false);
+            await Future.delayed(const Duration(seconds: 2));
+            Get.find<ParcelController>()
+                .updateParcelState(ParcelDeliveryState.parcelComplete);
+            //Get.back();
+            Get.find<MapController>().notifyMapController();
+            Get.back();
+          });
+            Future.delayed(const Duration(seconds: 0))
+              .then((value) async {
+            Get.offAll(() => const PaymentScreen());
+          });
+        }
+        ///
+
+
+
+      // } else {
+      // Get.find<ParcelController>()
+      //     .updateParcelState(ParcelDeliveryState.acceptRider);
+      //
+      // await Future.delayed(const Duration(seconds: 2))
+      //     .then((value) {
+      // Get.find<ParcelController>()
+      //     .updateParcelState(ParcelDeliveryState.otpSent);
+      // Get.find<MapController>().notifyMapController();
+      // });
+      //
+      // await Future.delayed(const Duration(seconds: 2))
+      //     .then((value) async {
+      // Get.dialog(
+      // const ConfirmationTripDialog(
+      // isStartedTrip: true,
+      // ),
+      // barrierDismissible: false);
+      // await Future.delayed(const Duration(seconds: 5));
+      // Get.find<ParcelController>()
+      //     .updateParcelState(ParcelDeliveryState.parcelOngoing);
+      // Get.find<MapController>().notifyMapController();
+      // Get.back();
+      // });
+      //
+      // await Future.delayed(const Duration(seconds: 2))
+      //     .then((value) async {
+      // Get.dialog(
+      // const ConfirmationTripDialog(
+      // isStartedTrip: false,
+      // ),
+      // barrierDismissible: false);
+      // await Future.delayed(const Duration(seconds: 2));
+      // Get.find<ParcelController>()
+      //     .updateParcelState(ParcelDeliveryState.parcelComplete);
+      // //Get.back();
+      // Get.find<MapController>().notifyMapController();
+      // Get.back();
+      // });
+      // await Future.delayed(const Duration(seconds: 0))
+      //     .then((value) async {
+      // Get.offAll(() => const PaymentScreen());
+      // });
+      // }
+      //
       });
-    } else {
+    // }
+    }
+    else {
       Future.delayed(const Duration(seconds: 3), () {
         if (Get.find<RideController>().currentRideState != RideType.parcel &&
             widget.fromPage == 'ride') {
@@ -90,13 +234,15 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
           padding: const EdgeInsets.symmetric(
               horizontal: Dimensions.paddingSizeDefault),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
             children: [
               TollTipWidget(
                   title: rideController.selectedCategory == RideType.parcel
                       ? 'deliveryman'
                       : rideController.selectedCategory == RideType.bike
                           ? "rider"
-                          : "driver"),
+                          : "drivccer"),
               K.sizedBoxH0,
               K.sizedBoxH0,
               LinearPercentIndicator(
@@ -111,7 +257,7 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
               Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: Dimensions.paddingSizeExtraLarge),
-                  child: Image.asset(Images.findingDeliveryman, width: 70)),
+                  child: Image.asset(Images.findinDeliveryman, width: 70)),
               Text(
                   rideController.selectedCategory == RideType.parcel
                       ? 'finding_deliveryman'.tr
@@ -144,6 +290,7 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
                   }
 
                   Get.find<MapController>().notifyMapController();
+
                 },
               )
             ],

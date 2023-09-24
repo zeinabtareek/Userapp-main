@@ -65,7 +65,7 @@ class PaymentMethodScreen extends StatelessWidget {
                   },itemCount: walletController.promoCodeList.length,
                     shrinkWrap: true,
                     padding: EdgeInsets.zero,
-                    physics: const NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),//add_voucher_code
                   ),
                   const CustomAddButton(buttonText: 'add_promo_code',),
 

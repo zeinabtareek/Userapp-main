@@ -7,6 +7,8 @@ import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_image.dart';
 
+import '../../../../util/app_style.dart';
+
 class ConversationBubble extends StatefulWidget {
   final bool isRightMessage;
 
@@ -22,9 +24,10 @@ class _ConversationBubbleState extends State<ConversationBubble> {
   @override
   void initState() {
     super.initState();
-    IsolateNameServer.registerPortWithName(_port.sendPort, 'downloader_send_port');
+    IsolateNameServer.registerPortWithName(
+        _port.sendPort, 'downloader_send_port');
     _port.listen((dynamic data) {
-      setState((){ });
+      setState(() {});
     });
 
     FlutterDownloader.registerCallback(downloadCallback);
@@ -38,93 +41,127 @@ class _ConversationBubbleState extends State<ConversationBubble> {
 
   @pragma('vm:entry-point')
   static void downloadCallback(String id, int status, int progress) {
-    final SendPort? send = IsolateNameServer.lookupPortByName('downloader_send_port');
+    final SendPort? send =
+        IsolateNameServer.lookupPortByName('downloader_send_port');
     send!.send([id, status, progress]);
   }
 
   @override
   Widget build(BuildContext context) {
-
-
-    return Column(crossAxisAlignment: widget.isRightMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start, children: [
-      Padding(padding: widget.isRightMessage ? const EdgeInsets.fromLTRB(20, 5, 5, 5) : const EdgeInsets.fromLTRB(5, 5, 20, 5),
-        child: Column(
-          crossAxisAlignment: widget.isRightMessage ? CrossAxisAlignment.start : CrossAxisAlignment.end,
-          children: [
-            Row(
-              mainAxisAlignment: widget.isRightMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
-              children: [
-                Text(widget.isRightMessage ?
-                "customer".tr :"driver".tr,
-                  style: textRegular.copyWith(fontSize: Dimensions.fontSizeSmall,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height:Dimensions.fontSizeExtraSmall),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: widget.isRightMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
-              children: [
-                widget.isRightMessage ?
-                const SizedBox() :
-                Column(
-                  children: [
-                    ClipRRect(borderRadius: BorderRadius.circular(50),
-                      child: const CustomImage(
-                        height: 30,
-                        width: 30,
-                        image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60',
-                      ),
+    return Column(
+      crossAxisAlignment: widget.isRightMessage
+          ? CrossAxisAlignment.end
+          : CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: widget.isRightMessage
+              ? const EdgeInsets.fromLTRB(20, 5, 5, 5)
+              : const EdgeInsets.fromLTRB(5, 5, 20, 5),
+          child: Column(
+            crossAxisAlignment: widget.isRightMessage
+                ? CrossAxisAlignment.start
+                : CrossAxisAlignment.end,
+            children: [
+              Row(
+                mainAxisAlignment: widget.isRightMessage
+                    ? MainAxisAlignment.end
+                    : MainAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.isRightMessage ? "customer".tr : "driver".tr,
+                    style: textRegular.copyWith(
+                      fontSize: Dimensions.fontSizeSmall,
                     ),
-                  ],
-                ),
-
-                const SizedBox(width: Dimensions.paddingSizeSmall,),
-                Flexible(
-                  child: Column(crossAxisAlignment: widget.isRightMessage?CrossAxisAlignment.end:CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min, children: [
-                      Flexible(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: widget.isRightMessage?Theme.of(context).colorScheme.onPrimaryContainer:Theme.of(context).cardColor,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(Dimensions.paddingSizeDefault),
-                            child: Text('Please give us some time to review. We will contact as soon as possible after review.'),
+                  ),
+                ],
+              ),
+              SizedBox(height: Dimensions.fontSizeExtraSmall),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: widget.isRightMessage
+                    ? MainAxisAlignment.end
+                    : MainAxisAlignment.start,
+                children: [
+                  widget.isRightMessage
+                      ? const SizedBox()
+                      : Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: const CustomImage(
+                                height: 30,
+                                width: 30,
+                                image:
+                                    'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60',
+                              ),
+                            ),
+                          ],
+                        ),
+                  const SizedBox(
+                    width: Dimensions.paddingSizeSmall,
+                  ),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: widget.isRightMessage
+                          ? CrossAxisAlignment.end
+                          : CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                width: 1,
+                                color: widget.isRightMessage ? Theme.of(context).primaryColor:Colors.transparent
+                              ),
+                              color: widget.isRightMessage
+                                  ? K.lightGreen2.withOpacity(.5)
+                                  : Color(0xffE8E8E8),
+                              borderRadius:   BorderRadius.only(
+                                bottomLeft: const Radius.circular(20),
+                                topRight: Radius.circular(widget.isRightMessage ?0:20),
+                                bottomRight: Radius.circular(20),
+                                topLeft: Radius.circular(widget.isRightMessage ?20: 0),
+                              ),
+                            ),
+                            child: const Padding(
+                              padding:
+                                  EdgeInsets.all(Dimensions.paddingSizeDefault),
+                              child: Text(
+                                  'Please give us some time to review. We will contact as soon as possible after review.'),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-
-                const SizedBox(width: 10,),
-                widget.isRightMessage ?
-                ClipRRect(borderRadius: BorderRadius.circular(50),
-                    child: const CustomImage(height: 30, width: 30,
-                        image: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-                    )
-                )
-                    : const SizedBox(),
-              ],
-            ),
-          ],
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  widget.isRightMessage
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: const CustomImage(
+                              height: 30,
+                              width: 30,
+                              image:
+                                  'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'))
+                      : const SizedBox(),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-
-      Padding(
-          padding: widget.isRightMessage ? const EdgeInsets.fromLTRB(5, 0, 50, 5) : const EdgeInsets.fromLTRB(50, 0, 5, 5),
-          child: Text(
-              "Dec 12,2023",
-              textDirection: TextDirection.ltr,
-              style: textRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall)
-          )
-      ),
-    ],
+        Padding(
+            padding: widget.isRightMessage
+                ? const EdgeInsets.fromLTRB(5, 0, 50, 5)
+                : const EdgeInsets.fromLTRB(50, 0, 5, 5),
+            child: Text("Dec 12,2023",
+                textDirection: TextDirection.ltr,
+                style: textRegular.copyWith(color: Theme.of(context).hintColor,
+                    fontSize: Dimensions.fontSizeExtraSmall))),
+      ],
     );
   }
 }
-
-

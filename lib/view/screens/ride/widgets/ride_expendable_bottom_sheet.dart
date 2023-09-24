@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/widgets/get_price.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/widgets/ride_details_widget.dart';
 
 import '../../../../util/images.dart';
 
 class RideExpendableBottomSheet extends StatefulWidget {
-  const RideExpendableBottomSheet({Key? key}) : super(key: key);
+  final bool isGetPrice;
+  const RideExpendableBottomSheet({Key? key ,required this.isGetPrice}) : super(key: key);
 
   @override
   State<RideExpendableBottomSheet> createState() =>
@@ -61,12 +63,9 @@ class _RideExpendableBottomSheetState extends State<RideExpendableBottomSheet> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       ),
                     ),
-                      BikeRideDetailsWidgets(image: Images.car
-
-
-                      // 'https://www.mitsubishicars.com/content/dam/mitsubishi-motors-us/images/siteimages/cars/eclipse-cross/my24/overview/2023-2024-mitsubishi-eclipse-cross-length-height-dimensions.png'
-
-                        , title: 'SUV',)
+                    // widget.isGetPrice?
+                    // GetPrice(image: Images.car,title: 'SUVww',):// const RideExpendableBottomSheet(isGetPrice: null,),
+                    BikeRideDetailsWidgets(image: Images.car  , title: 'SUV',)
                   ])),
             ),
           ],

@@ -6,6 +6,7 @@ enum RideState {
   initial,
   riseFare,
   findingRider,
+  getPrice,
   acceptingRider,
   afterAcceptRider,
   otpSent,

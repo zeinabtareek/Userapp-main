@@ -8,16 +8,17 @@ import 'package:ride_sharing_user_app/view/screens/parcel/controller/parcel_cont
 import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
+import '../../../../util/app_strings.dart';
 import '../../../../util/app_style.dart';
 import '../../payment/payment_screen.dart';
 import '../../payment/widget/review_screen.dart';
 import '../../ride/widgets/confirmation_trip_dialog.dart';
 
-class FareInputWidget extends StatelessWidget {
+class FindDriverCustomBtn extends StatelessWidget {
   final String fromPage;
   final bool whoWillPay;
 
-  const FareInputWidget({Key? key, required this.fromPage, required this.whoWillPay}) : super(key: key);
+  const FindDriverCustomBtn({Key? key, required this.fromPage, required this.whoWillPay}) : super(key: key);
 
 
   @override
@@ -25,53 +26,27 @@ class FareInputWidget extends StatelessWidget {
     return GetBuilder<RideController>(builder: (rideController) {
       return Row(
         children: [
-          // Expanded(child: GestureDetector(
-          //   onTap: (){
-          //     if(fromPage=='ride'){
-          //       Get.find<RideController>().updateRideCurrentState(RideState.riseFare);
-          //     }else{
-          //       Get.find<ParcelController>().updateParcelState(ParcelDeliveryState.riseFare);
-          //     }
-          //     Get.find<MapController>().notifyMapController();
-          //   },
-          //   child: Container(height: 45,decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-          //     border: Border.all(color: Theme.of(context).primaryColor,width: 1),
-          //   ),
-          //       child: Center(child: Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment:MainAxisAlignment.spaceBetween,children: [
-          //         Expanded(
-          //           child: Padding(padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
-          //             child: Text('your_fare'.tr,overflow: TextOverflow.ellipsis, style: textRegular.copyWith(fontSize: Dimensions.fontSizeLarge,
-          //
-          //                 color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.9)),
-          //             ),
-          //           ),
-          //         ),
-          //
-          //         Padding(
-          //           padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
-          //           child: Text(PriceConverter.convertPrice(context, double.tryParse( Get.find<RideController>().inputFarePriceController.text)!,),
-          //             style: textMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.9)),),),
-          //
-          //       ]))),
-          // )),
-          //
+
           Expanded(
               child: CustomButton(
             radius: 25,
             buttonText: Get.find<RideController>().selectedCategory ==
-                    RideType.bike
-                ? "find_rider".tr
+                RideType.bike
+                ? Strings.findRider.tr
                 : Get.find<RideController>().selectedCategory == RideType.car ||
-                        Get.find<RideController>().selectedCategory ==
-                            RideType.luxury
-                    ? "find_driver".tr
-                    : "find_deliveryman".tr,
-            onPressed: () async {
-              if (fromPage == 'ride') {
-                Get.find<RideController>()
-                    .updateRideCurrentState(RideState.findingRider);
-              } else {
+                Get.find<RideController>().selectedCategory ==
+                    RideType.luxury
+                ? Strings.findDriver.tr
+                :  Strings.findDeliveryMan.tr,
+                onPressed: () async {
+                // Get.to(()=>GetPrice( image: Images.car  , title: 'SUV',));
+                  //
+                  //                             ///TODO :this code zeinab removed it to apply the getPrice screen
+                  //
+                  if (fromPage == 'ride') {
+                    Get.find<RideController>()
+                        .updateRideCurrentState(RideState.findingRider);
+                  } else {
                 print('555555');
                 ///previous code
                 // Get.find<ParcelController>()
@@ -84,6 +59,8 @@ class FareInputWidget extends StatelessWidget {
                       RideType.parcel) {
                     Get.find<RideController>()
                         .updateRideCurrentState(RideState.afterAcceptRider);
+
+                    Get.find<MapController>().notifyMapController();
 
                     await Future.delayed(const Duration(seconds: 2))
                         .then((value) {
@@ -200,3 +177,4 @@ class FareInputWidget extends StatelessWidget {
     });
   }
 }
+

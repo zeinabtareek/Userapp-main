@@ -122,7 +122,7 @@
   "payment_method": "Payment Method",
   "add_card": "Add Card",
   "voucher": "Voucher",
-  "add_voucher_code": "Add Voucher Code",
+  "add_voucher_code": "Add Offer Code",
   "promo_code": "Promo Code",
   "add_promo_code": "Add Promo Code",
 
@@ -409,11 +409,13 @@
   "rate": "Rate",
   "resent_search": "Resent Search",
   "most_recent": "Most Recent",
-  "go": "Go"
-
-
-
-
+  "go": "Go",
+  "offer": "Offer",
+ "get_price": "Get Price",
+ "your_price_after_discount": "Your Price after Discount ",
+  "promo_code": "Promo Code",
+ "do_you_have_any_promo_code": "Do You Have any Promo Code ?",
+  "price": "Price "
 
 
 

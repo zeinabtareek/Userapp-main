@@ -57,7 +57,7 @@ class ActivityItemView extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
-                  Text(activityItemModel.createdAt??'',
+                  Text(activityItemModel.createdAt.toString()??'',
                   // Text(DateConverter.localToIsoString(DateTime.parse(activityItemModel.date!)),
                     style:K.hintSmallTextStyle
                   ),

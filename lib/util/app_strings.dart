@@ -207,6 +207,15 @@ class Strings {
   static const shipmentDetails = "shipment_details";
   static const resentSearch = "resent_search";
   static const go = "go";
+  static const seeDriverWantToSay = "see_driver_want_to_say";
+  static const typeHere = "type_here";
+  static const findDriver = "find_driver";
+  static const findDeliveryMan = "find_deliveryman";
+  static const getPrice = "get_price";
+  static const yourPriceAfterDiscount = "your_price_after_discount";
+  static const promoCode = "promo_code";
+  static const doYouHaveAnyPromoCode = "do_you_have_any_promo_code";
+  static const price = "price";
 
 
 
