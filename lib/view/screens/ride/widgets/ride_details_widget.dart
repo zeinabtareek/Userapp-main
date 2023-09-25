@@ -334,4 +334,305 @@ class BikeRideDetailsWidgets extends StatelessWidget {
       );
     });
   }
+// }
+//   @override
+//   Widget build(BuildContext context) {
+//     return  GetBuilder<RideController>(builder: (rideController){
+//       return Padding(
+//         padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+//         child: Column(children:  [
+//
+//       //     if(rideController.currentRideState == RideState.initial)
+//       //       Column(children:  [
+//       //           // RideCategoryWidget(),
+//       // Text('your selected car type is : $title',style: textRegular.copyWith(
+//       //                 color: Theme.of(context).primaryColor,fontWeight: FontWeight.w600),),
+//       //             K.sizedBoxH0,
+//       //
+//       //             Center(
+//       //               child: GestureDetector(
+//       //                 onTap: () {},
+//       //                 child: CustomCategoryCard(
+//       //                   height: MediaQuery.of(context).size.height/7,
+//       //                   image: image,
+//       //                   title: title,
+//       //                   isClicked: false,
+//       //                 ),
+//       //               ),
+//       //             ),
+//       //         const SizedBox(height: Dimensions.paddingSizeDefault,),
+//       //
+//       //           RouteWidget(),
+//       //         const SizedBox(height: Dimensions.paddingSizeDefault,),
+//       //
+//       //         const TripFareSummery(),
+//       //         const SizedBox(height: Dimensions.paddingSizeDefault,),
+//       //
+//       //         CustomTextField(
+//       //           prefix: false,
+//       //           borderRadius: Dimensions.radiusExtraLarge,
+//       //           hintText: "add_note".tr,
+//       //         ),
+//       //         const SizedBox(height: Dimensions.paddingSizeDefault,),
+//       //
+//       //         rideController.isBiddingOn ?
+//       //         FindDriverCustomBtn(fromPage: 'ride', whoWillPay: true,):
+//       //         CustomButton(
+//       //             // buttonText: "get price".tr, onPressed: (){
+//       //             buttonText: "find_rider".tr, onPressed: (){
+//       //           // rideController.updateRideCurrentState(RideState.getPrice);
+//       //           rideController.updateRideCurrentState(RideState.findingRider);
+//       //         }),
+//       //       ],),
+//       //
+// ///%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+//           if (rideController.currentRideState == RideState.initial)
+//               Column(
+//                 mainAxisAlignment: MainAxisAlignment.start,
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   Text('your selected car type is : $title',style: textRegular.copyWith(
+//                       color: Theme.of(context).primaryColor,fontWeight: FontWeight.w600),),
+//                   K.sizedBoxH0,
+//
+//                   Center(
+//                     child: GestureDetector(
+//                       onTap: () {},
+//                       child: CustomCategoryCard(
+//                         height: MediaQuery.of(context).size.height/7,
+//                         image: image,
+//                         title: title,
+//                         isClicked: false,
+//                       ),
+//                     ),
+//                   ),
+//                   K.sizedBoxH0,
+//                   RouteWidget(),
+//                   const SizedBox(
+//                     height: Dimensions.paddingSizeDefault,
+//                   ),
+//                   const TripFareSummery(),
+//                   const SizedBox(
+//                     height: Dimensions.paddingSizeDefault,
+//                   ),
+//                   CustomTextField(
+//                     prefix: false,
+//                     borderRadius: Dimensions.radiusLarge,
+//                     hintText: Strings.addNote.tr,
+//                   ),
+//                   const SizedBox(
+//                     height: Dimensions.paddingSizeDefault,
+//                   ),
+//                   rideController.isBiddingOn
+//                       ?
+//                   ///TODO :this code zeinab removed it to apply the getPrice screen
+//                   //
+//                   const FindDriverCustomBtn(fromPage: Strings.ride, whoWillPay: true,)
+//
+//       //             CustomButton(
+//       //             buttonText: Strings.getPrice.tr,
+//       // radius: 50,
+//       // onPressed: () {
+//       //   // Get.to(()=> RideExpendableBottomSheet(isGetPrice: true,));
+//       // rideController
+//       //     .updateRideCurrentState(RideState.getPrice);
+//       // // rideController
+//       // //     .updateRideCurrentState(RideState.acceptingRider);
+//       // })
+//
+//
+//                       :
+//
+//                   CustomButton(
+//                           buttonText: Strings.findRider.tr,
+//                           onPressed: () {
+//                            rideController
+//                                 .updateRideCurrentState(RideState.findingRider);
+//                           }),
+//                   K.sizedBoxH0,
+//                   K.sizedBoxH0,
+//                 ],
+//               ),
+//           if(rideController.currentRideState == RideState.riseFare)
+//             Column(children: [
+//               TollTipWidget(title: 'trip_details'.tr),
+//               const SizedBox(height: Dimensions.paddingSizeDefault,),
+//
+//                 RouteWidget(),
+//               const SizedBox(height: Dimensions.paddingSizeDefault,),
+//
+//               const RiseFareWidget(fromPage: 'ride',),
+//               const SizedBox(height: Dimensions.paddingSizeDefault,),
+//             ]),
+//
+//
+//
+//           if(rideController.currentRideState == RideState.getPrice)
+//             Column(children:   [
+//               GetPriceWidget(  image: Images.car, title: 'dd',),
+//               // GetPriceWidget(fromPage: 'ride', image: Images.car, title: 'dd',),
+//               // FindingRiderWidget(fromPage: 'ride',),
+//             ]),
+//    if(rideController.currentRideState == RideState.findingRider)
+//             Column(children: const [
+//               FindingRiderWidget(fromPage: 'ride',),
+//             ]),
+//
+//
+//
+//           if(rideController.currentRideState == RideState.acceptingRider)
+//             Column(children: const [
+//               RiderDetailsWidget(fromNotification: false,),
+//               SizedBox(height: Dimensions.paddingSizeDefault,),
+//
+//               RiseFareWidget(fromPage: 'ride',),
+//               SizedBox(height: Dimensions.paddingSizeDefault,),
+//             ]),
+//
+//
+//           if(rideController.currentRideState == RideState.afterAcceptRider)
+//             GestureDetector(
+//               onTap: ()=> Get.find<RideController>().updateRideCurrentState(RideState.otpSent),
+//               child: Column(children: [
+//                 TollTipWidget(title: 'rider_details'.tr),
+//                 const SizedBox(height: Dimensions.paddingSizeDefault,),
+//
+//                 ContactWidget(),
+//                 const SizedBox(height: Dimensions.paddingSizeDefault,),
+//
+//                 // ActivityScreenRiderDetails(
+//                 //   riderDetails: RiderDetails(
+//                 //       name: "mostafizur",
+//                 //       vehicleNumber: "DH-1234",
+//                 //       rating: 5,
+//                 //       vehicleType: "bike",
+//                 //       vehicleName: "Pulser-150",
+//                 //       image: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg"
+//                 //   ),
+//                 // ),
+//                 const SizedBox(height: Dimensions.paddingSizeDefault,),
+//
+//                 const EstimatedFareAndDistance(),
+//                 const SizedBox(height: Dimensions.paddingSizeDefault,),
+//
+//                   RouteWidget(),
+//                 const SizedBox(height: Dimensions.paddingSizeDefault,),
+//
+//                 CustomButton(buttonText: 'cancel_ride'.tr,
+//                   transparent: true,
+//                   borderWidth: 1,
+//                   showBorder: true,
+//                   radius: Dimensions.paddingSizeSmall,
+//                   borderColor: Theme.of(Get.context!).primaryColor,
+//                   onPressed: (){
+//                     rideController.updateRideCurrentState(RideState.initial);
+//                     Get.find<MapController>().notifyMapController();
+//                   },
+//                 )
+//               ]),
+//             ),
+//
+//           if(rideController.currentRideState == RideState.otpSent)
+//             GestureDetector(
+//               onTap: () async {
+//                 Get.dialog(const ConfirmationTripDialog(isStartedTrip: true,), barrierDismissible: false);
+//                 await Future.delayed( const Duration(seconds: 5));
+//                 rideController.updateRideCurrentState(RideState.ongoingRide);
+//                 Get.find<MapController>().notifyMapController();
+//                 Get.back();
+//
+//               },
+//               child: Column(children: [
+//                 TollTipWidget(title: 'rider_details'.tr),
+//                 const SizedBox(height: Dimensions.paddingSizeDefault,),
+//
+//                 const OtpWidget(fromPage: 'bike',),
+//                 const SizedBox(height: Dimensions.paddingSizeDefault,),
+//
+//                 ContactWidget(),
+//                 const SizedBox(height: Dimensions.paddingSizeDefault,),
+//
+//                 // ActivityScreenRiderDetails(
+//                 //   riderDetails: RiderDetails(
+//                 //       name: "mostafizur",
+//                 //       vehicleNumber: "DH-1234",
+//                 //       rating: 5,
+//                 //       vehicleType: "bike",
+//                 //       vehicleName: "Pulser-150",
+//                 //       image: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg"
+//                 //   ),
+//                 // ),
+//                 const SizedBox(height: Dimensions.paddingSizeDefault,),
+//
+//                 const EstimatedFareAndDistance(),
+//                 const SizedBox(height: Dimensions.paddingSizeDefault,),
+//
+//                   RouteWidget(),
+//                 const SizedBox(height: Dimensions.paddingSizeDefault,),
+//                 CustomButton(buttonText: 'cancel_ride'.tr,
+//                   transparent: true,
+//                   borderWidth: 1,
+//                   showBorder: true,
+//                   radius: Dimensions.paddingSizeSmall,
+//                   borderColor: Theme.of(Get.context!).primaryColor,
+//                   onPressed: (){
+//                     rideController.updateRideCurrentState(RideState.initial);
+//                     Get.find<MapController>().notifyMapController();
+//                   },
+//                 )
+//               ]),
+//             ),
+//
+//           if(rideController.currentRideState == RideState.ongoingRide)
+//             GestureDetector(
+//               onTap: () {
+//                 showDialog(context: context, builder: (_){
+//                   return ConfirmationDialog(icon: Images.endTrip,
+//                     description: 'end_this_trip_at_your_destination'.tr, onYesPressed: () async {
+//                       Get.back();
+//                       Get.dialog(const ConfirmationTripDialog(isStartedTrip: false,), barrierDismissible: false);
+//                       await Future.delayed( const Duration(seconds: 5));
+//                       rideController.updateRideCurrentState(RideState.completeRide);
+//                       //Get.back();
+//                       Get.find<MapController>().notifyMapController();
+//                       Get.off(()=>const PaymentScreen());
+//                     },);
+//                 });
+//               },
+//               child: Column(children: [
+//                 TollTipWidget(title: 'trip_is_ongoing'.tr),
+//                 const SizedBox(height: Dimensions.paddingSizeDefault,),
+//                 Padding(
+//                   padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
+//                   child: Text.rich(TextSpan(
+//                     style: textRegular.copyWith(fontSize: Dimensions.fontSizeLarge,
+//                         color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8)
+//                     ),
+//                     children:  [
+//                       TextSpan(text: "the_car_just_arrived_at".tr,style: textRegular.copyWith(fontSize: Dimensions.fontSizeDefault)),
+//                       TextSpan(text: " ".tr),
+//                       TextSpan(text: "your_destination".tr,style: textMedium.copyWith(fontSize: Dimensions.fontSizeDefault,color: Theme.of(context).primaryColor)),
+//                     ],
+//                   ),
+//                   ),
+//                 ),
+//
+//                 // ActivityScreenRiderDetails(
+//                 //   riderDetails: RiderDetails(
+//                 //       name: "mostafizur",
+//                 //       vehicleNumber: "DH-1234",
+//                 //       rating: 5,
+//                 //       vehicleType: "bike",
+//                 //       vehicleName: "Pulser-150",
+//                 //       image: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg"
+//                 //   ),
+//                 // ),
+//                 const SizedBox(height: Dimensions.paddingSizeDefault,),
+//               ]),
+//             )
+//         ],
+//         ),
+//       );
+//     });
+//   }
 }

@@ -33,7 +33,10 @@ class MapScreen extends StatelessWidget {
 
               Get.find<RideController>()
                   .resetControllerValue();
-              Get.back();},),
+              Get.back();
+
+
+              },),
             body: GetBuilder<MapController>(builder: (userMapController) {
               Completer<GoogleMapController> mapCompleter =
                   Completer<GoogleMapController>();
@@ -74,7 +77,7 @@ class MapScreen extends StatelessWidget {
                     ),
                     Positioned(
                         top: 0,
-                        bottom: 200,
+                        bottom: 0,
                         left: 0,
                         right: 0,
                         child: Align(
@@ -88,7 +91,9 @@ class MapScreen extends StatelessWidget {
                 ),
                 persistentContentHeight:
                     userMapController.persistentContentHeight,
-                expandableContent: fromScreen == Strings.parcel
+                expandableContent:
+
+                fromScreen == Strings.parcel
                     ? Column(children: [
                         const ParcelExpendableBottomSheet(),
                         SizedBox(
@@ -103,6 +108,7 @@ class MapScreen extends StatelessWidget {
                             ),
                           ])
                         : const SizedBox(),
+
               );
             }),
           ),

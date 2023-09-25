@@ -4,16 +4,17 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../util/app_strings.dart';
+import '../../../../util/app_style.dart';
 import '../../../../util/dimensions.dart';
 import '../../../../util/images.dart';
 import '../../../../util/text_style.dart';
 
 class ChatTextField extends StatelessWidget {
   final formKey;
-  final onPickMultipleImage;
-  final onPickFiles;
+  final void Function()? onPickMultipleImage;
+  final void Function()? onPickFiles;
   final bool isLoading;
-  final onSendMessageTap;
+  final void Function()?  onSendMessageTap;
   final TextEditingController conversationController;
 
   const ChatTextField({
@@ -87,10 +88,11 @@ class ChatTextField extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       horizontal: Dimensions.paddingSizeSmall),
                   child: InkWell(
+                      onTap: onPickMultipleImage,
                       child: Image.asset(Images.pickImage,
-                          color: Get.isDarkMode ? Colors.white : Colors.black),
-                      onTap: onPickMultipleImage),
+                          color: Get.isDarkMode ? Colors.white : Colors.black)),
                 ),
+                K.sizedBoxW0,
                 InkWell(
                   onTap: onPickFiles,
                   child: Image.asset(Images.pickFile,

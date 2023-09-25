@@ -210,7 +210,7 @@ class ParcelHomeScreen extends StatelessWidget {
                                       MediaQuery.of(context).size.width / 2,
                                   // verticalOffset:   50.0 ,
                                   child: GestureDetector(
-                                    onTap: ()=> Get.off(controller.optionsList[index]
+                                    onTap: ()=> Get.to(controller.optionsList[index]
                                     ['onTap']??{} ),
                                     child: Card(
                                         shape: RoundedRectangleBorder(

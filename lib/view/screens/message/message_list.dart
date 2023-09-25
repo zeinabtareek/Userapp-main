@@ -22,34 +22,36 @@ class MessageListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomBody(
-        appBar:   CustomAppBar(title: Strings.ridersAreSayingToYou.tr,showBackButton: true,),
+        appBar: CustomAppBar(
+          title: Strings.ridersAreSayingToYou.tr,
+          showBackButton: true,
+        ),
         body: Padding(
           padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-          child: GetBuilder<MessageController>(builder: (messageController){
-    return Column(
-            children:  [
-              Center(
-                child: CustomTapBar(
-                  tabController: messageController.tabController,
-                  firstTap: Strings.driver.tr,
-                  secondTap:Strings.admin.tr,
+          child: GetBuilder<MessageController>(builder: (messageController) {
+            return Column(
+              children: [
+                Center(
+                  child: CustomTapBar(
+                    tabController: messageController.tabController,
+                    firstTap: Strings.driver.tr,
+                    secondTap: Strings.admin.tr,
+                  ),
                 ),
-              ),
-              K.sizedBoxH2,
-              const SearchWidget(),
-              const SizedBox(height: Dimensions.paddingSizeSmall,),
-
-
-                Expanded(child: TabBarView(
-                controller:messageController. tabController,
-                children:  const [
-                  AdminMessagesPages(),
-                  DriverMessagesPage(),
-                ],
-              ))
-            ],
-          );}
-          ),
+                K.sizedBoxH2,
+                // const SearchWidget(),
+                // K.sizedBoxH0,
+                Expanded(
+                    child: TabBarView(
+                  controller: messageController.tabController,
+                  children: const [
+                    AdminMessagesPages(),
+                    DriverMessagesPage(),
+                  ],
+                ))
+              ],
+            );
+          }),
         ),
       ),
     );

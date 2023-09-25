@@ -42,15 +42,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeExtraLarge),
                 child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
                   Text('payment'.tr, style: textSemiBold.copyWith(color: Theme.of(context).primaryColor)),
-                  Container(padding: const EdgeInsets.symmetric(horizontal : Dimensions.paddingSizeExtraSmall, vertical: Dimensions.paddingSizeThree),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor.withOpacity(.2),
-                    borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
-                  ),child: Row(children: [
-                    Text('cash'.tr, style: textMedium.copyWith(color: Theme.of(context).primaryColor)),
-                    const SizedBox(width: Dimensions.paddingSizeExtraSmall,),
-                    SizedBox(width: Dimensions.iconSizeSmall, child: Image.asset(Images.cash))
-                  ],))
+                  // Container(padding: const EdgeInsets.symmetric(horizontal : Dimensions.paddingSizeExtraSmall, vertical: Dimensions.paddingSizeThree),
+                  //     decoration: BoxDecoration(
+                  //       color: Theme.of(context).primaryColor.withOpacity(.2),
+                  //   borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+                  // ),child: Row(children: [
+                  //   Text('cash'.tr, style: textMedium.copyWith(color: Theme.of(context).primaryColor)),
+                  //   const SizedBox(width: Dimensions.paddingSizeExtraSmall,),
+                  //   SizedBox(width: Dimensions.iconSizeSmall, child: Image.asset(Images.cash))
+                  // ],))
                 ],),
 
 

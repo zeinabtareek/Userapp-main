@@ -36,6 +36,8 @@ class ParcelController extends GetxController
   @override
   void onInit() async {
     super.onInit();
+    currentParcelState ==
+        ParcelDeliveryState.initial;
     tabController = TabController(length: 2, vsync: this);
     parcelTypeController.text =
         parcelCategoryList[selectedParcelCategory].categoryTitle.toString().tr;

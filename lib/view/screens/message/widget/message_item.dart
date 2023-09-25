@@ -16,11 +16,11 @@ class MessageItem extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 6),
         padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall,horizontal: Dimensions.paddingSizeExtraSmall),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.2)),
-          color: isRead ? Theme.of(context).colorScheme.primary.withOpacity(.1) : Theme.of(context).cardColor,
-        ),
+        // decoration: BoxDecoration(
+        //   borderRadius: BorderRadius.circular(20),
+        //   border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.2)),
+        //   color: isRead ? Theme.of(context).colorScheme.primary.withOpacity(.1) : Theme.of(context).cardColor,
+        // ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,

@@ -157,13 +157,15 @@ class GetPriceWidget extends StatelessWidget {
           const SizedBox(
             height: Dimensions.paddingSizeDefault,
           ),
-          CustomButton(
-            radius: 50,
-              buttonText: Strings.findDriver.tr,
-              onPressed: () {
-                rideController
-                    .updateRideCurrentState(RideState.findingRider);
-              }),
+          // CustomButton(
+          //   radius: 50,
+          //     buttonText: Strings.findDriver.tr,
+          //     onPressed: () {
+          //       rideController
+          //           .updateRideCurrentState(RideState.findingRider);
+          //     }),
+
+          FindDriverCustomBtn2(fromPage: 'ride', whoWillPay: true,),
           K.sizedBoxH0,
           K.sizedBoxH0,
         ],
