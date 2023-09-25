@@ -41,6 +41,7 @@ class MapScreen extends StatelessWidget {
                 mapCompleter.complete(userMapController.mapController);
               }
               return ExpandableBottomSheet(
+                
                 background: Stack(
                   children: [
                     Animarker(
@@ -74,7 +75,7 @@ class MapScreen extends StatelessWidget {
                     ),
                     Positioned(
                         top: 0,
-                        bottom: 200,
+                        bottom: 20,
                         left: 0,
                         right: 0,
                         child: Align(
@@ -89,14 +90,20 @@ class MapScreen extends StatelessWidget {
                 persistentContentHeight:
                     userMapController.persistentContentHeight,
                 expandableContent: fromScreen == Strings.parcel
-                    ? Column(children: [
+                    ? Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
                         const ParcelExpendableBottomSheet(),
                         SizedBox(
                           height: MediaQuery.of(context).viewInsets.bottom,
                         ),
                       ])
                     : fromScreen == Strings.ride
-                        ? Column(children: [
+                        ? Column(
+                               mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                          children: [
                             const RideExpendableBottomSheet(isGetPrice: false,),
                             SizedBox(
                               height: MediaQuery.of(context).viewInsets.bottom,
