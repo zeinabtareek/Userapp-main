@@ -12,6 +12,7 @@ import '../widgets/test_field_title.dart';
 
 class SignUpScreen extends GetView<AuthController> {
   SignUpScreen({Key? key}) : super(key: key) {
+    controller.initSignUp();
     if (kDebugMode) {
       controller.regFirstNameController.text = "aaa";
       controller.regLastNameController.text = 'jjj';
