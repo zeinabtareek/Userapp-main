@@ -42,6 +42,7 @@ import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'app_navigator_observer.dart';
 import 'authenticate/presentation/sign-up/sign_up_screen.dart';
 import 'helper/cache_helper.dart';
 import 'helper/route_helper.dart';
@@ -98,9 +99,12 @@ class MyApp extends StatelessWidget {
               currentFocus.focusedChild!.unfocus();
             }
           },
+          // app_navigator_observer
+      
           child:  GetMaterialApp(
             title: AppConstants.appName,
             debugShowCheckedModeBanner: false,
+            navigatorObservers: [ScreenObserver()],
             navigatorKey: Get.key,
             scrollBehavior: const MaterialScrollBehavior().copyWith(
               dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
