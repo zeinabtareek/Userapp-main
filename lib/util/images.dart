@@ -139,7 +139,8 @@ class Images {
   static const String  parcelIcon= 'assets/image/parcel_icon.png';
   static const String  statusIcon= 'assets/image/status.png';
   // static const String  statusIcon= 'assets/image/delivery_truck.png';
-
+  static const String  reloadIcon= 'assets/image/reload.png';
+  static const String error = 'assets/image/error.png';
 
 
 
@@ -155,5 +156,12 @@ class Images {
   static const String onboard1 = 'assets/svg/onboard1.svg';
   static const String onboard2 = 'assets/svg/onboard2.svg';
   static const String onboard3 = 'assets/svg/onboard3.svg';
+
+
+
+  static const String successSvg = 'assets/svg/sucess.svg';
+  static const String infoIcon = 'assets/svg/info_icon.svg';
+  static const String warning = 'assets/svg/warning.svg';
+  static const String errorIcon = 'assets/svg/error_icon.svg';
 
 }

@@ -420,7 +420,13 @@
   "your_price_after_discount": "سعرك بعد الخصم",
   "promo_code": "الرمز الترويجي",
   "do_you_have_any_promo_code": "هل لديك أي رمز ترويجي؟",
-  "price": "السعر "
+  "price": "السعر ",
+  "no_internet": " لا يوجد اتصال بالإنترنت ",
+  "some_thing_error": "عفوا! حدث خطأ ما",
+  "try_again": "حاول مرة أخرى",
+  "finished": "المكتمله",
+  "withdraw": "سحب"
+
 
 
 }

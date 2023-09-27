@@ -9,7 +9,8 @@ import 'package:ride_sharing_user_app/view/screens/wallet/controller/wallet_cont
 
 class WalletMoneyAmountWidget extends StatelessWidget {
   final bool walletMoney;
-  const WalletMoneyAmountWidget({Key? key,  this.walletMoney = false}) : super(key: key);
+  final String amount;
+  const WalletMoneyAmountWidget({Key? key,  this.walletMoney = false,required this.amount}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class WalletMoneyAmountWidget extends StatelessWidget {
                         children: [
                           Image.asset(walletMoney?Images.walletMoney:Images.loyaltyPoint,height: 20,width: 20,),
                           const SizedBox(width: Dimensions.paddingSizeDefault),
-                          Text(walletMoney?PriceConverter.convertPrice(context, 67):'65', style: textBold.copyWith(
+                          Text(walletMoney?PriceConverter.convertPrice(context, double.parse(amount.toString())):amount, style: textBold.copyWith(
                             fontSize: Dimensions.fontSizeExtraLarge,
                             color: Theme.of(context).primaryColor)),
                           const SizedBox(width: Dimensions.paddingSizeDefault),

@@ -28,7 +28,7 @@ class DioUtilNew {
   }
 
   static BaseOptions _getOptions() {
-    String dummyTokken="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vaG9vZGJhY2tlbmQuZGV2ZWxvYnVnLmNvbS9hcGkvdXNlci9sb2dpbiIsImlhdCI6MTY5NTU0NTk0NSwiZXhwIjoxNzI3MDgxOTQ1LCJuYmYiOjE2OTU1NDU5NDUsImp0aSI6IkpyTVpyeXhlaVpmQU5lZWoiLCJzdWIiOiIzIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.vem5d-pGU0ag9UlAISo4Z08ilarnkDX4N_fFAN2Df4A";
+    String dummyTokken= "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTcyLjE2LjEzLjIyOjgwMDAvYXBpL3VzZXIvcmVnaXN0ZXIiLCJpYXQiOjE2OTYxNDc4OTYsImV4cCI6MTcyNzY4Mzg5NiwibmJmIjoxNjk2MTQ3ODk2LCJqdGkiOiJIcnJmVmVOekRacnNOWGw2Iiwic3ViIjoiMyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.hBdTurknwBexgqzpuPKnXSAT1Mozo078oCABjfqAvyA";
     BaseOptions options = BaseOptions(
       followRedirects: false,
       validateStatus: (status) => status! <= 500,

@@ -16,7 +16,7 @@ class ActivityController extends BaseController
     implements GetxService {
   // final ActivityRepo activityRepo;
   // ActivityController({required this.activityRepo});
-  ActivityRepo activityRepo = ActivityRepo();
+  // ActivityRepo activityRepo = ActivityRepo();
 
   final List<String> _filterList = ['all', 'today', 'yesterday', 'custom'];
 
@@ -51,7 +51,7 @@ class ActivityController extends BaseController
     tabController = TabController(length: 2, vsync: this);
 
     // await activityRepo.getAllHistoryTrips();
-    await getAllHistoryTrips();
+    // await getAllHistoryTrips();
   }
 
   void setMapController(GoogleMapController mapController) {
@@ -70,18 +70,18 @@ class ActivityController extends BaseController
   }
 
   ///Api Fetch
-
-  HistoryModel model = HistoryModel();
-  // final loading=false.obs;
-  getAllHistoryTrips() async {
-    setState(ViewState.busy);
-    model = await activityRepo.getAllHistoryTrips();
-    if (model.data != null && (model.data?.isNotEmpty ?? false)) {
-      setState(ViewState.idle);
-    } else {
-      setState(ViewState.noDate);
-    }
-  }
+  //
+  // HistoryModel model = HistoryModel();
+  // // final loading=false.obs;
+  // getAllHistoryTrips() async {
+  //   setState(ViewState.busy);
+  //   model = await activityRepo.getAllHistoryTrips();
+  //   if (model.data != null && (model.data?.isNotEmpty ?? false)) {
+  //     setState(ViewState.idle);
+  //   } else {
+  //     setState(ViewState.noDate);
+  //   }
+  // }
 
   ///animate camera move
   //   Future<void> goToPlace({

@@ -10,7 +10,9 @@ import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/authenticate/domain/use-cases/auth_cases.dart';
 import 'package:ride_sharing_user_app/firebase_options.dart';
 import 'package:ride_sharing_user_app/helper/notification_helper.dart';
+import 'package:ride_sharing_user_app/util/app_strings.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/history/history_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/home/home_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/message/message_list.dart';
 import 'package:ride_sharing_user_app/view/screens/message/message_screen.dart';
@@ -34,6 +36,7 @@ import 'package:ride_sharing_user_app/theme/theme_controller.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/splash_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/support/support.dart';
+import 'package:ride_sharing_user_app/view/screens/wallet/wallet_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/widget/payment_method_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/widget/use_voucher_code.dart';
 import 'package:ride_sharing_user_app/view/widgets/animated_widget.dart';
@@ -138,7 +141,9 @@ class MyApp extends StatelessWidget {
             // home: const MessageListScreen()/**/,
             // home: const MessageScreen()/**/,
             // home: const UseCouponScreen()/**/,
-            home: const OnBoardingScreen2()/**/,
+            // home:   HistoryScreen(fromPage: Strings.home,)/**/,
+            home: const WalletScreen()/**/,
+            // home: const OnBoardingScreen2()/**/,
             // home: DashboardScreen(),
           ));
         });

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/controller/base_controller.dart';
+import 'package:ride_sharing_user_app/view/screens/history/model/history_model.dart';
 
 import '../../../../enum/view_state.dart';
 import '../../../../util/app_strings.dart';
@@ -8,48 +9,26 @@ import '../controller/activity_controller.dart';
 import 'activity_item_view.dart';
 
 class CurrentTripsPage extends GetView<ActivityController> {
-  const CurrentTripsPage({super.key});
+  List<HistoryData >model;
+    CurrentTripsPage({super.key ,required this.model});
 
   @override
   Widget build(BuildContext context) {
  
-    return Flexible(
-      child: BaseStateWidget<ActivityController>(
-        successWidget: ListView.builder(
+    return   ListView.builder(
           itemBuilder: (context, index) {
-            var item = controller.model.data![index];
-    
-            return ActivityItemView(
-              activityItemModel: item,
+            // var item = controller.model.data![index];
+            //
+            return index==model.length ?
+            SizedBox(height: 200,):ActivityItemView(
+              activityItemModel: model[index],
               isDetailsScreen: false,
             );
           },
-          itemCount: controller.model.data!.length,
+          itemCount: model.length+1,
           padding: EdgeInsets.zero,
-        ),
-        emptyWord: Strings.noHistory.tr,
-      ),
-  //  child:   Obx(() {
-  //       if (controller.state == ViewState.busy) {
-  //         return const Center(child: CupertinoActivityIndicator(),);
-  //       } else if (controller.model.data == null ||
-  //           controller.model.data!.isEmpty||
-  //           controller.model.data==[]) {
-  //         return   Center(child: Text(Strings.noHistory.tr));
-  //       } else {
-  //         return
-  //     ListView.builder(
-  //       itemBuilder: (context, index) {
-  //         return ActivityItemView(
-  //           activityItemModel: controller.model.data![index],
-  //           isDetailsScreen: false,
-  //         );
-  //       },
-  //       itemCount: controller.model.data!.length,
-  //       padding: EdgeInsets.zero,
-  //     );
-  //       }
-  //     }),
-    );
+          shrinkWrap: true,
+
+     );
   }
 }

@@ -56,6 +56,10 @@ dependencies:
   another_stepper: ^1.2.2
   fl_chart:
   flutter_staggered_animations:
+  connectivity:
+  barbecue:
+  ansicolor:
+  top_snackbar_flutter:
 dependency_overrides:
 #  modal_bottom_sheet:
 #    git:

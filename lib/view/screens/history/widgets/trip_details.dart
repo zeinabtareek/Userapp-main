@@ -54,7 +54,7 @@ class ActivityScreenTripDetails extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   onTap: ()async{
-                    await activityController.goToPlace(mapCompleter,lat: tripDetails.from?.lat??0.0, lng: tripDetails.from?.lng??0.0,  );
+                    await activityController.goToPlace(mapCompleter,lat:  0.0, lng:  0.0,  );
 
                   },
                 ),
@@ -69,7 +69,7 @@ class ActivityScreenTripDetails extends StatelessWidget {
                   ),
                   onTap: ()async{
 
-                    await activityController.goToPlace(mapCompleter,lat: tripDetails.to?.lat??0.0, lng: tripDetails.to?.lng??0.0,  );
+                    await activityController.goToPlace(mapCompleter,lat:  0.0, lng: 0.0,  );
 
                   },
                 ),
@@ -113,7 +113,7 @@ class ActivityScreenTripDetails extends StatelessWidget {
             Row(children: [
               Image.asset(Images.profileMyWallet,height: 15,width: 15,),
               const SizedBox(width: Dimensions.paddingSizeSmall,),
-              Text('fare_price'.tr,style: textRegular.copyWith(color: Theme.of(context).primaryColor,fontSize: Dimensions.fontSizeSmall),),
+              Text(Strings.price.tr,style: textRegular.copyWith(color: Theme.of(context).primaryColor,fontSize: Dimensions.fontSizeSmall),),
             ]),
             Container(
               decoration: BoxDecoration(
@@ -121,12 +121,11 @@ class ActivityScreenTripDetails extends StatelessWidget {
                 color: Theme.of(context).primaryColor.withOpacity(0.2)
               ),
               padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall,vertical: Dimensions.paddingSizeExtraSmall),
-              child: Text(tripDetails.farePrice!.toString(),style: textBold.copyWith(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).primaryColor),),
+              child: Text('222',style: textBold.copyWith(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).primaryColor),),
             )]
           ),
 
           const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
-
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Row(children: [
               Image.asset(Images.profileMyWallet,height: 15,width: 15,),

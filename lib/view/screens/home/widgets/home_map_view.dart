@@ -291,9 +291,10 @@ class HomeMapViewState extends State<HomeMapView> {
         icon: BitmapDescriptor.fromBytes(
             await getBytesFromAsset(Images.locationFill, 70)),
         onTap: () {});
-    setState(() {
-      markers[kMarkerId] = marker;
-    });
+    ///just removed
+    // setState(() {
+    //   markers[kMarkerId] = marker;
+    // });
     return position;
   }
 

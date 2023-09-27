@@ -22,7 +22,7 @@ class LoyaltyPointScreen extends StatelessWidget {
     return GetBuilder<WalletController>(builder: (walletController){
       return  Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
 
-        const WalletMoneyAmountWidget(),
+          WalletMoneyAmountWidget(amount: '300',),
 
         const Padding(
           padding:  EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
@@ -31,11 +31,11 @@ class LoyaltyPointScreen extends StatelessWidget {
         walletController.isConvert==false?
         Expanded(
           child: ListView.builder(
-              itemCount: walletController.myEarnList.length,
+              itemCount: walletController.model.data?.length,
               shrinkWrap: true,
 
               itemBuilder: (context, index){
-                return MyEarnCardWidget(myEarnModel: walletController.myEarnList[index], onTap: () {  },);
+                return MyEarnCardWidget(myEarnModel: walletController.model.data![index], onTap: () {  },);
               }),
         ): Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.end,
           children: [

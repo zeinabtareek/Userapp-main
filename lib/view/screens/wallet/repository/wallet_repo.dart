@@ -5,9 +5,9 @@ import 'package:ride_sharing_user_app/view/screens/wallet/model/my_earn_model.da
 import 'package:ride_sharing_user_app/view/screens/wallet/model/wallet_item_model.dart';
 
 class WalletRepo{
-  final ApiClient apiClient;
-
-  WalletRepo({required this.apiClient});
+  // final ApiClient apiClient;
+  //
+  // WalletRepo({required this.apiClient});
 
 
 
@@ -84,4 +84,8 @@ class WalletRepo{
           statusCode: 404, statusText: 'on boarding data not found');
     }
   }
+
+
+
+
 }
