@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../enum/view_state.dart';
+import '../view/widgets/error_widget.dart';
 
 class BaseController extends GetxController {
   final _state = ViewState.idle.obs;
@@ -20,10 +21,12 @@ class BaseStateWidget<T extends BaseController> extends StatelessWidget {
 
   final String emptyWord;
   final Widget successWidget;
+  final Function()? onPressedRetryButton;
   const BaseStateWidget({
     super.key,
-   
+
     required this.successWidget,
+    required this.onPressedRetryButton,
     this.emptyWord = '',
   });
 
@@ -43,7 +46,11 @@ class BaseStateWidget<T extends BaseController> extends StatelessWidget {
           return Center(child: Text(emptyWord));
         } else if (ctx.state == ViewState.idle) {
           return successWidget;
-        } else {
+        }else if (ctx.state == ViewState.error) {
+          return errorWidget(onPressed: onPressedRetryButton);
+        }
+
+        else {
           return SizedBox();
         }
       },

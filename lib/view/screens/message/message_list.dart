@@ -35,7 +35,7 @@ class MessageListScreen extends StatelessWidget {
                   child: CustomTapBar(
                     tabController: messageController.tabController,
                     firstTap: Strings.driver.tr,
-                    secondTap: Strings.admin.tr,
+                    secondTap: Strings.admin.tr, onTabChanged: (v) {  },
                   ),
                 ),
                 K.sizedBoxH2,

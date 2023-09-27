@@ -39,7 +39,7 @@ class NotificationScreen extends StatelessWidget {
                 child: CustomTapBar(
                   tabController: notificationController.tabController,
                   firstTap: Strings.activity.tr,
-                  secondTap: Strings.offer.tr,
+                  secondTap: Strings.offer.tr, onTabChanged: (v) {  },
                 ),
               ),
               // ),

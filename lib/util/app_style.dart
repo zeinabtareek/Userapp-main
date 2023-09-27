@@ -21,7 +21,11 @@ class K {
     color: Theme.of(Get.context!).primaryColor,
     fontSize: Dimensions.fontSizeSmall,
   );
-
+  static TextStyle  blackTextStyleLarge = textBold.copyWith(
+    fontSize: Dimensions.fontSizeLarge,
+    fontWeight: FontWeight.w400,
+    color: Colors.black,
+  );
   ///hint color text (grey)
   static TextStyle hintMediumTextStyle = textMedium.copyWith(
       color: Theme.of(Get.context!).hintColor,

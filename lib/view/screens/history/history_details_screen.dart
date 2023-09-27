@@ -139,19 +139,31 @@ class HistoryDetailsScreen extends StatelessWidget {
                             ),
                     ),
                     K.sizedBoxH0,
+
+                    Text(Strings.totalDistance.tr,
+                      style: textRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),
+                        fontSize: Dimensions.fontSizeSmall,
+                      ),
+                    ),
+                    K.sizedBoxH0,
+                    ///just removed
                     ActivityScreenMapView(
                       sourcePosition: LatLng(
-                        activityItemModel.from?.lat ?? 0.0,
-                        activityItemModel.from?.lng ?? 0.0,
+                       double.parse( activityItemModel.from!.lat .toString()??'0.0'),
+                       double.parse( activityItemModel.from!.lng .toString()??'0.0'),
+                        // // activityItemModel.from?.lat ?? 0.0,
+                        // activityItemModel.from?.lng ?? 0.0,
                       ),
                       destinationPosition: LatLng(
-                        activityItemModel.to?.lat ?? 0.0,
-                        activityItemModel.to?.lng ?? 0.0,
+                        double.parse( activityItemModel.to!.lat .toString()??'0.0'),
+                        double.parse( activityItemModel.to!.lng .toString()??'0.0'),
+                        // activityItemModel.to?.lat ?? 0.0,
+                        // activityItemModel.to?.lng ?? 0.0,
                       ),
                       activityController: activityController,
                       mapCompleter: mapCompleter,
                     ),
-                    if (activityItemModel.tip != null)
+                    // if (activityItemModel.tip != null)
                       ActivityScreenTripDetails(
                         tripDetails: activityItemModel,
                         mapCompleter: mapCompleter,

@@ -217,7 +217,15 @@ class Strings {
   static const doYouHaveAnyPromoCode = "do_you_have_any_promo_code";
   static const price = "price";
 
-
+  static const noInternet = "no_internet";
+  static const  requestTimeout = 'request_timeout';
+  static const  somethingWrongTryAgain = 'something_wrong_try_again';
+  static const somethingWrong = 'some_thing_error';
+  static const tryAgain = 'try_again';
+  static const current = 'current';
+  static const cancel = 'cancel';
+  static const pending = 'pending';
+  static const finished = 'finished';
 
 
 

@@ -359,7 +359,7 @@
   "enter_entrance": "Enter Entrance",
   "enter_destination_route":  "Enter Destination Route",
   "enter_extra_route": "Enter Extra Route",
-  "canceled": "canceled",
+  "canceled": "Canceled",
   "no_history": "No History",
   "pick_up_location": "Pick up Location?",
   "searching_address": "Searching Address....",
@@ -415,8 +415,11 @@
  "your_price_after_discount": "Your Price after Discount ",
   "promo_code": "Promo Code",
  "do_you_have_any_promo_code": "Do You Have any Promo Code ?",
-  "price": "Price "
-
+  "price": "Price ",
+  "no_internet": "No internet Connection",
+  "some_thing_error": "OOPS! Something went wrong",
+  "try_again": "Try Again",
+  "finished": "Completed"
 
 
 

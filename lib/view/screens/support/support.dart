@@ -37,7 +37,7 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> with Single
               CustomTapBar(
                   tabController: tabController,
                 firstTap: Strings.helpSupport.tr,
-                secondTap:Strings.complains.tr,
+                secondTap:Strings.complains.tr, onTabChanged: (v) {  },
               ),
               Expanded(child: TabBarView(
                 controller: tabController,

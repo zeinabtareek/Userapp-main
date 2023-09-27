@@ -37,13 +37,16 @@ import 'package:ride_sharing_user_app/view/screens/wallet/repository/wallet_repo
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../util/connectivity.dart';
 import '../view/screens/history/controller/activity_controller.dart';
+import '../view/screens/history/controller/history_controller.dart';
 import '../view/screens/history/repository/history_repo.dart';
 import '../view/screens/notification/controller/notification_controller.dart';
 import '../view/screens/profile/profile_screen/controller/user_controller.dart';
 import '../view/screens/where_to_go/controller/where_to_go_controller.dart';
 import '../view/screens/where_to_go/repository/set_map_repo.dart';
 import 'cache_helper.dart';
+import 'logger/logger.dart';
 import 'network/dio_integration.dart';
 
 Future<Map<String, Map<String, String>>> init() async {
@@ -58,7 +61,7 @@ Future<Map<String, Map<String, String>>> init() async {
   // Repository
   Get.lazyPut(() => ConfigRepo(sharedPreferences: Get.find(), apiClient: Get.find()));
   Get.lazyPut(() => NotificationRepo(apiClient: Get.find()));
-  Get.lazyPut(() => ActivityRepo( ));
+  Get.lazyPut(() => HistoryRepo( ));
   // Get.lazyPut(() => ActivityRepo(apiClient: Get.find()));
   Get.lazyPut(() => WalletRepo(apiClient: Get.find()));
   Get.lazyPut(() => OfferRepo(apiClient: Get.find()));
@@ -81,6 +84,7 @@ Future<Map<String, Map<String, String>>> init() async {
   // Get.lazyPut(() => AuthController(authRepo: AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find())));
   Get.lazyPut(() => NotificationController(notificationRepo: Get.find()));
   Get.lazyPut(() => ActivityController( ));
+  Get.lazyPut(() => HistoryController( ));
   // Get.lazyPut(() => ActivityController(activityRepo: ActivityRepo( )));
   // Get.lazyPut(() => ActivityController(activityRepo: ActivityRepo(apiClient: Get.find())));
   Get.lazyPut(() => UserController(userRepo: UserRepo(apiClient: Get.find())));
@@ -95,6 +99,9 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => RideController(rideRepo: Get.find()));
   Get.lazyPut(() => PaymentController(paymentRepo: Get.find()));
   Get.lazyPut(() => BottomMenuController());
+  Get.lazyPut<AbsLogger>(() => DebugLogger());
+
+  Get.put<IConnectivityService>(ConnectivityService(Get.find<AbsLogger>()));
 
   //
   // Retrieving localized data

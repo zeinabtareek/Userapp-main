@@ -6,9 +6,11 @@ import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/screens/history/history_details_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/history/model/activity_item_model.dart';
+import 'package:ride_sharing_user_app/view/widgets/custom_image.dart';
 
 import '../../../../util/app_strings.dart';
 import '../../../../util/app_style.dart';
+import '../../../../util/images.dart';
 import '../model/history_model.dart';
 
 class ActivityItemView extends StatelessWidget {
@@ -28,8 +30,8 @@ class ActivityItemView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              width: 80,
-              height: 70,
+              height: Dimensions.orderStatusIconHeight,
+              width: Dimensions.orderStatusIconHeight,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
                 color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.02),
@@ -37,8 +39,22 @@ class ActivityItemView extends StatelessWidget {
               child: Center(
                 child: Column(
                   children: [
-                    Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPKO1snoUiaUnFPzAd21Sf-8imAd1J_Li24fKwHSyItg&s',height: 40,width: 40,),
-                    Text('type',
+                    K.sizedBoxH2,
+                    Expanded(
+                      child: ClipRRect(
+                        // borderRadius: BorderRadius.circular(50),
+                        child:  CustomImage(
+                          image: activityItemModel.driver?.vehicle?.img??'',
+                          // height: Dimensions.iconSizeExtraLarge,
+                          // width: Dimensions.dropDownWidth,
+
+                          placeholder: Images.car,fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    // Image.network(CustomImage(),height: 40,width: 40,),
+                    // Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPKO1snoUiaUnFPzAd21Sf-8imAd1J_Li24fKwHSyItg&s',height: 40,width: 40,),
+                    Text(activityItemModel.driver?.vehicle?.type??'',
                       style: K.hintSmallTextStyle ),
                   ],
                 ),
@@ -61,10 +77,12 @@ class ActivityItemView extends StatelessWidget {
                   // Text(DateConverter.localToIsoString(DateTime.parse(activityItemModel.date!)),
                     style:K.hintSmallTextStyle
                   ),
-               // K.sizedBoxH0,
-                  if(activityItemModel.status !='cancel' &&activityItemModel.userFarePrice!=null)
+               /// just removed 27.sep
+                  if(activityItemModel.status !='cancel'  )
+                  // if(activityItemModel.status !='cancel' &&activityItemModel.userFarePrice!=null)
                   // if(activityItemModel.userFarePrice!=null)
-                    Text(PriceConverter.convertPrice(context, activityItemModel.userFarePrice?.toDouble()??0),
+                    Text(PriceConverter.convertPrice(context, 330),
+                    // Text(PriceConverter.convertPrice(context, activityItemModel.userFarePrice?.toDouble()??0),
                       style: textMedium.copyWith(
                         fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),),
                       maxLines: 1,
@@ -73,7 +91,8 @@ class ActivityItemView extends StatelessWidget {
                   if(activityItemModel.status =='cancel')
                   Text(Strings.canceled.tr,
                     style: textMedium.copyWith(
-                      fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),),
+                      fontSize: Dimensions.fontSizeSmall,
+                      color: Colors.red.withOpacity(0.8)),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
