@@ -61,7 +61,7 @@ class HistoryController extends BaseController    with SingleGetTickerProviderMi
         setState(ViewState.busy);
         model = await historyRepo.getAllHistory(status: status);
         if (model.isNotEmpty ) {
-          setState(ViewState.idle);
+           setState(ViewState.idle);
         } else {
           setState(ViewState.noDate);
         }   },
