@@ -26,7 +26,7 @@ class SetDestinationScreen extends StatelessWidget {
 
 
 
-    SetDestinationScreen({Key? key, this.address}) : super(key: key);
+    const SetDestinationScreen({Key? key, this.address}) : super(key: key);
 
   // @override
   // void initState() {
@@ -35,7 +35,6 @@ class SetDestinationScreen extends StatelessWidget {
   // }
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(WhereToGoController( ));
     // final controller = Get.put(WhereToGoController(setMapRepo: Get.find()));
 
     return   Scaffold(
@@ -118,17 +117,17 @@ class SetDestinationScreen extends StatelessWidget {
                                       child: Focus(
                                         onFocusChange: (focus) {
                                           if (focus) {
-                                            controller.searchController.value = controller.fromRouteController;
+                                            setMapController.searchController.value = setMapController.fromRouteController;
                                           }
                                         },
                                         child: InputField(
-                                          controller: controller.fromRouteController,
-                                          node: controller.fromNode,
+                                          controller: setMapController.fromRouteController,
+                                          node: setMapController.fromNode,
                                           hint: Strings.enterCurrentLocationRoute.tr,
                                           onTap: () async {
-                                            await controller.checkPermissionBeforeNavigation(context);},
+                                            await setMapController.checkPermissionBeforeNavigation(context);},
                                           onChange: (v) {
-                                            controller.searchPlacesFrom(v);
+                                            setMapController.searchPlacesFrom(v);
                                             print(v);
                                           },
                                         ),
@@ -142,17 +141,17 @@ class SetDestinationScreen extends StatelessWidget {
                                       itemCount: setMapController.currentExtraRoute,
                                       shrinkWrap: true,
                                       physics: const NeverScrollableScrollPhysics(),
-                                      padding: EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
+                                      padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
 
                                       itemBuilder: (context, index) {
                                         List<TextEditingController>itemControllers = [
-                                          controller. extraRouteController,
-                                          controller.    extraRouteController2,
+                                          setMapController. extraRouteController,
+                                          setMapController.    extraRouteController2,
                                           // controller.  extraRouteController3,
                                         ];
                                         List<FocusNode>itemFocusNodes = [
-                                          controller. extraNode,
-                                          controller.    extraNode2,
+                                          setMapController. extraNode,
+                                          setMapController.    extraNode2,
                                           // controller.  extraNode3,
                                         ];
                                         TextEditingController itemController = itemControllers[index];
@@ -162,16 +161,16 @@ class SetDestinationScreen extends StatelessWidget {
                                                 child: Focus(
                                                   onFocusChange: (focus) {
                                                     if (focus) {
-                                                      controller.searchController.value = itemController;
+                                                      setMapController.searchController.value = itemController;
                                                     }
                                                   },
                                                   child: InputField(
                                                     controller: itemController,
                                                     node: itemFocusNode,
                                                     hint: Strings.enterExtraRoute.tr,
-                                                    onTap: () async => await controller.checkPermissionBeforeNavigation(context),
+                                                    onTap: () async => await setMapController.checkPermissionBeforeNavigation(context),
                                                     onChange: (v) {
-                                                      controller.searchPlacesFrom(v);
+                                                      setMapController.searchPlacesFrom(v);
                                                       print(v);
                                                     },
                                                   ),
@@ -189,17 +188,17 @@ class SetDestinationScreen extends StatelessWidget {
                                               child: Focus(
                                                 onFocusChange: (focus) {
                                                   if (focus) {
-                                                    controller.searchController.value = controller.toRouteController;
+                                                    setMapController.searchController.value = setMapController.toRouteController;
                                                   }
                                                 },
                                                 child: InputField(
                                               controller:
-                                                  controller.toRouteController,
+                                                  setMapController.toRouteController,
                                               hint: Strings
                                                   .enterDestinationRoute.tr,
-                                              node: controller.toRoutNode, onTap: () async => await controller.checkPermissionBeforeNavigation(context),
+                                              node: setMapController.toRoutNode, onTap: () async => await setMapController.checkPermissionBeforeNavigation(context),
                                               onChange: (v) {
-                                                controller.searchPlacesFrom(v);
+                                                setMapController.searchPlacesFrom(v);
                                                 print(v);
                                               }),
                                         ),
@@ -303,7 +302,7 @@ class SetDestinationScreen extends StatelessWidget {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Get.to(() =>   MapScreen(fromScreen: 'ride',));
+                                  Get.to(() =>   const MapScreen(fromScreen: 'ride',));
                                   // Get.to(() => const SuggestedRouteScreen());
                                   Get.find<RideController>()
                                       .updateRideCurrentState(
@@ -453,8 +452,8 @@ class SetDestinationScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Obx(() => controller.searchResultsFrom.isNotEmpty
-                ? controller.state == ViewState.busy
+            Obx(() => setMapController.searchResultsFrom.isNotEmpty
+                ? setMapController.state == ViewState.busy
                     ? const Center(
                         child: CupertinoActivityIndicator(),
                       )
@@ -463,9 +462,9 @@ class SetDestinationScreen extends StatelessWidget {
                         left: 15,
                         right: 15,
                         child: SearchListWidget(
-                          listOfSearchedPlaces: controller.searchResultsFrom,
+                          listOfSearchedPlaces: setMapController.searchResultsFrom,
                           onTap: () {},
-                          inputTextField: controller.searchController.value,
+                          inputTextField: setMapController.searchController.value,
                         ))
                 : const SizedBox())
           ]),
