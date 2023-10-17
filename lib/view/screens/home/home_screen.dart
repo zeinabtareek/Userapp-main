@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const HomeMyAddress(
                   fromPage: Strings.home,
                 ),
-                HomeMapView()
+                // HomeMapView()
               ],
             ),
           ),

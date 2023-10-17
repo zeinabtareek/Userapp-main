@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
+import 'package:ride_sharing_user_app/view/screens/home/controller/address_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/where_to_go/repository/search_service.dart';
 import 'package:ride_sharing_user_app/view/screens/where_to_go/widget/input_field_for_set_route.dart';
@@ -22,11 +23,11 @@ import '../map/map_screen.dart';
 import 'controller/where_to_go_controller.dart';
 
 class SetDestinationScreen extends StatelessWidget {
-  final String? address;
+    String? address;
 
 
 
-    const SetDestinationScreen({Key? key, this.address}) : super(key: key);
+      SetDestinationScreen({Key? key, this.address}) : super(key: key);
 
   // @override
   // void initState() {
@@ -36,8 +37,7 @@ class SetDestinationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final controller = Get.put(WhereToGoController(setMapRepo: Get.find()));
-
-    return   Scaffold(
+     return   Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
@@ -48,6 +48,8 @@ class SetDestinationScreen extends StatelessWidget {
         init: WhereToGoController( ),
           builder: (setMapController) {
         return SingleChildScrollView(
+          controller: setMapController.scrollController,
+
           child: Stack(children: [
             Padding(
               padding: K.fixedPadding0,
@@ -116,20 +118,32 @@ class SetDestinationScreen extends StatelessWidget {
                                     FocusScope(
                                       child: Focus(
                                         onFocusChange: (focus) {
-                                          if (focus) {
-                                            setMapController.searchController.value = setMapController.fromRouteController;
+                                          if (!focus) {
+                                            if (setMapController.searchController.value != null) {
+                                              setMapController.searchController.value =
+                                                  setMapController.fromRouteController;
+                                            } else if (setMapController.selectedSuggestedAddress.value != '') {
+                                              setMapController.selectedSuggestedAddress.value = '';
+                                            } else {
+                                              setMapController.fromRouteController.text = ''; // Clear the address
+                                            }
                                           }
                                         },
-                                        child: InputField(
-                                          controller: setMapController.fromRouteController,
-                                          node: setMapController.fromNode,
-                                          hint: Strings.enterCurrentLocationRoute.tr,
-                                          onTap: () async {
-                                            await setMapController.checkPermissionBeforeNavigation(context);},
-                                          onChange: (v) {
-                                            setMapController.searchPlacesFrom(v);
-                                            print(v);
-                                          },
+                                        child: GetBuilder<AddressController>(
+                                          builder: (addressController) => InputField(
+                                            controller: address != null
+                                                ? TextEditingController(text: address.toString())
+                                                : setMapController.fromRouteController,
+                                            node: setMapController.fromNode,
+                                            hint: Strings.enterCurrentLocationRoute.tr,
+                                            onTap: () async {
+                                              await setMapController.checkPermissionBeforeNavigation(context);
+                                            },
+                                            onChange: (v) {
+                                              setMapController.searchPlacesFrom(v);
+                                              print(v);
+                                            },
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -152,11 +166,9 @@ class SetDestinationScreen extends StatelessWidget {
                                         List<FocusNode>itemFocusNodes = [
                                           setMapController. extraNode,
                                           setMapController.    extraNode2,
-                                          // controller.  extraNode3,
-                                        ];
+                                         ];
                                         TextEditingController itemController = itemControllers[index];
                                         FocusNode itemFocusNode = itemFocusNodes[index];
-
                                         return   FocusScope(
                                                 child: Focus(
                                                   onFocusChange: (focus) {
@@ -370,6 +382,14 @@ class SetDestinationScreen extends StatelessWidget {
                                 fontSize: Dimensions.fontSizeLarge),
                           ),
                         ),
+
+                        ///suggestions
+
+
+                      GetBuilder<AddressController>(
+                        init: AddressController(),
+                        builder: (addressController)=>
+
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: Dimensions.paddingSizeDefault),
@@ -377,33 +397,46 @@ class SetDestinationScreen extends StatelessWidget {
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
                               padding: EdgeInsets.zero,
-                              itemCount: 6,
+                              itemCount:  addressController.addressModel.data?.length,
+                              // itemCount:  setMapController.listOfSuggestedPlaces.length,
                               itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: K.fixedPadding1,
-                                  child: Row(
-                                    children: [
-                                      Container(
+                                return InkWell(
+                                  child: Padding(
+                                    padding: K.fixedPadding1,
+                                    child: Row(
+                                      children: [
+                                        Container(
                                           // padding: K.fixedPadding0,
-                                          decoration: BoxDecoration(
+                                            decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .hintColor
+                                                    .withOpacity(.08),
+                                                borderRadius: BorderRadius
+                                                    .circular(Dimensions
+                                                    .paddingSizeExtraSmall)),
+                                            child: Icon(
+                                              Icons.place_outlined,
                                               color: Theme.of(context)
-                                                  .hintColor
-                                                  .withOpacity(.08),
-                                              borderRadius: BorderRadius
-                                                  .circular(Dimensions
-                                                      .paddingSizeExtraSmall)),
-                                          child: Icon(
-                                            Icons.place_outlined,
-                                            color: Theme.of(context)
-                                                .primaryColor
-                                                .withOpacity(.5),
-                                          )),
-                                      const SizedBox(
-                                        width: Dimensions.paddingSizeSmall,
-                                      ),
-                                      const Text('Uttara, Sector 12'),
-                                    ],
+                                                  .primaryColor
+                                                  .withOpacity(.5),
+                                            )),
+                                        const SizedBox(
+                                          width: Dimensions.paddingSizeSmall,
+                                        ),
+                                          Text('${addressController.addressModel.data?[index].location}'),
+                                      ],
+                                    ),
                                   ),
+                                  onTap: (){
+                                    address=addressController.addressModel.data?[index].location??'';
+                                    addressController.update();
+                                    setMapController. scrollController.animateTo(
+                                      0,
+                                      duration: Duration(milliseconds: 500),
+                                      curve: Curves.easeInOut,
+                                    );
+
+                                  },
                                 );
                               }),
                         ),
@@ -445,7 +478,7 @@ class SetDestinationScreen extends StatelessWidget {
                         //       ],
                         //     ),
                         //   ),
-                        // )
+                        )
                       ],
                     ),
                   ),

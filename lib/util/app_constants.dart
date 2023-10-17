@@ -6,7 +6,8 @@ class AppConstants {
   static const String appName = 'Hood';
   static const bool isDevelopment = true;
 
-  static const String baseUrl = 'http://172.16.13.22:8000';
+  static const String baseUrl = 'https://arabchance.com/Hood-Backend-Dashboard/public';
+  // static const String baseUrl = 'http://172.16.13.22:8000';
   // static const String baseUrl = 'http://hoodbackend.develobug.com';
   static const String getAllOrders = '/api/user/orders';
   static const String getAllHistory = '/api/user/orders?status=';
@@ -22,6 +23,14 @@ class AppConstants {
   static const String packages = "/api/user/packages";
   static const String parcelCategories = "/api/user/parcel_categories";
   static const String postComplains = "/api/user/complains";
+///zeinab working on now
+  static const String getAddress = "/api/user/addresses";
+  static const String getAddressSuggestions = "/api/user/address_suggestions";
+
+
+
+
+
 
   // Shared Key
   static const String notification = 'demand_notification';

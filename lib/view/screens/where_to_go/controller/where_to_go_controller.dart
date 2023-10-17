@@ -38,8 +38,23 @@ class WhereToGoController extends BaseController implements GetxService {
   final extraNode3 = FocusNode();
   final toRoutNode = FocusNode();
   final searchController=TextEditingController().obs;
+  final selectedSuggestedAddress=''.obs;
+  List listOfSuggestedPlaces=[
+    'place one',
+    'place two',
+    'place three',
+    'place four',
 
+  ];
 
+  ScrollController scrollController = ScrollController();
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    scrollController.dispose();
+
+  }
   @override
   void onInit() {
      super.onInit();
