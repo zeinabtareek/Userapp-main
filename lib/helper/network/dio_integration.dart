@@ -2,7 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../util/app_constants.dart';
-import 'dio_interceptors.dart';
+import 'auth_interceptor.dart';
+import 'error_interceptor.dart';
 
 class DioUtilNew {
   static DioUtilNew? _instance;
@@ -11,7 +12,10 @@ class DioUtilNew {
   static DioUtilNew? getInstance() {
     if (_instance == null) {
       _dio = Dio(_getOptions());
-      _dio!.interceptors.add(LoggingInterceptor());
+      _dio!.interceptors.add(AuthInterceptor());
+      _dio!.interceptors.add(ErrorInterceptor());
+
+      // _dio!.interceptors.add(LoggingInterceptor());
       _dio!.interceptors.add((PrettyDioLogger(
         requestHeader: true,
         requestBody: true,
@@ -42,7 +46,7 @@ class DioUtilNew {
       'Accept': 'application/json',
       // 'Authorization': "Bearer ${CacheHelper.getData(key: AppConstants.token)}",
       'Authorization': 'Bearer $dummyTokken',
-      AppConstants.localization: 'en'
+      AppConstants.acceptLanguage: 'en'
 
 
     // AppConstants.acceptLanguage: languageCode ?? AppConstants.languages[0].languageCode,

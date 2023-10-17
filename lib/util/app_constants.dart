@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/localization/language_model.dart';
-import 'package:ride_sharing_user_app/util/images.dart';
+import '../localization/language_model.dart';
+import 'images.dart';
 
 class AppConstants {
   static const String appName = 'Hood';
@@ -33,7 +33,7 @@ class AppConstants {
   static const String userAddress = 'user_address';
   static const String userNumber = 'user_number';
   static const String searchAddress = 'search_address';
-  static const String localization = 'X-Localization';
+  static const String localization = 'Accept-Language';
   static const String acceptLanguage = 'Accept-Language';
   static const String topic = 'notify';
   static const String signUpBody = 'signUpBody';
