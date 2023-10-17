@@ -16,7 +16,7 @@ class AppConstants {
   static const String configUri = '/api/v1/config';
   static const String loginUri = '/api/v1/auth/login';
   static const String notificationUri = '/api/v1/customer/notifications';
-
+  static const String getAllSettingUri = '/api/user/all_setting';
 
   // Shared Key
   static const String notification = 'demand_notification';

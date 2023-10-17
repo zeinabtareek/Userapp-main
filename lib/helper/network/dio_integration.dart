@@ -41,7 +41,8 @@ class DioUtilNew {
       'Content-type': 'application/json',
       'Accept': 'application/json',
       // 'Authorization': "Bearer ${CacheHelper.getData(key: AppConstants.token)}",
-      'Authorization': 'Bearer $dummyTokken'
+      'Authorization': 'Bearer $dummyTokken',
+      AppConstants.localization: 'en'
 
 
     // AppConstants.acceptLanguage: languageCode ?? AppConstants.languages[0].languageCode,

@@ -128,16 +128,17 @@ class HistoryDetailsScreen extends StatelessWidget {
                     Divider(
                       color: Theme.of(context).primaryColor.withOpacity(0.2),
                     ),
-                    Obx(
-                      () => activityController.state == ViewState.busy
-                          ? const Center(
-                              child: CupertinoActivityIndicator(),
-                            )
-                          : ActivityItemView(
-                              activityItemModel: activityItemModel,
-                              isDetailsScreen: true,
-                            ),
-                    ),
+                    ///Zeinab uncomment this
+                    // Obx(
+                    //   () => activityController.state == ViewState.busy
+                    //       ? const Center(
+                    //           child: CupertinoActivityIndicator(),
+                    //         )
+                    //       : ActivityItemView(
+                    //           activityItemModel: activityItemModel,
+                    //           isDetailsScreen: true,
+                    //         ),
+                    // ),
                     K.sizedBoxH0,
 
                     Text(Strings.totalDistance.tr,
@@ -146,7 +147,7 @@ class HistoryDetailsScreen extends StatelessWidget {
                       ),
                     ),
                     K.sizedBoxH0,
-                    ///just removed
+                    ///just removed zeinab don't forget to uncomment
                     ActivityScreenMapView(
                       sourcePosition: LatLng(
                        double.parse( activityItemModel.from!.lat .toString()??'0.0'),
@@ -163,6 +164,7 @@ class HistoryDetailsScreen extends StatelessWidget {
                       activityController: activityController,
                       mapCompleter: mapCompleter,
                     ),
+                    /// till here
                     // if (activityItemModel.tip != null)
                       ActivityScreenTripDetails(
                         tripDetails: activityItemModel,

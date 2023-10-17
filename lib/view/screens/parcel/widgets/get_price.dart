@@ -527,6 +527,9 @@ class GetPrice extends StatelessWidget {
                   const SizedBox(
                     height: Dimensions.paddingSizeDefault,
                   ),
+
+
+                  ///Zeinab Uncomment this
                   ActivityScreenRiderDetails(
                     riderDetails: Driver(
                         firstName: "mostafizur",
@@ -534,7 +537,7 @@ class GetPrice extends StatelessWidget {
                         img:
                         "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
                         lastName: "smith"),
-
+                    ///till here
                     // RiderDetails(
                     //     f: "mostafizur",
                     //     vehicleNumber: "DH-1234",

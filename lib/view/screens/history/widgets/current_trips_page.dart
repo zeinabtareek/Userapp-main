@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/controller/base_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/history/model/history_model.dart';
+import 'package:ride_sharing_user_app/view/screens/history/model/support_model.dart';
 
 import '../../../../enum/view_state.dart';
 import '../../../../util/app_strings.dart';
@@ -9,7 +10,8 @@ import '../controller/activity_controller.dart';
 import 'activity_item_view.dart';
 
 class CurrentTripsPage extends GetView<ActivityController> {
-  List<HistoryData >model;
+  List<SupportData >model;
+  // List<HistoryData >model;
     CurrentTripsPage({super.key ,required this.model});
 
   @override

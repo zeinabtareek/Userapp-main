@@ -425,8 +425,7 @@
   "some_thing_error": "عفوا! حدث خطأ ما",
   "try_again": "حاول مرة أخرى",
   "finished": "المكتمله",
-  "withdraw": "سحب"
-
-
-
+  "withdraw": "سحب",
+  "no_data_to_show": "لا توجد بيانات لإظهارها",
+  "privacy_policy": "سياسة الخصوصية"
 }

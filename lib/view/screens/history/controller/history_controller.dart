@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ride_sharing_user_app/view/screens/history/model/support_model.dart';
 
 import '../../../../controller/base_controller.dart';
 import '../../../../enum/view_state.dart';
@@ -20,7 +21,8 @@ class HistoryController extends BaseController    with SingleGetTickerProviderMi
 
   // HistoryController({required this.historyRepo});
   final ActionCenter _actionCenter = ActionCenter(Get.find<AbsLogger>());
-  List<HistoryData> model=<HistoryData>[];
+  List<SupportData> model=<SupportData>[];
+  // List<HistoryData> model=<HistoryData>[];
   late TabController tabController;
   bool _showCustomDate = false;
   bool get showCustomDate => _showCustomDate;
@@ -55,22 +57,23 @@ class HistoryController extends BaseController    with SingleGetTickerProviderMi
   // final  model=HistoryModel();
   getAllHistory({status}) async {
 
-    var result = (await _actionCenter.execute(
-          () async {
-
-        setState(ViewState.busy);
+    // var result = (await _actionCenter.execute(
+    //       () async {
+    //
+    //     setState(ViewState.busy);
         model = await historyRepo.getAllHistory(status: status);
-        if (model.isNotEmpty ) {
-           setState(ViewState.idle);
-        } else {
-          setState(ViewState.noDate);
-        }   },
-      checkConnection: true,
-    ));
-    if (!result) {
-      setState(ViewState.error);
-      print(" ::: error in getting history ");
-    }update();
+    //     if (model.isNotEmpty ) {
+    //        setState(ViewState.idle);
+    //     } else {
+    //       setState(ViewState.noDate);
+    //     }   },
+    //   checkConnection: true,
+    // ));
+    // if (!result) {
+    //   setState(ViewState.error);
+    //   print(" ::: error in getting history ");
+      print(" :::$model");
+    // }update();
 
   }
 }
