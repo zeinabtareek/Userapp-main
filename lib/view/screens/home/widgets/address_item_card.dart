@@ -4,10 +4,12 @@ import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/view/screens/home/model/address_model.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/controller/parcel_controller.dart';
 
+import '../../ride/model/address_model.dart';
 import '../../where_to_go/where_to_go_screen.dart';
 
 class AddressItemCard extends StatelessWidget {
-  final AddressModel addressModel;
+  final AddressData addressModel;
+  // final AddressModel addressModel;
   final String fromPage;
 
   const AddressItemCard(
@@ -20,11 +22,11 @@ class AddressItemCard extends StatelessWidget {
       onTap: () {
         if (fromPage == "home") {
           Get.to(() => SetDestinationScreen(
-                address: addressModel.address,
+                address: addressModel.location,
               ));
         } else {
           Get.find<ParcelController>()
-              .setParcelAddress(addressModel.address ?? "");
+              .setParcelAddress(addressModel.location ?? "");
         }
       },
       child: Container(
@@ -41,11 +43,12 @@ class AddressItemCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(Dimensions.radiusOverLarge)),
         child: Row(
           children: [
-            Image.asset(addressModel.addressIcon!, width: 20),
+            ///Zeinab uncomment this
+            // Image.asset(Assets.!, width: 20),
             const SizedBox(
               width: 5,
             ),
-            Text(addressModel.addressType!.tr),
+            Text(addressModel.name.toString().tr??''),
           ],
         ),
       ),
