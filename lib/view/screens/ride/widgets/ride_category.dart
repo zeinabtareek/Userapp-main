@@ -9,13 +9,16 @@ import 'package:ride_sharing_user_app/view/screens/where_to_go/where_to_go_scree
 
 import '../../../../util/app_style.dart';
 import '../../../widgets/animated_widget.dart';
+import '../../home/model/categoty_model.dart';
 
 class RideSubCategoryWidget extends StatelessWidget {
-  List listOfSubCategory;
+  List<CategoryModel> listOfSubCategory;
   RideType categoryName;
+  CategoryModel selectedCategoryModel;
   RideSubCategoryWidget({
     Key? key,
     required this.listOfSubCategory,
+    required this.selectedCategoryModel,
     required this.categoryName,
   }) : super(key: key);
 
@@ -40,11 +43,15 @@ class RideSubCategoryWidget extends StatelessWidget {
                         if (categoryName == RideType.car) {
                           rideController
                               .updateSelectedSubRideType(RideType.car);
-                          Get.to(SetDestinationScreen());
+                          rideController
+                              .selectedSubPackage(listOfSubCategory[index]);
+                          Get.to(
+                            () => SetDestinationScreen(),
+                          );
                         } else {
                           rideController
                               .updateSelectedSubRideType(RideType.parcel);
-                          Get.to(const ParcelHomeScreen());
+                          Get.to(() => const ParcelHomeScreen());
                         } // if (index == 0) {
                         //   rideController.updateSelectedRideType(RideType.car);
                         //   // ...
@@ -80,7 +87,7 @@ class RideSubCategoryWidget extends StatelessWidget {
                             padding: const EdgeInsets.all(
                                 Dimensions.paddingSizeDefault),
                             child: Image.network(
-                              listOfSubCategory[index]['image'].toString(),
+                              listOfSubCategory[index].categoryImage.toString(),
                               errorBuilder: (context, error, stackTrace) {
                                 print(error); //do something
                                 return const Text('error');
@@ -112,7 +119,7 @@ class RideSubCategoryWidget extends StatelessWidget {
                             height: Dimensions.paddingSizeExtraSmall,
                           ),
                           Text(
-                            listOfSubCategory[index]['type'].toString(),
+                            listOfSubCategory[index].categoryTitle.toString(),
                             style: textSemiBold.copyWith(
                                 color: Theme.of(context)
                                     .textTheme
@@ -141,16 +148,19 @@ class RideCategoryWidget extends StatelessWidget {
       categoryController.getCategoryList().then((value) {
         if (categoryController.categoryList.isNotEmpty) {
           if (Get.isRegistered<RideController>()) {
-            Get.find<RideController>().selectedCategory(
-              categoryController.categoryList.first,
-            );
-          } else {
-            var con = Get.put(RideController(rideRepo: Get.find()));
-            con.selectedCategory(
+            var con = Get.find<RideController>();
+            con.selectedPackage(
               categoryController.categoryList.first,
             );
             con.updateSelectedRideType(RideType.car);
-            con.vehicleToggle(RideType.car);
+            con.vehicleToggle();
+          } else {
+            var con = Get.put(RideController(rideRepo: Get.find()));
+            con.selectedPackage(
+              categoryController.categoryList.first,
+            );
+            con.updateSelectedRideType(RideType.car);
+            con.vehicleToggle();
           }
         }
       });
@@ -171,20 +181,20 @@ class RideCategoryWidget extends StatelessWidget {
                     width: Dimensions.iconSizeOnline,
                     child: InkWell(
                       onTap: () {
-                        rideController.selectedCategory(item);
+                        rideController.selectedPackage(item);
                         if (index != 2 && index != 3) {
                           if (index == 0) {
                             rideController.updateSelectedRideType(RideType.car);
-                            rideController.vehicleToggle(RideType.car);
+                            rideController.vehicleToggle();
                           } else if (index == 1) {
                             rideController
                                 .updateSelectedRideType(RideType.parcel);
-                            rideController.vehicleToggle(RideType.parcel);
+                            rideController.vehicleToggle();
                             null;
                           } else if (index == 2) {
                             rideController
                                 .updateSelectedRideType(RideType.bike);
-                            rideController.vehicleToggle(RideType.bike);
+                            rideController.vehicleToggle();
                           } else if (index == 3) {
                             // rideController
                             //     .updateSelectedRideType(RideType.luxury);
@@ -211,7 +221,7 @@ class RideCategoryWidget extends StatelessWidget {
                                       .hintColor
                                       .withOpacity(0.1),
                             ),
-                            padding: index == 2 || index == 3 || index == 1
+                            padding: index == 2 || index == 3
                                 ? null
                                 : const EdgeInsets.all(
                                     Dimensions.paddingSizeDefault),
@@ -225,7 +235,7 @@ class RideCategoryWidget extends StatelessWidget {
                                 Image.network(
                                   item.categoryImage!,
                                 ),
-                                if (index == 2 || index == 3 || index == 1)
+                                if (index == 2 || index == 3)
                                   Positioned.fill(
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -277,12 +287,12 @@ class RideCategoryWidget extends StatelessWidget {
                 ? Obx(() => animatedWidget(
                     onTap: () {},
                     widget: RideSubCategoryWidget(
-                      listOfSubCategory: rideController
-                              .selectedCategory.value?.sub
-                              ?.map((e) => e.toJson())
-                              .toList() ??
-                          [],
+                      listOfSubCategory:
+                          rideController.selectedPackage.value?.sub?.toList() ??
+                              [],
                       categoryName: rideController.selectedCategoryTypeEnum,
+                      selectedCategoryModel:
+                          rideController.selectedPackage.value!,
                     ),
                     limit: 1))
                 : const SizedBox(),

@@ -26,7 +26,9 @@ class RideController extends GetxController implements GetxService {
   var currentRideState = RideState.initial;
   var selectedCategoryTypeEnum = RideType.car;
 
-  Rxn<CategoryModel> selectedCategory = Rxn();
+  Rxn<CategoryModel> selectedPackage = Rxn();
+  Rxn<CategoryModel> selectedSubPackage = Rxn();
+
   var selectedSubCategory = RideType.car;
 
   bool isBiddingOn = true;
@@ -56,7 +58,7 @@ class RideController extends GetxController implements GetxService {
     isExpanded = false;
   }
 
-  void vehicleToggle(RideType newType) {
+  void vehicleToggle() {
     isExpanded = !isExpanded;
     heightOfTypes = isExpanded ? 110.0 : 0.0;
     rideSubCategoryIndex = 0;
