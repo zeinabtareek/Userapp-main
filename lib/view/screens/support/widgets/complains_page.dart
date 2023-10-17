@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/enum/view_state.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
 
 import '../../../../authenticate/presentation/widgets/test_field_title.dart';
@@ -99,14 +100,21 @@ class ComplainsPage extends StatelessWidget {
             hint:Strings.yourFeedBack .tr  ),
 
 Spacer(),
-        CustomButton(
+      Obx(()=>  CustomButton(
           buttonText: Strings.submit.tr,
           radius: 25,
+
+          isLoading: controller.state==ViewState.busy?true:false,
+
           onPressed: () {
-Get.offAll(DashboardScreen());
+            controller.submitComplain();
+       // Get.offAll(DashboardScreen());
             // Get.back();
           },
         ),
+        ),
+
+
         K.sizedBoxH0,
       ],
     );

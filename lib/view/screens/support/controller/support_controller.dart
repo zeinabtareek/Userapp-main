@@ -10,6 +10,7 @@ import '../../../../controller/base_controller.dart';
 import '../../../../enum/view_state.dart';
 import '../../../../helper/logger/logger.dart';
 import '../../../../util/action_center/action_center.dart';
+import '../../../../util/ui/overlay_helper.dart';
 import '../../history/model/support_model.dart';
 import '../model/help_model.dart';
 
@@ -19,7 +20,7 @@ class SupportController extends BaseController {
 
 
   final List<String> complainsList = ['Good Driver', 'Bad Driver', 'Good Driver', 'Good Driver'];
-  late String initialSelectItem;
+    String ?initialSelectItem;
   final feedBackController=TextEditingController();
   final ActionCenter _actionCenter = ActionCenter(Get.find<AbsLogger>());
   int _helpAndSupportIndex = 0;
@@ -33,7 +34,7 @@ class SupportController extends BaseController {
 
 
 
-    initialSelectItem = complainsList.first;
+    // initialSelectItem = complainsList.first;
   }
   ///TODO get All Setting
   SupportModel model=SupportModel();
@@ -67,9 +68,21 @@ class SupportController extends BaseController {
     update();
   }
 
-  // final Uri params = Uri(
-  //   scheme: 'mailto',
-  //   path: 'test@gmail.com',
-  //   query: 'subject=support Feedback&body=',
-  // );
+ submitComplain()async{
+    if( initialSelectItem == null){
+      OverlayHelper.showErrorToast(Get.overlayContext!, 'select_complain_type'.tr);
+    }else
+    if(feedBackController.text.isEmpty ){
+      OverlayHelper.showErrorToast(Get.overlayContext!, 'write_complain'.tr);
+    }
+   else{
+      setState(ViewState.busy);
+      await helpAndSupportRepo.submitComplain(
+        message: feedBackController.text,
+        type:initialSelectItem,
+      );
+      setState(ViewState.idle);
+
+    }
+  }
 }

@@ -21,6 +21,7 @@ class AppConstants {
   static const String packagesDetails = "/api/user/packages_details";
   static const String packages = "/api/user/packages";
   static const String parcelCategories = "/api/user/parcel_categories";
+  static const String postComplains = "/api/user/complains";
 
   // Shared Key
   static const String notification = 'demand_notification';

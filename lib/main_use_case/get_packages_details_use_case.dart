@@ -11,7 +11,7 @@ class GetPackagesDetailsUseCase {
       AppConstants.packagesDetails,
     );
 
-    if (res.data["status"] == 200 || res.data["status"] == "sucses") {
+    if (res.data["status"] == 200 || res.data["status"] == "success") {
       return (res.data['data'] as List)
           .map((e) => VehicleType.fromMap(e))
           .toList();

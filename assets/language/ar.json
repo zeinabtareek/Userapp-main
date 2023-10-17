@@ -427,5 +427,8 @@
   "finished": "المكتمله",
   "withdraw": "سحب",
   "no_data_to_show": "لا توجد بيانات لإظهارها",
+  "select_complain_type": "يجب عليك تحديد نوع الشكوى",
+  "write_complain": "يجب عليك كتابة شكواك",
+  "complaint_sent": "تم إرسال شكواك بنجاح.\nسنصل إليك قريبًا جدًا"،
   "privacy_policy": "سياسة الخصوصية"
 }

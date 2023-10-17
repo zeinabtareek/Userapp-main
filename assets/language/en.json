@@ -422,6 +422,9 @@
   "finished": "Completed",
   "no_data_to_show": "There is no data to show",
   "privacy_policy": "Privacy Policy",
+  "select_complain_type": "you should select a complaint type",
+  "write_complain": "You must write your complaint",
+   "complaint_sent": "your complaint sent successfully .\nwe will reach you very soon",
 
   "withdraw": "Withdraw"
 

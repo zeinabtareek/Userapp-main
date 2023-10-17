@@ -46,7 +46,8 @@ class CustomButton extends StatelessWidget {
         child:isLoading ?Padding(
           padding:   EdgeInsets.all(Dimensions.paddingSizeSeven),
           child: CircularProgressIndicator.adaptive(backgroundColor: backgroundColor??Colors.white,),
-        ): Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        ):
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           icon != null ? Padding(
             padding:   EdgeInsets.only(right: Dimensions.paddingSizeExtraSmall),
             child: Icon(icon, color: transparent ? Theme.of(context).primaryColor : iconColor?? Colors.white),

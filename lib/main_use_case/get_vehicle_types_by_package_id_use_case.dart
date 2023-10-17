@@ -13,7 +13,8 @@ class GetVehicleTypesByPackageIdUseCase {
   GetVehicleTypesByPackageIdUseCase(this.packageId);
   Future<List<VehicleType>> call() async {
     final res = await DioUtilNew.dio!.get(
-      '${AppConstants.vehicleTypesByPackageId}/$packageId',
+      ' /$packageId',
+      // '${AppConstants.vehicleTypesByPackageId}/$packageId',
     );
 
     if (res.data["status"] == 200 || res.data["status"] == "sucses") {

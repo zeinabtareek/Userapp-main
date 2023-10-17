@@ -112,4 +112,26 @@ class RideController extends GetxController implements GetxService {
     inputFarePriceController.text = currentFarePrice.toString();
     update();
   }
+
+  /// Set Rate For The Trip
+
+
+
+  // submitComplain()async{
+  //   if( initialSelectItem == null){
+  //     OverlayHelper.showErrorToast(Get.overlayContext!, 'select_complain_type'.tr);
+  //   }else
+  //   if(feedBackController.text.isEmpty ){
+  //     OverlayHelper.showErrorToast(Get.overlayContext!, 'write_complain'.tr);
+  //   }
+  //   else{
+  //     setState(ViewState.busy);
+  //     await helpAndSupportRepo.submitComplain(
+  //       message: feedBackController.text,
+  //       type:initialSelectItem,
+  //     );
+  //     setState(ViewState.idle);
+  //
+  //   }
+  // }
 }
