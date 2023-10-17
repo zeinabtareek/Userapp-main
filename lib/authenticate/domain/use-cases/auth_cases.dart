@@ -21,12 +21,12 @@ class AuthCases {
   }
 
   FDM forgetPassword(
-   BasePhoneReqModel sendOtpReqModel,
+    BasePhoneReqModel sendOtpReqModel,
   ) {
     return _data.forgetPassword(sendOtpReqModel);
   }
 
-  Future<User?> getUserData() {
+  Future<UserAuthModel?> getUserData() {
     return _data.getUserData();
   }
 
@@ -49,12 +49,12 @@ class AuthCases {
   }
 
   FDM sendOtp(
-   BasePhoneReqModel sendOtpReqModel,
+    BasePhoneReqModel sendOtpReqModel,
   ) {
     return _data.sendOtp(sendOtpReqModel);
   }
 
-  Future<bool?> setUserDate(User? user) {
+  Future<bool?> setUserDate(UserAuthModel? user) {
     return _data.setUserDate(user);
   }
 

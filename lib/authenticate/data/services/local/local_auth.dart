@@ -7,18 +7,17 @@ import '../../models/req-model/login_with_pass_req_model.dart';
 import '../../models/res-models/user_model.dart';
 import 'i_local_auth.dart';
 
-class LocalAuth implements ILocalAuth<User> {
- 
+class LocalAuth implements ILocalAuth<UserAuthModel> {
   final String key = "user";
 
   @override
-  Future<User?> getUser() {
+  Future<UserAuthModel?> getUser() {
     String jsn = CacheHelper.getValue(kay: key) as String;
-    return Future.value(User.fromJson(jsn));
+    return Future.value(UserAuthModel.fromJson(jsn));
   }
 
   @override
-  Future<bool?> setUser(User? user) async {
+  Future<bool?> setUser(UserAuthModel? user) async {
     if (user != null) {
       return CacheHelper.setValue(kay: key, value: user.toJson());
     } else {

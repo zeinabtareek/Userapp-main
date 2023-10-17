@@ -49,11 +49,10 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
   }
 
   void handelState() {
-       if (Get.find<RideController>().isBiddingOn) {
+    if (Get.find<RideController>().isBiddingOn) {
       Future.delayed(const Duration(seconds: 3), () async {
         print('object is called');
-    
-    
+
         // showGeneralDialog(
         //   context: context,
         //   barrierDismissible: true,
@@ -78,21 +77,19 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
         //     );
         //   },
         // );
-    ///
-        if (Get.find<RideController>().selectedCategory !=
+        ///
+        if (Get.find<RideController>().selectedCategoryTypeEnum !=
             RideType.parcel) {
           Get.find<RideController>()
               .updateRideCurrentState(RideState.afterAcceptRider);
-       Get.find<MapController>().notifyMapController();
-          await Future.delayed(const Duration(seconds: 2))
-              .then((value) {
+          Get.find<MapController>().notifyMapController();
+          await Future.delayed(const Duration(seconds: 2)).then((value) {
             Get.find<RideController>()
                 .updateRideCurrentState(RideState.otpSent);
             Get.find<MapController>().notifyMapController();
           });
-    
-          await Future.delayed(const Duration(seconds: 2))
-              .then((value) async {
+
+          await Future.delayed(const Duration(seconds: 2)).then((value) async {
             Get.dialog(
                 const ConfirmationTripDialog(
                   isStartedTrip: true,
@@ -104,9 +101,8 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
             Get.find<MapController>().notifyMapController();
             Get.back();
           });
-    
-          await Future.delayed(const Duration(seconds: 2))
-              .then((value) async {
+
+          await Future.delayed(const Duration(seconds: 2)).then((value) async {
             Get.dialog(
                 const ConfirmationTripDialog(
                   isStartedTrip: false,
@@ -119,23 +115,20 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
             Get.find<MapController>().notifyMapController();
             Get.back();
           });
-          await Future.delayed(const Duration(seconds: 0))
-              .then((value) async {
+          await Future.delayed(const Duration(seconds: 0)).then((value) async {
             Get.offAll(() => const PaymentScreen());
           });
         } else {
           Get.find<ParcelController>()
               .updateParcelState(ParcelDeliveryState.acceptRider);
-       Get.find<MapController>().notifyMapController();
-            Future.delayed(const Duration(seconds: 2))
-              .then((value) {
+          Get.find<MapController>().notifyMapController();
+          Future.delayed(const Duration(seconds: 2)).then((value) {
             Get.find<ParcelController>()
                 .updateParcelState(ParcelDeliveryState.otpSent);
             Get.find<MapController>().notifyMapController();
           });
-    
-            Future.delayed(const Duration(seconds: 2))
-              .then((value) async {
+
+          Future.delayed(const Duration(seconds: 2)).then((value) async {
             Get.dialog(
                 const ConfirmationTripDialog(
                   isStartedTrip: true,
@@ -147,9 +140,8 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
             Get.find<MapController>().notifyMapController();
             Get.back();
           });
-    
-            Future.delayed(const Duration(seconds: 2))
-              .then((value) async {
+
+          Future.delayed(const Duration(seconds: 2)).then((value) async {
             Get.dialog(
                 const ConfirmationTripDialog(
                   isStartedTrip: false,
@@ -162,64 +154,61 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
             Get.find<MapController>().notifyMapController();
             Get.back();
           });
-            Future.delayed(const Duration(seconds: 0))
-              .then((value) async {
+          Future.delayed(const Duration(seconds: 0)).then((value) async {
             Get.offAll(() => const PaymentScreen());
           });
         }
+
         ///
-    
-    
-    
-      // } else {
-      // Get.find<ParcelController>()
-      //     .updateParcelState(ParcelDeliveryState.acceptRider);
-      //
-      // await Future.delayed(const Duration(seconds: 2))
-      //     .then((value) {
-      // Get.find<ParcelController>()
-      //     .updateParcelState(ParcelDeliveryState.otpSent);
-      // Get.find<MapController>().notifyMapController();
-      // });
-      //
-      // await Future.delayed(const Duration(seconds: 2))
-      //     .then((value) async {
-      // Get.dialog(
-      // const ConfirmationTripDialog(
-      // isStartedTrip: true,
-      // ),
-      // barrierDismissible: false);
-      // await Future.delayed(const Duration(seconds: 5));
-      // Get.find<ParcelController>()
-      //     .updateParcelState(ParcelDeliveryState.parcelOngoing);
-      // Get.find<MapController>().notifyMapController();
-      // Get.back();
-      // });
-      //
-      // await Future.delayed(const Duration(seconds: 2))
-      //     .then((value) async {
-      // Get.dialog(
-      // const ConfirmationTripDialog(
-      // isStartedTrip: false,
-      // ),
-      // barrierDismissible: false);
-      // await Future.delayed(const Duration(seconds: 2));
-      // Get.find<ParcelController>()
-      //     .updateParcelState(ParcelDeliveryState.parcelComplete);
-      // //Get.back();
-      // Get.find<MapController>().notifyMapController();
-      // Get.back();
-      // });
-      // await Future.delayed(const Duration(seconds: 0))
-      //     .then((value) async {
-      // Get.offAll(() => const PaymentScreen());
-      // });
-      // }
-      //
+
+        // } else {
+        // Get.find<ParcelController>()
+        //     .updateParcelState(ParcelDeliveryState.acceptRider);
+        //
+        // await Future.delayed(const Duration(seconds: 2))
+        //     .then((value) {
+        // Get.find<ParcelController>()
+        //     .updateParcelState(ParcelDeliveryState.otpSent);
+        // Get.find<MapController>().notifyMapController();
+        // });
+        //
+        // await Future.delayed(const Duration(seconds: 2))
+        //     .then((value) async {
+        // Get.dialog(
+        // const ConfirmationTripDialog(
+        // isStartedTrip: true,
+        // ),
+        // barrierDismissible: false);
+        // await Future.delayed(const Duration(seconds: 5));
+        // Get.find<ParcelController>()
+        //     .updateParcelState(ParcelDeliveryState.parcelOngoing);
+        // Get.find<MapController>().notifyMapController();
+        // Get.back();
+        // });
+        //
+        // await Future.delayed(const Duration(seconds: 2))
+        //     .then((value) async {
+        // Get.dialog(
+        // const ConfirmationTripDialog(
+        // isStartedTrip: false,
+        // ),
+        // barrierDismissible: false);
+        // await Future.delayed(const Duration(seconds: 2));
+        // Get.find<ParcelController>()
+        //     .updateParcelState(ParcelDeliveryState.parcelComplete);
+        // //Get.back();
+        // Get.find<MapController>().notifyMapController();
+        // Get.back();
+        // });
+        // await Future.delayed(const Duration(seconds: 0))
+        //     .then((value) async {
+        // Get.offAll(() => const PaymentScreen());
+        // });
+        // }
+        //
       });
-    // }
-    }
-    else {
+      // }
+    } else {
       Future.delayed(const Duration(seconds: 3), () {
         if (Get.find<RideController>().currentRideState != RideType.parcel &&
             widget.fromPage == 'ride') {
@@ -242,9 +231,10 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               TollTipWidget(
-                  title: rideController.selectedCategory == RideType.parcel
+                  title: rideController.selectedCategoryTypeEnum ==
+                          RideType.parcel
                       ? 'deliveryman'
-                      : rideController.selectedCategory == RideType.bike
+                      : rideController.selectedCategoryTypeEnum == RideType.bike
                           ? "rider"
                           : "drivccer"),
               K.sizedBoxH0,
@@ -263,9 +253,9 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
                       vertical: Dimensions.paddingSizeExtraLarge),
                   child: Image.asset(Images.findinDeliveryman, width: 70)),
               Text(
-                  rideController.selectedCategory == RideType.parcel
+                  rideController.selectedCategoryTypeEnum == RideType.parcel
                       ? 'finding_deliveryman'.tr
-                      : rideController.selectedCategory == RideType.bike
+                      : rideController.selectedCategoryTypeEnum == RideType.bike
                           ? "finding_rider".tr
                           : "finding_driver".tr,
                   style: textMedium.copyWith(
@@ -294,7 +284,6 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
                   }
 
                   Get.find<MapController>().notifyMapController();
-
                 },
               )
             ],

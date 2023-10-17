@@ -158,7 +158,7 @@ class AuthController extends GetxController {
             await authCases.saveAuthUserData(null);
           }
 
-          final User user = res!.user!;
+          final UserAuthModel user = res!.user!;
 
           await authCases.setUserDate(user);
           // TODO:  isNotVerifiedPhone
@@ -260,7 +260,7 @@ class AuthController extends GetxController {
       checkStatus(
         res,
         onSuccess: (res) {
-          User user = res!.data!.user!;
+          UserAuthModel user = res!.data!.user!;
           authCases.setUserDate(user);
           toCompleteDataScreen();
         },
@@ -326,7 +326,7 @@ class AuthController extends GetxController {
           debugPrint(' completeData-- res $res data ${res?.data}');
           await authCases.setUserDate(null);
 // TODO:  make sure user have token
-          User user = res!.data!.user!;
+          UserAuthModel user = res!.data!.user!;
           await authCases.setUserDate(user);
           Get.to(
             () => VerificationScreen(
@@ -662,8 +662,6 @@ class AuthController extends GetxController {
       showSuccessToast: true,
     );
   }
-
-
 
   changePass() async {
     if (resetNewPasswordController.text.trim().isEmpty ||

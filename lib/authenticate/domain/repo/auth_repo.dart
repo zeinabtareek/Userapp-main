@@ -46,9 +46,9 @@ abstract class AuthRepo {
 
   Future<DataState<MsgModel>> changePass(ChangePasswordReqModel req);
 
-  Future<bool?> setUserDate(User? user);
+  Future<bool?> setUserDate(UserAuthModel? user);
 
-  Future<User?> getUserData();
+  Future<UserAuthModel?> getUserData();
 
   Future<bool> isAuthenticated();
 

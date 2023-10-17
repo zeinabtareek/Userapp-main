@@ -48,7 +48,7 @@ class RiderDetailsWidget extends StatelessWidget {
           Expanded(
               child: GestureDetector(
             onTap: () {
-              if (Get.find<RideController>().selectedCategory !=
+              if (Get.find<RideController>().selectedCategoryTypeEnum !=
                   RideType.parcel) {
                 Get.find<RideController>()
                     .updateRideCurrentState(RideState.acceptingRider);
@@ -166,7 +166,7 @@ class RiderDetailsWidget extends StatelessWidget {
               backgroundColor: Theme.of(context).hintColor.withOpacity(0.2),
               boldText: false,
               onPressed: () {
-                if (Get.find<RideController>().selectedCategory !=
+                if (Get.find<RideController>().selectedCategoryTypeEnum !=
                     RideType.parcel) {
                   Get.find<RideController>()
                       .updateRideCurrentState(RideState.initial);
@@ -192,7 +192,7 @@ class RiderDetailsWidget extends StatelessWidget {
                 if (fromNotification) {
                   Get.back();
                 }
-                if (Get.find<RideController>().selectedCategory !=
+                if (Get.find<RideController>().selectedCategoryTypeEnum !=
                     RideType.parcel) {
                   Get.find<RideController>()
                       .updateRideCurrentState(RideState.afterAcceptRider);

@@ -18,143 +18,147 @@ class FindDriverCustomBtn2 extends StatelessWidget {
   final String fromPage;
   final bool whoWillPay;
 
-  const FindDriverCustomBtn2({Key? key, required this.fromPage, required this.whoWillPay}) : super(key: key);
-
+  const FindDriverCustomBtn2(
+      {Key? key, required this.fromPage, required this.whoWillPay})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RideController>(builder: (rideController) {
       return Row(
         children: [
-
           Expanded(
               child: CustomButton(
             radius: 25,
-            buttonText: Get.find<RideController>().selectedCategory ==
-                RideType.bike
+            buttonText: Get.find<RideController>().selectedCategoryTypeEnum ==
+                    RideType.bike
                 ? Strings.findRider.tr
-                : Get.find<RideController>().selectedCategory == RideType.car ||
-                Get.find<RideController>().selectedCategory ==
-                    RideType.luxury
-                ? Strings.findDriver.tr
-                :  Strings.findDeliveryMan.tr,
-                onPressed: () async {
-                  if (fromPage == 'ride') {
-                    Get.find<RideController>()
-                        .updateRideCurrentState(RideState.findingRider);
-                  } else {
+                : Get.find<RideController>().selectedCategoryTypeEnum ==
+                            RideType.car ||
+                        Get.find<RideController>().selectedCategoryTypeEnum ==
+                            RideType.luxury
+                    ? Strings.findDriver.tr
+                    : Strings.findDeliveryMan.tr,
+            onPressed: () async {
+              if (fromPage == 'ride') {
+                Get.find<RideController>()
+                    .updateRideCurrentState(RideState.findingRider);
+              } else {
                 print('555555');
+
                 ///previous code
 
-                  if (Get.find<RideController>().selectedCategory !=   RideType.parcel) {
-                    Get.find<RideController>() .updateRideCurrentState(RideState.afterAcceptRider);
+                if (Get.find<RideController>().selectedCategoryTypeEnum !=
+                    RideType.parcel) {
+                  Get.find<RideController>()
+                      .updateRideCurrentState(RideState.afterAcceptRider);
 
+                  Get.find<MapController>().notifyMapController();
+
+                  await Future.delayed(const Duration(seconds: 2))
+                      .then((value) {
+                    print('####first');
+                    Get.find<RideController>()
+                        .updateRideCurrentState(RideState.otpSent);
                     Get.find<MapController>().notifyMapController();
+                  });
 
-                    await Future.delayed(const Duration(seconds: 2))
-                        .then((value) {
-                          print('####first');
-                      Get.find<RideController>()
-                          .updateRideCurrentState(RideState.otpSent);
-                      Get.find<MapController>().notifyMapController();
-                    });
-
-                    await Future.delayed(const Duration(seconds: 2))
-                        .then((value) async {                          print('####second');
+                  await Future.delayed(const Duration(seconds: 2))
+                      .then((value) async {
+                    print('####second');
 
                     Get.dialog(
+                        const ConfirmationTripDialog(
+                          isStartedTrip: true,
+                        ),
+                        barrierDismissible: false);
+                    await Future.delayed(const Duration(seconds: 5));
+                    print('####third');
+                    Get.find<RideController>()
+                        .updateRideCurrentState(RideState.ongoingRide);
+                    Get.find<MapController>().notifyMapController();
+                    Get.back();
+                  });
+
+                  await Future.delayed(const Duration(seconds: 2))
+                      .then((value) async {
+                    print('####forth');
+                    Get.dialog(
+                        const ConfirmationTripDialog(
+                          isStartedTrip: false,
+                        ),
+                        barrierDismissible: false);
+                    await Future.delayed(const Duration(seconds: 2));
+                    print('####fifth');
+                    Get.find<RideController>()
+                        .updateRideCurrentState(RideState.completeRide);
+                    //Get.back();
+                    Get.find<MapController>().notifyMapController();
+                    Get.back();
+                  });
+                  await Future.delayed(const Duration(seconds: 0))
+                      .then((value) async {
+                    print('####six');
+                    Get.off(() => const PaymentScreen());
+                  });
+                } else {
+                  Get.find<ParcelController>()
+                      .updateParcelState(ParcelDeliveryState.acceptRider);
+
+                  await Future.delayed(const Duration(seconds: 2))
+                      .then((value) {
+                    print('####seven');
+                    Get.find<ParcelController>()
+                        .updateParcelState(ParcelDeliveryState.otpSent);
+                    Get.find<MapController>().notifyMapController();
+                  });
+                  if (whoWillPay == false) //parcelController.payReceiver
+                  {
+                    await Future.delayed(const Duration(seconds: 2))
+                        .then((value) async {
+                      print('####eight');
+                      Get.dialog(
                           const ConfirmationTripDialog(
+                            //calculation ConfirmationTripDialog
                             isStartedTrip: true,
                           ),
                           barrierDismissible: false);
                       await Future.delayed(const Duration(seconds: 5));
-                    print('####third');
-                      Get.find<RideController>()
-                          .updateRideCurrentState(RideState.ongoingRide);
-                      Get.find<MapController>().notifyMapController();
-                      Get.back();
-                    });
-
-                    await Future.delayed(const Duration(seconds: 2))
-                        .then((value) async {  print('####forth');
-                      Get.dialog(
-                          const ConfirmationTripDialog(
-                            isStartedTrip: false,
-                          ),
-                          barrierDismissible: false);
-                      await Future.delayed(const Duration(seconds: 2));
-                    print('####fifth');
-                      Get.find<RideController>()
-                          .updateRideCurrentState(RideState.completeRide);
-                      //Get.back();
-                      Get.find<MapController>().notifyMapController();
-                      Get.back();
-                    });
-                    await Future.delayed(const Duration(seconds: 0))
-                        .then((value) async {
-                      print('####six');
-                      Get.off(() => const PaymentScreen());
-                    });
-                  } else {
-                    Get.find<ParcelController>()
-                        .updateParcelState(ParcelDeliveryState.acceptRider);
-
-                    await Future.delayed(const Duration(seconds: 2))
-                        .then((value) { print('####seven');
                       Get.find<ParcelController>()
-                          .updateParcelState(ParcelDeliveryState.otpSent);
-                      Get.find<MapController>().notifyMapController();
-                    });
-                    if( whoWillPay==false)//parcelController.payReceiver
-                        {
-                      await Future.delayed(const Duration(seconds: 2))
-                          .then((value) async {
-                        print('####eight');
-                        Get.dialog(
-                            const ConfirmationTripDialog( //calculation ConfirmationTripDialog
-                              isStartedTrip: true,
-                            ),
-                            barrierDismissible: false);
-                        await Future.delayed(const Duration(seconds: 5));
-                        Get.find<ParcelController>()
-                            .updateParcelState(
-                            ParcelDeliveryState.parcelOngoing);
-                        Get.find<MapController>().notifyMapController();
-                        Get.back();
-                      });
-                    }
-
-                    await Future.delayed(const Duration(seconds: 2))
-                        .then((value) async {
-                      print('####nine');
-                      Get.dialog(
-                          const ConfirmationTripDialog(
-                            isStartedTrip: false,
-                          ),
-                          barrierDismissible: false);
-                      await Future.delayed(const Duration(seconds: 2));
-                      print('####ten');
-                      Get.find<ParcelController>()
-                          .updateParcelState(ParcelDeliveryState.parcelComplete);
-                      //Get.back();
+                          .updateParcelState(ParcelDeliveryState.parcelOngoing);
                       Get.find<MapController>().notifyMapController();
                       Get.back();
-                    });
-                    await Future.delayed(const Duration(seconds: 0))
-                        .then((value) async { print('####eleven');
-
-
-                          if( whoWillPay==true)//parcelController.payReceiver
-                            {
-                            Get.off(()=> const ReviewScreen());
-
-                          }
-                          else if( whoWillPay==false){
-                            Get.off(() => const PaymentScreen());
-                          }
                     });
                   }
 
+                  await Future.delayed(const Duration(seconds: 2))
+                      .then((value) async {
+                    print('####nine');
+                    Get.dialog(
+                        const ConfirmationTripDialog(
+                          isStartedTrip: false,
+                        ),
+                        barrierDismissible: false);
+                    await Future.delayed(const Duration(seconds: 2));
+                    print('####ten');
+                    Get.find<ParcelController>()
+                        .updateParcelState(ParcelDeliveryState.parcelComplete);
+                    //Get.back();
+                    Get.find<MapController>().notifyMapController();
+                    Get.back();
+                  });
+                  await Future.delayed(const Duration(seconds: 0))
+                      .then((value) async {
+                    print('####eleven');
+
+                    if (whoWillPay == true) //parcelController.payReceiver
+                    {
+                      Get.off(() => const ReviewScreen());
+                    } else if (whoWillPay == false) {
+                      Get.off(() => const PaymentScreen());
+                    }
+                  });
+                }
               }
               Get.find<MapController>().notifyMapController();
             },
@@ -165,155 +169,157 @@ class FindDriverCustomBtn2 extends StatelessWidget {
     });
   }
 }
+
 class FindDriverCustomBtn extends StatelessWidget {
   final String fromPage;
   final bool whoWillPay;
 
-  const FindDriverCustomBtn({Key? key, required this.fromPage, required this.whoWillPay}) : super(key: key);
-
+  const FindDriverCustomBtn(
+      {Key? key, required this.fromPage, required this.whoWillPay})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RideController>(builder: (rideController) {
       return Row(
         children: [
-
           Expanded(
               child: CustomButton(
             radius: 25,
-            buttonText: Get.find<RideController>().selectedCategory ==
-                RideType.bike
+            buttonText: Get.find<RideController>().selectedCategoryTypeEnum ==
+                    RideType.bike
                 ? Strings.findRider.tr
-                : Get.find<RideController>().selectedCategory == RideType.car ||
-                Get.find<RideController>().selectedCategory ==
-                    RideType.luxury
-                ? Strings.getPrice.tr
-                :  Strings.findDeliveryMan.tr,
-                onPressed: () async {
-                  if (fromPage == 'ride') {
-                    Get.find<RideController>()
-                        .updateRideCurrentState(RideState.getPrice);
+                : Get.find<RideController>().selectedCategoryTypeEnum ==
+                            RideType.car ||
+                        Get.find<RideController>().selectedCategoryTypeEnum ==
+                            RideType.luxury
+                    ? Strings.getPrice.tr
+                    : Strings.findDeliveryMan.tr,
+            onPressed: () async {
+              if (fromPage == 'ride') {
+                Get.find<RideController>()
+                    .updateRideCurrentState(RideState.getPrice);
 
-                    // Get.find<RideController>()
-                    //     .updateRideCurrentState(RideState.findingRider);
-                  } else {
+                // Get.find<RideController>()
+                //     .updateRideCurrentState(RideState.findingRider);
+              } else {
                 print('555555');
+
                 ///previous code
 
-                  if (Get.find<RideController>().selectedCategory !=   RideType.parcel) {
-                    Get.find<RideController>() .updateRideCurrentState(RideState.getPrice);
-                    Get.find<RideController>() .updateRideCurrentState(RideState.afterAcceptRider);
+                if (Get.find<RideController>().selectedCategoryTypeEnum !=
+                    RideType.parcel) {
+                  Get.find<RideController>()
+                      .updateRideCurrentState(RideState.getPrice);
+                  Get.find<RideController>()
+                      .updateRideCurrentState(RideState.afterAcceptRider);
 
+                  Get.find<MapController>().notifyMapController();
+
+                  await Future.delayed(const Duration(seconds: 2))
+                      .then((value) {
+                    print('####first');
+                    Get.find<RideController>()
+                        .updateRideCurrentState(RideState.otpSent);
                     Get.find<MapController>().notifyMapController();
+                  });
 
-                    await Future.delayed(const Duration(seconds: 2))
-                        .then((value) {
-                          print('####first');
-                      Get.find<RideController>()
-                          .updateRideCurrentState(RideState.otpSent);
-                      Get.find<MapController>().notifyMapController();
-                    });
-
-                    await Future.delayed(const Duration(seconds: 2))
-                        .then((value) async {                          print('####second');
+                  await Future.delayed(const Duration(seconds: 2))
+                      .then((value) async {
+                    print('####second');
 
                     Get.dialog(
+                        const ConfirmationTripDialog(
+                          isStartedTrip: true,
+                        ),
+                        barrierDismissible: false);
+                    await Future.delayed(const Duration(seconds: 5));
+                    print('####third');
+                    Get.find<RideController>()
+                        .updateRideCurrentState(RideState.ongoingRide);
+                    Get.find<MapController>().notifyMapController();
+                    Get.back();
+                  });
+
+                  await Future.delayed(const Duration(seconds: 2))
+                      .then((value) async {
+                    print('####forth');
+                    Get.dialog(
+                        const ConfirmationTripDialog(
+                          isStartedTrip: false,
+                        ),
+                        barrierDismissible: false);
+                    await Future.delayed(const Duration(seconds: 2));
+                    print('####fifth');
+                    Get.find<RideController>()
+                        .updateRideCurrentState(RideState.completeRide);
+                    //Get.back();
+                    Get.find<MapController>().notifyMapController();
+                    Get.back();
+                  });
+                  await Future.delayed(const Duration(seconds: 0))
+                      .then((value) async {
+                    print('####six');
+                    Get.off(() => const PaymentScreen());
+                  });
+                } else {
+                  Get.find<ParcelController>()
+                      .updateParcelState(ParcelDeliveryState.acceptRider);
+
+                  await Future.delayed(const Duration(seconds: 2))
+                      .then((value) {
+                    print('####seven');
+                    Get.find<ParcelController>()
+                        .updateParcelState(ParcelDeliveryState.otpSent);
+                    Get.find<MapController>().notifyMapController();
+                  });
+                  if (whoWillPay == false) //parcelController.payReceiver
+                  {
+                    await Future.delayed(const Duration(seconds: 2))
+                        .then((value) async {
+                      print('####eight');
+                      Get.dialog(
                           const ConfirmationTripDialog(
+                            //calculation ConfirmationTripDialog
                             isStartedTrip: true,
                           ),
                           barrierDismissible: false);
                       await Future.delayed(const Duration(seconds: 5));
-                    print('####third');
-                      Get.find<RideController>()
-                          .updateRideCurrentState(RideState.ongoingRide);
+                      Get.find<ParcelController>()
+                          .updateParcelState(ParcelDeliveryState.parcelOngoing);
                       Get.find<MapController>().notifyMapController();
                       Get.back();
-                    });
-
-                    await Future.delayed(const Duration(seconds: 2))
-                        .then((value) async {  print('####forth');
-                      Get.dialog(
-                          const ConfirmationTripDialog(
-                            isStartedTrip: false,
-                          ),
-                          barrierDismissible: false);
-                      await Future.delayed(const Duration(seconds: 2));
-                    print('####fifth');
-                      Get.find<RideController>()
-                          .updateRideCurrentState(RideState.completeRide);
-                      //Get.back();
-                      Get.find<MapController>().notifyMapController();
-                      Get.back();
-                    });
-                    await Future.delayed(const Duration(seconds: 0))
-                        .then((value) async {
-                      print('####six');
-                      Get.off(() => const PaymentScreen());
                     });
                   }
 
-
-                  else {
+                  await Future.delayed(const Duration(seconds: 2))
+                      .then((value) async {
+                    print('####nine');
+                    Get.dialog(
+                        const ConfirmationTripDialog(
+                          isStartedTrip: false,
+                        ),
+                        barrierDismissible: false);
+                    await Future.delayed(const Duration(seconds: 2));
+                    print('####ten');
                     Get.find<ParcelController>()
-                        .updateParcelState(ParcelDeliveryState.acceptRider);
+                        .updateParcelState(ParcelDeliveryState.parcelComplete);
+                    //Get.back();
+                    Get.find<MapController>().notifyMapController();
+                    Get.back();
+                  });
+                  await Future.delayed(const Duration(seconds: 0))
+                      .then((value) async {
+                    print('####eleven');
 
-
-                    await Future.delayed(const Duration(seconds: 2))
-                        .then((value) { print('####seven');
-                      Get.find<ParcelController>()
-                          .updateParcelState(ParcelDeliveryState.otpSent);
-                      Get.find<MapController>().notifyMapController();
-                    });
-                    if( whoWillPay==false)//parcelController.payReceiver
-                        {
-                      await Future.delayed(const Duration(seconds: 2))
-                          .then((value) async {
-                        print('####eight');
-                        Get.dialog(
-                            const ConfirmationTripDialog( //calculation ConfirmationTripDialog
-                              isStartedTrip: true,
-                            ),
-                            barrierDismissible: false);
-                        await Future.delayed(const Duration(seconds: 5));
-                        Get.find<ParcelController>()
-                            .updateParcelState(
-                            ParcelDeliveryState.parcelOngoing);
-                        Get.find<MapController>().notifyMapController();
-                        Get.back();
-                      });
+                    if (whoWillPay == true) //parcelController.payReceiver
+                    {
+                      Get.off(() => const ReviewScreen());
+                    } else if (whoWillPay == false) {
+                      Get.off(() => const PaymentScreen());
                     }
-
-                    await Future.delayed(const Duration(seconds: 2))
-                        .then((value) async {
-                      print('####nine');
-                      Get.dialog(
-                          const ConfirmationTripDialog(
-                            isStartedTrip: false,
-                          ),
-                          barrierDismissible: false);
-                      await Future.delayed(const Duration(seconds: 2));
-                      print('####ten');
-                      Get.find<ParcelController>()
-                          .updateParcelState(ParcelDeliveryState.parcelComplete);
-                      //Get.back();
-                      Get.find<MapController>().notifyMapController();
-                      Get.back();
-                    });
-                    await Future.delayed(const Duration(seconds: 0))
-                        .then((value) async { print('####eleven');
-
-
-                          if( whoWillPay==true)//parcelController.payReceiver
-                            {
-                            Get.off(()=> const ReviewScreen());
-
-                          }
-                          else if( whoWillPay==false){
-                            Get.off(() => const PaymentScreen());
-                          }
-                    });
-                  }
-
+                  });
+                }
               }
               Get.find<MapController>().notifyMapController();
             },
@@ -324,4 +330,3 @@ class FindDriverCustomBtn extends StatelessWidget {
     });
   }
 }
-

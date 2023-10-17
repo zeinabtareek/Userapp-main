@@ -11,7 +11,7 @@ class HOODAuthorizedResModel extends BaseResModel<HOODAuthorizedResModel>
   String? msg;
   @override
   int? status;
-  User? user;
+  UserAuthModel? user;
 
   HOODAuthorizedResModel(
     this.user, {
@@ -21,7 +21,7 @@ class HOODAuthorizedResModel extends BaseResModel<HOODAuthorizedResModel>
 
   factory HOODAuthorizedResModel.fromJson(Map<String, dynamic> json) {
     return HOODAuthorizedResModel(
-      json["data"] != null ? User.fromMap(json["data"]) : null,
+      json["data"] != null ? UserAuthModel.fromMap(json["data"]) : null,
       msg: json["message"],
       status: json['status'],
     );
@@ -47,8 +47,8 @@ class HOODAuthorizedResModel extends BaseResModel<HOODAuthorizedResModel>
   @override
   String toString() => 'HOODAuthorizedResModel(user: $user)';
 
-  bool get isSuccess=> user!=null&&status==200;
-  
+  bool get isSuccess => user != null && status == 200;
+
   @override
   int get statusNumber => this.status!;
 }

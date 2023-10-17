@@ -77,7 +77,7 @@ Future<Map<String, Map<String, String>>> init() async {
 
   // Controller
 
-  Get.lazyPut(() => CategoryController(categoryRepo: Get.find()));
+  Get.lazyPut(() => CategoryController());
   Get.lazyPut(() => ConfigController(configRepo: Get.find()));
   Get.lazyPut(() => ThemeController(sharedPreferences: Get.find()));
   Get.lazyPut(() => LocalizationController(sharedPreferences: Get.find()));

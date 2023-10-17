@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/repository/ride_repo.dart';
 
+import '../../home/model/categoty_model.dart';
+
 enum RideState {
   initial,
   riseFare,
@@ -22,7 +24,9 @@ class RideController extends GetxController implements GetxService {
   RideController({required this.rideRepo});
 
   var currentRideState = RideState.initial;
-  var selectedCategory = RideType.car;
+  var selectedCategoryTypeEnum = RideType.car;
+
+  Rxn<CategoryModel> selectedCategory = Rxn();
   var selectedSubCategory = RideType.car;
 
   bool isBiddingOn = true;
@@ -67,7 +71,7 @@ class RideController extends GetxController implements GetxService {
   }
 
   void updateSelectedRideType(RideType newType) {
-    selectedCategory = newType;
+    selectedCategoryTypeEnum = newType;
     update();
   }
 
@@ -88,7 +92,7 @@ class RideController extends GetxController implements GetxService {
 
   void resetControllerValue() {
     currentRideState = RideState.initial;
-    selectedCategory = RideType.car;
+    selectedCategoryTypeEnum = RideType.car;
     selectedSubCategory = RideType.car;
     rideCategoryIndex = 0;
     rideSubCategoryIndex = 0;

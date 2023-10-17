@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'country_model.dart';
 
-class User {
+class UserAuthModel {
   int? id;
   String? phoneCode;
   String? phone;
@@ -22,7 +22,7 @@ class User {
   Country? country;
   String? token;
   DateTime? createdAt;
-  User({
+  UserAuthModel({
     this.id,
     this.phoneCode,
     this.phone,
@@ -44,8 +44,8 @@ class User {
     this.createdAt,
   });
 
-  factory User.fromMap(Map<String, dynamic> json) {
-    return User(
+  factory UserAuthModel.fromMap(Map<String, dynamic> json) {
+    return UserAuthModel(
       id: json["id"],
       phoneCode: json["phone_code"],
       phone: json["phone"],
@@ -95,7 +95,8 @@ class User {
 
   String toJson() => json.encode(toMap());
 
- factory User. fromJson(String jsn) => User.fromMap (json.decode(jsn));
+  factory UserAuthModel.fromJson(String jsn) =>
+      UserAuthModel.fromMap(json.decode(jsn));
 
   setEmil(String emil) => email = emil;
 
@@ -107,7 +108,7 @@ class User {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is User &&
+    return other is UserAuthModel &&
         other.id == id &&
         other.phoneCode == phoneCode &&
         other.phone == phone &&

@@ -17,7 +17,11 @@ class AppConstants {
   static const String loginUri = '/api/v1/auth/login';
   static const String notificationUri = '/api/v1/customer/notifications';
 
-  static const String vehicleTypesByPackageId = "/api/user/vehicle_types_by_package_id/";
+  static const String vehicleTypesByPackageId =
+      "/api/user/vehicle_types_by_package_id/";
+  static const String packagesDetails = "/api/user/packages_details";
+  static const String packages = "/api/user/packages";
+  static const String parcelCategories = "/api/user/parcel_categories";
 
   // Shared Key
   static const String notification = 'demand_notification';

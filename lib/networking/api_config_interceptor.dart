@@ -21,12 +21,9 @@ class ApiConfigInterceptor extends InterceptorsWrapper {
     debugPrint('interceptor $loggingTag');
 
     if (await sl<AuthCases>().isAuthenticated()) {
-      User? user =
-          await sl<AuthCases>().getUserData();
-          
-          options.headers.addAll({
-            "Authorization":"Bearer ${user!.tkn}"
-          });
+      UserAuthModel? user = await sl<AuthCases>().getUserData();
+
+      options.headers.addAll({"Authorization": "Bearer ${user!.tkn}"});
     }
 
     debugPrint(

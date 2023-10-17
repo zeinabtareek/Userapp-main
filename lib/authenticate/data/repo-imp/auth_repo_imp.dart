@@ -33,10 +33,10 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-          return DataFailedErrorMsg(res.data.msg ?? "",res.data);
+        return DataFailedErrorMsg(res.data.msg ?? "", res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString(),null);
+      return DataFailedErrorMsg(e.toString(), null);
     }
   }
 
@@ -49,15 +49,15 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-         return DataFailedErrorMsg(res.data.msg ?? "",res.data);
+        return DataFailedErrorMsg(res.data.msg ?? "", res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString(),null);
+      return DataFailedErrorMsg(e.toString(), null);
     }
   }
 
   @override
-  Future<User?> getUserData() {
+  Future<UserAuthModel?> getUserData() {
     return localAuth.getUser();
   }
 
@@ -75,10 +75,10 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-        return DataFailedErrorMsg(res.data.msg ?? "",res.data);
+        return DataFailedErrorMsg(res.data.msg ?? "", res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString(),null);
+      return DataFailedErrorMsg(e.toString(), null);
     }
   }
 
@@ -91,10 +91,10 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-        return DataFailedErrorMsg(res.data.msg ?? "",res.data);
+        return DataFailedErrorMsg(res.data.msg ?? "", res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString(),null);
+      return DataFailedErrorMsg(e.toString(), null);
     }
   }
 
@@ -107,10 +107,10 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-        return DataFailedErrorMsg(res.data.msg ?? "",res.data);
+        return DataFailedErrorMsg(res.data.msg ?? "", res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString(),null);
+      return DataFailedErrorMsg(e.toString(), null);
     }
   }
 
@@ -122,15 +122,15 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-         return DataFailedErrorMsg(res.data.msg ?? "",res.data);
+        return DataFailedErrorMsg(res.data.msg ?? "", res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString(),null);
+      return DataFailedErrorMsg(e.toString(), null);
     }
   }
 
   @override
-  Future<bool?> setUserDate(User? user) {
+  Future<bool?> setUserDate(UserAuthModel? user) {
     return localAuth.setUser(user);
   }
 
@@ -143,10 +143,10 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-         return DataFailedErrorMsg(res.data.msg ?? "",res.data);
+        return DataFailedErrorMsg(res.data.msg ?? "", res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString(),null);
+      return DataFailedErrorMsg(e.toString(), null);
     }
   }
 
@@ -159,10 +159,10 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-        return DataFailedErrorMsg(res.data.msg ?? "",res.data);
+        return DataFailedErrorMsg(res.data.msg ?? "", res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString(),null);
+      return DataFailedErrorMsg(e.toString(), null);
     }
   }
 
@@ -173,10 +173,10 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-        return DataFailedErrorMsg(res.data.msg ?? "",res.data);
+        return DataFailedErrorMsg(res.data.msg ?? "", res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString(),null);
+      return DataFailedErrorMsg(e.toString(), null);
     }
   }
 
@@ -203,10 +203,10 @@ class AuthRepoImp implements AuthRepo {
       if (res.response.statusCode == HttpStatus.ok) {
         return DataSuccess(res.data);
       } else {
-         return DataFailedErrorMsg(res.data.msg ?? "",res.data);
+        return DataFailedErrorMsg(res.data.msg ?? "", res.data);
       }
     } catch (e) {
-      return DataFailedErrorMsg(e.toString(),null);
+      return DataFailedErrorMsg(e.toString(), null);
     }
   }
 
