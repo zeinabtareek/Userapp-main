@@ -12,11 +12,12 @@ class AppConstants {
   static const String getAllHistory = '/api/user/orders?status=';
   static const String getAllTransactions = '/api/user/all_transactions';
 
-///****************
+  ///****************
   static const String configUri = '/api/v1/config';
   static const String loginUri = '/api/v1/auth/login';
   static const String notificationUri = '/api/v1/customer/notifications';
 
+  static const String vehicleTypesByPackageId = "/api/user/vehicle_types_by_package_id/";
 
   // Shared Key
   static const String notification = 'demand_notification';
@@ -43,16 +44,21 @@ class AppConstants {
   static const String signError = 'signError';
   static const String serverFailure = 'serverFailure';
 
-
 //map api key
 
   static const String mapKey = 'AIzaSyBvK3ADi17SjO55E46KGr2RT5vSj2nyRpI';
 
-
-
   static List<LanguageModel> languages = [
-    LanguageModel(imageUrl: Images.unitedKingdom, languageName: 'English', countryCode: 'US', languageCode: 'en'),
-    LanguageModel(imageUrl: Images.saudi, languageName: 'Arabic', countryCode: 'SA', languageCode: 'ar'),
+    LanguageModel(
+        imageUrl: Images.unitedKingdom,
+        languageName: 'English',
+        countryCode: 'US',
+        languageCode: 'en'),
+    LanguageModel(
+        imageUrl: Images.saudi,
+        languageName: 'Arabic',
+        countryCode: 'SA',
+        languageCode: 'ar'),
   ];
 
   static const int limitOfPickedIdentityImageNumber = 2;
@@ -79,5 +85,4 @@ class AppConstants {
 
   // static double pinVisiblePositions=20;
   // static double pinInVisiblePositions=-300;
-
 }
