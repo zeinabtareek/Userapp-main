@@ -31,6 +31,7 @@ import 'package:ride_sharing_user_app/localization/language_model.dart';
 import 'package:ride_sharing_user_app/localization/localization_controller.dart';
 import 'package:ride_sharing_user_app/theme/theme_controller.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
+import 'package:ride_sharing_user_app/view/screens/support/controller/support_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/controller/wallet_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/repository/wallet_repo.dart';
 
@@ -43,6 +44,7 @@ import '../view/screens/history/controller/history_controller.dart';
 import '../view/screens/history/repository/history_repo.dart';
 import '../view/screens/notification/controller/notification_controller.dart';
 import '../view/screens/profile/profile_screen/controller/user_controller.dart';
+import '../view/screens/support/repository/help_and_support_repository.dart';
 import '../view/screens/where_to_go/controller/where_to_go_controller.dart';
 import '../view/screens/where_to_go/repository/set_map_repo.dart';
 import 'cache_helper.dart';
@@ -73,6 +75,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => RideRepo(apiClient: Get.find()));
   Get.lazyPut(() => SetMapRepo(apiClient: Get.find()));
   Get.lazyPut(() => PaymentRepo(apiClient: Get.find()));
+  Get.lazyPut<HelpAndSupportRepo>(() => HelpAndSupportRepo());
 
 
   // Controller
@@ -103,7 +106,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut<AbsLogger>(() => DebugLogger());
 
   Get.put<IConnectivityService>(ConnectivityService(Get.find<AbsLogger>()));
-
+  Get.lazyPut<SupportController>(() => SupportController());
   //
   // Retrieving localized data
   Map<String, Map<String, String>> languages = {};

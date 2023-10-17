@@ -8,6 +8,7 @@ import '../../../../helper/network/dio_integration.dart';
 import '../../../../helper/network/error_handler.dart';
 import '../../../../util/app_constants.dart';
 import '../model/history_model.dart';
+import '../model/support_model.dart';
 
 class HistoryRepo {
 
@@ -23,7 +24,8 @@ class HistoryRepo {
 
       debugPrint('######${response.data }');
       if (response.statusCode == 200) {
-        final model = HistoryModel.fromJson(response.data);
+        final model = SupportModel.fromJson(response.data);
+        // final model = HistoryModel.fromJson(response.data);
         return model.data;
       } else {
         throw UnimplementedError();

@@ -228,6 +228,7 @@ class Strings {
   static const pending = 'pending';
   static const finished = 'finished';
   static const withdraw = 'withdraw';
+  static const noDataToShow = 'no_data_to_show';
 
 
 
