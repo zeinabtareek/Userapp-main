@@ -35,7 +35,7 @@ class HtmlViewerScreen extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             child: GetBuilder<SupportController>(
 
-              initState: (context) => Get.find<SupportController>().getAllSetting(),
+            //  initState: (context) =>// Get.find<SupportController>().getAllSetting(),
     builder: (helpAndSupportController) {
     return Column(
               children: [
