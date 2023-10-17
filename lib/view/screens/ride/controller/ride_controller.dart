@@ -136,4 +136,7 @@ class RideController extends GetxController implements GetxService {
   //
   //   }
   // }
+
+
+
 }

@@ -1,0 +1,792 @@
+class CreateOrderModel {
+  int? status;
+  String? message;
+  OrderData? data;
+
+  CreateOrderModel({this.status, this.message, this.data});
+
+  CreateOrderModel.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    data = json['data'] != null ? new OrderData.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
+class OrderData {
+  String? id;
+  String? orderNum;
+  From? from;
+  From? to;
+  String? status;
+  List<StatusTimes>? statusTimes;
+  int? distance;
+  int? time;
+  String? paymentType;
+  dynamic transactionId;
+  String? note;
+  ExtraRoutes? extraRoutes;
+  List<GoogleRoute>? googleRoute;
+  bool? isParcel;
+  dynamic parcelDetails;
+  Package? package;
+  VehicleType? vehicleType;
+  bool ? promoCode;
+  Driver ?driver;
+  int? kmPrice;
+  int? priceBeforeDiscount;
+  bool? promoCodeUsed;
+  int? discountPercent;
+  int? finalPrice;
+  int? discountAmount;
+  int? tip;
+  int? driverAmount;
+  String? createdAt;
+
+  OrderData(
+      {this.id,
+        this.orderNum,
+        this.from,
+        this.to,
+        this.status,
+        this.statusTimes,
+        this.distance,
+        this.time,
+        this.paymentType,
+        this.transactionId,
+        this.note,
+        this.extraRoutes,
+        this.googleRoute,
+        this.isParcel,
+        this.parcelDetails,
+        this.package,
+        this.vehicleType,
+        this.promoCode,
+        this.driver,
+        this.kmPrice,
+        this.priceBeforeDiscount,
+        this.promoCodeUsed,
+        this.discountPercent,
+        this.finalPrice,
+        this.discountAmount,
+        this.tip,
+        this.driverAmount,
+        this.createdAt});
+
+  OrderData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    orderNum = json['order_num'];
+    from = json['from'] != null ? new From.fromJson(json['from']) : null;
+    to = json['to'] != null ? new From.fromJson(json['to']) : null;
+    status = json['status'];
+    if (json['status_times'] != null) {
+      statusTimes = <StatusTimes>[];
+      json['status_times'].forEach((v) {
+        statusTimes!.add(new StatusTimes.fromJson(v));
+      });
+    }
+    distance = json['distance'];
+    time = json['time'];
+    paymentType = json['payment_type'];
+    transactionId = json['transaction_id'];
+    note = json['note'];
+    extraRoutes = json['extra_routes'];
+    if (json['google_route'] != null) {
+      googleRoute = <GoogleRoute>[];
+      json['google_route'].forEach((v) {
+        googleRoute!.add(new GoogleRoute.fromJson(v));
+      });
+    }
+    isParcel = json['is_parcel'];
+    parcelDetails = json['parcel_details'];
+    package =
+    json['package'] != null ? new Package.fromJson(json['package']) : null;
+    vehicleType = json['vehicle_type'] != null
+        ? new VehicleType.fromJson(json['vehicle_type'])
+        : null;
+    promoCode = json['promo_code'];
+    driver = json['driver'];
+    kmPrice = json['km_price'];
+    priceBeforeDiscount = json['price_before_discount'];
+    promoCodeUsed = json['promo_code_used'];
+    discountPercent = json['discount_percent'];
+    finalPrice = json['final_price'];
+    discountAmount = json['discount_amount'];
+    tip = json['tip'];
+    driverAmount = json['driver_amount'];
+    createdAt = json['created_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['order_num'] = this.orderNum;
+    if (this.from != null) {
+      data['from'] = this.from!.toJson();
+    }
+    if (this.to != null) {
+      data['to'] = this.to!.toJson();
+    }
+    data['status'] = this.status;
+    if (this.statusTimes != null) {
+      data['status_times'] = this.statusTimes!.map((v) => v.toJson()).toList();
+    }
+    data['distance'] = this.distance;
+    data['time'] = this.time;
+    data['payment_type'] = this.paymentType;
+    data['transaction_id'] = this.transactionId;
+    data['note'] = this.note;
+    data['extra_routes'] = this.extraRoutes;
+    if (this.googleRoute != null) {
+      data['google_route'] = this.googleRoute!.map((v) => v.toJson()).toList();
+    }
+    data['is_parcel'] = this.isParcel;
+    data['parcel_details'] = this.parcelDetails;
+    if (this.package != null) {
+      data['package'] = this.package!.toJson();
+    }
+    if (this.vehicleType != null) {
+      data['vehicle_type'] = this.vehicleType!.toJson();
+    }
+    data['promo_code'] = this.promoCode;
+    data['driver'] = this.driver;
+    data['km_price'] = this.kmPrice;
+    data['price_before_discount'] = this.priceBeforeDiscount;
+    data['promo_code_used'] = this.promoCodeUsed;
+    data['discount_percent'] = this.discountPercent;
+    data['final_price'] = this.finalPrice;
+    data['discount_amount'] = this.discountAmount;
+    data['tip'] = this.tip;
+    data['driver_amount'] = this.driverAmount;
+    data['created_at'] = this.createdAt;
+    return data;
+  }
+}
+
+class From {
+  String? lat;
+  String? lng;
+  String? location;
+
+  From({this.lat, this.lng, this.location});
+
+  From.fromJson(Map<String, dynamic> json) {
+    lat = json['lat'];
+    lng = json['lng'];
+    location = json['location'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['lat'] = this.lat;
+    data['lng'] = this.lng;
+    data['location'] = this.location;
+    return data;
+  }
+}
+
+class StatusTimes {
+  String? status;
+  String? time;
+
+  StatusTimes({this.status, this.time});
+
+  StatusTimes.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    time = json['time'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['time'] = this.time;
+    return data;
+  }
+}
+
+class GoogleRoute {
+  String? lat;
+  String? lng;
+
+  GoogleRoute({this.lat, this.lng});
+
+  GoogleRoute.fromJson(Map<String, dynamic> json) {
+    lat = json['lat'];
+    lng = json['lng'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['lat'] = this.lat;
+    data['lng'] = this.lng;
+    return data;
+  }
+}
+
+class Package {
+  String? id;
+  String? name;
+  String? img;
+  int? kmPrice;
+  bool? isParcel;
+  bool? hasChild;
+
+  Package(
+      {this.id,
+        this.name,
+        this.img,
+        this.kmPrice,
+        this.isParcel,
+        this.hasChild});
+
+  Package.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    img = json['img'];
+    kmPrice = json['km_price'];
+    isParcel = json['is_parcel'];
+    hasChild = json['has_child'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['img'] = this.img;
+    data['km_price'] = this.kmPrice;
+    data['is_parcel'] = this.isParcel;
+    data['has_child'] = this.hasChild;
+    return data;
+  }
+}
+
+class VehicleType {
+  String? id;
+  String? name;
+  String? img;
+  int? kmPrice;
+
+  VehicleType({this.id, this.name, this.img, this.kmPrice});
+
+  VehicleType.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    img = json['img'];
+    kmPrice = json['km_price'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['img'] = this.img;
+    data['km_price'] = this.kmPrice;
+    return data;
+  }
+}
+
+
+
+
+
+
+// class OrderData {
+//   OrderData({
+//     this.id,
+//     this.status,
+//     this.distance,
+//     this.time,
+//     this.paymentType,
+//     this.from,
+//     this.to,
+//     this.extraRoutes,
+//     this.priceBeforeDiscount,
+//     this.promoCodeUsed,
+//     this.discountPercent,
+//     this.finalPrice,
+//     this.discountAmount,
+//     this.isParcel,
+//     this.package,
+//     this.driver,
+//     this  .user,
+//     this.createdAt,
+//   });
+//   late final String? id;
+//   late final String ?status;
+//   late final num ?distance;
+//   // late final int ?distance;
+//   late final num ?time;
+//   late final String ?paymentType;
+//   late final From ?from;
+//   late final To ?to;
+//   late final List<ExtraRoutes> ?extraRoutes;
+//   late final num ?priceBeforeDiscount;
+//   late final bool? promoCodeUsed;
+//   late final num ?discountPercent;
+//   late final num? finalPrice;
+//   late final num ?discountAmount;
+//   late final bool ?isParcel;
+//   late final Package? package;
+//   late final Driver? driver;
+//   late final User ?user;
+//   late final String ?createdAt;
+//
+//   OrderData.fromJson(Map<dynamic, dynamic> json) {
+//     id = json['id'];
+//     status = json['status'];
+//     distance = json['distance'];
+//     time = json['time'];
+//     paymentType = json['payment_type'];
+//     from = json['from'] != null ? From.fromJson(json['from']) : null;
+//     to = json['to'] != null ? To.fromJson(json['to']) : null;
+//     extraRoutes = List.from(json['extra_routes'] ?? [])
+//         .map((e) => ExtraRoutes.fromJson(e))
+//         .toList();
+//     priceBeforeDiscount = json['price_before_discount'];
+//     promoCodeUsed = json['promo_code_used'];
+//     discountPercent = json['discount_percent'];
+//     finalPrice = json['final_price'];
+//     discountAmount = json['discount_amount'];
+//     isParcel = json['is_parcel'];
+//     package = json['package'] != null ? Package.fromJson(json['package']) : null;
+//     driver = null;
+//     user = json['user'] != null ? User.fromJson(json['user']) : null;
+//     createdAt = json['created_at'];
+//   }
+//
+//
+// }
+// /// id : "79d32c41-5dd9-41b2-b0e0-65960753746c"
+// /// phone_code : "+966"
+// /// phone : "123456784"
+// /// email : "omar4@gmail.com"
+// /// img : "http://hoodbackend.develobug.com/storage/files/uploads/user/img/11_hood_1697030718_@2023.png"
+// /// first_name : "abeer"
+// /// last_name : "elghool"
+// /// username : "abeerab7c3"
+//
+// class User {
+//   User({
+//     String? id,
+//     String? phoneCode,
+//     String? phone,
+//     String? email,
+//     String? img,
+//     String? firstName,
+//     String? lastName,
+//     String? username,}){
+//     _id = id;
+//     _phoneCode = phoneCode;
+//     _phone = phone;
+//     _email = email;
+//     _img = img;
+//     _firstName = firstName;
+//     _lastName = lastName;
+//     _username = username;
+//   }
+//
+//   User.fromJson(dynamic json) {
+//     _id = json['id'];
+//     _phoneCode = json['phone_code'];
+//     _phone = json['phone'];
+//     _email = json['email'];
+//     _img = json['img'];
+//     _firstName = json['first_name'];
+//     _lastName = json['last_name'];
+//     _username = json['username'];
+//   }
+//   String? _id;
+//   String? _phoneCode;
+//   String? _phone;
+//   String? _email;
+//   String? _img;
+//   String? _firstName;
+//   String? _lastName;
+//   String? _username;
+//   User copyWith({  String? id,
+//     String? phoneCode,
+//     String? phone,
+//     String? email,
+//     String? img,
+//     String? firstName,
+//     String? lastName,
+//     String? username,
+//   }) => User(  id: id ?? _id,
+//     phoneCode: phoneCode ?? _phoneCode,
+//     phone: phone ?? _phone,
+//     email: email ?? _email,
+//     img: img ?? _img,
+//     firstName: firstName ?? _firstName,
+//     lastName: lastName ?? _lastName,
+//     username: username ?? _username,
+//   );
+//   String? get id => _id;
+//   String? get phoneCode => _phoneCode;
+//   String? get phone => _phone;
+//   String? get email => _email;
+//   String? get img => _img;
+//   String? get firstName => _firstName;
+//   String? get lastName => _lastName;
+//   String? get username => _username;
+//
+//   Map<String, dynamic> toJson() {
+//     final map = <String, dynamic>{};
+//     map['id'] = _id;
+//     map['phone_code'] = _phoneCode;
+//     map['phone'] = _phone;
+//     map['email'] = _email;
+//     map['img'] = _img;
+//     map['first_name'] = _firstName;
+//     map['last_name'] = _lastName;
+//     map['username'] = _username;
+//     return map;
+//   }
+//
+// }
+class ExtraRoutes {
+  ExtraRoutes({
+    required this.lat,
+    required this.lng,
+    required this.location,
+  });
+  late final String lat;
+  late final String lng;
+  late final String location;
+
+  ExtraRoutes.fromJson(Map<String, dynamic> json){
+    lat = json['lat'];
+    lng = json['lng'];
+    location = json['location'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['lat'] = lat;
+    _data['lng'] = lng;
+    _data['location'] = location;
+    return _data;
+  }
+}
+class Driver {
+  Driver({
+    required this.id,
+    required this.phoneCode,
+    required this.phone,
+    required this.email,
+    required this.img,
+    required this.firstName,
+    required this.lastName,
+    required this.isOnline,
+    required this.vehicle,
+  });
+  late final String id;
+  late final String phoneCode;
+  late final String phone;
+  late final String email;
+  late final String img;
+  late final String firstName;
+  late final String lastName;
+  late final bool isOnline;
+  late final Vehicle vehicle;
+
+  Driver.fromJson(Map<String, dynamic> json){
+    id = json['id'];
+    phoneCode = json['phone_code'];
+    phone = json['phone'];
+    email = json['email'];
+    img = json['img'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
+    isOnline = json['is_online'];
+    vehicle = Vehicle.fromJson(json['vehicle']);
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['phone_code'] = phoneCode;
+    _data['phone'] = phone;
+    _data['email'] = email;
+    _data['img'] = img;
+    _data['first_name'] = firstName;
+    _data['last_name'] = lastName;
+    _data['is_online'] = isOnline;
+    _data['vehicle'] = vehicle.toJson();
+    return _data;
+  }
+}
+class Vehicle {
+  Vehicle({
+    required this.id,
+    required this.type,
+    required this.brand,
+    required this.model,
+    required this.factoryYear,
+    required this.color,
+    required this.licenseImage,
+    required this.img,
+  });
+  late final int id;
+  late final String type;
+  late final String brand;
+  late final String model;
+  late final String factoryYear;
+  late final String color;
+  late final String licenseImage;
+  late final String img;
+
+  Vehicle.fromJson(Map<String, dynamic> json){
+    id = json['id'];
+    type = json['type'];
+    brand = json['brand'];
+    model = json['model'];
+    factoryYear = json['factory_year'];
+    color = json['color'];
+    licenseImage = json['license_image'];
+    img = json['img'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['type'] = type;
+    _data['brand'] = brand;
+    _data['model'] = model;
+    _data['factory_year'] = factoryYear;
+    _data['color'] = color;
+    _data['license_image'] = licenseImage;
+    _data['img'] = img;
+    return _data;
+  }
+}
+// /// lat : "21.23443"
+// /// lng : "23.32323"
+// /// location : "Nasr City"
+//
+// class From {
+//   From({
+//     String? lat,
+//     String? lng,
+//     String? location,}){
+//     _lat = lat;
+//     _lng = lng;
+//     _location = location;
+//   }
+//
+//   From.fromJson(dynamic json) {
+//     _lat = json['lat'];
+//     _lng = json['lng'];
+//     _location = json['location'];
+//   }
+//   String? _lat;
+//   String? _lng;
+//   String? _location;
+//   From copyWith({  String? lat,
+//     String? lng,
+//     String? location,
+//   }) => From(  lat: lat ?? _lat,
+//     lng: lng ?? _lng,
+//     location: location ?? _location,
+//   );
+//   String? get lat => _lat;
+//   String? get lng => _lng;
+//   String? get location => _location;
+//
+//   Map<String, dynamic> toJson() {
+//     final map = <String, dynamic>{};
+//     map['lat'] = _lat;
+//     map['lng'] = _lng;
+//     map['location'] = _location;
+//     return map;
+//   }
+//
+// }
+//
+//
+//
+// /// id : "85712ad3-bd9e-442b-932b-229ddbc4ce54"
+// /// name : "سيارة"
+// /// img : "http://hoodbackend.develobug.com/default/place_holder.jpg"
+// /// km_price : 100
+// /// is_parcel : false
+// /// has_child : true
+//
+// class Package {
+//   Package({
+//     String? id,
+//     String? name,
+//     String? img,
+//     num? kmPrice,
+//     bool? isParcel,
+//     bool? hasChild,}){
+//     _id = id;
+//     _name = name;
+//     _img = img;
+//     _kmPrice = kmPrice;
+//     _isParcel = isParcel;
+//     _hasChild = hasChild;
+//   }
+//
+//   Package.fromJson(dynamic json) {
+//     _id = json['id'];
+//     _name = json['name'];
+//     _img = json['img'];
+//     _kmPrice = json['km_price'];
+//     _isParcel = json['is_parcel'];
+//     _hasChild = json['has_child'];
+//   }
+//   String? _id;
+//   String? _name;
+//   String? _img;
+//   num? _kmPrice;
+//   bool? _isParcel;
+//   bool? _hasChild;
+//   Package copyWith({  String? id,
+//     String? name,
+//     String? img,
+//     num? kmPrice,
+//     bool? isParcel,
+//     bool? hasChild,
+//   }) => Package(  id: id ?? _id,
+//     name: name ?? _name,
+//     img: img ?? _img,
+//     kmPrice: kmPrice ?? _kmPrice,
+//     isParcel: isParcel ?? _isParcel,
+//     hasChild: hasChild ?? _hasChild,
+//   );
+//   String? get id => _id;
+//   String? get name => _name;
+//   String? get img => _img;
+//   num? get kmPrice => _kmPrice;
+//   bool? get isParcel => _isParcel;
+//   bool? get hasChild => _hasChild;
+//
+//   Map<String, dynamic> toJson() {
+//     final map = <String, dynamic>{};
+//     map['id'] = _id;
+//     map['name'] = _name;
+//     map['img'] = _img;
+//     map['km_price'] = _kmPrice;
+//     map['is_parcel'] = _isParcel;
+//     map['has_child'] = _hasChild;
+//     return map;
+//   }
+//
+// }
+//
+// /// lat : "21.123"
+// /// lng : "21.124"
+//
+// class GoogleRoute {
+//   GoogleRoute({
+//     String? lat,
+//     String? lng,}){
+//     _lat = lat;
+//     _lng = lng;
+//   }
+//
+//   GoogleRoute.fromJson(dynamic json) {
+//     _lat = json['lat'];
+//     _lng = json['lng'];
+//   }
+//   String? _lat;
+//   String? _lng;
+//   GoogleRoute copyWith({  String? lat,
+//     String? lng,
+//   }) => GoogleRoute(  lat: lat ?? _lat,
+//     lng: lng ?? _lng,
+//   );
+//   String? get lat => _lat;
+//   String? get lng => _lng;
+//
+//   Map<String, dynamic> toJson() {
+//     final map = <String, dynamic>{};
+//     map['lat'] = _lat;
+//     map['lng'] = _lng;
+//     return map;
+//   }
+//
+// }
+//
+// class StatusTimes {
+//   StatusTimes({
+//     String? status,
+//     String? time,}){
+//     _status = status;
+//     _time = time;
+//   }
+//
+//   StatusTimes.fromJson(dynamic json) {
+//     _status = json['status'];
+//     _time = json['time'];
+//   }
+//   String? _status;
+//   String? _time;
+//   StatusTimes copyWith({  String? status,
+//     String? time,
+//   }) => StatusTimes(  status: status ?? _status,
+//     time: time ?? _time,
+//   );
+//   String? get status => _status;
+//   String? get time => _time;
+//
+//   Map<String, dynamic> toJson() {
+//     final map = <String, dynamic>{};
+//     map['status'] = _status;
+//     map['time'] = _time;
+//     return map;
+//   }
+//
+// }
+//
+// /// lat : "21.23443"
+// /// lng : "23.32323"
+// /// location : "Nasr City"
+//
+// class To {
+//   To({
+//     String? lat,
+//     String? lng,
+//     String? location,}){
+//     _lat = lat;
+//     _lng = lng;
+//     _location = location;
+//   }
+//
+//   To.fromJson(dynamic json) {
+//     _lat = json['lat'];
+//     _lng = json['lng'];
+//     _location = json['location'];
+//   }
+//   String? _lat;
+//   String? _lng;
+//   String? _location;
+//   To copyWith({  String? lat,
+//     String? lng,
+//     String? location,
+//   }) => To(  lat: lat ?? _lat,
+//     lng: lng ?? _lng,
+//     location: location ?? _location,
+//   );
+//   String? get lat => _lat;
+//   String? get lng => _lng;
+//   String? get location => _location;
+//
+//   Map<String, dynamic> toJson() {
+//     final map = <String, dynamic>{};
+//     map['lat'] = _lat;
+//     map['lng'] = _lng;
+//     map['location'] = _location;
+//     return map;
+//   }
+//
+// }
