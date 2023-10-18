@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 // import 'package:ride_sharing_user_app/view/screens/auth/controller/auth_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/bottom_menu_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/home/controller/address_controller.dart';
@@ -10,10 +11,10 @@ import 'package:ride_sharing_user_app/view/screens/home/repository/address_repo.
 import 'package:ride_sharing_user_app/view/screens/home/repository/banner_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/home/repository/category_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/map/controller/map_controller.dart';
-// import 'package:ride_sharing_user_app/view/screens/auth/repository/auth_repo.dart';
-import 'package:ride_sharing_user_app/view/screens/notification/repository/notification_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/message/controller/message_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/message/repository/message_repo.dart';
+// import 'package:ride_sharing_user_app/view/screens/auth/repository/auth_repo.dart';
+import 'package:ride_sharing_user_app/view/screens/notification/repository/notification_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/offer/controller/offer_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/offer/repository/offer_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/onboard/controller/on_board_page_controller.dart';
@@ -21,23 +22,21 @@ import 'package:ride_sharing_user_app/view/screens/parcel/controller/parcel_cont
 import 'package:ride_sharing_user_app/view/screens/parcel/repository/parcel_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/payment/controller/payment_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/payment/repository/payment_repo.dart';
- import 'package:ride_sharing_user_app/view/screens/profile/repository/uer_repo.dart';
+import 'package:ride_sharing_user_app/view/screens/profile/repository/uer_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/repository/ride_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/repo/config_repo.dart';
-import 'package:ride_sharing_user_app/data/api_client.dart';
-import 'package:ride_sharing_user_app/localization/language_model.dart';
-import 'package:ride_sharing_user_app/localization/localization_controller.dart';
-import 'package:ride_sharing_user_app/theme/theme_controller.dart';
-import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'package:ride_sharing_user_app/view/screens/support/controller/support_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/controller/wallet_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/repository/wallet_repo.dart';
-
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/api_client.dart';
+import '../localization/language_model.dart';
+import '../localization/localization_controller.dart';
+import '../theme/theme_controller.dart';
+import '../util/app_constants.dart';
 import '../util/connectivity.dart';
 import '../view/screens/history/controller/activity_controller.dart';
 import '../view/screens/history/controller/history_controller.dart';
@@ -100,7 +99,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => MapController());
   Get.lazyPut(() => ParcelController(parcelRepo: Get.find()));
   Get.lazyPut(() => WhereToGoController(  ));
-  Get.lazyPut(() => RideController(rideRepo: Get.find()));
+  Get.lazyPut(() => RideController(rideRepo: Get.find()),fenix: true);
   Get.lazyPut(() => PaymentController(paymentRepo: Get.find()));
   Get.lazyPut(() => BottomMenuController());
   Get.lazyPut<AbsLogger>(() => DebugLogger());

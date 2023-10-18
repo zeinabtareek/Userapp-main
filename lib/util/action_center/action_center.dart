@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 
- import '../../helper/logger/logger.dart';
+import '../../helper/logger/logger.dart';
 import '../app_strings.dart';
 import '../connectivity.dart';
- import '../ui/overlay_helper.dart';
+import '../ui/overlay_helper.dart';
 import 'exceptions.dart';
 
 // class ActionCenter {
@@ -104,14 +104,17 @@ class ActionCenter with WidgetsBindingObserver {
   Future<void> checkInternetConnection() async {
     if (!_connectivityService.isConnected) {
       _logger.info(message: 'ActionCenter: No Internet Connection');
-      OverlayHelper.showWarningToast(Get.overlayContext!, 'No Internet Connection');
+      OverlayHelper.showWarningToast(
+          Get.overlayContext!, 'No Internet Connection');
       print("No connection");
     }
   }
 
-  Future<bool> execute(Function() action,
-      {bool checkConnection = false,
-        Function(dynamic ex)? errorHandler}) async {
+  Future<bool> execute(
+    Function() action, {
+    bool checkConnection = true,
+    Function(dynamic ex)? errorHandler,
+  }) async {
     try {
       if (checkConnection) {
         // Check internet connection
@@ -131,19 +134,23 @@ class ActionCenter with WidgetsBindingObserver {
         _logger.error(error: ex.message, stackTrace: st);
 
         if (ex is ApiTimeoutException) {
-          OverlayHelper.showErrorToast(Get.overlayContext!, Strings.requestTimeout);
+          OverlayHelper.showErrorToast(
+              Get.overlayContext!, Strings.requestTimeout);
         } else if (ex is ApiResponseException) {
           String message = Strings.somethingWrongTryAgain;
           if (HttpStatus(ex.statusCode).isServerError) {
             OverlayHelper.showErrorToast(Get.overlayContext!, message);
           } else {
-            OverlayHelper.showErrorToast(Get.overlayContext!, message.replaceAll("\"", ""));
+            OverlayHelper.showErrorToast(
+                Get.overlayContext!, message.replaceAll("\"", ""));
           }
         } else {
-          OverlayHelper.showErrorToast(Get.overlayContext!, ex.message.replaceAll("\"", ""));
+          OverlayHelper.showErrorToast(
+              Get.overlayContext!, ex.message.replaceAll("\"", ""));
         }
       } else {
-        OverlayHelper.showErrorToast(Get.overlayContext!, Strings.somethingWrong.tr);
+        OverlayHelper.showErrorToast(
+            Get.overlayContext!, Strings.somethingWrong.tr);
         _logger.error(error: ex.toString());
       }
 
