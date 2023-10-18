@@ -6,7 +6,8 @@ class AppConstants {
   static const String appName = 'Hood';
   static const bool isDevelopment = true;
 
-  static const String baseUrl = 'http://172.16.13.22:8000';
+  static const String baseUrl = 'https://arabchance.com/Hood-Backend-Dashboard/public/';
+  // static const String baseUrl = 'http://172.16.13.22:8000';
   // static const String baseUrl = 'http://hoodbackend.develobug.com';
   static const String getAllOrders = '/api/user/orders';
   static const String getAllHistory = '/api/user/orders?status=';
@@ -19,6 +20,7 @@ class AppConstants {
   static const String getAllSettingUri =
       '/api/user/all_setting';
   static const String packagesDetails = "/api/user/packages_details";
+  static const String getAddress = "/api/user/addresses";
   static const String packages = "/api/user/packages";
   static const String parcelCategories = "/api/user/parcel_categories";
   static const String postComplains = "/api/user/complains";

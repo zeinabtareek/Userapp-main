@@ -1,39 +1,66 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:ride_sharing_user_app/data/api_client.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/view/screens/home/model/address_model.dart';
 
+import '../../../../helper/network/dio_integration.dart';
+import '../../../../util/app_constants.dart';
+import '../../ride/model/address_model.dart';
+
 class AddressRepo {
-  final ApiClient apiClient;
+  // final ApiClient apiClient;
+  //
+  // AddressRepo({required this.apiClient});
 
-  AddressRepo({required this.apiClient});
+  // Future<Response> getAddressList() async {
+  //   List<AddressModel> addressList = [];
+  //   try {
+  //     addressList = [
+  //       AddressModel(
+  //           addressType: 'office',
+  //           addressIcon: Images.addressOffice,
+  //           address: "25/8 Madartek, Adarshapara Rd"),
+  //       AddressModel(
+  //           addressType: 'home',
+  //           addressIcon: Images.addressHome,
+  //           address: "Plot-688, Road-9 Main Road, Dhaka 1216"),
+  //       AddressModel(
+  //           addressType: 'journey',
+  //           addressIcon: Images.addressJourney,
+  //           address: "House# 99, Apt# B2, Road# 4/25, Block# A, Dhaka 1213"),
+  //       AddressModel(
+  //           addressType: 'shopping',
+  //           addressIcon: Images.addressShopping,
+  //           address: "R95V+C8, Dhaka"),
+  //     ];
+  //     Response response = Response(body: addressList, statusCode: 200);
+  //     return response;
+  //   } catch (e) {
+  //     return const Response(
+  //         statusCode: 404, statusText: 'on boarding data not found');
+  //   }
+  // }
 
-  Future<Response> getAddressList() async {
-    List<AddressModel> addressList = [];
+
+  final dio = DioUtilNew.dio;
+
+  getAddressList()async{
     try {
-      addressList = [
-        AddressModel(
-            addressType: 'office',
-            addressIcon: Images.addressOffice,
-            address: "25/8 Madartek, Adarshapara Rd"),
-        AddressModel(
-            addressType: 'home',
-            addressIcon: Images.addressHome,
-            address: "Plot-688, Road-9 Main Road, Dhaka 1216"),
-        AddressModel(
-            addressType: 'journey',
-            addressIcon: Images.addressJourney,
-            address: "House# 99, Apt# B2, Road# 4/25, Block# A, Dhaka 1213"),
-        AddressModel(
-            addressType: 'shopping',
-            addressIcon: Images.addressShopping,
-            address: "R95V+C8, Dhaka"),
-      ];
-      Response response = Response(body: addressList, statusCode: 200);
-      return response;
+      final response = await dio!.get(AppConstants.getAddress);
+
+      debugPrint('######addressList${response.data}');
+      if (response.statusCode == 200) {
+        final  model =  AddressModel.fromJson(response.data);
+        return model;
+      } else {
+        throw UnimplementedError();
+      }
     } catch (e) {
-      return const Response(
-          statusCode: 404, statusText: 'on boarding data not found');
+      print(e);
+      throw UnimplementedError();
     }
   }
+
+
 }
