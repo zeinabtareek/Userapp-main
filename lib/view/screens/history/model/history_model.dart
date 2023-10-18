@@ -115,6 +115,27 @@ class From {
     return data;
   }
 }
+class To {
+  String? lat;
+  String? lng;
+  String? location;
+
+  To({this.lat, this.lng, this.location});
+
+  To.fromJson(Map<String, dynamic> json) {
+    lat = json['lat'];
+    lng = json['lng'];
+    location = json['location'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['lat'] = this.lat;
+    data['lng'] = this.lng;
+    data['location'] = this.location;
+    return data;
+  }
+}
 
 class Package {
   String? id;

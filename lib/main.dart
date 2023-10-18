@@ -14,6 +14,17 @@ import 'package:ride_sharing_user_app/util/app_strings.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/history/history_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/home/home_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/message/message_list.dart';
+import 'package:ride_sharing_user_app/view/screens/message/message_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/n/test_polyline_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/onboard/onboarding_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/onboarding/onboarding.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/add_shipment.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/order_details_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/parcel_home_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/parcel_notification_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/parcel_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/widgets/item_track_history_card.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
 import 'package:ride_sharing_user_app/helper/responsive_helper.dart';
 import 'package:ride_sharing_user_app/helper/di_container.dart' as di;
@@ -23,7 +34,22 @@ import 'package:ride_sharing_user_app/theme/dark_theme.dart';
 import 'package:ride_sharing_user_app/theme/light_theme.dart';
 import 'package:ride_sharing_user_app/theme/theme_controller.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
+import 'package:ride_sharing_user_app/view/screens/splash/splash_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/support/support.dart';
+import 'package:ride_sharing_user_app/view/screens/wallet/wallet_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/wallet/widget/payment_method_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/wallet/widget/use_voucher_code.dart';
+import 'package:ride_sharing_user_app/view/screens/where_to_go/test_where_to_go.dart';
+import 'package:ride_sharing_user_app/view/widgets/animated_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'app_navigator_observer.dart';
+import 'authenticate/presentation/sign-up/sign_up_screen.dart';
+import 'helper/cache_helper.dart';
+import 'helper/route_helper.dart';
 import 'initialize_dependencies.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -118,6 +144,7 @@ class MyApp extends StatelessWidget {
             // home:   HistoryScreen(fromPage: Strings.home,)/**/,
             // home: const WalletScreen()/**/,
             // home: const OnBoardingScreen2()/**/,
+            // home: TestWhereToGo(address :'haram 2000 gate '),
             home: DashboardScreen(),
           ));
         });

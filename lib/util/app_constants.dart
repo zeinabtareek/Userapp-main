@@ -13,7 +13,7 @@ class AppConstants {
   static const String getAllHistory = '/api/user/orders?status=';
   static const String getAllTransactions = '/api/user/all_transactions';
 
-///****************
+  ///****************
   static const String configUri = '/api/v1/config';
   static const String loginUri = '/api/v1/auth/login';
   static const String notificationUri = '/api/v1/customer/notifications';
@@ -23,9 +23,11 @@ class AppConstants {
   static const String packages = "/api/user/packages";
   static const String parcelCategories = "/api/user/parcel_categories";
   static const String postComplains = "/api/user/complains";
-///zeinab working on now
+  ///zeinab working on now
   static const String getAddress = "/api/user/addresses";
   static const String getAddressSuggestions = "/api/user/address_suggestions";
+  static const String createATrip = "/api/user/orders";
+  static const String getOrderPrice = "/api/user/orders/order_price";
 
 
 
@@ -91,7 +93,7 @@ class AppConstants {
     }
   ];
 
-  // static double pinVisiblePositions=20;
-  // static double pinInVisiblePositions=-300;
+// static double pinVisiblePositions=20;
+// static double pinInVisiblePositions=-300;
 
 }

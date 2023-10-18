@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/util/dimensions.dart';
-import 'package:ride_sharing_user_app/util/text_style.dart';
-import 'package:ride_sharing_user_app/view/screens/home/controller/category_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/map/map_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/controller/parcel_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/parcel_home_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
+
 import '../../../widgets/custom_category_card.dart';
+import '../../map/map_screen.dart';
+import '../../parcel/controller/parcel_controller.dart';
+import '../../parcel/parcel_home_screen.dart';
+import '../../ride/controller/ride_controller.dart';
 import '../../where_to_go/where_to_go_screen.dart';
+import '../controller/category_controller.dart';
 
 class CategoryView extends StatelessWidget {
   const CategoryView({Key? key}) : super(key: key);
@@ -38,7 +37,7 @@ class CategoryView extends StatelessWidget {
 
 
                       } else if (index == 2) {
-                        Get.to((const MapScreen(
+                        Get.to((  MapScreen(
                           fromScreen: 'parcel',
                         )));
                       }

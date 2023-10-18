@@ -1,5 +1,6 @@
 //
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
@@ -85,6 +86,26 @@ class SearchServices {
         await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
     return "${placemark[0].name}, ${placemark[0].locality}, ${placemark[0].country}";
   }
+  static Future<dynamic> getDistance(LatLng origin, LatLng destination) async {
+    String Url = 'https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${origin.latitude},${origin.longitude}&origins=${destination.latitude},${destination.longitude}&key=AIzaSyA6NSYZTZaYj_Kgit9CAlNuCTvwLOoRSes';
+    try {
+      var response = await http.get(Uri.parse(Url));
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        // var distance = responseData['rows'][0]['elements'][0]['distance']['value'];
+        final distanceValue = responseData['rows'][0]['elements'][0]['distance']['value'];
+        var distanceInKm = distanceValue / 1000;
+        return distanceInKm;
+
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
 
 // Future<LatLng> getLatLngFromAddress(Position address) async {
 //   List<Placemark> list = await Geolocator().placemarkFromAddress(address);

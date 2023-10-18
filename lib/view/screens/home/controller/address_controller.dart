@@ -29,6 +29,7 @@ class AddressController extends BaseController implements GetxService {
 
 
   AddressModel addressModel = AddressModel();
+  AddressModel suggestionAddressModel = AddressModel();
 
   @override
   onInit() async {
@@ -54,13 +55,13 @@ class AddressController extends BaseController implements GetxService {
     update();
   }
 
-     Future<void> getSuggestedAddressList() async {
+  Future<void> getSuggestedAddressList() async {
     setState(ViewState.busy);
 
     try {
-      addressModel = await addressRepo1.getAddressList();
+      suggestionAddressModel = await addressRepo1.getSuggestedAddressList();
 
-      print('addressList ${addressModel.data?.length}');
+      print('suggestionAddressModel ${suggestionAddressModel.data?.length}');
       // }
     } on MsgModel catch (e) {
       // TODO

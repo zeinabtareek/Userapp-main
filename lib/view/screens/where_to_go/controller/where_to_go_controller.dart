@@ -6,11 +6,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/controller/base_controller.dart';
 import 'package:ride_sharing_user_app/data/api_checker.dart';
 import 'package:ride_sharing_user_app/enum/view_state.dart';
+import 'package:ride_sharing_user_app/view/screens/where_to_go/controller/create_trip_controller.dart';
 
 import '../../../../helper/display_helper.dart';
 import '../../../../helper/location_permission.dart';
 import '../../../../util/app_strings.dart';
+import '../../../../util/ui/overlay_helper.dart';
 import '../../choose_from_map/choose_from_map_screen.dart';
+import '../../map/map_screen.dart';
+import '../../ride/controller/ride_controller.dart';
 import '../model/search_suggestion_model.dart';
 import '../model/suggested_route_model.dart';
 import '../repository/search_service.dart';
@@ -53,17 +57,19 @@ class WhereToGoController extends BaseController implements GetxService {
     // TODO: implement dispose
     super.dispose();
     scrollController.dispose();
+    fromRouteController.clear();
 
   }
   @override
   void onInit() {
-     super.onInit();
-     // Get.put(WhereToGoController(setMapRepo: Get.find()));
+    super.onInit();
+    // fromRouteController.text =  address ?? "";
+    // Get.put(WhereToGoController(setMapRepo: Get.find()));
   }
-List <String>extraRoutes=[];
+  List <String>extraRoutes=[];
   void setExtraRoute() {
     if (currentExtraRoute < 1) {
-    // if (currentExtraRoute < 2) {
+      // if (currentExtraRoute < 2) {
       currentExtraRoute = currentExtraRoute + 1;
       extraRoutes.add('currentExtraRoute$currentExtraRoute');
     }
@@ -117,4 +123,23 @@ List <String>extraRoutes=[];
   getPlaceNameFromLatLng(LatLng latlng)async{
     await searchServices.getPlaceNameFromLatLng(latlng);
   }
+
+
+  validateData() {
+    if(fromRouteController.text==''||toRouteController.text==''){
+      print('no');
+      OverlayHelper.showErrorToast(Get.overlayContext!, 'select_a_trip'.tr);
+    }
+    else {
+      print('yes');
+      Get.to(() =>
+        MapScreen(
+        fromScreen: 'ride',
+      ));
+      Get.find<RideController>().updateRideCurrentState(RideState.initial);
+      // calculateDistance();
+    }
+
+  }
+
 }

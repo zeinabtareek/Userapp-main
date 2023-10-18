@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ride_sharing_user_app/bases/base_controller.dart';
+import 'package:ride_sharing_user_app/enum/view_state.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/repository/ride_repo.dart';
 
+import '../../../../util/app_strings.dart';
+import '../../../../util/ui/overlay_helper.dart';
 import '../../home/model/categoty_model.dart';
+import '../../where_to_go/controller/create_trip_controller.dart';
+import '../../where_to_go/controller/where_to_go_controller.dart';
+import '../model/order_price_model.dart';
 
 enum RideState {
   initial,
@@ -18,7 +26,7 @@ enum RideState {
 
 enum RideType { car, bike, parcel, luxury }
 
-class RideController extends GetxController implements GetxService {
+class RideController extends BaseController implements GetxService {
   final RideRepo rideRepo;
 
   RideController({required this.rideRepo});
@@ -45,10 +53,20 @@ class RideController extends GetxController implements GetxService {
   FocusNode parcelWeightNode = FocusNode();
   double heightOfTypes = 0.0;
   bool isExpanded = false;
+  dynamic distance = 0.0;
+
   @override
-  void onInit() {
+  onInit() async {
     super.onInit();
     inputFarePriceController.text = "0.00";
+    // distance=await  Get.find<WhereToGoController>().calculateDistance();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    promoCodeController.clear();
   }
 
   @override
@@ -56,6 +74,15 @@ class RideController extends GetxController implements GetxService {
     super.onClose();
     heightOfTypes = 0.0;
     isExpanded = false;
+  }
+
+  Future<double?> calculateDistance() async {
+    var distance = await Get.find<CreateATripController>().calculateDistance(
+      LatLng(37.7749, -122.4194), // San Francisco
+      LatLng(
+          37.7753, -122.4199), // Replace with your actual point 1 coordinates
+    );
+    return distance;
   }
 
   void vehicleToggle() {
@@ -74,6 +101,7 @@ class RideController extends GetxController implements GetxService {
 
   void updateSelectedRideType(RideType newType) {
     selectedCategoryTypeEnum = newType;
+    print('selectedCategoryTypeEnum :$selectedCategoryTypeEnum');
     update();
   }
 
@@ -115,28 +143,49 @@ class RideController extends GetxController implements GetxService {
     update();
   }
 
-  /// Set Rate For The Trip
-
-
-
-  // submitComplain()async{
-  //   if( initialSelectItem == null){
-  //     OverlayHelper.showErrorToast(Get.overlayContext!, 'select_complain_type'.tr);
-  //   }else
-  //   if(feedBackController.text.isEmpty ){
-  //     OverlayHelper.showErrorToast(Get.overlayContext!, 'write_complain'.tr);
-  //   }
-  //   else{
-  //     setState(ViewState.busy);
-  //     await helpAndSupportRepo.submitComplain(
-  //       message: feedBackController.text,
-  //       type:initialSelectItem,
-  //     );
-  //     setState(ViewState.idle);
+  // calculateDistance()async{
   //
-  //   }
+  //
+  //   await  Get.find<CreateATripController>().calculateDistance(
+  //       LatLng(37.7749, -122.4194), // San Francisco
+  //       LatLng(37.7753, -122.4199) // Replace with your actual point 1 coordinates
+  //
+  //   );
   // }
+  /// Set Rate For The Trip
+  TextEditingController promoCodeController = TextEditingController();
+  OrderPriceData priceData = OrderPriceData();
 
+  getPrice() async {
+    try {
+      setState(ViewState.busy);
 
+      var result = await actionCenter.execute(() async {
+        if (promoCodeController.text.isEmpty) {
+          OverlayHelper.showErrorToast(
+              Get.overlayContext!, Strings.noEnteredPromoCode.tr);
+        } else {
+          double? distance = await calculateDistance();
+          priceData = await rideRepo.getPrice(
+              packageId: selectedPackage.value!.id,
+              vehicleTypeId: selectedSubPackage.value!.id,
+              promoCode: promoCodeController.text,
+              // distance: 22
+              distance: distance);
 
+          print('priceData $priceData');
+        }
+       }, checkConnection: true);
+
+      if (!result) {
+        setState(ViewState.error);
+        print(" ::: error");
+      }
+
+      return priceData; // Return the acceptedOrderData object
+    } catch (e) {
+      print(e);
+    }
+    setState(ViewState.idle);
+  }
 }

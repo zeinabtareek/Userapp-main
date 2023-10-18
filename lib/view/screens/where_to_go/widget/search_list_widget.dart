@@ -36,7 +36,8 @@ class SearchListWidget extends StatelessWidget {
             children: [
              GestureDetector(
                onTap:(){
-                 print(listOfSearchedPlaces[index] .structuredFormatting?.secondaryText);
+                 print('search result');
+                 // print(listOfSearchedPlaces[index] .structuredFormatting?.secondaryText);
                  // controller. handlePlaceSelection(listOfSearchedPlaces[index].description.toString());
                },
                // onTap: onTap,
@@ -66,6 +67,7 @@ class SearchListWidget extends StatelessWidget {
 
                      controller. handlePlaceSelection(listOfSearchedPlaces[index].description.toString(),inputTextField );
                      listOfSearchedPlaces.clear();
+                     controller.update();
                      }
                    ),
              ),

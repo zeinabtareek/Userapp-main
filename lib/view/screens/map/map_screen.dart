@@ -15,18 +15,21 @@ import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
 import '../../../util/app_strings.dart';
+import '../where_to_go/controller/create_trip_controller.dart';
 
 class MapScreen extends StatelessWidget {
   final String fromScreen;
 
-  const MapScreen({Key? key, required this.fromScreen}) : super(key: key);
+    MapScreen({Key? key, required this.fromScreen}) : super(key: key);
 
+  final controller= Get.put(CreateATripController());
+///zeinab you need to  fetch the created order here
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.topCenter,
         children: [
           CustomBody(
             appBar: CustomAppBar(title: Strings.theDeliverymanNeedYou.tr,onBackPressed: (){
@@ -44,7 +47,7 @@ class MapScreen extends StatelessWidget {
                 mapCompleter.complete(userMapController.mapController);
               }
               return ExpandableBottomSheet(
-                
+
                 background: Stack(
                   children: [
                     Animarker(
@@ -84,7 +87,7 @@ class MapScreen extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.center,
                           child: SizedBox(
-                            width: 120,
+                            width: 100,
                             child: Image.asset(Images.mapLocationIcon),
                           ),
                         ))
