@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/enum/view_state.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
@@ -89,7 +90,7 @@ class GetPriceWidget extends StatelessWidget {
                     ),
 
                 const SizedBox(width: Dimensions.paddingSizeSmall),
-                  Text('200 \$',style: textSemiBold.copyWith(
+                  Text('2wef00 \$',style: textSemiBold.copyWith(
                     color: Theme.of(context)
                         .textTheme
                         .bodyMedium!
@@ -118,19 +119,25 @@ class GetPriceWidget extends StatelessWidget {
                   Expanded(
                   flex: 2,
                   child: CustomTextField(
-                  prefix: false,
+                  prefix: false,controller: rideController.promoCodeController,
                   borderRadius: Dimensions.radiusLarge,
                   hintText: Strings.promoCode.tr,
           ),
                 ),
                 K.sizedBoxW0,
-                Expanded(child:   CustomButton(
+               Obx(()=> Expanded(child:   CustomButton(
+                  isLoading: rideController.state==ViewState.busy?true:false,
+
                     radius: 50,
                     buttonText: Strings.apply.tr,
                     onPressed: () {
-                      rideController
-                          .updateRideCurrentState(RideState.findingRider);
-                    }),)
+                      // rideController.calculateDistance();
+                      rideController.getPrice();
+
+                      //
+                      // rideController
+                      //     .updateRideCurrentState(RideState.findingRider);
+                    }),))
               ],
             ),
           const SizedBox(
@@ -165,7 +172,10 @@ class GetPriceWidget extends StatelessWidget {
           //           .updateRideCurrentState(RideState.findingRider);
           //     }),
 
-          FindDriverCustomBtn2(fromPage: 'ride', whoWillPay: true,),
+          const FindDriverCustomBtn2(fromPage: 'ride', whoWillPay: true,
+
+
+          ),
           K.sizedBoxH0,
           K.sizedBoxH0,
         ],

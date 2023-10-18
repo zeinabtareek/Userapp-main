@@ -45,8 +45,12 @@ class RideSubCategoryWidget extends StatelessWidget {
                               .updateSelectedSubRideType(RideType.car);
                           rideController
                               .selectedSubPackage(listOfSubCategory[index]);
+                          print('sub package ${listOfSubCategory[index].categoryTitle}');
+
+
+                          ///zeinab this is the sub package
                           Get.to(
-                            () => SetDestinationScreen(),
+                            () => SetDestinationScreen(categoryModel:listOfSubCategory[index]),
                           );
                         } else {
                           rideController

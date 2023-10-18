@@ -26,7 +26,7 @@ class MapScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.topCenter,
         children: [
           CustomBody(
             appBar: CustomAppBar(title: Strings.theDeliverymanNeedYou.tr,onBackPressed: (){
@@ -84,7 +84,7 @@ class MapScreen extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.center,
                           child: SizedBox(
-                            width: 120,
+                            width: 100,
                             child: Image.asset(Images.mapLocationIcon),
                           ),
                         ))

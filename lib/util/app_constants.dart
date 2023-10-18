@@ -6,13 +6,14 @@ class AppConstants {
   static const String appName = 'Hood';
   static const bool isDevelopment = true;
 
-  static const String baseUrl = 'http://172.16.13.22:8000';
+  static const String baseUrl = 'https://arabchance.com/Hood-Backend-Dashboard/public';
+  // static const String baseUrl = 'http://172.16.13.22:8000';
   // static const String baseUrl = 'http://hoodbackend.develobug.com';
   static const String getAllOrders = '/api/user/orders';
   static const String getAllHistory = '/api/user/orders?status=';
   static const String getAllTransactions = '/api/user/all_transactions';
 
-///****************
+  ///****************
   static const String configUri = '/api/v1/config';
   static const String loginUri = '/api/v1/auth/login';
   static const String notificationUri = '/api/v1/customer/notifications';
@@ -22,6 +23,16 @@ class AppConstants {
   static const String packages = "/api/user/packages";
   static const String parcelCategories = "/api/user/parcel_categories";
   static const String postComplains = "/api/user/complains";
+  ///zeinab working on now
+  static const String getAddress = "/api/user/addresses";
+  static const String getAddressSuggestions = "/api/user/address_suggestions";
+  static const String createATrip = "/api/user/orders";
+  static const String getOrderPrice = "/api/user/orders/order_price";
+
+
+
+
+
 
   // Shared Key
   static const String notification = 'demand_notification';
@@ -82,7 +93,7 @@ class AppConstants {
     }
   ];
 
-  // static double pinVisiblePositions=20;
-  // static double pinInVisiblePositions=-300;
+// static double pinVisiblePositions=20;
+// static double pinInVisiblePositions=-300;
 
 }

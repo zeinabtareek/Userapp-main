@@ -425,6 +425,8 @@
   "select_complain_type": "you should select a complaint type",
   "write_complain": "You must write your complaint",
    "complaint_sent": "your complaint sent successfully .\nwe will reach you very soon",
+  "select_a_trip": "you should select a trip location (from ,to)",
+  "no_entered_promo_code": "you should write a promo code first",
 
   "withdraw": "Withdraw"
 

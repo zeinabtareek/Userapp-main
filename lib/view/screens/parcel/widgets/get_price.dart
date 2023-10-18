@@ -394,11 +394,7 @@ class GetPrice extends StatelessWidget {
                       buttonText: Strings.getPrice.tr,
                       radius: 50,
                       onPressed: () {
-                        // Get.to(()=> RideExpendableBottomSheet(isGetPrice: true,));
-                        // rideController
-                        //     .updateRideCurrentState(RideState.getPrice);
-
-
+print('object');
                         rideController
                             .updateRideCurrentState(RideState.acceptingRider);
                       })

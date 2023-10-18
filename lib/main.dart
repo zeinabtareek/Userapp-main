@@ -39,6 +39,7 @@ import 'package:ride_sharing_user_app/view/screens/support/support.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/wallet_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/widget/payment_method_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/widget/use_voucher_code.dart';
+import 'package:ride_sharing_user_app/view/screens/where_to_go/test_where_to_go.dart';
 import 'package:ride_sharing_user_app/view/widgets/animated_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -143,6 +144,7 @@ class MyApp extends StatelessWidget {
             // home:   HistoryScreen(fromPage: Strings.home,)/**/,
             // home: const WalletScreen()/**/,
             // home: const OnBoardingScreen2()/**/,
+            // home: TestWhereToGo(address :'haram 2000 gate '),
             home: DashboardScreen(),
           ));
         });
