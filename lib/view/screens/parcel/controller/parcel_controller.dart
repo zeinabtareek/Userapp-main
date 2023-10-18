@@ -48,14 +48,14 @@ class ParcelController extends GetxController
   }
 
   List optionsList = [
- {'image': Images.statusIcon,  'title': Strings.pickUp.tr,'onTap':  const MapScreen(fromScreen: Strings.parcel,)},
+ {'image': Images.statusIcon,  'title': Strings.pickUp.tr,'onTap':    MapScreen(fromScreen: Strings.parcel,)},
  {'image': Images.deliveryTruck, 'title': Strings.statusOrder.tr,'onTap':  const StatusPackageScreen() }
   ];
 
 
   List<Widget> navigationOptions=[
  const CheckRatesScreen(),
- const MapScreen(fromScreen: 'ride'),
+   MapScreen(fromScreen: 'ride'),
   ]
 ;  List<CategoryModel> parcelCategoryList = [
     CategoryModel(

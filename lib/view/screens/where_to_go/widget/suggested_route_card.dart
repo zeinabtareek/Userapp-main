@@ -15,7 +15,7 @@ class SuggestedRouteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()=> Get.off(()=>const MapScreen(fromScreen: 'ride')),
+      onTap: ()=> Get.off(()=>  MapScreen(fromScreen: 'ride')),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(Dimensions.paddingSizeDefault, 0, Dimensions.paddingSizeDefault, Dimensions.paddingSizeDefault),
         child: Container(decoration: BoxDecoration(

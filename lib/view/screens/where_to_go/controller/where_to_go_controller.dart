@@ -133,7 +133,7 @@ class WhereToGoController extends BaseController implements GetxService {
     else {
       print('yes');
       Get.to(() =>
-      const MapScreen(
+        MapScreen(
         fromScreen: 'ride',
       ));
       Get.find<RideController>().updateRideCurrentState(RideState.initial);

@@ -26,17 +26,17 @@ class CreateTripRepo {
     );
     print('res ::${res.statusCode}');
     print('res ::${res.data}');
-    // if (res.statusCode == 200) {
-      // if (res.data != null) {
+    if (res.statusCode == 200) {
+      if (res.data != null) {
         final model = CreateOrderModel.fromJson(res.data);
         print('model ${model.data?.id??''}');
         return model;
-      // }
-    // } else if (res.statusCode == 422) {
-    //   throw CustomException(res.data['message'], description: '');
-    // } else {
-    //   throw ApiResponseException(res.statusCode!);
-    // }
+      }
+    } else if (res.statusCode == 422) {
+      throw CustomException(res.data['message'], description: '');
+    } else {
+      throw ApiResponseException(res.statusCode!);
+    }
 
     throw Exception("Unexpected error occurred");
     }

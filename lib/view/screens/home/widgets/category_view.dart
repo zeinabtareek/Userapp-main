@@ -37,7 +37,7 @@ class CategoryView extends StatelessWidget {
 
 
                       } else if (index == 2) {
-                        Get.to((const MapScreen(
+                        Get.to((  MapScreen(
                           fromScreen: 'parcel',
                         )));
                       }
