@@ -267,7 +267,7 @@ mixin MapHelper on GetxController {
         barrierDismissible: false,
         builder: (context) => const PermissionDialog(),
       );
-      Get.back();
+    
 
       if (state == false) {
         return null;
@@ -290,7 +290,7 @@ mixin MapHelper on GetxController {
         barrierDismissible: false,
         builder: (context) => const ServiceDialog(),
       );
-      Get.back();
+      // Get.back();
       if (!state) {
         return null;
       } else {

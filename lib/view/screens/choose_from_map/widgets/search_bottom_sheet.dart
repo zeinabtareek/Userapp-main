@@ -1,7 +1,6 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../../util/app_strings.dart';
 import '../../../../util/app_style.dart';
 import '../../../widgets/custom_button.dart';
@@ -46,90 +45,55 @@ class SearchBottom extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Obx(
-                        () => Container(
-                           width: MediaQuery.of(context).size.width/1.5,
-                          child:controller.isDataLoading.value
-                        ? Text(Strings.searchingAddress.tr,style:
-                    K.hintSmallTextStyle,)
-                        : Text(controller.address.value.tr),
+                    () => SizedBox(
+                      width: MediaQuery.of(context).size.width / 1.5,
+                      child: controller.isDataLoading.value
+                          ? Text(
+                              Strings.searchingAddress.tr,
+                              style: K.hintSmallTextStyle,
+                            )
+                          : Text(controller.address.value.tr),
+                    ),
                   ),
-                  ),
-                   GestureDetector(child: Text(Strings.search.tr,style: K.primaryMediumTextStyle,),
-                   onTap: (){
-                     controller.toggleContainerVisibility();
-                   },)
+                  GestureDetector(
+                    onTap: controller.toggleContainerVisibility,
+                    child: Text(
+                      Strings.search.tr,
+                      style: K.primarySmallTextStyle,
+                    ),
+                  )
                 ],
               ),
-
               K.sizedBoxH0,
-           // Obx(
-           //      () => Row(
-           //        children: [
-           //          Expanded(
-           //            child: AnimatedContainer(
-           //              duration: Duration(milliseconds: 500),
-           //              height: controller.isContainerVisible.value ? 50 : 0,
-           //              child: Container(
-           //                padding: EdgeInsets.symmetric(horizontal: 10),
-           //                // height: 50.0,
-           //                decoration: getBoxShadow(),
-           //                child: Center(
-           //                  child: TextFormField(
-           //
-           //                      textCapitalization: TextCapitalization.words,
-           //                      decoration: getInoutDecoration(
-           //                        controller.isContainerVisible.value
-           //                            ? Strings.selectDestination.tr
-           //                            : null,
-           //                        controller.isContainerVisible.value
-           //                            ? Icon(Icons.location_on)
-           //                            : null,
-           //                      ),
-           //                      onChanged: (value) {
-           //                        print(value);
-           //                      }),
-           //                ),
-           //              ),
-           //            ),
-           //          ),
-           //
-           //
-           //        ],
-           //      ),
-           //    ),
-              Obx(()=> AnimatedContainer(
-                 height:controller.isContainerVisible.value ?50:0,
-                 // color: Colors.red,
-                duration: Duration(milliseconds: 500),
-                decoration: getBoxShadow(),
-
-                child:
-
-
-                TextFormField(
-                  decoration:  getInoutDecoration(
-                    controller.isContainerVisible.value
-                      ? Strings.selectDestination.tr : null,
-                                           controller.isContainerVisible.value
-                                               ? Icon(Icons.location_on)
-                                               : null,
-                      controller.isContainerVisible.value,
-                  ),
-
-                  // InputDecoration(
-                  //   hintText: 'hint',
-                  //   border: InputBorder.none,
-                  //   hintStyle: controller.isContainerVisible.value?K.hintSmallTextStyle:TextStyle(color: Colors.transparent),
-                  //   contentPadding: EdgeInsets.only(left: 15.0, top: 16.0),
-                  // ),
-                )),),
+              Obx(
+                () => AnimatedContainer(
+                    height: controller.isContainerVisible.value ? 50 : 0,
+                    // color: Colors.red,
+                    duration: const Duration(milliseconds: 500),
+                    decoration: getBoxShadow(),
+                    child: TextFormField(
+                      controller: controller.searchController,
+                      onFieldSubmitted: (value) {
+                        Focus.of(context).unfocus();
+                      },
+                      decoration: getInputDecoration(
+                        controller.isContainerVisible.value
+                            ? Strings.selectDestination.tr
+                            : null,
+                        controller.isContainerVisible.value
+                            ? const Icon(Icons.location_on)
+                            : null,
+                        controller.isContainerVisible.value,
+                      ),
+                    )),
+              ),
               K.sizedBoxH0,
               CustomButton(
                 buttonText: Strings.seTDestination.tr,
                 radius: 25,
                 onPressed: () {
-
-                  // Get.back();
+// TODO:
+                  Get.back(result: []);
                 },
               ),
             ],
@@ -139,7 +103,7 @@ class SearchBottom extends StatelessWidget {
     );
   }
 
-  getInoutDecoration(hint, icon,isContainerVisible) {
+  getInputDecoration(hint, icon, isContainerVisible) {
     return InputDecoration(
       icon: Container(
         margin: const EdgeInsets.only(
@@ -151,9 +115,10 @@ class SearchBottom extends StatelessWidget {
       ),
       hintText: hint,
       border: InputBorder.none,
-      hintStyle:  isContainerVisible?K.hintSmallTextStyle:TextStyle(color: Colors.transparent),
-
-      contentPadding: EdgeInsets.only(left: 15.0, top: 16.0),
+      hintStyle: isContainerVisible
+          ? K.hintSmallTextStyle
+          : const TextStyle(color: Colors.transparent),
+      contentPadding: const EdgeInsets.only(left: 15.0, top: 16.0),
     );
   }
 
@@ -164,11 +129,9 @@ class SearchBottom extends StatelessWidget {
         boxShadow: [
           BoxShadow(
               color: Colors.grey.withOpacity(.4),
-              offset: Offset(.50, 1.0),
+              offset: const Offset(.50, 1.0),
               blurRadius: 1,
               spreadRadius: 1)
         ]);
   }
-
-
 }
