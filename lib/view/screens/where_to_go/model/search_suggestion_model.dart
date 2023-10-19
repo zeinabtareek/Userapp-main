@@ -220,5 +220,10 @@ class PlaceDetail {
 
     );
 }
+
+  @override
+  String toString() {
+    return 'PlaceDetail(?geometry: $geometry, address: $address, latitude: $latitude, longitude: $longitude, name: $name)';
+  }
 }
 
