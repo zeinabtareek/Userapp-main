@@ -193,7 +193,7 @@ class ChooseFromMapController extends BaseController
           'Location permissions are permanently denied, we cannot request permissions **.',
           style: TextStyle(fontSize: 16),
         ));
-        Get.off( SetDestinationScreen());
+        Get.off( SetDestinationScreen(fromCat: false,));
         // Get.off(AddItemScreen(address: '', apartmentNumber: '', landMark: '', lat: '', lng: '', areaNumber: ''));
         return;
       }
@@ -211,7 +211,7 @@ class ChooseFromMapController extends BaseController
           // await   showPinsOnMap(LatLng(currLocation.latitude, currLocation.longitude));
           print(currLocation.longitude);
 
-          Get.to( SetDestinationScreen());
+          Get.to( SetDestinationScreen(fromCat: false,));
         });
       }
     } on TimeoutException {

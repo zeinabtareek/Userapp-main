@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/view/screens/ride/widgets/ride_category.dart';
 
 import '../../../../util/app_strings.dart';
 import '../../../../util/app_style.dart';
@@ -12,6 +13,7 @@ import '../../../widgets/custom_category_card.dart';
 import '../../../widgets/custom_text_field.dart';
 import '../../history/model/history_model.dart';
 import '../../history/widgets/rider_details.dart';
+import '../../home/controller/category_controller.dart';
 import '../../map/controller/map_controller.dart';
 import '../../parcel/widgets/contact_widget.dart';
 import '../../parcel/widgets/finding_rider_widget.dart';
@@ -64,18 +66,29 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
       GetBuilder<RideController>(//rideController.selectedPackage.value?
         init: RideController(rideRepo: Get.find()),
           builder: (controller)=>
+///here you will change the widget zeinab
 
-      Column(
+          Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'your selected car type is : ${controller.selectedSubPackage.value!.categoryTitle}',
+      children: [ Text(
+        controller.selectedSubPackage.value==null?
+          'please_choose_a_car_type'.tr:
+
+        '${'your_selected_car_type'.tr} : ${controller.selectedSubPackage.value?.categoryTitle}',
           style: textRegular.copyWith(
               color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.w600),
         ),
+
         K.sizedBoxH0,
+        controller.selectedSubPackage.value==null?
+        GetBuilder<CategoryController>(
+            initState: (_) =>
+                Get.find<CategoryController>().getCategoryList(),
+            builder: (categoryController) {
+              return const RideCategoryWidget();
+            }):
         Center(
           child: GestureDetector(
             onTap: () {},

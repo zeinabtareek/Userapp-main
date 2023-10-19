@@ -22,7 +22,7 @@ class AddressItemCard extends StatelessWidget {
       onTap: () {
         if (fromPage == "home") {
           Get.to(() => SetDestinationScreen(
-                address: addressModel.location,
+                address: addressModel.location, fromCat: false,
               ));
         } else {
           Get.find<ParcelController>()

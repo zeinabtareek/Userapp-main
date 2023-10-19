@@ -40,6 +40,7 @@ class RideController extends BaseController implements GetxService {
   var selectedSubCategory = RideType.car;
 
   bool isBiddingOn = true;
+  final isFromCat = true.obs;
 
   double currentFarePrice = 0;
 

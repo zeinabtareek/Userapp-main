@@ -431,6 +431,8 @@
   "discount": "Discount",
   "tax": "Tax",
   "total_price": "Total Price",
+  "your_selected_car_type": "your selected car type is",
+  "please_choose_a_car_type": "Please choose a car type",
 
   "withdraw": "Withdraw"
 

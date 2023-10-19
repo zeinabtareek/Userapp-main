@@ -45,16 +45,28 @@ class RideSubCategoryWidget extends StatelessWidget {
                         if (categoryName == RideType.car) {
                           rideController
                               .updateSelectedSubRideType(RideType.car);
-                          rideController
-                              .selectedSubPackage(listOfSubCategory[index]);
+
+                          // rideController
+                          //     .selectedSubPackage(listOfSubCategory[index]);
                           print(
                               'sub package ${listOfSubCategory[index].categoryTitle}');
 
                           ///zeinab this is the sub package
-                          Get.to(
-                            () => SetDestinationScreen(
-                                categoryModel: listOfSubCategory[index]),
-                          );
+                          if( rideController.isFromCat.value==true) {
+                            rideController
+                                .selectedSubPackage(listOfSubCategory[index]);
+                            Get.to(
+                                  () =>
+                                  SetDestinationScreen(
+                                      fromCat: rideController.isFromCat.value,
+                                      // fromCat: true,
+                                      categoryModel: listOfSubCategory[index]),
+                            );
+                          }
+                          else{
+                            print('you are choosing the car type from where to go${rideController.selectedSubPackage.value?.id} ');
+                          }
+
                         } else {
                           rideController
                               .updateSelectedSubRideType(RideType.parcel);

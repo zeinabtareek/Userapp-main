@@ -33,8 +33,8 @@ class SetDestinationScreen extends StatelessWidget {
   CategoryModel? categoryModel;
 
 
-
-  SetDestinationScreen({Key? key, this.address,   this.categoryModel}) : super(key: key);
+  bool fromCat;
+  SetDestinationScreen({Key? key, this.address,   this.categoryModel, required this. fromCat}) : super(key: key);
 final controller =Get.put(CreateATripController());
   // @override
   // void initState() {
@@ -74,7 +74,7 @@ final controller =Get.put(CreateATripController());
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(categoryModel!.categoryTitle.toString()??'ll'),
+                                Text(categoryModel?.categoryTitle.toString()??'ll'),
                                 Padding(
                                   padding: const EdgeInsets.fromLTRB(
                                       Dimensions.paddingSizeSmall,

@@ -13,7 +13,6 @@ import 'package:ride_sharing_user_app/view/screens/home/widgets/home_search_widg
 import 'package:ride_sharing_user_app/view/screens/payment/controller/payment_controller.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
-
 import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
 import '../../../util/images.dart';

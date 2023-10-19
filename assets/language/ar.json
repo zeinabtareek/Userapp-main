@@ -436,6 +436,7 @@
   "discount": "خصم",
   "total_price": "السعر الإجمالي",
   "tax": "ضريبة",
-
+  "your_selected_car_type": "نوع السيارة الذي اخترته هو",
+  "Please_choose_a_car_type": "الرجاء اختيار نوع السيارة",
   "select_a_trip": "يجب عليك تحديد موقع الرحلة (من، إلى)"
 }
