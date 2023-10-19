@@ -1,15 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/util/dimensions.dart';
-import 'package:ride_sharing_user_app/util/text_style.dart';
-import 'package:ride_sharing_user_app/view/screens/home/controller/category_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/parcel_home_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/where_to_go/where_to_go_screen.dart';
 
 import '../../../../util/app_style.dart';
+import '../../../../util/dimensions.dart';
+import '../../../../util/text_style.dart';
 import '../../../widgets/animated_widget.dart';
+import '../../home/controller/category_controller.dart';
 import '../../home/model/categoty_model.dart';
+import '../../parcel/parcel_home_screen.dart';
+import '../../where_to_go/where_to_go_screen.dart';
+import '../controller/ride_controller.dart';
 
 class RideSubCategoryWidget extends StatelessWidget {
   List<CategoryModel> listOfSubCategory;
@@ -24,8 +25,9 @@ class RideSubCategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var con = Get.find<CategoryController>();
     return GetBuilder<RideController>(
-        initState: (_) => Get.find<CategoryController>().getCategoryList(),
+        initState: (_) => con.getCategoryList(),
         builder: (rideController) {
           return SizedBox(
             height: 110,
@@ -45,12 +47,13 @@ class RideSubCategoryWidget extends StatelessWidget {
                               .updateSelectedSubRideType(RideType.car);
                           rideController
                               .selectedSubPackage(listOfSubCategory[index]);
-                          print('sub package ${listOfSubCategory[index].categoryTitle}');
-
+                          print(
+                              'sub package ${listOfSubCategory[index].categoryTitle}');
 
                           ///zeinab this is the sub package
                           Get.to(
-                            () => SetDestinationScreen(categoryModel:listOfSubCategory[index]),
+                            () => SetDestinationScreen(
+                                categoryModel: listOfSubCategory[index]),
                           );
                         } else {
                           rideController
@@ -147,31 +150,191 @@ class RideCategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RideController>(initState: (_) {
-      CategoryController categoryController = Get.find<CategoryController>();
-      categoryController.getCategoryList().then((value) {
-        if (categoryController.categoryList.isNotEmpty) {
-          if (Get.isRegistered<RideController>()) {
-            var con = Get.find<RideController>();
-            con.selectedPackage(
-              categoryController.categoryList.first,
-            );
-            con.updateSelectedRideType(RideType.car);
-            con.vehicleToggle();
-          } else {
-            var con = Get.put(RideController(rideRepo: Get.find()));
-            con.selectedPackage(
-              categoryController.categoryList.first,
-            );
-            con.updateSelectedRideType(RideType.car);
-            con.vehicleToggle();
+    CategoryController categoryController = Get.find<CategoryController>();
+
+    return GetBuilder<RideController>(
+      initState: (_) {
+        categoryController.getCategoryList().then((value) {
+          if (categoryController.categoryList.isNotEmpty) {
+            if (Get.isRegistered<RideController>()) {
+              var con = Get.find<RideController>();
+              con.selectedPackage(
+                categoryController.categoryList.first,
+              );
+              con.updateSelectedRideType(RideType.car);
+              con.vehicleToggle();
+            } else {
+              var con = Get.put(RideController(rideRepo: Get.find()));
+              con.selectedPackage(
+                categoryController.categoryList.first,
+              );
+              con.updateSelectedRideType(RideType.car);
+              con.vehicleToggle();
+            }
           }
-        }
-      });
-    }, builder: (rideController) {
-      return Column(
-        children: [
-          SizedBox(
+        });
+      },
+      builder: (rideController) {
+     if (categoryController.categoryList.isNotEmpty) {
+      return     Column(
+          children: [
+            SizedBox(
+              height: 110,
+              width: Get.width,
+              child: ListView.builder(
+                  itemCount: categoryController.categoryList.length,
+                  padding: EdgeInsets.zero,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    var item = categoryController.categoryList[index];
+                    return SizedBox(
+                      height: Dimensions.iconSizeOnline - 10,
+                      width: Dimensions.iconSizeOnline,
+                      child: InkWell(
+                        onTap: () {
+                          rideController.selectedPackage(item);
+                          if (index != 2 && index != 3) {
+                            if (index == 0) {
+                              rideController
+                                  .updateSelectedRideType(RideType.car);
+                              rideController.vehicleToggle();
+                            } else if (index == 1) {
+                              rideController
+                                  .updateSelectedRideType(RideType.parcel);
+                              rideController.vehicleToggle();
+                              null;
+                            } else if (index == 2) {
+                              rideController
+                                  .updateSelectedRideType(RideType.bike);
+                              rideController.vehicleToggle();
+                            } else if (index == 3) {
+                              // rideController
+                              //     .updateSelectedRideType(RideType.luxury);
+                            }
+                            rideController.setRideCategoryIndex(index);
+                          } else {
+                            rideController.resetControllerValue();
+                          }
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 80,
+                              width: 90,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    Dimensions.radiusDefault),
+                                color: rideController.rideCategoryIndex == index
+                                    ? Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.8)
+                                    : Theme.of(context)
+                                        .hintColor
+                                        .withOpacity(0.1),
+                              ),
+                              padding: index == 2 || index == 3
+                                  ? null
+                                  : const EdgeInsets.all(
+                                      Dimensions.paddingSizeDefault),
+                              //   child:   Image.asset(Get.find<CategoryController>()
+                              //       .categoryList[index]
+                              //       .categoryImage!),
+                              // ),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Image.network(
+                                    item.categoryImage!,
+                                  ),
+                                  if (index == 2 || index == 3)
+                                    Positioned.fill(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.black.withOpacity(.8),
+                                            borderRadius: BorderRadius.circular(
+                                                Dimensions.radiusDefault)),
+                                        child: const Center(
+                                          child: Text(
+                                            'Coming Soon',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: Dimensions.paddingSizeExtraSmall,
+                            ),
+                            Text(
+                              item.categoryTitle!.tr,
+                              style: textSemiBold.copyWith(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .color!
+                                      .withOpacity(0.8),
+                                  fontSize: Dimensions.fontSizeSmall),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+            // rideController.heightOfTypes
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+              width: 200,
+              height: rideController.heightOfTypes,
+              // color: Colors.blue,
+              child: rideController.isExpanded
+                  ? Obx(() => animatedWidget(
+                      onTap: () {},
+                      widget: RideSubCategoryWidget(
+                        listOfSubCategory: rideController
+                                .selectedPackage.value?.sub
+                                ?.toList() ??
+                            [],
+                        categoryName: rideController.selectedCategoryTypeEnum,
+                        selectedCategoryModel:
+                            rideController.selectedPackage.value!,
+                      ),
+                      limit: 1))
+                  : const SizedBox(),
+            ),
+          ],
+        );
+       
+     }else{
+     return Center(child: CupertinoActivityIndicator(),);
+     }
+
+        
+      },
+    );
+  }
+}
+/*
+class NewWidget extends StatelessWidget {
+  final RideController rideController;
+  const NewWidget(
+    this.rideController, {
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
             height: 110,
             width: Get.width,
             child: ListView.builder(
@@ -278,31 +441,30 @@ class RideCategoryWidget extends StatelessWidget {
                       ),
                     ),
                   );
-                }),
-          ),
-          // rideController.heightOfTypes
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeInOut,
-            width: 200,
-            height: rideController.heightOfTypes,
-            // color: Colors.blue,
-            child: rideController.isExpanded
-                ? Obx(() => animatedWidget(
-                    onTap: () {},
-                    widget: RideSubCategoryWidget(
-                      listOfSubCategory:
-                          rideController.selectedPackage.value?.sub?.toList() ??
-                              [],
-                      categoryName: rideController.selectedCategoryTypeEnum,
-                      selectedCategoryModel:
-                          rideController.selectedPackage.value!,
-                    ),
-                    limit: 1))
-                : const SizedBox(),
-          ),
-        ],
-      );
-    });
+                })),
+        // rideController.heightOfTypes
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+          width: 200,
+          height: rideController.heightOfTypes,
+          // color: Colors.blue,
+          child: rideController.isExpanded
+              ? Obx(() => animatedWidget(
+                  onTap: () {},
+                  widget: RideSubCategoryWidget(
+                    listOfSubCategory:
+                        rideController.selectedPackage.value?.sub?.toList() ??
+                            [],
+                    categoryName: rideController.selectedCategoryTypeEnum,
+                    selectedCategoryModel:
+                        rideController.selectedPackage.value!,
+                  ),
+                  limit: 1))
+              : const SizedBox(),
+        ),
+      ],
+    );
   }
 }
+*/

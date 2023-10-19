@@ -136,18 +136,10 @@ class AuthController extends GetxController {
         res,
         onError: (error) {
           if (error!.data?.status == 403) {
-            Get.off(
-              VerificationScreen(
-                number: loginPhoneController.text,
-                countryCode:
-                    loginSelectCountry.value.dialCode ?? defaultDailCode,
-                otpState: OtpState.register,
-              ),
-              binding: BindingsBuilder(
-                () {
-                  Get.lazyPut(() => AuthController(sl()));
-                },
-              ),
+            _toVerificationScreen(
+              loginPhoneController.text,
+              loginSelectCountry.value.dialCode!
+              , OtpState.loginWithOtp,
             );
           }
         },
@@ -168,6 +160,22 @@ class AuthController extends GetxController {
         },
       );
     }
+  }
+
+  Future<dynamic>? _toVerificationScreen(
+    String phone, String poneCode, OtpState state) {
+    return Get.off(
+      VerificationScreen(
+        number: phone,
+        countryCode: poneCode ?? defaultDailCode,
+        otpState: state,
+      ),
+      binding: BindingsBuilder(
+        () {
+          Get.lazyPut(() => AuthController(sl()));
+        },
+      ),
+    );
   }
 
   toggleRememberMe() {
@@ -262,7 +270,13 @@ class AuthController extends GetxController {
         onSuccess: (res) {
           UserAuthModel user = res!.data!.user!;
           authCases.setUserDate(user);
-          toCompleteDataScreen();
+          // toCompleteDataScreen();
+          _toVerificationScreen(
+
+             regPhoneController.text,
+             regSelectCountry.value.dialCode!,
+             OtpState.register,
+          );
         },
       );
     }
@@ -328,14 +342,7 @@ class AuthController extends GetxController {
 // TODO:  make sure user have token
           UserAuthModel user = res!.data!.user!;
           await authCases.setUserDate(user);
-          Get.to(
-            () => VerificationScreen(
-              otpState: OtpState.register,
-              number: user.phone!,
-              countryCode: user.phoneCode!,
-            ),
-            binding: authBinding,
-          );
+          _toHomeScreen();
         },
       );
     }

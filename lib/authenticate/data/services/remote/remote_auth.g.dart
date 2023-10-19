@@ -13,7 +13,7 @@ class _RemoteApiAuth implements RemoteApiAuth {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://hoodbackend.develobug.com/api/user/';
+    baseUrl ??= 'https://arabchance.com/Hood-Backend-Dashboard/public/api/user/';
   }
 
   final Dio _dio;

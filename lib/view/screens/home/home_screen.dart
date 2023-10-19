@@ -62,15 +62,16 @@ class _HomeScreenState extends State<HomeScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                BannerView(),
+                const BannerView(),
                 K.sizedBoxH0,
 
                 GetBuilder<CategoryController>(
                     initState: (_) =>
                         Get.find<CategoryController>().getCategoryList(),
                     builder: (categoryController) {
-                      return RideCategoryWidget();
-                    }), K.sizedBoxH0,
+                      return const RideCategoryWidget();
+                    }),
+                K.sizedBoxH0,
                 // const CategoryView(),
                 const HomeSearchWidget(),
                 const HomeMyAddress(

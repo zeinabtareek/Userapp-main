@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 class Country {
-  int? id;
+  String? id;
   String? name;
   String? phoneCode;
   String? code;
