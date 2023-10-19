@@ -19,6 +19,7 @@ import '../../parcel/widgets/otp_widget.dart';
 import '../../parcel/widgets/route_widget.dart';
 import '../../parcel/widgets/tolltip_widget.dart';
 import '../../payment/payment_screen.dart';
+import '../../where_to_go/controller/create_trip_controller.dart';
 import '../controller/ride_controller.dart';
 import 'confirmation_trip_dialog.dart';
 import 'estimated_fare_and_distance.dart';
@@ -37,7 +38,7 @@ class BikeRideDetailsWidgets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RideController>(
-      builder: (rideController) {
+       builder: (rideController) {
         print(" state ::: ${rideController.currentRideState} ");
         // print(" mounted  BikeRideDetailsWidgets  ");
         return Padding(
@@ -59,12 +60,17 @@ class BikeRideDetailsWidgets extends StatelessWidget {
 Widget getshetWidget(RideState state, BuildContext context, String title,
     String image, Function(RideState state) update, bool isBiddingOn) {
   if (state == RideState.initial) {
-    return Column(
+    return
+      GetBuilder<RideController>(//rideController.selectedPackage.value?
+        init: RideController(rideRepo: Get.find()),
+          builder: (controller)=>
+
+      Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'your selected car type is : $title',
+          'your selected car type is : ${controller.selectedSubPackage.value!.categoryTitle}',
           style: textRegular.copyWith(
               color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.w600),
@@ -82,6 +88,8 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
           ),
         ),
         K.sizedBoxH0,
+
+
         RouteWidget(),
         const SizedBox(
           height: Dimensions.paddingSizeDefault,
@@ -92,6 +100,7 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
         ),
         CustomTextField(
           prefix: false,
+          controller: controller.noteController,
           borderRadius: Dimensions.radiusLarge,
           hintText: Strings.addNote.tr,
         ),
@@ -106,13 +115,19 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
             // const FindDriverCustomBtn(fromPage: Strings.ride, whoWillPay: true,)
 
             CustomButton(
-                buttonText: Strings.getPrice.tr,
+                buttonText: Strings.go.tr,
+                // buttonText: Strings.getPrice.tr,
                 radius: 50,
-                onPressed: () {
+                onPressed: () async{
                   // Get.to(()=> RideExpendableBottomSheet(isGetPrice: true,));
+
                   update(RideState.getPrice);
+                  await controller.getOrderPrice();
+                  controller.update();
                   // rideController
                   //     .updateRideCurrentState(RideState.acceptingRider);
+
+
                 })
             : CustomButton(
                 buttonText: Strings.findRider.tr,
@@ -123,7 +138,9 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
         K.sizedBoxH0,
         K.sizedBoxH0,
       ],
-    );
+    )
+    )
+          ;
   } else if (state == RideState.riseFare) {
     return Column(children: [
       TollTipWidget(title: Strings.tripDetails.tr),
@@ -142,7 +159,7 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
     return Column(
       children: [
         // Flexible(child: Container(color: Colors.transparent,))
-        const FindingRiderWidget(fromPage: Strings.ride),
+          FindingRiderWidget(fromPage: Strings.ride),
       ],
     );
   } else if (state == RideState.getPrice) {

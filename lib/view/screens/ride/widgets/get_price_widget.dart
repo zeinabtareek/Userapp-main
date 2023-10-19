@@ -45,7 +45,9 @@ class GetPriceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RideController>(builder: (rideController) {
+    return GetBuilder<RideController>(
+      init:RideController(rideRepo: Get.find()),
+        builder: (rideController) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,6 +79,8 @@ class GetPriceWidget extends StatelessWidget {
             height: Dimensions.paddingSizeDefault,
           ),
           // const TripFareSummery(),
+
+
           Padding(
             padding:
             const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
@@ -88,9 +92,10 @@ class GetPriceWidget extends StatelessWidget {
                       style: textRegular.copyWith(
                           fontSize: Dimensions.fontSizeLarge),
                     ),
-
-                const SizedBox(width: Dimensions.paddingSizeSmall),
-                  Text('2wef00 \$',style: textSemiBold.copyWith(
+///zeinab get price
+                const SizedBox(width: Dimensions.paddingSizeSmall),//getOrderPrice
+                rideController.priceData.priceBeforeDiscount==null?Text('0.0'):
+                Text('${rideController.priceData.priceBeforeDiscount} ',style: textSemiBold.copyWith(
                     color: Theme.of(context)
                         .textTheme
                         .bodyMedium!
@@ -125,14 +130,14 @@ class GetPriceWidget extends StatelessWidget {
           ),
                 ),
                 K.sizedBoxW0,
-               Obx(()=> Expanded(child:   CustomButton(
-                  isLoading: rideController.state==ViewState.busy?true:false,
+             Obx(()=>   Expanded(child:   CustomButton(
+                  isLoading: rideController.loading.value,
 
                     radius: 50,
                     buttonText: Strings.apply.tr,
                     onPressed: () {
                       // rideController.calculateDistance();
-                      rideController.getPrice();
+                      rideController.getPromoCodeDiscount();
 
                       //
                       // rideController
@@ -152,13 +157,15 @@ class GetPriceWidget extends StatelessWidget {
               Text(Strings.yourPriceAfterDiscount.tr,    style: textRegular.copyWith(
       fontSize: Dimensions.fontSizeLarge),),
 
-              Text('100.0\$',style: textSemiBold.copyWith(
+             GetBuilder<RideController>(
+          builder: (rideController)=>rideController.priceData.finalPrice==null||rideController.priceData.finalPrice==rideController.priceData.priceBeforeDiscount?SizedBox():
+              Text('${rideController.priceData.finalPrice}',style: textSemiBold.copyWith(
                   color: Theme.of(context)
                       .textTheme
                       .bodyMedium!
                       .color!
                       .withOpacity(0.8),
-                  fontSize: Dimensions.fontSizeExtraLarge),),
+                  fontSize: Dimensions.fontSizeExtraLarge),),),
             ],
           ),
           const SizedBox(

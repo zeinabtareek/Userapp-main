@@ -47,6 +47,7 @@ class RideController extends BaseController implements GetxService {
   int rideSubCategoryIndex = 0;
 
   TextEditingController inputFarePriceController = TextEditingController();
+  TextEditingController noteController = TextEditingController();
 
   TextEditingController senderContactController = TextEditingController();
 
@@ -58,12 +59,13 @@ class RideController extends BaseController implements GetxService {
   @override
   onInit() async {
     super.onInit();
-    inputFarePriceController.text = "0.00";
+    // await getPrice();
+     inputFarePriceController.text = "0.00";
     // distance=await  Get.find<WhereToGoController>().calculateDistance();
   }
 
   @override
-  void dispose() {
+    dispose() {
     // TODO: implement dispose
     super.dispose();
     promoCodeController.clear();
@@ -75,10 +77,10 @@ class RideController extends BaseController implements GetxService {
     heightOfTypes = 0.0;
     isExpanded = false;
   }
-
+  // var distance ;
   Future<double?> calculateDistance() async {
-    var distance = await Get.find<CreateATripController>().calculateDistance(
-      LatLng(37.7749, -122.4194), // San Francisco
+    distance=  await Get.find<CreateATripController>().calculateDistance(
+      LatLng(33.7749, -122.4194), // San Francisco
       LatLng(
           37.7753, -122.4199), // Replace with your actual point 1 coordinates
     );
@@ -155,11 +157,10 @@ class RideController extends BaseController implements GetxService {
   /// Set Rate For The Trip
   TextEditingController promoCodeController = TextEditingController();
   OrderPriceData priceData = OrderPriceData();
-
-  getPrice() async {
+final loading=false.obs;
+  getPromoCodeDiscount() async {
+    loading.value = true;
     try {
-      setState(ViewState.busy);
-
       var result = await actionCenter.execute(() async {
         if (promoCodeController.text.isEmpty) {
           OverlayHelper.showErrorToast(
@@ -167,15 +168,16 @@ class RideController extends BaseController implements GetxService {
         } else {
           double? distance = await calculateDistance();
           priceData = await rideRepo.getPrice(
-              packageId: selectedPackage.value!.id,
-              vehicleTypeId: selectedSubPackage.value!.id,
-              promoCode: promoCodeController.text,
-              // distance: 22
-              distance: distance);
-
+            packageId: selectedPackage.value!.id,
+            vehicleTypeId: selectedSubPackage.value!.id,
+            promoCode: promoCodeController.text,
+              distance: 22
+            // distance: distance,
+          );
+          OverlayHelper.showSuccessToast(Get.overlayContext!, Strings.done.tr);
           print('priceData $priceData');
         }
-       }, checkConnection: true);
+      }, checkConnection: true);
 
       if (!result) {
         setState(ViewState.error);
@@ -185,7 +187,25 @@ class RideController extends BaseController implements GetxService {
       return priceData; // Return the acceptedOrderData object
     } catch (e) {
       print(e);
+    } finally {
+      loading.value = false; // Stop the loading indicator
+  update(); // Trigger a rebuild of the GetBuilder widget
+
     }
-    setState(ViewState.idle);
-  }
+   }
+
+
+getOrderPrice()async{
+  setState(ViewState.busy);
+  priceData= await   rideRepo.getPrice(
+                  packageId: selectedPackage.value!.id,
+                  vehicleTypeId: selectedSubPackage.value!.id,
+                  promoCode: promoCodeController.text,
+                  distance: 22
+                  // distance: distance
+
+  );
+  setState(ViewState.idle);
+
+}
 }

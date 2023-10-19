@@ -130,7 +130,7 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
               ),
             if (parcelController.currentParcelState ==
                 ParcelDeliveryState.findingRider)
-              const Column(
+                Column(
                 children: [
                   FindingRiderWidget(
                     fromPage: 'parcel',
