@@ -136,7 +136,11 @@ class AuthController extends GetxController {
         res,
         onError: (error) {
           if (error!.data?.status == 403) {
-            _toVerificationScreen();
+            _toVerificationScreen(
+              loginPhoneController.text,
+              loginSelectCountry.value.dialCode!
+              , OtpState.loginWithOtp,
+            );
           }
         },
         onSuccess: (res) async {
@@ -158,12 +162,13 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<dynamic>? _toVerificationScreen() {
+  Future<dynamic>? _toVerificationScreen(
+    String phone, String poneCode, OtpState state) {
     return Get.off(
       VerificationScreen(
-        number: loginPhoneController.text,
-        countryCode: loginSelectCountry.value.dialCode ?? defaultDailCode,
-        otpState: OtpState.register,
+        number: phone,
+        countryCode: poneCode ?? defaultDailCode,
+        otpState: state,
       ),
       binding: BindingsBuilder(
         () {
@@ -266,7 +271,12 @@ class AuthController extends GetxController {
           UserAuthModel user = res!.data!.user!;
           authCases.setUserDate(user);
           // toCompleteDataScreen();
-          _toVerificationScreen();
+          _toVerificationScreen(
+
+             regPhoneController.text,
+             regSelectCountry.value.dialCode!,
+             OtpState.register,
+          );
         },
       );
     }
