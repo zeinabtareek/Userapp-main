@@ -8,8 +8,8 @@ class AuthInterceptor extends InterceptorsWrapper {
   @override
   Future onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    // if (await sl<AuthCases>().isAuthenticated()) {
-    if (false) {
+    if (await sl<AuthCases>().isAuthenticated()) {
+    // if (false) {
       UserAuthModel? user = await sl<AuthCases>().getUserData();
 
       options.headers.addAll({"Authorization": "Bearer ${user!.tkn}"});

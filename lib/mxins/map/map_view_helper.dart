@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:math' as math;
+import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -45,20 +47,19 @@ mixin MapViewHelper on GetxController {
     Function() update, {
     required double lat,
     required double lng,
-    double bearing = 192.8334901395799,
+    double bearing = 170,
     double zoom = 19.0,
     bool isAnimate = true,
     double? disLat,
     double? disLong,
   }) async {
     bool isHaveDist = disLat != null && disLong != null;
-    GoogleMapController controller =
-        (await _mapViewHelperMapCompleter?.future)!;
+    GoogleMapController controller = _mapViewHelperMapController!;
 
     double zoomCamara = 0.0;
     if (isHaveDist) {
       LatLng dis = LatLng(disLat ?? lat, disLong ?? lng);
-      // zoomCamara = calculateZoomLevel(LatLng(lat, lng), dis);
+      zoomCamara = calculateZoomLevel(LatLng(lat, lng), dis);
     }
     var cameraPosition = CameraUpdate.newCameraPosition(
       CameraPosition(
@@ -207,26 +208,31 @@ mixin MapViewHelper on GetxController {
     }
   }
 
-  // double calculateZoomLevel(LatLng from, LatLng to) {
-  //   // The map's camera position includes zoom, so you need to calculate that.
-  //   // You can adjust the constants below to fine-tune the zoom level.
-  //   const double minZoomLevel = 1.0; // Minimum zoom level
-  //   const double maxZoomLevel = 21.0; // Maximum zoom level
-  //   const double zoomChangeThreshold =
-  //       1000.0; // Adjust this threshold as needed
+  double calculateZoomLevel(LatLng origin, LatLng destination) {
+    const double zoomConst = 15.0;
+    const double maxZoom = 21.0;
 
-  //   double distance =MapHelper.calculateDistance(
-  //       from.latitude, from.longitude, to.latitude, to.longitude);
+    // Calculate the distance between the two LatLng points using Haversine formula
+    double distance = MapHelper.calculateDistance(
+      origin.latitude,
+      origin.longitude,
+      destination.latitude,
+      destination.longitude,
+    );
 
-  //   double zoom = maxZoomLevel;
-
-  //   if (distance > 0) {
-  //     zoom = math.log(zoomChangeThreshold / distance) / math.ln2;
-  //     zoom = math.max(minZoomLevel, math.min(maxZoomLevel, zoom));
-  //   }
-
-  //   return zoom;
-  // }
+    // Adjust the distance for the zoom level calculation
+    double zoomLevel = zoomConst -  log(distance) / log(2);
+    print(" zoomLevel $zoomLevel ");
+    print(" maxZoom $maxZoom ");
+    // Ensure the zoom level is within bounds
+    if (zoomLevel < 0) {
+      return 0;
+    } else if (zoomLevel > maxZoom) {
+      return maxZoom;
+    } else {
+      return zoomLevel;
+    }
+  }
 
   Future<void> openMap(LatLng source, LatLng dist) async {
     String domain = 'https://www.google.com/maps/dir/?api=1';
@@ -267,7 +273,6 @@ mixin MapHelper on GetxController {
         barrierDismissible: false,
         builder: (context) => const PermissionDialog(),
       );
-    
 
       if (state == false) {
         return null;
@@ -313,7 +318,8 @@ mixin MapHelper on GetxController {
     return Geolocator.openLocationSettings();
   }
 
-  double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+  static double calculateDistance(
+      double lat1, double lon1, double lat2, double lon2) {
     var p = 0.017453292519943295;
     var a = 0.5 -
         math.cos((lat2 - lat1) * p) / 2 +
@@ -352,4 +358,105 @@ mixin MapHelper on GetxController {
       onChangeLocation,
     );
   }
+}
+
+class FlutterPolylinePointsHelper {
+  FlutterPolylinePointsHelper._() {
+    _init();
+  }
+  static PolylinePoints? _polylinePoints;
+  static PolylinePoints get instance {
+    if (_polylinePoints == null) {
+      _init();
+    }
+    return _polylinePoints!;
+  }
+
+  static _init() {
+    _polylinePoints ??= PolylinePoints();
+  }
+
+  static Future<PolylineResult> getRouteBetweenCoordinates(
+    String googleAPiKey,
+    double lat1,
+    double long1,
+    double lat2,
+    double long2,
+  ) async {
+    PointLatLng origin = PointLatLng(lat1, long1);
+
+    PointLatLng dest = PointLatLng(lat2, long2);
+
+    PolylineResult result =
+        await instance.getRouteBetweenCoordinates(googleAPiKey, origin, dest);
+    return result;
+  }
+
+  static List<PointLatLng> decodePolyline(String decode) {
+    List<PointLatLng> result = instance.decodePolyline(decode);
+    return result;
+  }
+
+  // static Future<List<PolylineResult>> getRouteWithAlternatives(
+  //   String googleAPiKey,
+  //   double lat1,
+  //   double long1,
+  //   double lat2,
+  //   double long2, {
+  //   TravelMode mode = TravelMode.driving,
+  // }) async {
+  //   PointLatLng origin = PointLatLng(lat1, long1);
+
+  //   PointLatLng dest = PointLatLng(lat2, long2);
+
+  //   PolylineRequest request = PolylineRequest(
+  //     apiKey: googleAPiKey,
+  //     origin: origin,
+  //     destination: dest,
+  //     mode: mode,
+  //     wayPoints:
+  //   );
+  //   List<PolylineResult> result =
+  //       await instance.getRouteWithAlternatives(request: request);
+
+  //   return result;
+  // }
+
+  static bool checkIfPointIsInPolyLine(LatLng tap, List<LatLng> vertices) {
+    int intersectCount = 0;
+    for (int j = 0; j < vertices.length - 1; j++) {
+      if (_rayCastIntersect(tap, vertices[j], vertices[j + 1])) {
+        intersectCount++;
+      }
+    }
+
+    return ((intersectCount % 2) == 1); // odd = inside, even = outside;
+  }
+
+  static bool _rayCastIntersect(LatLng tap, LatLng vertA, LatLng vertB) {
+    double aY = vertA.latitude;
+    double bY = vertB.latitude;
+    double aX = vertA.longitude;
+    double bX = vertB.longitude;
+    double pY = tap.latitude;
+    double pX = tap.longitude;
+
+    if ((aY > pY && bY > pY) || (aY < pY && bY < pY) || (aX < pX && bX < pX)) {
+      return false; // a and b can't both be above or below pt.y, and a or
+      // b must be east of pt.x
+    }
+
+    if (aX == bX) {
+      return true;
+    }
+    double m = (aY - bY) / (aX - bX); // Rise over run
+    double bee = (-aX) * m + aY; // y = mx + b
+    double x = (pY - bee) / m; // algebra is neat!
+
+    return x > pX;
+  }
+}
+
+extension ToLatLong on PointLatLng {
+  LatLng get toLatLng => LatLng(latitude, longitude);
 }

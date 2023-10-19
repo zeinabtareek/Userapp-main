@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
@@ -8,19 +9,29 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../controller/base_controller.dart';
+import '../../../../enum/view_state.dart';
 import '../../../../mxins/map/map_view_helper.dart';
+import '../../../../util/app_constants.dart';
 import '../../../../util/images.dart';
+import '../../where_to_go/model/search_suggestion_model.dart';
 import '../../where_to_go/repository/search_service.dart';
 import '../../where_to_go/where_to_go_screen.dart';
 
-class ChooseFromMapController extends BaseController with MapViewHelper {
-  List<LatLng> pickedPoints = [];
+class ChooseFromMapController extends BaseController
+    with MapViewHelper, MapHelper {
+  List<LatLng> pickedPoints = [
+    // const LatLng(37.421998189179185, -122.08399951457977),
+    // const LatLng(37.41511878640148, -122.0886980742216),
+    // const LatLng(37.416753550576935, -122.07783814519644)
+  ];
   @override
   void onInit() async {
     await _getCurrantLocation();
     await _drawMarkersIfHavePickedPoints();
+    await _moveCameraToMyLocation(
+        point: pickedPoints.isNotEmpty ? pickedPoints.first : null);
+    await _drawPolylineIfHavePickedPoints();
 
-    await _moveCameraToMyLocation();
     super.onInit();
   }
 
@@ -29,8 +40,7 @@ class ChooseFromMapController extends BaseController with MapViewHelper {
 
   final carouselController = CarouselController();
   SearchServices services = SearchServices();
-  // var markers = <MarkerId, Marker>{};
-  late Completer<GoogleMapController> completer;
+
   double distance = 0.0;
   late Position _position;
   GoogleMapController? _mapController;
@@ -61,12 +71,17 @@ class ChooseFromMapController extends BaseController with MapViewHelper {
     }
   }
 
-  Future<void> _moveCameraToMyLocation() async {
+  Future<void> _moveCameraToMyLocation({LatLng? point}) async {
     await Future.delayed(const Duration(milliseconds: 100));
+    double zoom = pickedPoints.isNotEmpty
+        ? calculateZoomLevel(pickedPoints.first, pickedPoints.last)
+        : 13;
     goToPlaceByCamera(
-      lat: _position.latitude,
-      lng: _position.longitude,
-      () => update(),
+      lat: point?.latitude ?? _position.latitude,
+      lng: point?.longitude ?? _position.longitude,
+      update,
+      zoom: zoom,
+      // zoom: 15,
     );
   }
 
@@ -79,7 +94,7 @@ class ChooseFromMapController extends BaseController with MapViewHelper {
           position: element,
           ripple: false,
           icon: BitmapDescriptor.fromBytes(
-              await getBytesFromAsset(Images.carIcon, 100)),
+              await getBytesFromAsset(Images.locationFill, 50)),
           onTap: () {},
         ));
       }
@@ -88,73 +103,40 @@ class ChooseFromMapController extends BaseController with MapViewHelper {
     }
   }
 
-  _drawPolylineIfHavePickedPoints() {
-    if (pickedPoints.length > 2) {
-      
+  Future _drawPolylineIfHavePickedPoints() async {
+    for (var i = 0; i < pickedPoints.length; i++) {
+      if (i + 1 < pickedPoints.length) {
+        LatLng fPoint = pickedPoints[i];
+        LatLng lPoint = pickedPoints[i + 1];
+        var x = await FlutterPolylinePointsHelper.getRouteBetweenCoordinates(
+          AppConstants.mapKey,
+          fPoint.latitude,
+          fPoint.longitude,
+          lPoint.latitude,
+          lPoint.longitude,
+        );
+
+        Polyline polyline = Polyline(
+          polylineId: PolylineId("$i"),
+          points: x.points.map((e) => e.toLatLng).toList(),
+          color: generateRandomColor(),
+          width: 5,
+          // patterns: [PatternItem.dash(3.0)],
+        );
+        addOnePolyline(update, polyline: polyline);
+      }
     }
   }
 
-/*
-  // Future<Position?> determinePosition() async {
-  //   bool serviceEnabled;
-  //   LocationPermission permission;
-
-  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  //   if (!serviceEnabled) {
-  //     showDialog(
-  //       context: Get.context!,
-  //       barrierDismissible: false,
-  //       builder: (context) => const PermissionDialog(),
-  //     );
-  //     Get.back();
-
-  //     return Future.error('Location services are disabled.');
-  //   }
-
-  //   permission = await Geolocator.checkPermission();
-  //   if (permission == LocationPermission.denied) {
-  //     permission = await Geolocator.requestPermission();
-  //     if (permission == LocationPermission.denied) {
-  //       showDialog(
-  //           context: Get.context!,
-  //           barrierDismissible: false,
-  //           builder: (context) => const PermissionDialog());
-
-  //       return Future.error('Location permissions are denied');
-  //     }
-  //   }
-
-  //   if (permission == LocationPermission.deniedForever) {
-  //     showDialog(
-  //         context: Get.context!,
-  //         barrierDismissible: false,
-  //         builder: (context) => const PermissionDialog());
-
-  //     // Permissions are denied forever, handle appropriately.
-  //     return Future.error(
-  //         'Location permissions are permanently denied, we cannot request permissions.');
-  //   }
-
-  //   _position = await Geolocator.getCurrentPosition();
-  //   print(position.latitude);
-  //   mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-  //       target: LatLng(position.latitude ?? 0.0, position.longitude ?? 0.0),
-  //       zoom: 17)));
-  //   var marker = RippleMarker(
-  //       markerId: kMarkerId,
-  //       position: LatLng(position.latitude ?? 0.0, position.longitude ?? 0.0),
-  //       ripple: false,
-  //       icon: BitmapDescriptor.fromBytes(
-  //           await getBytesFromAsset(Images.carIcon, 100)),
-  //       onTap: () {});
-
-  //   // setState(() {
-  //   // markers[kMarkerId] = marker;
-  //   // });
-  //   update();
-  //   return position;
-  // }
-  */
+  Color generateRandomColor() {
+    final Random random = Random();
+    return Color.fromRGBO(
+      random.nextInt(256), // Red value (0-255)
+      random.nextInt(256), // Green value (0-255)
+      random.nextInt(256), // Blue value (0-255)
+      1.0, // Alpha (transparency) value (0.0-1.0)
+    );
+  }
 
   onCameraIdle() async {
     isDataLoading.value = true;
@@ -272,5 +254,38 @@ class ChooseFromMapController extends BaseController with MapViewHelper {
 
   onCameraMove(CameraPosition position) {
     print(position.target);
+    // _moveCameraToMyLocation(point: position.target);
+
+    selectedPoint = position.target;
+  }
+
+  final searchServices = SearchServices();
+
+  final searchResultsFrom = <Predictions>[].obs;
+
+  searchPlacesFrom(String searchTerm) async {
+    setState(ViewState.busy);
+    searchResultsFrom.value = await searchServices.getAutoCompleteFrom(
+        search: searchTerm.toString(), country: 'eg');
+    print(
+        'data ${searchResultsFrom.value} length is ${searchResultsFrom.length}');
+    setState(ViewState.idle);
+    update();
+    return searchResultsFrom;
+  }
+
+  LatLng? selectedPoint;
+  getLocationOfSelectedSearchItem(Predictions predictions) async {
+    searchController.text = predictions.description.toString();
+    address("");
+    PlaceDetail result =
+        await searchServices.getPlaceDetails(predictions.placeId!);
+    print(" result ${result.toString()} ");
+    selectedPoint = LatLng(
+        result.geometry!.location!.lat!, result.geometry!.location!.lng!);
+    _moveCameraToMyLocation(point: selectedPoint);
+    print("  selected Point $selectedPoint ");
+
+    searchResultsFrom.clear();
   }
 }

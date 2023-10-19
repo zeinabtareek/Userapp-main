@@ -226,8 +226,8 @@ class _SplashScreenState extends State<SplashScreen>
         Get.offAll(DashboardScreen());
       } else {
     
-       Get.off(const OnBoardingScreen2());
-        // Get.offAllNamed(AuthScreenPath.loginScreenWithPassRouteName);
+      //  Get.off(const OnBoardingScreen2());
+        Get.offAllNamed(AuthScreenPath.loginScreenWithPassRouteName);
 
       }
     });

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'country_model.dart';
 
 class UserAuthModel {
-  int? id;
+  String? id;
   String? phoneCode;
   String? phone;
   String? email;

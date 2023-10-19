@@ -76,6 +76,7 @@ class SearchBottom extends StatelessWidget {
                       onFieldSubmitted: (value) {
                         Focus.of(context).unfocus();
                       },
+                      onChanged: (value) => controller.searchPlacesFrom(value),
                       decoration: getInputDecoration(
                         controller.isContainerVisible.value
                             ? Strings.selectDestination.tr
@@ -92,8 +93,8 @@ class SearchBottom extends StatelessWidget {
                 buttonText: Strings.seTDestination.tr,
                 radius: 25,
                 onPressed: () {
-// TODO:
-                  Get.back(result: []);
+                  controller.searchResultsFrom.clear();
+                  Get.back(result: controller.selectedPoint);
                 },
               ),
             ],
