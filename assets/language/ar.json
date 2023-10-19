@@ -138,7 +138,7 @@
   "bkAsh": "BkAsh",
   "paypal": "Paypal",
   "liqpay": "Liqpay",
-"master_card": "بطاقة ماستر بطاقة ائتمان",
+  "master_card": "بطاقة ماستر بطاقة ائتمان",
   "here_lots_of_offer_for_you": "هذا الكثير من العرض لك!",
   "your_level": "مستواك",
   "you_are_level": "أنت مستوى",
@@ -364,7 +364,7 @@
   "enter_extra_route": "أدخل طريقًا إضافيًا",
   "canceled": " ملغاة ",
   "no_history": "لا يوجد تاريخ",
- "pick_up_location": "موقع الإستلام؟",
+  "pick_up_location": "موقع الإستلام؟",
   "search_address": "عنوان البحث....",
 
   "email_is_not_valid":"بريد إلكتروني خاطئ",
@@ -432,5 +432,10 @@
   "complaint_sent": "تم إرسال شكواك بنجاح.\nسنصل إليك قريبًا جدًا",
   "privacy_policy": "سياسة الخصوصية",
   "no_entered_promo_code": "يجب عليك كتابة الرمز الترويجي أولاً",
+  "trip_id": "رقم الرحلة",
+  "discount": "خصم",
+  "total_price": "السعر الإجمالي",
+  "tax": "ضريبة",
+
   "select_a_trip": "يجب عليك تحديد موقع الرحلة (من، إلى)"
 }

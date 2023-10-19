@@ -230,6 +230,9 @@ class Strings {
   static const withdraw = 'withdraw';
   static const noDataToShow = 'no_data_to_show';
   static const noEnteredPromoCode = 'no_entered_promo_code';
+  static const discount = 'discount';
+  static const totalPrice = 'total_price';
+  static const tax = 'tax';
 
 
 
