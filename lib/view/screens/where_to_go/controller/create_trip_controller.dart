@@ -24,26 +24,35 @@ class CreateATripController extends BaseController {
       ExtraRoutes(lat: '21.125', lng: '21.126', location: 'Location 2'),
       ExtraRoutes(lat: '21.127', lng: '21.128', location: 'Location 3'),
     ];
-
+    LatLng source = LatLng(37.7749, -122.4194); // Example source coordinate (San Francisco)
+    LatLng destination = LatLng(34.0522, -118.2437);
+    dynamic distance = await calculateDistance(source, destination);
     List<ExtraRoutes> googleRoutes = [];
     try {
       var result = await actionCenter.execute(() async {
         setState(ViewState.busy);
+
         createOrderModel = await services.createATrip(
             createOrderBody: CreateOrderBody(
           orderType: 'trip',
-          packageId: '4abae317-b5fe-4078-a5d8-73138acc7277',
+          packageId:  Get.find<RideController>().selectedPackage.value?.id,
+          // packageId: '4abae317-b5fe-4078-a5d8-73138acc7277',
           from: From(lat: '21.23443', lng: '23.32323', location: 'Nasr City'),
           to: To(lat: '21.23443', lng: '23.32323', location: 'Nasr City'),
           extraRoutes: extraRoutes,
-          time: '12.0',
-          distance: '100',
-          note: 'note 100',
-          vehicleTypeId: '3ddb3780-fb2b-40b4-823f-283d51edc828',
+          time: '12',
+          // distance: 7 ,
+          distance: num.parse(distance.toString())  ,
+          note:  Get.find<RideController>().noteController.text,
+          vehicleTypeId:  Get.find<RideController>().selectedSubPackage.value?.id,
+          // vehicleTypeId: '3ddb3780-fb2b-40b4-823f-283d51edc828',
           paymentType: 'cash',
           googleRoutes: extraRoutes,
           // googleRoutes: googleRoutes,
         ));
+
+        Get.find<RideController>()
+            .updateRideCurrentState(RideState.findingRider);
         print('new trip data   ${createOrderModel.data?.id}');
        // await  calculateDistance();
         setState(ViewState.idle);
@@ -65,7 +74,7 @@ class CreateATripController extends BaseController {
 
 
 
-  calculateDistance(LatLng source ,LatLng dis )async{
+ Future calculateDistance(LatLng source ,LatLng dis )async{
 
     double sourceLatitude = source.latitude ?? 0.0;
     double sourceLongitude = source.longitude ?? 0.0;

@@ -28,6 +28,7 @@ class AppConstants {
   static const String getAddressSuggestions = "/api/user/address_suggestions";
   static const String createATrip = "/api/user/orders";
   static const String getOrderPrice = "/api/user/orders/order_price";
+  static const String getSlider = "/api/user/sliders";
 
 
 

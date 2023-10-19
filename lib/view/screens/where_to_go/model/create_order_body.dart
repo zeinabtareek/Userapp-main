@@ -10,7 +10,7 @@ class CreateOrderBody {
   List<ExtraRoutes>? extraRoutes;
   List<ExtraRoutes>? googleRoutes;
   String? time;
-  String? distance;
+  num ?distance;
   String? note;
   String? vehicleTypeId;
   String? paymentType;

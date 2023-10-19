@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/enum/view_state.dart';
 import 'package:ride_sharing_user_app/helper/price_converter.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/screens/map/controller/map_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/controller/parcel_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
+import 'package:ride_sharing_user_app/view/screens/where_to_go/controller/create_trip_controller.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
 import '../../../../util/app_strings.dart';
@@ -41,8 +43,13 @@ class FindDriverCustomBtn2 extends StatelessWidget {
                     : Strings.findDeliveryMan.tr,
             onPressed: () async {
               if (fromPage == 'ride') {
+
+                Get.find<CreateATripController>().createATrip();
+                // Get.find<CreateATripController>().state==ViewState.busy?
                 Get.find<RideController>()
                     .updateRideCurrentState(RideState.findingRider);
+              //
+
               } else {
                 print('555555');
 

@@ -15,6 +15,7 @@ class CategoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CategoryController>(
+      init: CategoryController(),
         initState: (_) => Get.find<CategoryController>().getCategoryList(),
         builder: (categoryController) {
           return

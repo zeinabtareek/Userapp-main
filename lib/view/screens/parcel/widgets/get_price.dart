@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/enum/view_state.dart';
 import 'package:ride_sharing_user_app/helper/price_converter.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
@@ -45,6 +46,7 @@ import '../../../../util/app_style.dart';
 import '../../../widgets/custom_category_card.dart';
 import '../../map/map_screen.dart';
 import '../../parcel/controller/parcel_controller.dart';
+import '../../where_to_go/controller/create_trip_controller.dart';
 class GetPrice extends StatelessWidget {
 
 
@@ -424,9 +426,13 @@ print('object');
                 K.sizedBoxH0,
               ]),
             if (rideController.currentRideState == RideState.findingRider)///
-              const Column(
+                Column(
                   mainAxisAlignment:MainAxisAlignment.end, mainAxisSize: MainAxisSize.min,
                   children: [
+                    ///hna kda zeinab
+
+
+
                 FindingRiderWidget(fromPage: Strings.ride),
               ]),
 

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:ride_sharing_user_app/enum/view_state.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
@@ -15,11 +16,11 @@ import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 import '../../../../util/app_style.dart';
 import '../../payment/payment_screen.dart';
 import '../../ride/widgets/confirmation_trip_dialog.dart';
+import '../../where_to_go/controller/create_trip_controller.dart';
 
 class FindingRiderWidget extends StatefulWidget {
   final String fromPage;
-
-  const FindingRiderWidget({Key? key, required this.fromPage})
+    FindingRiderWidget({Key? key, required this.fromPage})
       : super(key: key);
 
   @override
@@ -80,16 +81,22 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
         ///
         if (Get.find<RideController>().selectedCategoryTypeEnum !=
             RideType.parcel) {
-          Get.find<RideController>()
-              .updateRideCurrentState(RideState.afterAcceptRider);
-          Get.find<MapController>().notifyMapController();
-          await Future.delayed(const Duration(seconds: 2)).then((value) {
+          if (Get.find<CreateATripController>().state == ViewState.busy) {
+            Get.find<RideController>()
+                .updateRideCurrentState(RideState.afterAcceptRider);
+            Get.find<MapController>().notifyMapController();
+          }
+
+
+
+          await Future.delayed(const Duration(seconds: 30)).then((value) {
+            print(value);
             Get.find<RideController>()
                 .updateRideCurrentState(RideState.otpSent);
             Get.find<MapController>().notifyMapController();
           });
 
-          await Future.delayed(const Duration(seconds: 2)).then((value) async {
+          await Future.delayed(const Duration(seconds: 20)).then((value) async { //Z
             Get.dialog(
                 const ConfirmationTripDialog(
                   isStartedTrip: true,
@@ -221,6 +228,8 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final controller=Get.put(CreateATripController());
+
     return GetBuilder<RideController>(builder: (rideController) {
       return GetBuilder<ParcelController>(builder: (parcelController) {
         return Padding(
@@ -274,16 +283,21 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
                 // radius: Dimensions.paddingSizeSmall,
                 borderColor: Theme.of(Get.context!).primaryColor,
                 onPressed: () {
-                  if (Get.find<RideController>().currentRideState !=
-                          RideType.parcel &&
-                      widget.fromPage == 'ride') {
-                    rideController.updateRideCurrentState(RideState.initial);
-                  } else {
-                    Get.find<ParcelController>()
-                        .updateParcelState(ParcelDeliveryState.initial);
-                  }
 
-                  Get.find<MapController>().notifyMapController();
+                  ///zeinab removed from here
+                  // if (Get.find<RideController>().currentRideState !=
+                  //         RideType.parcel &&
+                  //     widget.fromPage == 'ride'#) {
+                  //   rideController.updateRideCurrentState(RideState.initial);
+                  // } else {
+                  //   Get.find<ParcelController>()
+                  //       .updateParcelState(ParcelDeliveryState.initial);
+                  // }
+                  //
+                  // Get.find<MapController>().notifyMapController();
+
+                  ///zeinab removed to here
+
                 },
               )
             ],

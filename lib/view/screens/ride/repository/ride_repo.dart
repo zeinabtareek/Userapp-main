@@ -32,7 +32,7 @@ class RideRepo {
         debugPrint('######${response.data }');
         if (response.statusCode == 200) {
           final model = OrderPriceData.fromJson(response.data['data']);
-          OverlayHelper.showSuccessToast(Get.overlayContext!, Strings.done.tr);
+          promoCode!=null??    OverlayHelper.showSuccessToast(Get.overlayContext!, Strings.done.tr);
 
           return model;
         } else if (response.statusCode == 422) {
@@ -45,12 +45,6 @@ class RideRepo {
   // OverlayHelper.showErrorToast(Get.overlayContext!, e.message);
   throw e; // Optionally re-throw the exception
   }
-  // on MsgModel catch (e) {
-  //   OverlayHelper.showWarningToast(Get.overlayContext!, e.toString() ?? "");
-  //   throw e; // Optionally re-throw the exception
-  // }
-
-  throw Exception("Unexpected error occurred"); // Throw an exception if none of the catch blocks are executed
 }
 
 }

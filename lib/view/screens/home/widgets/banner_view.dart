@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/enum/view_state.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/view/screens/home/controller/banner_controller.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_image.dart';
@@ -21,7 +23,9 @@ class _BannerViewState extends State<BannerView> {
         return SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 130,
-            child: CarouselSlider.builder(
+            child:
+            // Obx(()=>bannerController.loading.value?
+            CarouselSlider.builder(
               options: CarouselOptions(
                 autoPlay: true,
                 enlargeCenterPage: false,
@@ -35,14 +39,18 @@ class _BannerViewState extends State<BannerView> {
                 return ClipRRect(
                   borderRadius:
                       BorderRadius.circular(Dimensions.radiusOverLarge),
-                  child: const CustomImage(
-                    image:
-                        "https://img.freepik.com/premium-vector/luxury-car-rental-promotion-facebook-cover-banner-web-banner-template_621071-62.jpg?w=2000",
+                  child:   CustomImage(
+                    image: bannerController.banners[index].img??'',
+                        // "https://img.freepik.com/premium-vector/luxury-car-rental-promotion-facebook-cover-banner-web-banner-template_621071-62.jpg?w=2000",
                     fit: BoxFit.cover,
                   ),
                 );
               },
-            ));
+            )
+
+                // :CupertinoActivityIndicator()
+        // )
+        );
       },
     );
   }

@@ -39,6 +39,7 @@ class WhereToGoController extends BaseController implements GetxService {
   final fromNode = FocusNode();
   final extraNode = FocusNode();
   final extraNode2 = FocusNode();
+    var distance ;
   final extraNode3 = FocusNode();
   final toRoutNode = FocusNode();
   final searchController=TextEditingController().obs;
@@ -81,6 +82,14 @@ class WhereToGoController extends BaseController implements GetxService {
     update();
   }
 
+  Future<double?> calculateDistance() async {
+    distance=  await Get.find<CreateATripController>().calculateDistance(
+      LatLng(37.7749, -122.4194), // San Francisco
+      LatLng(
+          37.7753, -122.4199), // Replace with your actual point 1 coordinates
+    );
+    return distance;
+  }
   void getSuggestedRouteList() async {
     // Response response = await setMapRepo.getSuggestedRouteList();
     // if (response.statusCode == 200) {
@@ -125,7 +134,7 @@ class WhereToGoController extends BaseController implements GetxService {
   }
 
 
-  validateData() {
+  validateData() async {
     if(fromRouteController.text==''||toRouteController.text==''){
       print('no');
       OverlayHelper.showErrorToast(Get.overlayContext!, 'select_a_trip'.tr);
@@ -137,7 +146,8 @@ class WhereToGoController extends BaseController implements GetxService {
         fromScreen: 'ride',
       ));
       Get.find<RideController>().updateRideCurrentState(RideState.initial);
-      // calculateDistance();
+      distance=await calculateDistance();
+      update();
     }
 
   }

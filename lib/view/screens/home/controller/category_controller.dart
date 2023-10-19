@@ -14,6 +14,14 @@ import '../../../../util/ui/overlay_helper.dart';
 class CategoryController extends BaseController implements GetxService {
  
 
+
+
+
+  onInit()async{
+    super.onInit();
+
+    await getCategoryList();
+  }
   List<CategoryModel> categoryList = [];
   int heightOfTypes = 0;
   Future<void> getCategoryList() async {

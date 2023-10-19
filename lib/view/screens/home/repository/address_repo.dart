@@ -45,7 +45,8 @@ class AddressRepo {
 
   final dio = DioUtilNew.dio;
 
-  getAddressList()async{
+  getAddressList()async{//  List<BannerData>? data;
+
     try {
       final response = await dio!.get(AppConstants.getAddress);
 
