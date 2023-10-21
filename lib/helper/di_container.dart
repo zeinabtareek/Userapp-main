@@ -43,6 +43,9 @@ import '../view/screens/history/controller/history_controller.dart';
 import '../view/screens/history/repository/history_repo.dart';
 import '../view/screens/notification/controller/notification_controller.dart';
 import '../view/screens/profile/profile_screen/controller/user_controller.dart';
+import '../view/screens/request_screens/controller/base_map_controller.dart';
+import '../view/screens/request_screens/controller/finding_driver_controller.dart';
+import '../view/screens/request_screens/controller/timer_controller.dart';
 import '../view/screens/support/repository/help_and_support_repository.dart';
 import '../view/screens/where_to_go/controller/create_trip_controller.dart';
 import '../view/screens/where_to_go/controller/where_to_go_controller.dart';
@@ -92,14 +95,18 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => NotificationController(notificationRepo: Get.find()));
   Get.lazyPut(() => ActivityController( ));
   Get.lazyPut(() => HistoryController( ));
-  Get.lazyPut(() => ActivityController());
-  Get.lazyPut(() => ActivityController( ));
+  Get.lazyPut(() => TimerController());
   Get.lazyPut(() => UserController(userRepo: UserRepo(apiClient: Get.find())));
   Get.lazyPut(() => MessageController(messageRepo: MessageRepo(apiClient: Get.find())));
   Get.lazyPut(() => WalletController(walletRepo: Get.find()));
   Get.lazyPut(() => OfferController(offerRepo: Get.find()));
   Get.lazyPut(() => BannerController(bannerRepo: Get.find()));
   Get.lazyPut(() => AddressController( ));
+///newly added
+  Get.lazyPut(() => BaseMapController( ));
+  Get.lazyPut(() => FindingDriverController( ));
+
+
   Get.lazyPut(() => CreateATripController( ),fenix: true);
   // Get.lazyPut(() => AddressController(addressRepo: Get.find()));
   Get.lazyPut(() => MapController());

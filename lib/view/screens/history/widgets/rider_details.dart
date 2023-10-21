@@ -24,18 +24,25 @@ class ActivityScreenRiderDetails extends StatelessWidget {
       Row(children: [
         Expanded(
           child: Row(children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(Dimensions.radiusOverLarge),
-              child: const CustomImage(height: 50, width: 50,
-                image: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-              )),
+       Container(
+         padding: EdgeInsets.all(Dimensions.radiusSmall),
+         decoration: BoxDecoration(
+           borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+           color: Color(0xffF7F7F7)
+         ),
+         child: ClipRRect(
+             borderRadius: BorderRadius.circular(Dimensions.radiusOverLarge),
+             child: const CustomImage(height: 50, width: 50,
+               image: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+             )),
+       ),
             const SizedBox(width: Dimensions.paddingSizeSmall,),
             Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('${riderDetails.firstName.toString().tr} ${riderDetails.lastName.toString().tr}',
-                    style: textMedium.copyWith(fontSize: Dimensions.fontSizeLarge,color: Theme.of(context).primaryColorDark),
+                    style: textMedium.copyWith(fontSize: Dimensions.fontSizeDefault,color: Theme.of(context).primaryColor),
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text.rich(TextSpan(
@@ -53,25 +60,31 @@ class ActivityScreenRiderDetails extends StatelessWidget {
                   ),
                 ],
               ),
-            )
-            ],
+            )  ],
           ),
         ),
 
         Expanded(
           child: Row(children: [
-            ClipRRect(
+    Container(
+    padding: EdgeInsets.all(Dimensions.radiusSmall),
+    decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+    color: const Color(0xffF7F7F7)
+    ),
+    child: ClipRRect(
                 borderRadius: BorderRadius.circular(Dimensions.radiusOverLarge),
                 child: const CustomImage(height: 50, width: 50,
                   image: 'https://images.unsplash.com/photo-1595691403533-7f4a52a5b189?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3VwZXJiaWtlfGVufDB8fDB8fA%3D%3D&w=1000&q=80',
                 )),
+               ),
             const SizedBox(width: Dimensions.paddingSizeSmall,),
             Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('bike',
-                    style: textMedium.copyWith(fontSize: Dimensions.fontSizeDefault,color: Theme.of(context).primaryColorDark),
+                    style: textMedium.copyWith(fontSize: Dimensions.fontSizeDefault,color: Theme.of(context).primaryColor ),
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text.rich(
@@ -83,7 +96,7 @@ class ActivityScreenRiderDetails extends StatelessWidget {
                       TextSpan(text: "${'bike Type.'.tr} : ",style: textRegular.copyWith(fontSize: Dimensions.fontSizeDefault,
                         color: Theme.of(context).primaryColor
                       )),
-                      TextSpan(text: 'vehicleNumber',style: textRegular.copyWith(fontSize: Dimensions.fontSizeDefault)),
+                      TextSpan(text: 'vehicleNumber',style: textRegular.copyWith(fontSize: Dimensions.fontSizeSmall)),
                     ],
                   ),
                     overflow: TextOverflow.ellipsis,

@@ -13,39 +13,39 @@ class ContactWidget extends StatelessWidget {
     return Center(
       child: Container(
         width: 250,
+        height: 35,
         padding: const EdgeInsets.symmetric(
-            horizontal: Dimensions.paddingSizeDefault),
+            horizontal: Dimensions.paddingSizeSmall,
+            vertical: Dimensions.paddingSizeExtraSmall),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
-            border:
-                Border.all(width: .75, color: Theme.of(context).primaryColor)),
+            borderRadius: BorderRadius.circular(Dimensions.radiusOverLarge),
+            border: Border.all(
+                width: 2,
+                color: Theme.of(context).primaryColor.withOpacity(.2))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            GestureDetector(
+            Expanded(
+              child: GestureDetector(
                 onTap: () => Get.to(() => const MessageListScreen()),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.paddingSizeDefault,
-                      vertical: Dimensions.paddingSizeSmall),
-                  child: SizedBox(
-                      width: Dimensions.iconSizeLarge,
-                      child: Image.asset(Images.customerMessage)),
-                )),
-            Container(
-                width: 1, height: 25, color: Theme.of(context).primaryColor),
-            GestureDetector(
-              onTap: () async {
-                await launchUrl(launchUri,
-                    mode: LaunchMode.externalApplication);
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: Dimensions.paddingSizeDefault,
-                    vertical: Dimensions.paddingSizeSmall),
                 child: SizedBox(
                     width: Dimensions.iconSizeLarge,
-                    child: Image.asset(Images.customerCall)),
+                    child: Image.asset(Images.customerMessage)),
+              ),
+            ),
+            Container(
+                width: 1, height: 25, color: Theme.of(context).primaryColor),
+            Expanded(
+              child: GestureDetector(
+                onTap: () async {
+                  await launchUrl(launchUri,
+                      mode: LaunchMode.externalApplication);
+                },
+                child: SizedBox(
+                    width: Dimensions.iconSizeLarge,
+                    child: Image.asset(
+                      Images.customerCall,
+                    )),
               ),
             ),
           ],

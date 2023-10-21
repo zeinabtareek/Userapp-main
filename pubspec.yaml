@@ -59,6 +59,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^22.2.12
   top_snackbar_flutter: null
   url_launcher: ^6.1.14
+
 dependency_overrides:
   #  modal_bottom_sheet:
   #    git:

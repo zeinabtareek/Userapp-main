@@ -40,9 +40,8 @@ class BikeRideDetailsWidgets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RideController>(
-       builder: (rideController) {
+      builder: (rideController) {
         print(" state ::: ${rideController.currentRideState} ");
-        // print(" mounted  BikeRideDetailsWidgets  ");
         return Padding(
           padding: const EdgeInsets.symmetric(
               horizontal: Dimensions.paddingSizeDefault),
@@ -62,130 +61,126 @@ class BikeRideDetailsWidgets extends StatelessWidget {
 Widget getshetWidget(RideState state, BuildContext context, String title,
     String image, Function(RideState state) update, bool isBiddingOn) {
   if (state == RideState.initial) {
-    return
-      GetBuilder<RideController>(//rideController.selectedPackage.value?
+    return GetBuilder<RideController>(
+        //rideController.selectedPackage.value?
         init: RideController(rideRepo: Get.find()),
-          builder: (controller)=>
-///here you will change the widget zeinab
+        builder: (controller) =>
 
-          Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [ Text(
-        controller.selectedSubPackage.value==null?
-          'please_choose_a_car_type'.tr:
+            ///here you will change the widget zeinab
 
-        '${'your_selected_car_type'.tr} : ${controller.selectedSubPackage.value?.categoryTitle}',
-          style: textRegular.copyWith(
-              color: Theme.of(context).primaryColor,
-              fontWeight: FontWeight.w600),
-        ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  controller.selectedSubPackage.value == null
+                      ? 'please_choose_a_car_type'.tr
+                      : '${'your_selected_car_type'.tr} : ${controller.selectedSubPackage.value?.categoryTitle}',
+                  style: textRegular.copyWith(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.w600),
+                ),
+                K.sizedBoxH0,
+                controller.selectedSubPackage.value == null
+                    ? GetBuilder<CategoryController>(
+                        initState: (_) =>
+                            Get.find<CategoryController>().getCategoryList(),
+                        builder: (categoryController) {
+                          return const RideCategoryWidget();
+                        })
+                    : Center(
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: CustomCategoryCard(
+                            height: MediaQuery.of(context).size.height / 7,
+                            image: image,
+                            title: title,
+                            isClicked: false,
+                          ),
+                        ),
+                      ),
+                K.sizedBoxH0,
+                RouteWidget(),
+                const SizedBox(
+                  height: Dimensions.paddingSizeDefault,
+                ),
+                const TripFareSummery(),
+                const SizedBox(
+                  height: Dimensions.paddingSizeDefault,
+                ),
+                CustomTextField(
+                  prefix: false,
+                  controller: controller.noteController,
+                  borderRadius: Dimensions.radiusLarge,
+                  hintText: Strings.addNote.tr,
+                ),
+                const SizedBox(
+                  height: Dimensions.paddingSizeDefault,
+                ),
+                isBiddingOn
+                    ?
 
-        K.sizedBoxH0,
-        controller.selectedSubPackage.value==null?
-        GetBuilder<CategoryController>(
-            initState: (_) =>
-                Get.find<CategoryController>().getCategoryList(),
-            builder: (categoryController) {
-              return const RideCategoryWidget();
-            }):
-        Center(
-          child: GestureDetector(
-            onTap: () {},
-            child: CustomCategoryCard(
-              height: MediaQuery.of(context).size.height / 7,
-              image: image,
-              title: title,
-              isClicked: false,
-            ),
-          ),
-        ),
-        K.sizedBoxH0,
+                    ///TODO :this code zeinab removed it to apply the getPrice screen
+                    //
+                    // const FindDriverCustomBtn(fromPage: Strings.ride, whoWillPay: true,)
 
+                    CustomButton(
+                        buttonText: Strings.go.tr,
+                        // buttonText: Strings.getPrice.tr,
+                        radius: 50,
+                        onPressed: () async {
+                          // Get.to(()=> RideExpendableBottomSheet(isGetPrice: true,));
 
-        RouteWidget(),
-        const SizedBox(
-          height: Dimensions.paddingSizeDefault,
-        ),
-        const TripFareSummery(),
-        const SizedBox(
-          height: Dimensions.paddingSizeDefault,
-        ),
-        CustomTextField(
-          prefix: false,
-          controller: controller.noteController,
-          borderRadius: Dimensions.radiusLarge,
-          hintText: Strings.addNote.tr,
-        ),
-        const SizedBox(
-          height: Dimensions.paddingSizeDefault,
-        ),
-        isBiddingOn
-            ?
+                          update(RideState.getPrice);
+                          await controller.getOrderPrice();
+                          controller.update();
+                          // rideController
+                          //     .updateRideCurrentState(RideState.acceptingRider);
+                        })
+                    : CustomButton(
+                        buttonText: Strings.findRider.tr,
+                        onPressed: () {
+                          update(RideState.findingRider);
+                          // rideController.notifyChildrens();
+                        }),
+                K.sizedBoxH0,
+                K.sizedBoxH0,
+              ],
+            ));
+  }
+  // else if (state == RideState.riseFare) {
+  //    return Column(children: [
+  //     TollTipWidget(title: Strings.tripDetails.tr),
+  //     K.sizedBoxH0,
+  //     RouteWidget(),
+  //     const SizedBox(
+  //       height: Dimensions.paddingSizeDefault,
+  //     ),
+  //     const RiseFareWidget(fromPage: Strings.ride),
+  //     K.sizedBoxH0,
+  //   ]);
+  // }
 
-            ///TODO :this code zeinab removed it to apply the getPrice screen
-            //
-            // const FindDriverCustomBtn(fromPage: Strings.ride, whoWillPay: true,)
-
-            CustomButton(
-                buttonText: Strings.go.tr,
-                // buttonText: Strings.getPrice.tr,
-                radius: 50,
-                onPressed: () async{
-                  // Get.to(()=> RideExpendableBottomSheet(isGetPrice: true,));
-
-                  update(RideState.getPrice);
-                  await controller.getOrderPrice();
-                  controller.update();
-                  // rideController
-                  //     .updateRideCurrentState(RideState.acceptingRider);
-
-
-                })
-            : CustomButton(
-                buttonText: Strings.findRider.tr,
-                onPressed: () {
-                  update(RideState.findingRider);
-                  // rideController.notifyChildrens();
-                }),
-        K.sizedBoxH0,
-        K.sizedBoxH0,
-      ],
-    )
-    )
-          ;
-  } else if (state == RideState.riseFare) {
-    return Column(children: [
-      TollTipWidget(title: Strings.tripDetails.tr),
-      K.sizedBoxH0,
-      RouteWidget(),
-      const SizedBox(
-        height: Dimensions.paddingSizeDefault,
-      ),
-      const RiseFareWidget(fromPage: Strings.ride),
-      K.sizedBoxH0,
-    ]);
-  } else if (state == RideState.findingRider)
-
-  ///
-  {
+  // else if (state == RideState.initial)
+  // }
+  else if (state == RideState.findingRider) {
     return Column(
       children: [
         // Flexible(child: Container(color: Colors.transparent,))
-          FindingRiderWidget(fromPage: Strings.ride),
+        FindingRiderWidget(fromPage: Strings.ride),
       ],
     );
-  } else if (state == RideState.getPrice) {
-    return
-
-        ///
-        Column(children: [
+  }
+  else if (state == RideState.getPrice) {
+    return Column(children: [
       GetPriceWidget(
         image: Images.car,
         title: 'Suv.',
       ),
     ]);
-  } else if (state == RideState.acceptingRider) {
+  }
+
+  else if (state == RideState.acceptingRider) {
     return const Column(children: [
       RiderDetailsWidget(
         fromNotification: false,
@@ -209,16 +204,6 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
         ContactWidget(),
         K.sizedBoxH0,
 
-        // ActivityScreenRiderDetails(
-        // riderDetails: RiderDetails(
-        //     name: "mostafizur",
-        //     vehicleNumber: "DH-1234",
-        //     rating: 5,
-        //     vehicleType: "bike",
-        //     vehicleName: "Pulser-150",
-        //     image: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg"
-        // ),
-        // ),
         K.sizedBoxH0,
 
         const EstimatedFareAndDistance(),
@@ -265,7 +250,7 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
         ),
         const SizedBox(
           height: Dimensions.paddingSizeDefault,
-        ),
+        ),///zeinab 200
         ContactWidget(),
         const SizedBox(
           height: Dimensions.paddingSizeDefault,
@@ -278,14 +263,6 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
                   "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
               lastName: "smith"),
 
-          // RiderDetails(
-          //     f: "mostafizur",
-          //     vehicleNumber: "DH-1234",
-          //     rating: 5,
-          //     vehicleType: "bike",
-          //     vehicleName: "Pulser-150",
-          //     image: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg"
-          // ),
         ),
         const SizedBox(
           height: Dimensions.paddingSizeDefault,

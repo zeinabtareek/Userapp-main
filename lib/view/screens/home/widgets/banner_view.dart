@@ -39,11 +39,11 @@ class _BannerViewState extends State<BannerView> {
                 return ClipRRect(
                   borderRadius:
                       BorderRadius.circular(Dimensions.radiusOverLarge),
-                  child:   CustomImage(
-                    image: bannerController.banners[index].img??'',
+                  child:  Obx(()=> bannerController.banners.value.isNotEmpty?CustomImage(
+                    image: bannerController.banners.value[index].img??'',
                         // "https://img.freepik.com/premium-vector/luxury-car-rental-promotion-facebook-cover-banner-web-banner-template_621071-62.jpg?w=2000",
                     fit: BoxFit.cover,
-                  ),
+                  ):SizedBox()),
                 );
               },
             )

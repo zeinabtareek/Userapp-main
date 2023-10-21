@@ -1,45 +1,25 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/enum/view_state.dart';
-import 'package:ride_sharing_user_app/util/dimensions.dart';
-import 'package:ride_sharing_user_app/util/images.dart';
-import 'package:ride_sharing_user_app/util/text_style.dart';
-import 'package:ride_sharing_user_app/view/screens/history/model/activity_item_model.dart';
-import 'package:ride_sharing_user_app/view/screens/history/model/history_model.dart';
-import 'package:ride_sharing_user_app/view/screens/history/widgets/rider_details.dart';
-import 'package:ride_sharing_user_app/view/screens/map/controller/map_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/widgets/contact_widget.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/widgets/fare_input_widget.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/widgets/finding_rider_widget.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/widgets/get_price.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/widgets/otp_widget.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/widgets/route_widget.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/widgets/tolltip_widget.dart';
-import 'package:ride_sharing_user_app/view/screens/payment/payment_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/ride/widgets/confirmation_trip_dialog.dart';
-import 'package:ride_sharing_user_app/view/screens/ride/widgets/estimated_fare_and_distance.dart';
-import 'package:ride_sharing_user_app/view/screens/ride/widgets/ride_category.dart';
-import 'package:ride_sharing_user_app/view/screens/ride/widgets/ride_expendable_bottom_sheet.dart';
-import 'package:ride_sharing_user_app/view/screens/ride/widgets/rider_details_widget.dart';
-import 'package:ride_sharing_user_app/view/screens/ride/widgets/rise_fare_widget.dart';
-import 'package:ride_sharing_user_app/view/screens/ride/widgets/trip_fare_summery.dart';
-import 'package:ride_sharing_user_app/view/widgets/confirmation_dialog.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../../../../util/app_strings.dart';
-import '../../../../util/app_style.dart';
-import '../../../../util/text_style.dart';
-import '../../../widgets/custom_category_card.dart';
+import '../../../../../enum/request_states.dart';
+import '../../../../../util/app_strings.dart';
+import '../../../../../util/app_style.dart';
+import '../../../../../util/dimensions.dart';
+import '../../../../../util/text_style.dart';
+import '../../../../widgets/custom_button.dart';
+import '../../../../widgets/custom_category_card.dart';
+import '../../../../widgets/custom_text_field.dart';
+import '../../../parcel/widgets/fare_input_widget.dart';
+import '../../../parcel/widgets/route_widget.dart';
+import '../../../ride/controller/ride_controller.dart';
+import '../../controller/base_map_controller.dart';
 
-class GetPriceWidget extends StatelessWidget {
+class SecondWidget extends StatelessWidget {
   String image;
   String title;
 
-  GetPriceWidget({Key? key, required this.image, required this.title})
+  SecondWidget({Key? key, required this.image, required this.title})
       : super(key: key);
 
   @override
@@ -70,7 +50,7 @@ class GetPriceWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              K.sizedBoxH0,
+              // K.sizedBoxH0,
               RouteWidget(),
               const SizedBox(
                 height: Dimensions.paddingSizeDefault,
@@ -84,9 +64,9 @@ class GetPriceWidget extends StatelessWidget {
                       Strings.price.tr,
                       style: textRegular.copyWith(
                           fontSize: Dimensions.fontSizeLarge),
-                    ), ///zeinab get price
+                    ),
+                    ///zeinab get price
                     const SizedBox(width: Dimensions.paddingSizeSmall),
-                    //getOrderPrice
                     rideController.priceData.priceBeforeDiscount == null
                         ? Text('0.0')
                         : Text(
@@ -177,10 +157,23 @@ class GetPriceWidget extends StatelessWidget {
               const SizedBox(
                 height: Dimensions.paddingSizeDefault,
               ),
-              const FindDriverCustomBtn2(
-                fromPage: 'ride',
-                whoWillPay: true,
-              ),
+              //   baseMapController.changeState(request[RequestState.getPriceState]!);
+
+              GetBuilder<BaseMapController>(
+                  init: BaseMapController(),
+                  builder: (baseMapController) => CustomButton(
+                      buttonText: Strings.findDriver.tr,
+                      radius: 50,
+                      onPressed: () async {
+                        baseMapController.  key.currentState!.contract();
+
+
+
+                            baseMapController.changeState(request[RequestState.findDriverState]!);//riderDetailsState
+
+                        baseMapController.update();
+
+                      })),
               K.sizedBoxH0,
               K.sizedBoxH0,
             ],

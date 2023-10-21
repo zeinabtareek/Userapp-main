@@ -26,6 +26,7 @@ import 'package:ride_sharing_user_app/view/screens/parcel/parcel_home_screen.dar
 import 'package:ride_sharing_user_app/view/screens/parcel/parcel_notification_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/parcel_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/item_track_history_card.dart';
+import 'package:ride_sharing_user_app/view/screens/request_screens/screens/base_map/base_map_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
 import 'package:ride_sharing_user_app/helper/responsive_helper.dart';
 import 'package:ride_sharing_user_app/helper/di_container.dart' as di;
@@ -139,15 +140,16 @@ class MyApp extends StatelessWidget {
             //   home: AddShipmenScreen(),
             //   home: AddShipmenScreen(),
             //   home: SplashScreen()/**/,
-            // home: const MessageListScreen()/**/,
-            // home: const MessageScreen()/**/,
-            // home: const UseCouponScreen()/**/,
+            //   home: const MessageListScreen()/**/,
+            //   home: const MessageScreen()/**/,
+            //   home: const UseCouponScreen()/**/,
             // home:   HistoryScreen(fromPage: Strings.home,)/**/,
             // home: const WalletScreen()/**/,
             // home: const OnBoardingScreen2()/**/,
             // home: TestWhereToGo(address :'haram 2000 gate '),
             // home: InvoiceScreen(),
-            home: DashboardScreen(),
+            home: BaseMapScreen(),
+            // home: DashboardScreen(),
           ));
         });
       });

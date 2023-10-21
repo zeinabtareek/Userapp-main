@@ -10,12 +10,14 @@ class BannerController extends BaseController implements GetxService {
 
   BannerController({required this.bannerRepo});
 
-  List<BannerData> banners =<BannerData> [];
+  final  banners =<BannerData> [].obs;
+  // List<BannerData> banners =<BannerData> [];
 
   int? _currentIndex = 0;
 
   int? get currentIndex => _currentIndex;
 
+  final loading=false.obs;
   onInit()async{
     super.onInit();
 
@@ -23,21 +25,20 @@ class BannerController extends BaseController implements GetxService {
 
 
   }
-  final loading=false.obs;
 
 
   Future<void> getBannerList() async {
-    // loading.value=true;
 
     try{
+    loading.value=true;
      BannerModel response = await bannerRepo.getSlider();
-       banners = [];
-      banners.addAll(response.data as Iterable<BannerData>);
+       banners.value = [];
+      banners.value.addAll(response.data as Iterable<BannerData>);
+    loading.value=false;
 
   }catch(e){
       print(e);
     }
-    // loading.value=false;
     update();
 
   }
