@@ -102,13 +102,8 @@ class InitialRequestWidget extends StatelessWidget {
                   await controller.getOrderPrice();
                   controller.update();
                   print( baseMapController.widgetNumber.value );
-
                 }
                     )
-
-
-
-
                 // : CustomButton(
                 // buttonText: Strings.findRider.tr,
                 // onPressed: () {

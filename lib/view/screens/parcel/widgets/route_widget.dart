@@ -126,6 +126,7 @@ class RouteWidget extends StatelessWidget {
 
 
                     Text('${whereToGoController.distance} km'),
+                    // Text('${whereToGoController.duration} duration'),
                 ],
               ),
             )

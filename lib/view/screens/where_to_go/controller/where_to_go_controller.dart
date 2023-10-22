@@ -15,6 +15,7 @@ import '../../../../util/app_strings.dart';
 import '../../../../util/ui/overlay_helper.dart';
 import '../../choose_from_map/choose_from_map_screen.dart';
 import '../../map/map_screen.dart';
+import '../../request_screens/screens/base_map/base_map_screen.dart';
 import '../../ride/controller/ride_controller.dart';
 import '../model/search_suggestion_model.dart';
 import '../model/suggested_route_model.dart';
@@ -40,6 +41,7 @@ class WhereToGoController extends BaseController implements GetxService {
   final extraNode = FocusNode();
   final extraNode2 = FocusNode();
     var distance ;
+    var duration ;
   final extraNode3 = FocusNode();
   final toRoutNode = FocusNode();
   final searchController=TextEditingController().obs;
@@ -68,11 +70,7 @@ class WhereToGoController extends BaseController implements GetxService {
     // Get.put(WhereToGoController(setMapRepo: Get.find()));
   }
   List <String>extraRoutes=[];
-  // final searchController = TextEditingController().obs;
-
   List<LatLng> selectedPoints = [];
-
-  // List<String> extraRoutes = [];
   void setExtraRoute() {
     if (currentExtraRoute < 1) {
       // if (currentExtraRoute < 2) {
@@ -96,6 +94,17 @@ class WhereToGoController extends BaseController implements GetxService {
     );
     return distance;
   }
+    Future<double?> calculateDuration() async {
+      duration=  await Get.find<CreateATripController>().calculateDuration(
+      LatLng(37.7749, -122.4194), // San Francisco
+      LatLng(
+          37.7753, -122.4199), // Replace with your actual point 1 coordinates
+    );
+    return duration;
+  }
+
+
+
   void getSuggestedRouteList() async {
     // Response response = await setMapRepo.getSuggestedRouteList();
     // if (response.statusCode == 200) {
@@ -178,10 +187,12 @@ class WhereToGoController extends BaseController implements GetxService {
     }
     else {
       print('yes');
-      Get.to(() =>
-        MapScreen(
-        fromScreen: 'ride',
-      ));
+      // Get.to(() =>
+      //   MapScreen(
+      //   fromScreen: 'ride',
+      // ));
+      Get.to(BaseMapScreen());
+      //not needed
       Get.find<RideController>().updateRideCurrentState(RideState.initial);
       distance=await calculateDistance();
       update();

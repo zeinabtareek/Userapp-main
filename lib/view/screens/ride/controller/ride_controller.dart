@@ -56,6 +56,7 @@ class RideController extends BaseController implements GetxService {
   double heightOfTypes = 0.0;
   bool isExpanded = false;
   dynamic distance = 0.0;
+  var duration ;
 
   @override
   onInit() async {
@@ -81,12 +82,23 @@ class RideController extends BaseController implements GetxService {
   // var distance ;
   Future<double?> calculateDistance() async {
     distance=  await Get.find<CreateATripController>().calculateDistance(
-      LatLng(33.7749, -122.4194), // San Francisco
-      LatLng(
-          37.7753, -122.4199), // Replace with your actual point 1 coordinates
+      const LatLng(33.7749, -122.4194), // San Francisco
+      const LatLng(37.7753, -122.4199), // Replace with your actual point 1 coordinates
     );
     return distance;
   }
+
+
+
+  Future<double?> calculateDuration() async {
+    duration=  await Get.find<CreateATripController>().calculateDuration(
+      LatLng(37.7749, -122.4194), // San Francisco
+      LatLng(
+          37.7753, -122.4199), // Replace with your actual point 1 coordinates
+    );
+    return duration;
+  }
+
 
   void vehicleToggle() {
     isExpanded = !isExpanded;

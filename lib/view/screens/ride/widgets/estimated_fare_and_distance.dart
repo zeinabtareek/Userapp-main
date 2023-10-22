@@ -3,15 +3,20 @@ import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/helper/price_converter.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
+import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
 
 import '../../../../util/app_style.dart';
+import '../../where_to_go/controller/create_trip_controller.dart';
 
 class EstimatedFareAndDistance extends StatelessWidget {
   const EstimatedFareAndDistance({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GetBuilder<CreateATripController>(
+        init: CreateATripController(),
+    // initState: Get.find<CreateATripController>().showTrip(),
+    builder: (controller) => Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
           color: Theme.of(context).primaryColor.withOpacity(0.15)),
@@ -19,10 +24,11 @@ class EstimatedFareAndDistance extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          customDistanceItem(context, false, "0.4 km", "distance_away"),
-          customDistanceItem(context, false, "3 min", "estimated_time"),
-          customDistanceItem(context, true, "34", "fare_price"),
+          customDistanceItem(context, false, "${controller.orderModel.data?.distance.toString()??'0.0'} km", "distance_away"),
+          customDistanceItem(context, false, "${Get.find<RideController>().duration??0.0} min", "estimated_time"),
+          customDistanceItem(context, true, "${controller.orderModel.data?.finalPrice.toString()??'0.0'} ", "fare_price"),
         ],
+      ),
       ),
     );
   }

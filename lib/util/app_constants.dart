@@ -26,9 +26,11 @@ class AppConstants {
   ///zeinab working on now
   static const String getAddress = "/api/user/addresses";
   static const String getAddressSuggestions = "/api/user/address_suggestions";
-  static const String createATrip = "/api/user/orders";
+  static const String order = "/api/user/orders";
   static const String getOrderPrice = "/api/user/orders/order_price";
   static const String getSlider = "/api/user/sliders";
+  // static const String cancelTrip = "/api/user/orders/";
+  // static const String cancelTrip = "/api/user/orders/";
 
 
 

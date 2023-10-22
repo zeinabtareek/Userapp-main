@@ -92,7 +92,6 @@ class SearchServices {
       var response = await http.get(Uri.parse(Url));
       if (response.statusCode == 200) {
         var responseData = jsonDecode(response.body);
-        // var distance = responseData['rows'][0]['elements'][0]['distance']['value'];
         final distanceValue = responseData['rows'][0]['elements'][0]['distance']['value'];
         var distanceInKm = distanceValue / 1000;
         return distanceInKm;
@@ -105,11 +104,35 @@ class SearchServices {
       return null;
     }
   }
+  // static Future<dynamic> getDuration(LatLng origin, LatLng destination) async {
+  //   String Url = 'https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${origin.latitude},${origin.longitude}&origins=${destination.latitude},${destination.longitude}&key=AIzaSyA6NSYZTZaYj_Kgit9CAlNuCTvwLOoRSes';
+  //   try {
+  //     var response = await http.get(Uri.parse(Url));
+  //     if (response.statusCode == 200) {
+  //       var responseData = jsonDecode(response.body);
+  //       final duration = responseData['rows'][0]['elements'][0]['duration']['text'];
+  //
+  //       return duration;
+  //
+  //     } else {
+  //       return null;
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //     return null;
+  //   }
+  // }
 
 
-// Future<LatLng> getLatLngFromAddress(Position address) async {
-//   List<Placemark> list = await Geolocator().placemarkFromAddress(address);
-//   List<Placemark> list = await placemarkFromCoordinates(address);
-//   return LatLng(list[0].position.latitude, list[0].position.longitude);
-// }
+  // Future<Map<String, dynamic>>
+  static getDistanceAndDuration(LatLng origin, LatLng destination) async {
+    final apiUrl = 'https://maps.googleapis.com/maps/api/distancematrix/json';
+    final url = '$apiUrl?origins=${origin.latitude},${origin.longitude}&destinations=${destination.latitude},${destination.longitude}&key=AIzaSyA6NSYZTZaYj_Kgit9CAlNuCTvwLOoRSes';
+    final response = await http.get(Uri.parse(url));
+    final data = json.decode(response.body);
+    final distance = data['rows'][0]['elements'][0]['distance']['text'];
+    final duration = data['rows'][0]['elements'][0]['duration']['text'];
+    return   duration;
+    // return {'distance': distance, 'duration': duration};
+  }
 }

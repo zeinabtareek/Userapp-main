@@ -29,8 +29,8 @@ class OrderData {
   From? to;
   String? status;
   List<StatusTimes>? statusTimes;
-  int? distance;
-  int? time;
+  dynamic distance;
+  dynamic time;
   String? paymentType;
   dynamic transactionId;
   String? note;
@@ -39,12 +39,12 @@ class OrderData {
    dynamic parcelDetails;
    VehicleType? vehicleType;
   bool? promoCode;
-   int? kmPrice;
-  late final num ?priceBeforeDiscount;
+   dynamic kmPrice;
+  late final dynamic  priceBeforeDiscount;
   late final bool? promoCodeUsed;
-  late final num ?discountPercent;
-  late final num? finalPrice;
-  late final num ?discountAmount;
+  late final dynamic  discountPercent;
+  late final dynamic   finalPrice;
+  late final dynamic discountAmount;
   late final bool ?isParcel;
   late final Package? package;
   late dynamic driver;
@@ -52,8 +52,8 @@ class OrderData {
   // late final User ?user;
   late final String ?createdAt;
 
-  int? tip;
-  num? driverAmount;
+  dynamic  tip;
+  dynamic driverAmount;
   OrderData({
     this.id,
     this.orderNum,
@@ -468,6 +468,9 @@ class VehicleType {
 //   }
 //
 // }
+
+
+///zeinab
 class ExtraRoutes {
   ExtraRoutes({
     required this.lat,

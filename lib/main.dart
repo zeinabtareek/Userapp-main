@@ -38,6 +38,7 @@ import 'package:ride_sharing_user_app/theme/theme_controller.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/splash_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/support/support.dart';
+import 'package:ride_sharing_user_app/view/screens/test.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/wallet_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/widget/payment_method_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/widget/use_voucher_code.dart';
@@ -148,8 +149,9 @@ class MyApp extends StatelessWidget {
             // home: const OnBoardingScreen2()/**/,
             // home: TestWhereToGo(address :'haram 2000 gate '),
             // home: InvoiceScreen(),
-            home: BaseMapScreen(),
-            // home: DashboardScreen(),
+            // home: BaseMapScreen(),
+            // home: HomeScreen1(),
+            home: DashboardScreen(),
           ));
         });
       });
@@ -170,99 +172,3 @@ class MyHttpOverrides extends HttpOverrides {
 
 
 
-
-
-//
-//
-// class MapView extends StatefulWidget {
-//   @override
-//   _MapViewState createState() => _MapViewState();
-// }
-//
-// class _MapViewState extends State<MapView> {
-//   GoogleMapController? _mapController;
-//   Position? _currentPosition;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _getCurrentLocation();
-//   }
-//
-//   _getCurrentLocation() async {
-//     try {
-//       Position position = await Geolocator.getCurrentPosition(
-//         desiredAccuracy: LocationAccuracy.high,
-//       );
-//       setState(() {
-//         _currentPosition = position;
-//       });
-//       _goToCurrentLocation();
-//     } catch (e) {
-//       print(e);
-//     }
-//   }
-//
-//   _goToCurrentLocation() {
-//     if (_currentPosition != null && _mapController != null) {
-//       _mapController!.animateCamera(
-//         CameraUpdate.newCameraPosition(
-//           CameraPosition(
-//             target: LatLng(
-//               _currentPosition!.latitude,
-//               _currentPosition!.longitude,
-//             ),
-//             zoom: 15,
-//           ),
-//         ),
-//       );
-//     } else {
-//       // Handle the case when the current position is not available
-//       // Show an error message or perform other actions.
-//     }
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Map View'),
-//       ),
-//       body: Stack(
-//         children: [
-//           GoogleMap(
-//             onMapCreated: (controller) {
-//               setState(() {
-//                 _mapController = controller;
-//               });
-//               _goToCurrentLocation(); // Set initial location here
-//             },
-//             initialCameraPosition: CameraPosition(
-//               target: LatLng(0.0, 0.0), // Placeholder initial location
-//               zoom: 15,
-//             ),
-//             markers: _currentPosition != null
-//                 ? {
-//               Marker(
-//                 markerId: MarkerId('currentLocation'),
-//                 position: LatLng(
-//                   _currentPosition!.latitude,
-//                   _currentPosition!.longitude,
-//                 ),
-//               ),
-//             }
-//                 : {},
-//           ),
-//           Positioned(
-//             bottom: 16,
-//             right: 16,
-//             child: FloatingActionButton(
-//               onPressed: _goToCurrentLocation,
-//               child: Icon(Icons.my_location),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

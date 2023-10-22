@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/enum/view_state.dart';
 
 import '../../../../../enum/request_states.dart';
 import '../../../../../util/app_strings.dart';
@@ -13,6 +14,7 @@ import '../../../../widgets/custom_text_field.dart';
 import '../../../parcel/widgets/fare_input_widget.dart';
 import '../../../parcel/widgets/route_widget.dart';
 import '../../../ride/controller/ride_controller.dart';
+import '../../../where_to_go/controller/create_trip_controller.dart';
 import '../../controller/base_map_controller.dart';
 
 class SecondWidget extends StatelessWidget {
@@ -27,155 +29,163 @@ class SecondWidget extends StatelessWidget {
     return GetBuilder<RideController>(
         init: RideController(rideRepo: Get.find()),
         builder: (rideController) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          return Stack(
             children: [
-              Text(
-                'your selected car type is : $title',
-                style: textRegular.copyWith(
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.w600),
-              ),
-              K.sizedBoxH0,
-
-              Center(
-                child: GestureDetector(
-                  onTap: () {},
-                  child: CustomCategoryCard(
-                    height: MediaQuery.of(context).size.height / 7,
-                    image: image,
-                    title: title,
-                    isClicked: false,
-                  ),
-                ),
-              ),
-              // K.sizedBoxH0,
-              RouteWidget(),
-              const SizedBox(
-                height: Dimensions.paddingSizeDefault,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      Strings.price.tr,
-                      style: textRegular.copyWith(
-                          fontSize: Dimensions.fontSizeLarge),
-                    ),
-                    ///zeinab get price
-                    const SizedBox(width: Dimensions.paddingSizeSmall),
-                    rideController.priceData.priceBeforeDiscount == null
-                        ? Text('0.0')
-                        : Text(
-                            '${rideController.priceData.priceBeforeDiscount} ',
-                            style: textSemiBold.copyWith(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .color!
-                                    .withOpacity(0.8),
-                                fontSize: Dimensions.fontSizeLarge),
-                          ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: Dimensions.paddingSizeDefault,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0, left: 8),
-                child: Text(
-                  Strings.doYouHaveAnyPromoCode.tr,
-                  style: textSemiBold.copyWith(
-                      color: Theme.of(context).hintColor.withOpacity(0.8),
-                      fontSize: Dimensions.fontSizeDefault),
-                ),
-              ),
-              const SizedBox(
-                height: Dimensions.paddingSizeDefault,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: CustomTextField(
-                      prefix: false,
-                      controller: rideController.promoCodeController,
-                      borderRadius: Dimensions.radiusLarge,
-                      hintText: Strings.promoCode.tr,
-                    ),
-                  ),
-                  K.sizedBoxW0,
-                  Obx(() => Expanded(
-                        child: CustomButton(
-                            isLoading: rideController.loading.value,
-                            radius: 50,
-                            buttonText: Strings.apply.tr,
-                            onPressed: () {
-                              // rideController.calculateDistance();
-                              rideController.getPromoCodeDiscount();
-                              //
-                              // rideController
-                              //     .updateRideCurrentState(RideState.findingRider);
-                            }),
-                      ))
-                ],
-              ),
-              const SizedBox(
-                height: Dimensions.paddingSizeDefault,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              rideController.state==ViewState.busy?
+              Positioned.fill(child: Center(
+                // color: Colors.grey.withOpacity(.6),
+                child: CircularProgressIndicator(color: Theme.of(context).primaryColor),)):SizedBox(),
+          IgnorePointer(
+          ignoring:  rideController.state==ViewState.busy? true : false, // <-- Ignore only when selecting something.
+          child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    Strings.yourPriceAfterDiscount.tr,
+                    'your selected car type is : $title',
                     style: textRegular.copyWith(
-                        fontSize: Dimensions.fontSizeLarge),
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w600),
                   ),
-                  GetBuilder<RideController>(
-                    builder: (rideController) =>
-                        rideController.priceData.finalPrice == null ||
-                                rideController.priceData.finalPrice ==
-                                    rideController.priceData.priceBeforeDiscount
-                            ? SizedBox()
+                  K.sizedBoxH0,
+
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: CustomCategoryCard(
+                        height: MediaQuery.of(context).size.height / 7,
+                        image: image,
+                        title: title,
+                        isClicked: false,
+                      ),
+                    ),
+                  ),
+                  // K.sizedBoxH0,
+                  RouteWidget(),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          Strings.price.tr,
+                          style: textRegular.copyWith(
+                              fontSize: Dimensions.fontSizeLarge),
+                        ),
+                        ///zeinab get price
+                        const SizedBox(width: Dimensions.paddingSizeSmall),
+                        rideController.priceData.priceBeforeDiscount == null
+                            ? Text('0.0')
                             : Text(
-                                '${rideController.priceData.finalPrice}',
+                                '${rideController.priceData.priceBeforeDiscount} ',
                                 style: textSemiBold.copyWith(
                                     color: Theme.of(context)
                                         .textTheme
                                         .bodyMedium!
                                         .color!
                                         .withOpacity(0.8),
-                                    fontSize: Dimensions.fontSizeExtraLarge),
+                                    fontSize: Dimensions.fontSizeLarge),
                               ),
+                      ],
+                    ),
                   ),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0, left: 8),
+                    child: Text(
+                      Strings.doYouHaveAnyPromoCode.tr,
+                      style: textSemiBold.copyWith(
+                          color: Theme.of(context).hintColor.withOpacity(0.8),
+                          fontSize: Dimensions.fontSizeDefault),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: CustomTextField(
+                          prefix: false,
+                          controller: rideController.promoCodeController,
+                          borderRadius: Dimensions.radiusLarge,
+                          hintText: Strings.promoCode.tr,
+                        ),
+                      ),
+                      K.sizedBoxW0,
+                      Obx(() => Expanded(
+                            child: CustomButton(
+                                isLoading: rideController.loading.value,
+                                radius: 50,
+                                buttonText: Strings.apply.tr,
+                                onPressed: () {
+                                  // rideController.calculateDistance();
+                                  rideController.getPromoCodeDiscount();
+                                  //
+                                  // rideController
+                                  //     .updateRideCurrentState(RideState.findingRider);
+                                }),
+                          ))
+                    ],
+                  ),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        Strings.yourPriceAfterDiscount.tr,
+                        style: textRegular.copyWith(
+                            fontSize: Dimensions.fontSizeLarge),
+                      ),
+                      GetBuilder<RideController>(
+                        builder: (rideController) =>
+                            rideController.priceData.finalPrice == null ||
+                                    rideController.priceData.finalPrice ==
+                                        rideController.priceData.priceBeforeDiscount
+                                ? SizedBox()
+                                : Text(
+                                    '${rideController.priceData.finalPrice}',
+                                    style: textSemiBold.copyWith(
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .color!
+                                            .withOpacity(0.8),
+                                        fontSize: Dimensions.fontSizeExtraLarge),
+                                  ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: Dimensions.paddingSizeDefault,
+                  ),
+                  //   baseMapController.changeState(request[RequestState.getPriceState]!);
+
+                  GetBuilder<BaseMapController>(
+                      init: BaseMapController(),
+                      builder: (baseMapController) => CustomButton(
+                          buttonText: 'Strings.findDriver.tr',
+                          radius: 50,
+                          onPressed: () async {
+                            ///zeinab here we will create a trip
+                            baseMapController.  key.currentState!.contract();
+                            baseMapController.changeState(request[RequestState.findDriverState]!);
+                            Get.find<CreateATripController>().createATrip();
+                            baseMapController.update();
+                          })),
+                  K.sizedBoxH0,
+                  K.sizedBoxH0,
                 ],
               ),
-              const SizedBox(
-                height: Dimensions.paddingSizeDefault,
               ),
-              //   baseMapController.changeState(request[RequestState.getPriceState]!);
-
-              GetBuilder<BaseMapController>(
-                  init: BaseMapController(),
-                  builder: (baseMapController) => CustomButton(
-                      buttonText: Strings.findDriver.tr,
-                      radius: 50,
-                      onPressed: () async {
-                        baseMapController.  key.currentState!.contract();
-
-
-
-                            baseMapController.changeState(request[RequestState.findDriverState]!);//riderDetailsState
-
-                        baseMapController.update();
-
-                      })),
-              K.sizedBoxH0,
-              K.sizedBoxH0,
             ],
           );
         });

@@ -25,6 +25,7 @@ import '../../../ride/widgets/get_price_widget.dart';
 import '../../../ride/widgets/ride_details_widget.dart';
 import '../../../ride/widgets/rider_details_widget.dart';
 import '../../../ride/widgets/rise_fare_widget.dart';
+import '../../../where_to_go/controller/create_trip_controller.dart';
 import '../../widgets/common_map_widget.dart';
 import '../../widgets/first_widget/initial_widget.dart';
 import '../../controller/base_map_controller.dart';
@@ -51,7 +52,7 @@ class BaseMapScreen extends StatelessWidget {
                 enableToggle: true,
                 background:
                     ///Map background
-                    CommonMapWidget(
+                CommonMapWidget(
                   mapId: controller.mapCompleter.future
                       .then<int>((value) => value.mapId),
                   onMapCreated: controller.onMapCreated,
@@ -62,6 +63,7 @@ class BaseMapScreen extends StatelessWidget {
                 ),
 
                 expandableContent: Container(
+                  // height: 500,
                   color: Colors.white,
                   padding: const EdgeInsets.symmetric(
                       horizontal: Dimensions.paddingSizeDefault),
@@ -74,7 +76,7 @@ class BaseMapScreen extends StatelessWidget {
                         InitialRequestWidget(
                                 image: Images.car,
                                 title: Get.find<RideController>()
-                                        .selectedPackage
+                                        .selectedSubPackage
                                         .value
                                         ?.categoryTitle
                                         .toString() ??
@@ -93,17 +95,23 @@ class BaseMapScreen extends StatelessWidget {
                                             .value
                                             ?.categoryTitle
                                             .toString() ??
-                                        '')
+                                        '') ///Get Price
                                 : controller.widgetNumber.value ==
                                         request[RequestState.findDriverState]
                                     ? const ThirdWidget(
                                         whoWillPay: true,
-                                      )
+                                      )///Find Driver
                                     : controller.widgetNumber.value ==
                                             request[
-                                                RequestState.riderDetailsState]
-                                        ? const FourthWidget()
-                                        : SizedBox()), // ),
+                                                RequestState.driverAcceptState]
+                                        ?   const FourthWidget(
+                          // cancelFunction: () {
+                          //
+                          //   Get.find<CreateATripController>().cancelATrip(orderId:'93666287-b870-495a-b219-78e8b874c219' );
+                          //
+                          // },
+                        ) ///Ride Details
+                                        : const SizedBox()), // ),
                       ],
                     ),
                   ),

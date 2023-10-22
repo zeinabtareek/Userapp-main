@@ -180,6 +180,7 @@ class GetPriceWidget extends StatelessWidget {
               const FindDriverCustomBtn2(
                 fromPage: 'ride',
                 whoWillPay: true,
+
               ),
               K.sizedBoxH0,
               K.sizedBoxH0,
