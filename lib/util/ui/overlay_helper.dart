@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/ui/snack_bar_helper.dart';
 
 import '../images.dart';
@@ -18,7 +19,7 @@ class OverlayHelper {
 
   static void showSuccessToast(BuildContext context, String text,
       {int seconds = 10}) {
-    showSnackBar("Success", text,
+    showSnackBar("success".tr, text,
         context: context,
         color: successColor,
         iconSVG: Images.successSvg,
@@ -38,7 +39,7 @@ class OverlayHelper {
 
   static void showErrorToast(BuildContext context, String text,
       {int seconds = 10}) {
-    showSnackBar("Error", text,
+    showSnackBar("error".tr, text,
         context: context,
         color: errorColor,
         iconSVG: Images.errorIcon,
@@ -47,7 +48,7 @@ class OverlayHelper {
 
   static void showInfoToast(BuildContext context, String text,
       {int seconds = 10}) {
-    showSnackBar("Information", text,
+    showSnackBar("information".tr, text,
         context: context,
         color: infoColor,
         iconSVG: Images.infoIcon,
@@ -56,7 +57,7 @@ class OverlayHelper {
 
   static void showWarningToast(BuildContext context, String text,
       {int seconds = 10}) {
-    showSnackBar("Warning", text,
+    showSnackBar("warning".tr, text,
         context: context,
         color: warningColor,
         iconSVG: Images.warning,

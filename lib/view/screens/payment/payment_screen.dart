@@ -17,6 +17,7 @@ import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
 import '../wallet/widget/use_voucher_code.dart';
+import '../where_to_go/controller/create_trip_controller.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({Key? key}) : super(key: key);
@@ -60,9 +61,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 const SizedBox(width: Dimensions.paddingSizeExtraSmall,),
                 Text('complete'.tr, style: textSemiBold.copyWith(color: Theme.of(context).primaryColor)),
               ],),
-              Padding(
+              ///
+            GetBuilder<CreateATripController>(
+              init: CreateATripController(),
+              // initState: Get.find<CreateATripController>().showTrip(),
+              builder: (controller) =>     Padding(
                 padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
-                child: Text(PriceConverter.convertPrice(context, 210),style: textSemiBold.copyWith(fontSize: Dimensions.fontSizeOverLarge,color: Theme.of(context).textTheme.bodyMedium!.color)),
+                child: Text(PriceConverter.convertPrice(context, double.parse(controller.orderModel.data?.finalPrice.toString()??'0.0')),style: textSemiBold.copyWith(fontSize: Dimensions.fontSizeOverLarge,color: Theme.of(context).textTheme.bodyMedium!.color)),
+              ),
               ),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text('your'.tr, style: textMedium.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color),),

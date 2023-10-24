@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/util/ui/overlay_helper.dart';
 import 'package:ride_sharing_user_app/view/screens/where_to_go/where_to_go_screen.dart';
 
 import '../../../../enum/request_states.dart';
@@ -7,6 +8,7 @@ import '../../../../util/action_center/exceptions.dart';
 import '../../../../util/app_constants.dart';
 import '../../../../util/app_strings.dart';
 import '../../request_screens/controller/base_map_controller.dart';
+import '../../request_screens/model/order/OrderModel.dart';
 import '../../request_screens/model/order_model.dart';
 import '../model/create_order_body.dart';
 import '../model/order_create.dart';
@@ -28,6 +30,7 @@ class CreateTripRepo {
       if (res.data != null) {
         final model = CreateOrderModel.fromJson(res.data);
         print('model ${model.data?.id??''}');
+
         return model;
       }
     } else if (res.statusCode == 422) {
@@ -47,6 +50,7 @@ class CreateTripRepo {
     if (res.statusCode == 200) {
       if (res.data != null) {
          print('cancel response ${res.data ??''}');
+         OverlayHelper.showGeneralToast(Get.context!, Strings.orderStatus, Strings.orderCanceled);
          Get.offAll(SetDestinationScreen(fromCat: false));
         return res.data ;
       }

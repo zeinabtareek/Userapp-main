@@ -64,7 +64,10 @@ class RideSubCategoryWidget extends StatelessWidget {
                             );
                           }
                           else{
+                            rideController
+                                .selectedSubPackage(listOfSubCategory[index]);
                             print('you are choosing the car type from where to go${rideController.selectedSubPackage.value?.id} ');
+
                           }
 
                         } else {

@@ -75,7 +75,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () => onBackPressed != null ? onBackPressed!() : Navigator.pop(context),
         ) :  SizedBox(child: Padding(
           padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-          child: Image.asset(Images.icon),
+          child: Image.asset(Images.logo,color: Colors.white,),
         ),),
         actions: const [
           // showActionButton?

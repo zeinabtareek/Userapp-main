@@ -58,10 +58,22 @@ class RideController extends BaseController implements GetxService {
   dynamic distance = 0.0;
   var duration ;
 
+
+
+
+   final List<String> _paymentOptions = ['cash', 'Master Card', 'Apple Pay',];
+  List<String> get paymentOptions => _paymentOptions;
+  var initialSelectItem;
+
+
+
+
+
   @override
   onInit() async {
     super.onInit();
     // await getPrice();
+    // initialSelectItem = _paymentOptions.first;
      inputFarePriceController.text = "0.00";
     // distance=await  Get.find<WhereToGoController>().calculateDistance();
   }

@@ -32,8 +32,10 @@ class ActivityScreenRiderDetails extends StatelessWidget {
          ),
          child: ClipRRect(
              borderRadius: BorderRadius.circular(Dimensions.radiusOverLarge),
-             child: const CustomImage(height: 50, width: 50,
-               image: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+             child:   CustomImage(height: 40, width: 40,
+               image: riderDetails.img??'',
+
+               // 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
              )),
        ),
             const SizedBox(width: Dimensions.paddingSizeSmall,),
@@ -74,8 +76,9 @@ class ActivityScreenRiderDetails extends StatelessWidget {
     ),
     child: ClipRRect(
                 borderRadius: BorderRadius.circular(Dimensions.radiusOverLarge),
-                child: const CustomImage(height: 50, width: 50,
-                  image: 'https://images.unsplash.com/photo-1595691403533-7f4a52a5b189?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3VwZXJiaWtlfGVufDB8fDB8fA%3D%3D&w=1000&q=80',
+                child:   CustomImage(height: 40, width: 40,
+                  image:riderDetails.vehicle?.img??'',
+                  // 'https://images.unsplash.com/photo-1595691403533-7f4a52a5b189?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3VwZXJiaWtlfGVufDB8fDB8fA%3D%3D&w=1000&q=80',
                 )),
                ),
             const SizedBox(width: Dimensions.paddingSizeSmall,),
@@ -83,7 +86,7 @@ class ActivityScreenRiderDetails extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('bike',
+                  Text(riderDetails.vehicle?.type??'',
                     style: textMedium.copyWith(fontSize: Dimensions.fontSizeDefault,color: Theme.of(context).primaryColor ),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -93,10 +96,10 @@ class ActivityScreenRiderDetails extends StatelessWidget {
                         color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8)
                     ),
                     children:  [
-                      TextSpan(text: "${'bike Type.'.tr} : ",style: textRegular.copyWith(fontSize: Dimensions.fontSizeDefault,
+                      TextSpan(text: "${'carNumber'.tr} : ",style: textRegular.copyWith(fontSize: Dimensions.fontSizeSmall,
                         color: Theme.of(context).primaryColor
                       )),
-                      TextSpan(text: 'vehicleNumber',style: textRegular.copyWith(fontSize: Dimensions.fontSizeSmall)),
+                      TextSpan(text: 'ssss',style: textRegular.copyWith(fontSize: Dimensions.fontSizeSmall)),
                     ],
                   ),
                     overflow: TextOverflow.ellipsis,

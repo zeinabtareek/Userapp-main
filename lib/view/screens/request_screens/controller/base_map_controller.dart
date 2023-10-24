@@ -24,7 +24,7 @@ class BaseMapController extends GetxController {
   late Position _position;
   Position get position => _position;
 
-    final double _persistentContentHeight = 700;
+    final double _persistentContentHeight = 500;
      double percent = 0;
 
   double get persistentContentHeight => _persistentContentHeight;

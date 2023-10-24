@@ -233,6 +233,16 @@ class Strings {
   static const discount = 'discount';
   static const totalPrice = 'total_price';
   static const tax = 'tax';
+  static const selectACarType = 'please_choose_a_car_type';
+  static const success = 'success';//Warning
+  static const information = 'information';//Warning
+  static const error = 'error';//Warning
+  static const warning = 'warning';//Warning
+  static const orderStatus = 'order_status';//حالة الطلب
+  static const orderCanceled = 'order_canceled';//حالة الطلب
+  static const selectAPaymentMethod = 'select_a_payment_method';
+  static const carArrived = 'car_arrived';
+
 
 
 

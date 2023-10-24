@@ -11,15 +11,21 @@ import '../../../../../util/app_strings.dart';
 import '../../../../../util/app_style.dart';
 import '../../../../../util/dimensions.dart';
 import '../../../../../util/images.dart';
+import '../../../../../util/text_style.dart';
+import '../../../../widgets/confirmation_dialog.dart';
 import '../../../../widgets/custom_app_bar.dart';
 import '../../../../widgets/custom_body.dart';
 import '../../../../widgets/custom_button.dart';
+import '../../../history/model/history_model.dart';
+import '../../../history/widgets/rider_details.dart';
 import '../../../map/controller/map_controller.dart';
 import '../../../parcel/widgets/contact_widget.dart';
 import '../../../parcel/widgets/parcel_expendable_bottom_sheet.dart';
 import '../../../parcel/widgets/route_widget.dart';
 import '../../../parcel/widgets/tolltip_widget.dart';
+import '../../../payment/payment_screen.dart';
 import '../../../ride/controller/ride_controller.dart';
+import '../../../ride/widgets/confirmation_trip_dialog.dart';
 import '../../../ride/widgets/estimated_fare_and_distance.dart';
 import '../../../ride/widgets/get_price_widget.dart';
 import '../../../ride/widgets/ride_details_widget.dart';
@@ -27,8 +33,10 @@ import '../../../ride/widgets/rider_details_widget.dart';
 import '../../../ride/widgets/rise_fare_widget.dart';
 import '../../../where_to_go/controller/create_trip_controller.dart';
 import '../../widgets/common_map_widget.dart';
+import '../../widgets/fifth_widget/fifth_widget.dart';
 import '../../widgets/first_widget/initial_widget.dart';
 import '../../controller/base_map_controller.dart';
+// import '../../widgets/fourth_widget/fourth_widget.dart';
 import '../../widgets/fourth_widget/fourth_widget.dart';
 import '../../widgets/second_widget/second_widget.dart';
 import '../../widgets/third_widget/third_widget.dart';
@@ -82,10 +90,10 @@ class BaseMapScreen extends StatelessWidget {
                                         .toString() ??
                                     '',
                               )
-                            // BikeRideDetailsWidgets(
-                            //   image: Images.car  ,
-                            //   title: Get.find<RideController>().selectedPackage.value?.categoryTitle.toString()??'',
-                            // )
+                        //     BikeRideDetailsWidgets(
+                        //       image: Images.car  ,
+                        //       title: Get.find<RideController>().selectedPackage.value?.categoryTitle.toString()??'',
+                        //     )
                             : controller.widgetNumber.value ==
                                     request[RequestState.getPriceState]
                                 ? SecondWidget(
@@ -101,17 +109,21 @@ class BaseMapScreen extends StatelessWidget {
                                     ? const ThirdWidget(
                                         whoWillPay: true,
                                       )///Find Driver
-                                    : controller.widgetNumber.value ==
+                                    : (controller.widgetNumber.value ==
                                             request[
-                                                RequestState.driverAcceptState]
-                                        ?   const FourthWidget(
-                          // cancelFunction: () {
-                          //
-                          //   Get.find<CreateATripController>().cancelATrip(orderId:'93666287-b870-495a-b219-78e8b874c219' );
-                          //
-                          // },
-                        ) ///Ride Details
-                                        : const SizedBox()), // ),
+                                                RequestState.driverAcceptState] ||
+                            controller.widgetNumber.value ==
+                                request[
+                                RequestState.tripOngoing])//tripOngoing
+                                        ?   const
+                         FourthWidget() ///Ride Details tripFinishedState
+
+             : controller.widgetNumber.value ==
+              request[
+              RequestState.tripFinishedState]?
+             //                ///here you paymenmt
+             FifthWidget()
+                            : const SizedBox()), // ),
                       ],
                     ),
                   ),

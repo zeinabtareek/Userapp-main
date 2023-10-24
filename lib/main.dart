@@ -39,6 +39,7 @@ import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/splash_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/support/support.dart';
 import 'package:ride_sharing_user_app/view/screens/test.dart';
+import 'package:ride_sharing_user_app/view/screens/test_payment.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/wallet_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/widget/payment_method_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/widget/use_voucher_code.dart';
@@ -151,7 +152,9 @@ class MyApp extends StatelessWidget {
             // home: InvoiceScreen(),
             // home: BaseMapScreen(),
             // home: HomeScreen1(),
-            home: DashboardScreen(),
+            home: TestPaymentScreen(),
+            // home: SplashScreen(),
+            // home: DashboardScreen(),
           ));
         });
       });

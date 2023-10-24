@@ -434,7 +434,18 @@
   "your_selected_car_type": "your selected car type is",
   "please_choose_a_car_type": "Please choose a car type",
 
-  "withdraw": "Withdraw"
+  "withdraw": "Withdraw",
+  "success": "Success",
+  "information": "Information",
+  "warning": "Warning",
+  "error": "Error",
+  "order_status": "Order Status",
+  "order_canceled": "The order has been successfully cancelled",
+  "select_a_payment_method": "Select a Payment",
+  "car_arrived": "The car has just arrived at your destination"
+
+
+
 
 
 

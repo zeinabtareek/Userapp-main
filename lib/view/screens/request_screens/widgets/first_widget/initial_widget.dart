@@ -6,14 +6,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:ride_sharing_user_app/util/ui/overlay_helper.dart';
 
 import '../../../../../enum/request_states.dart';
 import '../../../../../util/app_strings.dart';
 import '../../../../../util/app_style.dart';
 import '../../../../../util/dimensions.dart';
+import '../../../../../util/images.dart';
 import '../../../../../util/text_style.dart';
 import '../../../../widgets/custom_button.dart';
+import '../../../../widgets/custom_calender.dart';
 import '../../../../widgets/custom_category_card.dart';
+import '../../../../widgets/custom_drop_down.dart';
 import '../../../../widgets/custom_text_field.dart';
 import '../../../home/controller/category_controller.dart';
 import '../../../parcel/widgets/route_widget.dart';
@@ -72,7 +76,94 @@ class InitialRequestWidget extends StatelessWidget {
             const SizedBox(
               height: Dimensions.paddingSizeDefault,
             ),
-            const TripFareSummery(),
+            // const TripFareSummery(),
+            K.sizedBoxH0,
+            Container(
+                 decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
+                    color: Theme.of(context).primaryColor.withOpacity(0.15)),
+                padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+                child: Center(
+                child: CustomDropDown(
+
+                  icon: Icon(
+                    Icons.expand_more,
+                    color: Theme.of(context).primaryColor.withOpacity(0.5),
+                  ),
+                  maxListHeight: 200,
+                  items: controller.paymentOptions
+                      .map((item) =>
+                      CustomDropdownMenuItem<
+                          String>(
+                        value: item,
+                        child:SizedBox(
+                          width: 200,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                              Image.asset(
+                              Images.profileMyWallet,
+                              height: 15,
+                              width: 15,
+                            ), K.sizedBoxW0,
+                          Text(
+                              item.tr,
+                              style: textRegular.copyWith(
+                                  color: item !=
+                                      controller.initialSelectItem
+                                      ? Theme.of(
+                                      context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .color!
+                                      .withOpacity(
+                                      0.5)
+                                      : Theme.of(
+                                      context)
+                                      .primaryColor),
+                            ),
+                            ]),
+                        ),
+
+                      ))
+
+                      .toList(),
+                  // hintText: Strings.select.tr,
+                  isRowHint: true,
+                  rowWidget:Row(
+                    children: [
+                      Image.asset(
+                        Images.profileMyWallet,
+                        height: 15,
+                        width: 15,
+                      ), K.sizedBoxW0,
+                      Text(
+                        Strings.selectAPaymentMethod.tr,
+                        maxLines: 1,
+                        overflow: TextOverflow.clip,
+                      ),
+                    ],
+                  ),
+                  borderRadius: 5,
+                  onChanged: (selectedItem) {
+                    controller.initialSelectItem =
+                        selectedItem ?? Strings.all;
+                    if (controller.initialSelectItem ==
+                        Strings.custom) {
+                      showDialog(
+                          context: context,
+                          builder: (_) =>
+                              CustomCalender(
+                                onChanged: (value) {
+                                  Get.back();
+                                },
+                              ));
+                    }
+                    controller.update();
+                  },
+                ),
+              ),
+            ),
             const SizedBox(
               height: Dimensions.paddingSizeDefault,
             ),
@@ -97,17 +188,24 @@ class InitialRequestWidget extends StatelessWidget {
                 buttonText: Strings.getPrice.tr,
                 radius: 50,
                 onPressed: () async {
-                  // baseMapController.  key.currentState!.contract();
+                  print('controller.initialSelectItem ${controller.initialSelectItem}');
+
+                  if( controller.selectedSubPackage.value !=null&&controller.initialSelectItem!=null){
                   baseMapController.changeState(request[RequestState.getPriceState]!);
                   await controller.getOrderPrice();
                   controller.update();
                   print( baseMapController.widgetNumber.value );
                 }
+                  else if(controller.selectedSubPackage.value ==null){
+
+                    OverlayHelper.showWarningToast(context, Strings.selectACarType.tr);
+                  }
+                  else if(controller.initialSelectItem==null){
+                    OverlayHelper.showWarningToast(context, Strings.selectAPaymentMethod.tr);
+                    // print('select a type');
+                  }
+                }
                     )
-                // : CustomButton(
-                // buttonText: Strings.findRider.tr,
-                // onPressed: () {
-                //   update(RideState.findingRider);
                  ),
          K.sizedBoxH0,
             K.sizedBoxH0,

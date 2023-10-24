@@ -10,6 +10,8 @@ import '../../../../enum/view_state.dart';
 import '../../../../util/action_center/exceptions.dart';
 import '../../../../util/ui/overlay_helper.dart';
 import '../../map/map_screen.dart';
+import '../../request_screens/controller/base_map_controller.dart';
+import '../../request_screens/model/order/OrderModel.dart';
 import '../../request_screens/model/order_model.dart';
 import '../../ride/controller/ride_controller.dart';
 import '../model/create_order_body.dart';
@@ -45,13 +47,11 @@ class CreateATripController extends BaseController {
                   .selectedPackage
                   .value
                   ?.id,
-              // packageId: '4abae317-b5fe-4078-a5d8-73138acc7277',
               from: From(
                   lat: '21.23443', lng: '23.32323', location: 'Nasr City'),
               to: To(lat: '21.23443', lng: '23.32323', location: 'Nasr City'),
               extraRoutes: extraRoutes,
               time: '12',
-              // distance: 7 ,
               distance: num.parse(distance.toString()),
               note: Get
                   .find<RideController>()
@@ -63,15 +63,21 @@ class CreateATripController extends BaseController {
                   .value
                   ?.id,
               // vehicleTypeId: '3ddb3780-fb2b-40b4-823f-283d51edc828',
-              paymentType: 'cash',
+              paymentType: Get
+                  .find<RideController>()
+                  .initialSelectItem ,
+              // paymentType: 'cash',
               googleRoutes: extraRoutes,
-              // googleRoutes: googleRoutes,
-            ));
+             ));
 
         Get.find<RideController>()
             .updateRideCurrentState(RideState.findingRider);
         print('new trip data   ${createOrderModel.data?.id}');
-        // await  calculateDistance();
+
+        Get.find<BaseMapController>()
+            .  key.currentState!.contract();
+        Get.find<BaseMapController>()
+            .changeState(request[RequestState.findDriverState]!);
         setState(ViewState.idle);
       }, checkConnection: true);
 

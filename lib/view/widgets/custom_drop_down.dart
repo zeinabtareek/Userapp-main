@@ -10,11 +10,14 @@ class CustomDropDown<T> extends StatefulWidget {
   final double borderWidth;
   final int defaultSelectedIndex;
   final bool enabled;
+  final bool isRowHint;
   final Icon icon;
+  final Row ?rowWidget;
 
   const CustomDropDown(
       {required this.items,
         required this.onChanged,
+          this.rowWidget,
         this.hintText = "",
         this.borderRadius = 0,
         this.borderWidth = 1,
@@ -22,6 +25,7 @@ class CustomDropDown<T> extends StatefulWidget {
         this.defaultSelectedIndex = -1,
         Key? key,
         this.enabled = true,
+        this.isRowHint = false,
         required this.icon})
       : super(key: key);
 
@@ -219,7 +223,9 @@ class CustomDropDownState extends State<CustomDropDown>
                 ) : Padding(
                   padding:
                   const EdgeInsets.only(left: 4.0), // change it here
-                  child: Text(
+                  child:widget .isRowHint?
+                  widget.rowWidget:
+                  Text(
                     widget.hintText,
                     maxLines: 1,
                     overflow: TextOverflow.clip,
@@ -240,11 +246,13 @@ class CustomDropDownState extends State<CustomDropDown>
   Decoration? _getDecoration() {
     if (_isOpen && !_isReverse) {
       return BoxDecoration(
+
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(widget.borderRadius),
               topRight: Radius.circular(
                 widget.borderRadius,
               )));
+
     } else if (_isOpen && _isReverse) {
       return BoxDecoration(
           borderRadius: BorderRadius.only(

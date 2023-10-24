@@ -36,7 +36,7 @@ dependencies:
   flutter_secure_storage: any
   flutter_spinkit: null
   flutter_staggered_animations: null
-  flutter_svg: ^1.1.6
+  flutter_svg:
   flutter_widget_from_html_core: ^0.8.5+1
   geocoder2: null
   geocoding: null
@@ -59,7 +59,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^22.2.12
   top_snackbar_flutter: null
   url_launcher: ^6.1.14
-
+  moyasar: ^2.0.2
 
 dependency_overrides:
   #  modal_bottom_sheet:
