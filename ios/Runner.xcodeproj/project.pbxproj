@@ -10,6 +10,7 @@
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		526FFEAB3E02FD2940DB16C1 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC57CE8DA3F2BE22BB5BF4 /* Pods_Runner.framework */; };
+		528ED35A2AE82E5C00D0DED8 /* connectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528ED3592AE82E5C00D0DED8 /* connectivity.framework */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		788756664027B6EE2D65D3A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E149AC8CB47BD053D4B19627 /* GoogleService-Info.plist */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
@@ -41,6 +42,7 @@
 		528ED3532AE7FC2E00D0DED8 /* Reachability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Reachability.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		528ED3552AE7FC7600D0DED8 /* connectivity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = connectivity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		528ED3572AE7FC7600D0DED8 /* connectivity_plus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = connectivity_plus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		528ED3592AE82E5C00D0DED8 /* connectivity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = connectivity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				528ED35A2AE82E5C00D0DED8 /* connectivity.framework in Frameworks */,
 				526FFEAB3E02FD2940DB16C1 /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,6 +73,7 @@
 		88735A7BED4C015C8358F671 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				528ED3592AE82E5C00D0DED8 /* connectivity.framework */,
 				528ED3552AE7FC7600D0DED8 /* connectivity.framework */,
 				528ED3572AE7FC7600D0DED8 /* connectivity_plus.framework */,
 				528ED3512AE7FC2E00D0DED8 /* Reachability.framework */,
