@@ -1,5 +1,7 @@
 
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/data/api_client.dart';
@@ -18,11 +20,11 @@ class PaymentRepo {
     try {
       digitalPaymentMethodList = [
 
-
-        DigitalPaymentModel(name: 'paypal', cardNumber: '76543245678654',expireDate: "4/12", icon: Images.paypal, color: Theme.of(Get.context!).primaryColor),
-        DigitalPaymentModel(name: 'paytm', cardNumber: '76543245678677',expireDate: "4/6", icon: Images.paytm, color: Theme.of(Get.context!).colorScheme.secondaryContainer),
-        DigitalPaymentModel(name: 'master_card', cardNumber: '76543245678656',expireDate: "4/12", icon: Images.paypal, color: Theme.of(Get.context!).colorScheme.onSecondary),
-
+        // DigitalPaymentModel(name: 'paypal', cardNumber: '76543245678654',expireDate: "4/12", icon: Images.paypal, color: Theme.of(Get.context!).primaryColor),
+        // DigitalPaymentModel(name: 'paytm', cardNumber: '76543245678677',expireDate: "4/6", icon: Images.paytm, color: Theme.of(Get.context!).colorScheme.secondaryContainer),
+        DigitalPaymentModel(name: 'master_card', cardNumber: '76543245678656',expireDate: "4/12", icon: Images.masterCardIcon, color: Theme.of(Get.context!).colorScheme.onSecondary),
+        if (Platform.isIOS) // Only include Apple Pay for iOS
+          DigitalPaymentModel(name: 'apple_pay', cardNumber: '76543245678656',expireDate: "4/12", icon: Images.applePay, color: Theme.of(Get.context!).colorScheme.onSecondary),
       ];
 
       Response response = Response(body: digitalPaymentMethodList, statusCode: 200);

@@ -7,8 +7,9 @@ import 'package:ride_sharing_user_app/util/text_style.dart';
 
 class TripFareSummery extends StatelessWidget {
   final bool fromPayment;
+  final String paymentMethod;
 
-  const TripFareSummery({Key? key, this.fromPayment = false}) : super(key: key);
+  const TripFareSummery({Key? key, this.fromPayment = false,required this.paymentMethod}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +76,7 @@ class TripFareSummery extends StatelessWidget {
             ]),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                "cash".tr,
+              child: Text(paymentMethod.tr,
                 style: textRegular.copyWith(
                     fontSize: Dimensions.fontSizeSmall,
                     color: Theme.of(context).primaryColor),

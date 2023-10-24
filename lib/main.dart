@@ -26,6 +26,7 @@ import 'package:ride_sharing_user_app/view/screens/parcel/parcel_home_screen.dar
 import 'package:ride_sharing_user_app/view/screens/parcel/parcel_notification_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/parcel_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/item_track_history_card.dart';
+import 'package:ride_sharing_user_app/view/screens/payment/payment_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/request_screens/screens/base_map/base_map_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
 import 'package:ride_sharing_user_app/helper/responsive_helper.dart';
@@ -121,8 +122,8 @@ class MyApp extends StatelessWidget {
             locale: localizeController.locale,
             translations: Messages(languages: languages),
             fallbackLocale: Locale(AppConstants.languages[0].languageCode, AppConstants.languages[0].countryCode),
-            // initialRoute: RouteHelper.getSplashRoute(),
-            // getPages: RouteHelper.routes,
+            initialRoute: RouteHelper.getSplashRoute(),
+            getPages: RouteHelper.routes,
             defaultTransition: Transition.topLevel,
             transitionDuration:   const Duration(milliseconds: 500),
             // home:MapView(),
@@ -152,9 +153,11 @@ class MyApp extends StatelessWidget {
             // home: InvoiceScreen(),
             // home: BaseMapScreen(),
             // home: HomeScreen1(),
-            home: TestPaymentScreen(),
             // home: SplashScreen(),
             // home: DashboardScreen(),
+            // home: WalletScreen(),
+            // home: PaymentScreen(),
+            // home: TestPaymentScreen(),
           ));
         });
       });

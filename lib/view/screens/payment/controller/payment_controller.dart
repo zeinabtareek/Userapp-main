@@ -1,5 +1,6 @@
 
 import 'package:get/get.dart';
+import 'package:moyasar/moyasar.dart';
 import 'package:ride_sharing_user_app/data/api_checker.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/view/screens/payment/repository/payment_repo.dart';
@@ -61,7 +62,28 @@ class PaymentController extends GetxController implements GetxService{
   }
 
 
+///Moyaser gateway
+  final paymentConfig = PaymentConfig(
+    publishableApiKey: 'pk_test_gYHJb7Dzs3SUjghm2JFhLrFPdQRKzxb4V5W8FDib',
+    amount: 25758, // SAR 257.58
+    description: 'order #1324',
+    metadata: {'size': '250g'},
+    applePay: ApplePayConfig(merchantId: 'YOUR_MERCHANT_ID', label: 'YOUR_STORE_NAME', manual: false),
+  );
 
+  void onPaymentResult(result) {
+    print('result $result');
+    if (result is PaymentResponse) {
+      switch (result.status) {
+        case PaymentStatus.paid:
+        // handle success.
+          break;
+        case PaymentStatus.failed:
+        // handle failure.
+          break;
+      }
+    }
+  }
 
 }
 

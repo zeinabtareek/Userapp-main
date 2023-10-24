@@ -6,6 +6,8 @@ import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/screens/payment/controller/payment_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/payment/widget/digital_payment_model.dart';
 
+import '../credit_card_screen.dart';
+
 class DigitalCardPaymentWidget extends StatelessWidget {
   final DigitalPaymentModel digitalPaymentModel;
   final int index;
@@ -14,7 +16,12 @@ class DigitalCardPaymentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()=> Get.find<PaymentController>().setDigitalPaymentType(index),
+      onTap: (){
+        Get.find<PaymentController>().setDigitalPaymentType(index);
+        Get.to(()=>CreditCardScreen());
+        ///f
+
+      },
       child: Padding(
         padding: const EdgeInsets.only(right: Dimensions.paddingSizeDefault),
         child: Container(width: 160,decoration: BoxDecoration(
@@ -36,9 +43,16 @@ class DigitalCardPaymentWidget extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeDefault),
-                child: Text(digitalPaymentModel.expireDate!, style: textRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color),),
+                child: Text('tap_to_add_your_credit_card'.tr, style: textRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color,fontSize: 12,) ),
               ),
-              SizedBox(width: Dimensions.iconSizeLarge,child: Image.asset(digitalPaymentModel.icon!))
+              // Padding(
+              //   padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeDefault),
+              //   child: Text(digitalPaymentModel.expireDate!, style: textRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color),),
+              // ),
+              SizedBox(
+                  width: Dimensions.iconSizeLarge,
+                  height: Dimensions.iconSizeLarge,
+                  child: Image.asset(digitalPaymentModel.icon!))
             ],
           ),
         ),),

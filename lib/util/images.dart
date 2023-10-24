@@ -105,6 +105,7 @@ class Images {
   static const String volume = 'assets/image/volume.png';
   static const String cash = 'assets/image/cash.png';
   static const String paypal = 'assets/image/paypal.png';
+  static const String applePay = 'assets/image/apple_pay.png';
   static const String paytm = 'assets/image/paytm.png';
   static const String endTrip = 'assets/image/end_trip.png';
   static const String superb = 'assets/image/superb.png';

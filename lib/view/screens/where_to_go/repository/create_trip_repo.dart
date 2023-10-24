@@ -34,13 +34,17 @@ class CreateTripRepo {
         return model;
       }
     } else if (res.statusCode == 422) {
-      throw CustomException(res.data['message'], description: '');
+      throw CustomException(res.data['message'], description: 'test 422');
+
+
     } else {
       throw ApiResponseException(res.statusCode!);
     }
 
     throw Exception("Unexpected error occurred");
     }
+
+
   cancelATrip({orderId})async{
     final res = await dio!.post(
       '${AppConstants.order+"/"+orderId}/${Strings.cancel}',

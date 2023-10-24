@@ -61,7 +61,7 @@ class RideController extends BaseController implements GetxService {
 
 
 
-   final List<String> _paymentOptions = ['cash', 'Master Card', 'Apple Pay',];
+   final List<String> _paymentOptions = ['cash', 'digital', 'wallet',];
   List<String> get paymentOptions => _paymentOptions;
   var initialSelectItem;
 

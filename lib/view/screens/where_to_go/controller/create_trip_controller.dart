@@ -93,6 +93,7 @@ class CreateATripController extends BaseController {
 
     throw Exception(
         "Unexpected error occurred"); // Throw an exception if none of the catch blocks are executed
+    update();
   }
 
 

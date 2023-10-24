@@ -104,7 +104,7 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
                 const SizedBox(
                   height: Dimensions.paddingSizeDefault,
                 ),
-                const TripFareSummery(),
+                  TripFareSummery(paymentMethod: 'cash',),
                 const SizedBox(
                   height: Dimensions.paddingSizeDefault,
                 ),

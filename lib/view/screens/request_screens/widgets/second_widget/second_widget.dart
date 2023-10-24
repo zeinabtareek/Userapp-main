@@ -172,12 +172,15 @@ class SecondWidget extends StatelessWidget {
                   GetBuilder<BaseMapController>(
                       init: BaseMapController(),
                       builder: (baseMapController) => CustomButton(
-                          buttonText: 'Strings.findDriver.tr',
+                          buttonText: Strings.findDriver.tr,
                           radius: 50,
                           onPressed: () async {
                             ///zeinab here we will create a trip
                             baseMapController.  key.currentState!.contract();
-                            baseMapController.changeState(request[RequestState.findDriverState]!);
+                            if(Get
+                                .find<RideController>()
+                                .initialSelectItem=='wallet'){
+                            baseMapController.changeState(request[RequestState.findDriverState]!);}
                             Get.find<CreateATripController>().createATrip();
                             baseMapController.update();
                           })),

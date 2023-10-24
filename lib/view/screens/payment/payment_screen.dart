@@ -93,25 +93,28 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       );
                     }),
                   ),
-                  paymentController.paymentTypeSelectedIndex == 1?
-                  GestureDetector(
-                    onTap: (){
-                      showDialog(context: context, builder: (_)=>const TipsWidget());
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
-                      child: Container(decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor.withOpacity(.35),
-                          borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall)
-                      ),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal:Dimensions.iconSizeSmall, vertical: Dimensions.paddingSizeSmall),
-                            child: Text(paymentController.tipAmount == '0'? 'add_tips'.tr:'${'tips'.tr}-${paymentController.tipAmount}', style: textSemiBold.copyWith(color: Theme.of(context).primaryColorDark),),
-                          ),
-                        ),),
-                    ),
-                  ):paymentController.paymentTypeSelectedIndex == 2
+                  // paymentController.paymentTypeSelectedIndex == 1?
+                  // GestureDetector(
+                  //   onTap: (){
+                  //     showDialog(context: context, builder: (_)=>const TipsWidget());
+                  //   },
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+                  //     child: Container(decoration: BoxDecoration(
+                  //         color: Theme.of(context).primaryColor.withOpacity(.35),
+                  //         borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall)
+                  //     ),
+                  //       child: Center(
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.symmetric(horizontal:Dimensions.iconSizeSmall, vertical: Dimensions.paddingSizeSmall),
+                  //           child: Text(paymentController.tipAmount == '0'? 'add_tips'.tr:'${'tips'.tr}-${paymentController.tipAmount}', style: textSemiBold.copyWith(color: Theme.of(context).primaryColorDark),),
+                  //         ),
+                  //       ),),
+                  //   ),
+                  // ):
+                  /// here we will change the wallet amount
+
+                  paymentController.paymentTypeSelectedIndex == 2
                       ? Padding(
                         padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
                         child: Text.rich(
@@ -141,7 +144,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           padding: EdgeInsets.zero,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index){
-                          return DigitalCardPaymentWidget(digitalPaymentModel: paymentController.digitalPaymentMethodList[index], index: index,);
+                          return DigitalCardPaymentWidget(digitalPaymentModel: paymentController.digitalPaymentMethodList[index],
+                            index: index,);
 
                       }),
                     ),
@@ -162,11 +166,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ],),),
               ),
                 Padding(
-                padding: EdgeInsets.symmetric(horizontal : Dimensions.paddingSizeDefault),
+                padding: const EdgeInsets.symmetric(horizontal : Dimensions.paddingSizeDefault),
                 child: RouteWidget(),
               ),
 
-              const TripFareSummery(fromPayment: true,),
+            GetBuilder<CreateATripController>(
+              init: CreateATripController(),
+              // initState: Get.find<CreateATripController>().showTrip(),
+              builder: (controller) =>      TripFareSummery(fromPayment: true,paymentMethod: controller.orderModel.data?.paymentType.toString()??'',),)
 
             ],),),
           );

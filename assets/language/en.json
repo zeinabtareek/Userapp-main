@@ -140,6 +140,7 @@
   "paypal": "Paypal",
   "liqpay": "Liqpay",
   "master_card": "Master card",
+  "apple_pay": "Apple Pay",
   "here_lots_of_offer_for_you" : "Here's a lot of offer for you!",
   "your_level": "Your level",
   "you_are_level": "You are level ",
@@ -442,6 +443,7 @@
   "order_status": "Order Status",
   "order_canceled": "The order has been successfully cancelled",
   "select_a_payment_method": "Select a Payment",
+  "tap_to_add_your_credit_card": "Tap to add your credit card",
   "car_arrived": "The car has just arrived at your destination"
 
 
