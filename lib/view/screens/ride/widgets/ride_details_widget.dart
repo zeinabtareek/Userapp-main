@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/view/screens/ride/widgets/ride_category.dart';
+import 'ride_category.dart';
 
 import '../../../../util/app_strings.dart';
 import '../../../../util/app_style.dart';
@@ -11,6 +11,7 @@ import '../../../widgets/confirmation_dialog.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_category_card.dart';
 import '../../../widgets/custom_text_field.dart';
+import '../../chat/models/res/msg_chat_res_model_item.dart';
 import '../../history/model/history_model.dart';
 import '../../history/widgets/rider_details.dart';
 import '../../home/controller/category_controller.dart';

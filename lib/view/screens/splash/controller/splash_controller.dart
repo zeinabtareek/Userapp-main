@@ -1,7 +1,11 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
+
+import '../../../../authenticate/config/config.dart';
+import '../../../../authenticate/domain/use-cases/auth_cases.dart';
+import '../../../../initialize_dependencies.dart';
+import '../../dashboard/dashboard_screen.dart';
 
 class  SplashController extends GetxController{
 
@@ -15,7 +19,20 @@ class  SplashController extends GetxController{
      Timer(
          Duration(seconds: 5), () async {
 
-       Get.offAll(  DashboardScreen());
-     });
+      Future.delayed(const Duration(milliseconds: 2500), () async {
+        if (await sl<AuthCases>().isAuthenticated()) {
+          Get.offAll(DashboardScreen());
+        } else {
+          //  Get.off(const OnBoardingScreen2());
+          Get.offAllNamed(AuthScreenPath.loginScreenWithPassRouteName);
+        }
+      });     });
+  }
+
+
+  @override
+  void onClose() {
+
+    super.onClose();
   }
 }

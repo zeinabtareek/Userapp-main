@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/bases/base_controller.dart';
-import 'package:get/get.dart';
 // import 'package:ride_sharing_user_app/view/screens/auth/controller/auth_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/bottom_menu_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/home/controller/address_controller.dart';
@@ -23,22 +21,14 @@ import 'package:ride_sharing_user_app/view/screens/parcel/controller/parcel_cont
 import 'package:ride_sharing_user_app/view/screens/parcel/repository/parcel_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/payment/controller/payment_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/payment/repository/payment_repo.dart';
-import 'package:ride_sharing_user_app/view/screens/profile/repository/uer_repo.dart';
-import 'package:ride_sharing_user_app/view/screens/profile/repository/uer_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/repository/ride_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/repo/config_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/support/controller/support_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/wallet/controller/wallet_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/repository/wallet_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../data/api_client.dart';
-import '../localization/language_model.dart';
-import '../localization/localization_controller.dart';
-import '../theme/theme_controller.dart';
-import '../util/app_constants.dart';
 import '../data/api_client.dart';
 import '../localization/language_model.dart';
 import '../localization/localization_controller.dart';

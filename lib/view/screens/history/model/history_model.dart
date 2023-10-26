@@ -1,4 +1,5 @@
 import '../../../../bases/base_id_value_model.dart';
+import '../../chat/models/res/msg_chat_res_model_item.dart';
 
 class HistoryModel {
   int? status;
@@ -67,7 +68,7 @@ class HistoryData {
     package =
     json['package'] != null ? new Package.fromJson(json['package']) : null;
     driver =
-    json['driver'] != null ? new Driver.fromJson(json['driver']) : null;
+    json['driver'] != null ? new Driver.fromMap(json['driver']) : null;
     createdAt = json['created_at'];
   }
 
@@ -176,57 +177,57 @@ class Package {
   }
 }
 
-class Driver {
-  String? id;
-  String? phoneCode;
-  String? phone;
-  String? email;
-  String? img;
-  String? firstName;
-  String? lastName;
-  dynamic  rate;
-  Vehicle? vehicle;
+// class Driver {
+//   String? id;
+//   String? phoneCode;
+//   String? phone;
+//   String? email;
+//   String? img;
+//   String? firstName;
+//   String? lastName;
+//   dynamic  rate;
+//   Vehicle? vehicle;
 
-  Driver(
-      {this.id,
-        this.phoneCode,
-        this.phone,
-        this.email,
-        this.img,
-        this.firstName,
-        this.rate,
-        this.lastName,
-        this.vehicle});
+//   Driver(
+//       {this.id,
+//         this.phoneCode,
+//         this.phone,
+//         this.email,
+//         this.img,
+//         this.firstName,
+//         this.rate,
+//         this.lastName,
+//         this.vehicle});
 
-  Driver.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    phoneCode = json['phone_code'];
-    phone = json['phone'];
-    email = json['email'];
-    rate = json['rate'];
-    img = json['img'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    vehicle =
-    json['vehicle'] != null ? new Vehicle.fromJson(json['vehicle']) : null;
-  }
+//   Driver.fromJson(Map<String, dynamic> json) {
+//     id = json['id'];
+//     phoneCode = json['phone_code'];
+//     phone = json['phone'];
+//     email = json['email'];
+//     rate = json['rate'];
+//     img = json['img'];
+//     firstName = json['first_name'];
+//     lastName = json['last_name'];
+//     vehicle =
+//     json['vehicle'] != null ? new Vehicle.fromJson(json['vehicle']) : null;
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['phone_code'] = this.phoneCode;
-    data['phone'] = this.phone;
-    data['email'] = this.email;
-    data['img'] = this.img;
-    data['rate'] = this.rate;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    if (this.vehicle != null) {
-      data['vehicle'] = this.vehicle!.toJson();
-    }
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['id'] = this.id;
+//     data['phone_code'] = this.phoneCode;
+//     data['phone'] = this.phone;
+//     data['email'] = this.email;
+//     data['img'] = this.img;
+//     data['rate'] = this.rate;
+//     data['first_name'] = this.firstName;
+//     data['last_name'] = this.lastName;
+//     if (this.vehicle != null) {
+//       data['vehicle'] = this.vehicle!.toJson();
+//     }
+//     return data;
+//   }
+// }
 
 // class Vehicle {
 //   int? id;

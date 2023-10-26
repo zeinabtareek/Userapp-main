@@ -67,17 +67,8 @@
 //     Get.find<ConfigController>().initSharedData();
 //     _route();
 //
-//     Future.delayed(const Duration(milliseconds: 2500), () async {
-//       if (await sl<AuthCases>().isAuthenticated()) {
-//         Get.offAll(DashboardScreen());
-//       } else {
-//    
-//       //  Get.off(const OnBoardingScreen2());
-//         Get.offAllNamed(AuthScreenPath.loginScreenWithPassRouteName);
-//
-//       }
-//     });
-//   }
+   
+  // }
 //
 //   @override
 //   void dispose() {

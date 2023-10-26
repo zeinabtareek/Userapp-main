@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:ride_sharing_user_app/view/screens/chat/models/req/send_msg_req_model.dart';
+import 'package:ride_sharing_user_app/view/screens/where_to_go/model/order_create.dart';
 
 import '../../constants/chat_constant.dart';
 
@@ -170,7 +171,7 @@ class MsgChatResModelItem {
       Map<String, dynamic> mapElement, Map<String, dynamic> map) {
     try {
       return MsgChatResModelItem(
-        isMe: mapElement['sender_type'] ==   ChatConstant.who,
+        isMe: mapElement['sender_type'] == ChatConstant.who,
         msg: mapElement['msg'],
         id: mapElement['id'] != null ? mapElement['id'] as String : null,
         chatType: map['chat_type'] != null ? map['chat_type'] as String : null,
@@ -223,9 +224,10 @@ class Driver {
   String? lastName;
   dynamic vehicle;
   String? username;
-
+  int? rate;
   Driver({
     this.id,
+    this.rate,
     this.phoneCode,
     this.phone,
     this.email,
@@ -261,7 +263,7 @@ class Driver {
           (map['first_name'] != null ? map['first_name'] as String : null) ??
               (map['name'] != null ? map['name'] as String : null),
       lastName: map['last_name'] != null ? map['last_name'] as String : null,
-      vehicle: map['vehicle'] as dynamic,
+      vehicle: map['vehicle']!=null? Vehicle.fromJson(map['vehicle']): null,
       username: map['user_name'] != null ? map['user_name'] as String : null,
     );
   }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,14 +8,12 @@ import '../../../../../util/dimensions.dart';
 import '../../../../../util/images.dart';
 import '../../../../../util/text_style.dart';
 import '../../../../widgets/custom_button.dart';
-import '../../../history/model/history_model.dart';
+import '../../../chat/models/res/msg_chat_res_model_item.dart';
 import '../../../history/widgets/rider_details.dart';
-import '../../../map/controller/map_controller.dart';
 import '../../../parcel/widgets/contact_widget.dart';
 import '../../../parcel/widgets/route_widget.dart';
 import '../../../parcel/widgets/tolltip_widget.dart';
 import '../../../ride/widgets/estimated_fare_and_distance.dart';
-import '../../../ride/widgets/rider_details_widget.dart';
 import '../../../where_to_go/controller/create_trip_controller.dart';
 import '../../controller/base_map_controller.dart';
 import '../../controller/timer_controller.dart';

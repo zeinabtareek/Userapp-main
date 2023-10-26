@@ -23,6 +23,7 @@ class TestPaymentScreen extends StatelessWidget {
         case PaymentStatus.failed:
         // handle failure.
           break;
+          default:
       }
     }
   }

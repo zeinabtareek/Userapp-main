@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../util/dimensions.dart';
-import '../../../../util/text_style.dart';
-import '../model/activity_item_model.dart';
-import '../../../widgets/custom_image.dart';
 
 import '../../../../util/app_strings.dart';
-import '../model/history_model.dart';
+import '../../../../util/dimensions.dart';
+import '../../../../util/text_style.dart';
+import '../../../widgets/custom_image.dart';
+import '../../chat/models/res/msg_chat_res_model_item.dart';
 // TODO: Driver info
 class ActivityScreenRiderDetails extends StatelessWidget {
   final Driver riderDetails;
