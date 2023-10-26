@@ -18,7 +18,7 @@ import '../../../where_to_go/controller/create_trip_controller.dart';
 import '../../controller/base_map_controller.dart';
 import '../../controller/finding_driver_controller.dart';
 
-class ThirdWidget extends StatelessWidget {
+class ThirdWidget extends StatelessWidget { //
   final bool whoWillPay;
 
   const ThirdWidget({Key? key, required this.whoWillPay}) : super(key: key);

@@ -36,6 +36,7 @@ import '../../widgets/common_map_widget.dart';
 import '../../widgets/fifth_widget/fifth_widget.dart';
 import '../../widgets/first_widget/initial_widget.dart';
 import '../../controller/base_map_controller.dart';
+
 // import '../../widgets/fourth_widget/fourth_widget.dart';
 import '../../widgets/fourth_widget/fourth_widget.dart';
 import '../../widgets/second_widget/second_widget.dart';
@@ -59,8 +60,9 @@ class BaseMapScreen extends StatelessWidget {
                 key: controller.key,
                 enableToggle: true,
                 background:
+
                     ///Map background
-                CommonMapWidget(
+                    CommonMapWidget(
                   mapId: controller.mapCompleter.future
                       .then<int>((value) => value.mapId),
                   onMapCreated: controller.onMapCreated,
@@ -80,8 +82,7 @@ class BaseMapScreen extends StatelessWidget {
                       children: [
                         Obx(() => controller.widgetNumber.value ==
                                 request[RequestState.initialState]
-                            ?
-                        InitialRequestWidget(
+                            ? InitialRequestWidget(
                                 image: Images.car,
                                 title: Get.find<RideController>()
                                         .selectedSubPackage
@@ -90,10 +91,10 @@ class BaseMapScreen extends StatelessWidget {
                                         .toString() ??
                                     '',
                               )
-                        //     BikeRideDetailsWidgets(
-                        //       image: Images.car  ,
-                        //       title: Get.find<RideController>().selectedPackage.value?.categoryTitle.toString()??'',
-                        //     )
+                            //     BikeRideDetailsWidgets(
+                            //       image: Images.car  ,
+                            //       title: Get.find<RideController>().selectedPackage.value?.categoryTitle.toString()??'',
+                            //     )
                             : controller.widgetNumber.value ==
                                     request[RequestState.getPriceState]
                                 ? SecondWidget(
@@ -103,27 +104,33 @@ class BaseMapScreen extends StatelessWidget {
                                             .value
                                             ?.categoryTitle
                                             .toString() ??
-                                        '') ///Get Price
+                                        '')
+
+                                ///Get Price
                                 : controller.widgetNumber.value ==
                                         request[RequestState.findDriverState]
                                     ? const ThirdWidget(
                                         whoWillPay: true,
-                                      )///Find Driver
-                                    : (controller.widgetNumber.value ==
-                                            request[
-                                                RequestState.driverAcceptState] ||
-                            controller.widgetNumber.value ==
-                                request[
-                                RequestState.tripOngoing])//tripOngoing
-                                        ?   const
-                         FourthWidget() ///Ride Details tripFinishedState
+                                      )
 
-             : controller.widgetNumber.value ==
-              request[
-              RequestState.tripFinishedState]?
-             //                ///here you paymenmt
-             FifthWidget()
-                            : const SizedBox()), // ),
+                                    ///Find Driver
+                                    : (controller.widgetNumber.value ==
+                                                request[RequestState
+                                                    .driverAcceptState] ||
+                                            controller.widgetNumber.value ==
+                                                request[RequestState
+                                                    .tripOngoing]) //tripOngoing
+                                        ? const FourthWidget()
+
+                                        ///Ride Details tripFinishedState
+
+                                        : controller.widgetNumber.value ==
+                                                request[RequestState
+                                                    .tripFinishedState]
+                                            ?
+                                            //                ///here you paymenmt
+                                            FifthWidget()
+                                            : const SizedBox()), // ),
                       ],
                     ),
                   ),

@@ -21,13 +21,14 @@ handelState()async{
   if( Get.find<BaseMapController>().widgetNumber.value ==request[RequestState.findDriverState]){
     Future.delayed(const Duration(seconds: 5), () async {
       Get.find<BaseMapController>(). key.currentState!.expand();
-      // key.currentState!.expand();
+      Get.find<BaseMapController>().changeState(request[RequestState.findDriverState]!);
+
+
+
       Get.find<CreateATripController>().showTrip(orderId:'');
 
        // Get.find<BaseMapController>().changeState(request[RequestState.riderDetailsState]!);//riderDetailsState
     });
-
-
   }
   }
 
