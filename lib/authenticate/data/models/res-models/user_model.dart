@@ -23,6 +23,7 @@ class UserAuthModel {
   String? token;
   String? wallet;
   DateTime? createdAt;
+  String? ridesCount;
   UserAuthModel({
     this.id,
     this.phoneCode,
@@ -44,12 +45,14 @@ class UserAuthModel {
     this.country,
     this.token,
     this.createdAt,
+    this.ridesCount,
   });
 
   factory UserAuthModel.fromMap(Map<String, dynamic> json) {
     return UserAuthModel(
       id: json["id"],
       phoneCode: json["phone_code"],
+      ridesCount: json['rides_count'].toString(),
       phone: json["phone"],
       email: json["email"],
       img: json["img"],
@@ -75,6 +78,7 @@ class UserAuthModel {
   }
 
   Map<String, dynamic> toMap() => {
+        "rides_count": ridesCount,
         "id": id,
         "phone_code": phoneCode,
         "phone": phone,
@@ -107,6 +111,7 @@ class UserAuthModel {
   setIdentityNo(String identityNo) => this.identityNo = identityNo;
 
   String get tkn => token!;
+  String? get viewName =>" ${firstName} ${lastName}";
 
   @override
   bool operator ==(Object other) {

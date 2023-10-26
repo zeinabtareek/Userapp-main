@@ -26,7 +26,6 @@ import 'package:ride_sharing_user_app/view/screens/parcel/parcel_home_screen.dar
 import 'package:ride_sharing_user_app/view/screens/parcel/parcel_notification_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/parcel_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/item_track_history_card.dart';
-import 'package:ride_sharing_user_app/view/screens/payment/credit_card_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/payment/payment_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/request_screens/screens/base_map/base_map_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
@@ -45,7 +44,6 @@ import 'package:ride_sharing_user_app/view/screens/test_payment.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/wallet_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/widget/payment_method_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/widget/use_voucher_code.dart';
-import 'package:ride_sharing_user_app/view/screens/wallet/widget/withdraw_amount_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/where_to_go/test_where_to_go.dart';
 import 'package:ride_sharing_user_app/view/widgets/animated_widget.dart';
 import 'package:flutter/material.dart';
@@ -124,8 +122,8 @@ class MyApp extends StatelessWidget {
             locale: localizeController.locale,
             translations: Messages(languages: languages),
             fallbackLocale: Locale(AppConstants.languages[0].languageCode, AppConstants.languages[0].countryCode),
-            // initialRoute: RouteHelper.getSplashRoute(),
-            // getPages: RouteHelper.routes,
+            initialRoute: RouteHelper.getSplashRoute(),
+            getPages: RouteHelper.routes,
             defaultTransition: Transition.topLevel,
             transitionDuration:   const Duration(milliseconds: 500),
             // home:MapView(),
@@ -151,16 +149,7 @@ class MyApp extends StatelessWidget {
             // home:   HistoryScreen(fromPage: Strings.home,)/**/,
             // home: const WalletScreen()/**/,
             // home: const OnBoardingScreen2()/**/,
-            // home: TestWhereToGo(address :'haram 2000 gate '),
-            // home: InvoiceScreen(),
-            // home: BaseMapScreen(),
-            // home: HomeScreen1(),
-            // home: SplashScreen(),
-            // home: CreditCardScreen(),
-            home: DashboardScreen(),
-            // home: WithdrawAmountScreen(),
-            // home: PaymentScreen(),
-            // home: TestPaymentScreen(),
+            // home: DashboardScreen(),
           ));
         });
       });

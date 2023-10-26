@@ -1,15 +1,14 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../../util/app_strings.dart';
 import '../../../../../util/dimensions.dart';
 import '../../../../../util/images.dart';
 import '../../../../../util/text_style.dart';
 import '../../../../widgets/confirmation_dialog.dart';
-import '../../../history/model/history_model.dart';
+// import '../../../history/model/history_model.dart';
+import '../../../chat/models/res/msg_chat_res_model_item.dart';
 import '../../../history/widgets/rider_details.dart';
 import '../../../map/controller/map_controller.dart';
 import '../../../parcel/widgets/tolltip_widget.dart';

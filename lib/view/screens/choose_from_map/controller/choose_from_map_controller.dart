@@ -8,7 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../../../controller/base_controller.dart';
+import '../../../../bases/base_controller.dart';
 import '../../../../enum/view_state.dart';
 import '../../../../mxins/map/map_view_helper.dart';
 import '../../../../util/app_constants.dart';
@@ -16,7 +16,6 @@ import '../../../../util/images.dart';
 import '../../where_to_go/model/search_suggestion_model.dart';
 import '../../where_to_go/repository/search_service.dart';
 import '../../where_to_go/where_to_go_screen.dart';
-
 class ChooseFromMapController extends BaseController
     with MapViewHelper, MapHelper {
   List<LatLng> pickedPoints = [

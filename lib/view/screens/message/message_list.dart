@@ -1,19 +1,15 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/util/dimensions.dart';
-import 'package:ride_sharing_user_app/view/screens/message/widget/admin_messages_page.dart';
-import 'package:ride_sharing_user_app/view/screens/message/widget/driver_messages_page.dart';
-import 'package:ride_sharing_user_app/view/screens/message/widget/message_item.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
-import 'package:ride_sharing_user_app/view/widgets/search_widget.dart';
 
 import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
+import '../../../util/dimensions.dart';
+import '../../widgets/custom_app_bar.dart';
+import '../../widgets/custom_body.dart';
 import '../../widgets/custom_tap_bar.dart';
 import 'controller/message_controller.dart';
+import 'widget/admin_messages_page.dart';
+import 'widget/driver_messages_page.dart';
 
 class MessageListScreen extends StatelessWidget {
   const MessageListScreen({Key? key}) : super(key: key);
@@ -35,7 +31,7 @@ class MessageListScreen extends StatelessWidget {
                   child: CustomTapBar(
                     tabController: messageController.tabController,
                     firstTap: Strings.driver.tr,
-                    secondTap: Strings.admin.tr, onTabChanged: (v) {  },
+                    secondTap: Strings.admin.tr, onTabChanged: (v) {},
                   ),
                 ),
                 K.sizedBoxH2,

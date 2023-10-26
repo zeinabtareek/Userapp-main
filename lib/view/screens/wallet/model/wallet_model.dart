@@ -1,11 +1,11 @@
 class WalletModel {
   WalletModel({
-      this.data,
-      this.links,
-      this.meta,
-      this.status,
-      this.message,
-      this.wallet,
+    this.data,
+    this.links,
+    this.meta,
+    this.status,
+    this.message,
+    this.wallet,
   });
 
   final List<WalletData>? data;
@@ -15,9 +15,12 @@ class WalletModel {
   final dynamic message;
   final int? wallet;
 
-  factory WalletModel.fromJson(Map<String, dynamic> json){
+  factory WalletModel.fromJson(Map<String, dynamic> json) {
     return WalletModel(
-      data: json["data"] == null ? [] : List<WalletData>.from(json["data"]!.map((x) => WalletData.fromJson(x))),
+      data: json["data"] == null
+          ? []
+          : List<WalletData>.from(
+              json["data"]!.map((x) => WalletData.fromJson(x))),
       links: json["links"] == null ? null : Links.fromJson(json["links"]),
       meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
       status: json["status"],
@@ -27,14 +30,13 @@ class WalletModel {
   }
 
   Map<String, dynamic> toJson() => {
-    "data": data?.map((x) => x.toJson()).toList(),
-    "links": links?.toJson(),
-    "meta": meta?.toJson(),
-    "status": status,
-    "message": message,
-    "wallet": wallet,
-  };
-
+        "data": data?.map((x) => x.toJson()).toList(),
+        "links": links?.toJson(),
+        "meta": meta?.toJson(),
+        "status": status,
+        "message": message,
+        "wallet": wallet,
+      };
 }
 
 class WalletData {
@@ -46,18 +48,21 @@ class WalletData {
     required this.walletAfter,
     required this.transactionType,
     required this.createdAt,
+    required this.transactionNum,
   });
 
   final String? id;
   final Order? order;
+  final String? transactionNum;
   final int? amount;
   final int? walletBefore;
   final int? walletAfter;
   final String? transactionType;
   final String? createdAt;
 
-  factory WalletData.fromJson(Map<String, dynamic> json){
+  factory WalletData.fromJson(Map<String, dynamic> json) {
     return WalletData(
+      transactionNum: json['transaction_num'],
       id: json["id"],
       order: json["order"] == null ? null : Order.fromJson(json["order"]),
       amount: json["amount"],
@@ -70,15 +75,19 @@ class WalletData {
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "order": order?.toJson(),
-    "amount": amount,
-    "wallet_before": walletBefore,
-    "wallet_after": walletAfter,
-    "transaction_type": transactionType,
-    "created_at": createdAt,
-  };
+        "id": id,
+        "order": order?.toJson(),
+        "amount": amount,
+        "wallet_before": walletBefore,
+        "wallet_after": walletAfter,
+        "transaction_type": transactionType,
+        "created_at": createdAt,
+      };
 
+  bool get isCharged {
+    // return false;
+    return transactionType == "charge";
+  }
 }
 
 class Order {
@@ -92,7 +101,7 @@ class Order {
   final String? status;
   final dynamic transactionId;
 
-  factory Order.fromJson(Map<String, dynamic> json){
+  factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
       id: json["id"],
       status: json["status"],
@@ -101,11 +110,10 @@ class Order {
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "status": status,
-    "transaction_id": transactionId,
-  };
-
+        "id": id,
+        "status": status,
+        "transaction_id": transactionId,
+      };
 }
 
 class Links {
@@ -121,7 +129,7 @@ class Links {
   final dynamic prev;
   final dynamic next;
 
-  factory Links.fromJson(Map<String, dynamic> json){
+  factory Links.fromJson(Map<String, dynamic> json) {
     return Links(
       first: json["first"],
       last: json["last"],
@@ -131,12 +139,11 @@ class Links {
   }
 
   Map<String, dynamic> toJson() => {
-    "first": first,
-    "last": last,
-    "prev": prev,
-    "next": next,
-  };
-
+        "first": first,
+        "last": last,
+        "prev": prev,
+        "next": next,
+      };
 }
 
 class Meta {
@@ -160,12 +167,14 @@ class Meta {
   final int? to;
   final int? total;
 
-  factory Meta.fromJson(Map<String, dynamic> json){
+  factory Meta.fromJson(Map<String, dynamic> json) {
     return Meta(
       currentPage: json["current_page"],
       from: json["from"],
       lastPage: json["last_page"],
-      links: json["links"] == null ? [] : List<Link>.from(json["links"]!.map((x) => Link.fromJson(x))),
+      links: json["links"] == null
+          ? []
+          : List<Link>.from(json["links"]!.map((x) => Link.fromJson(x))),
       path: json["path"],
       perPage: json["per_page"],
       to: json["to"],
@@ -174,16 +183,15 @@ class Meta {
   }
 
   Map<String, dynamic> toJson() => {
-    "current_page": currentPage,
-    "from": from,
-    "last_page": lastPage,
-    "links": links.map((x) => x?.toJson()).toList(),
-    "path": path,
-    "per_page": perPage,
-    "to": to,
-    "total": total,
-  };
-
+        "current_page": currentPage,
+        "from": from,
+        "last_page": lastPage,
+        "links": links.map((x) => x.toJson()).toList(),
+        "path": path,
+        "per_page": perPage,
+        "to": to,
+        "total": total,
+      };
 }
 
 class Link {
@@ -197,7 +205,7 @@ class Link {
   final String? label;
   final bool? active;
 
-  factory Link.fromJson(Map<String, dynamic> json){
+  factory Link.fromJson(Map<String, dynamic> json) {
     return Link(
       url: json["url"],
       label: json["label"],
@@ -206,9 +214,8 @@ class Link {
   }
 
   Map<String, dynamic> toJson() => {
-    "url": url,
-    "label": label,
-    "active": active,
-  };
-
+        "url": url,
+        "label": label,
+        "active": active,
+      };
 }

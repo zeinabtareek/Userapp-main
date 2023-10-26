@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ride_sharing_user_app/bases/base_controller.dart';
 
 import '../../../helper/custom_pick_helper.dart';
 import '../../../util/app_strings.dart';
@@ -253,7 +254,10 @@ class CompleteDataScreen extends GetView<AuthController> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Get.to(() => DashboardScreen());
+                        Get.to(() => DashboardScreen(),
+                            binding: BindingsBuilder(() {
+                          Get.lazyPut(() => BaseController());
+                        }));
                       },
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.zero,

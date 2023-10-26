@@ -184,7 +184,7 @@ class VerificationScreen extends GetView<AuthController> {
         number,
         countryCode,
         onCheckSuccess: () {
-          Get.to(
+          Get.off(
             () => ResetPasswordScreen(
               phone: number,
               countryCode: countryCode,

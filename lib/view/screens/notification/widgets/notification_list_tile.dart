@@ -1,7 +1,3 @@
-
-
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../util/dimensions.dart';
@@ -14,7 +10,12 @@ class NotificationListTile extends StatelessWidget {
   final String desc;
   final String timer;
   final String image;
-  const NotificationListTile({super.key , required this.title, required this.desc, required this.timer, required this.image});
+  const NotificationListTile(
+      {super.key,
+      required this.title,
+      required this.desc,
+      required this.timer,
+      required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -25,34 +26,45 @@ class NotificationListTile extends StatelessWidget {
         IntrinsicHeight(
           child: Row(
             children: [
-                  CustomImage(
+              CustomImage(
                 image: image,
                 radius: Dimensions.radiusDefault,
-                height: 35, width: 35,
+                height: 35,
+                width: 35,
                 placeholder: Images.carPlaceholder,
               ),
-              const SizedBox(width: Dimensions.paddingSizeSmall,),
-
-              Column(crossAxisAlignment: CrossAxisAlignment.start,
+              const SizedBox(
+                width: Dimensions.paddingSizeSmall,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title,
-                    style: textBold.copyWith(fontSize: Dimensions.fontSizeLarge),
+                  Text(
+                    title,
+                    style:
+                        textBold.copyWith(fontSize: Dimensions.fontSizeLarge),
+                    overflow: TextOverflow.ellipsis,
                   ),
-
-                  Text(desc ),
+                  Text(
+                    desc,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ],
               ),
             ],
           ),
         ),
-
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
+          padding: const EdgeInsets.symmetric(
+              vertical: Dimensions.paddingSizeExtraSmall),
           child: Row(
             children: [
-                Text(timer,      ),
-              const SizedBox(width: Dimensions.paddingSizeExtraSmall,),
-
+              Text(
+                timer,
+              ),
+              const SizedBox(
+                width: Dimensions.paddingSizeExtraSmall,
+              ),
               Icon(
                 Icons.alarm,
                 size: Dimensions.fontSizeLarge,

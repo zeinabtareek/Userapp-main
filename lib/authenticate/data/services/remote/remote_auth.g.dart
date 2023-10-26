@@ -146,7 +146,7 @@ class _RemoteApiAuth implements RemoteApiAuth {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = req;
+    final _data = req.toMap();
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<HOODAuthorizedResModel>>(Options(
       method: 'POST',

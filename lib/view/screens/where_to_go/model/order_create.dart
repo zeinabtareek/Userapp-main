@@ -1,3 +1,5 @@
+import '../../../../bases/base_id_value_model.dart';
+
 class CreateOrderModel {
   int? status;
   String? message;
@@ -581,8 +583,8 @@ class Vehicle {
   late final String type;
   late final String brand;
   late final String model;
-  late final String factoryYear;
-  late final String color;
+  late final BaseIdNameModelString factoryYear;
+  late final BaseIdNameModelString color;
   late final String licenseImage;
   late final String img;
 
@@ -591,8 +593,8 @@ class Vehicle {
     type = json['type'];
     brand = json['brand'];
     model = json['model'];
-    factoryYear = json['factory_year'];
-    color = json['color'];
+    factoryYear = BaseIdNameModelString.fromMap( json['factory_year']);
+    color =BaseIdNameModelString.fromMap( json['color']);
     licenseImage = json['license_image'];
     img = json['img'];
   }

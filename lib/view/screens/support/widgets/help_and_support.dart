@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/bases/base_controller.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../controller/base_controller.dart';
 import '../../../../util/app_strings.dart';
 import '../../../../util/app_style.dart';
 import '../../html/html_viewer_screen.dart';
