@@ -21,6 +21,7 @@ class UserAuthModel {
   dynamic theme;
   Country? country;
   String? token;
+  String? wallet;
   DateTime? createdAt;
   UserAuthModel({
     this.id,
@@ -36,6 +37,7 @@ class UserAuthModel {
     this.isActive,
     this.isBanned,
     this.isDataCompleted,
+    this.wallet,
     this.rating,
     required this.lang,
     required this.theme,
@@ -58,6 +60,7 @@ class UserAuthModel {
       identityNo: json["identity_no"],
       isActive: json["is_active"],
       isBanned: json["is_banned"],
+      wallet: json["wallet"],
       isDataCompleted: json["is_data_completed"],
       rating: json["rating"],
       lang: json["lang"],
@@ -88,6 +91,7 @@ class UserAuthModel {
         "rating": rating,
         "lang": lang,
         "theme": theme,
+        "wallet": wallet,
         "country": country?.toMap(),
         "token": token,
         "created_at": createdAt?.toIso8601String(),
@@ -125,6 +129,7 @@ class UserAuthModel {
         other.rating == rating &&
         other.lang == lang &&
         other.theme == theme &&
+        other.wallet == wallet &&
         other.country == country &&
         other.token == token &&
         other.createdAt == createdAt;
@@ -149,12 +154,13 @@ class UserAuthModel {
         lang.hashCode ^
         theme.hashCode ^
         country.hashCode ^
+        wallet.hashCode ^
         token.hashCode ^
         createdAt.hashCode;
   }
 
   @override
   String toString() {
-    return 'User(id: $id, phoneCode: $phoneCode, phone: $phone, email: $email, img: $img, firstName: $firstName, lastName: $lastName, username: $username, address: $address, identityNo: $identityNo, isActive: $isActive, isBanned: $isBanned, isDataCompleted: $isDataCompleted, rating: $rating, lang: $lang, theme: $theme, country: $country, token: $token, createdAt: $createdAt)';
+    return 'User(id: $id, phoneCode: $phoneCode, phone: $phone, email: $email, img: $img, firstName: $firstName, lastName: $lastName, username: $username, address: $address, identityNo: $identityNo, isActive: $isActive, isBanned: $isBanned, isDataCompleted: $isDataCompleted, rating: $rating, lang: $lang, theme: $theme,wallet: $wallet, country: $country, token: $token, createdAt: $createdAt)';
   }
 }

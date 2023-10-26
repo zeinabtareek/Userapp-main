@@ -93,4 +93,35 @@ class CreateTripRepo {
     throw Exception("Unexpected error occurred");
 
   }
+
+
+
+  changePaymentType({id ,paymentType ,vehicleTypeId,transactionId})async{
+    // try {
+    //   final response = await dio!.post(AppConstants.getOrderPrice,
+    //       data: {
+    //         'promo_code':promoCode,
+    //         'distance':distance  ,
+    //         'vehicle_type_id':vehicleTypeId,
+    //         'package_id':packageId,
+    //       });
+    //
+    //   debugPrint('######${response.data }');
+    //   if (response.statusCode == 200) {
+    //     final model = OrderPriceData.fromJson(response.data['data']);
+    //     promoCode!=null??    OverlayHelper.showSuccessToast(Get.overlayContext!, Strings.done.tr);
+    //
+    //     return model;
+    //   } else if (response.statusCode == 422) {
+    //     throw CustomException(response.data['message'], description: '');
+    //   } else {
+    //     throw ApiResponseException(response.statusCode!);
+    //   }
+    // }      on CustomException catch (e) {
+    //
+    //   // OverlayHelper.showErrorToast(Get.overlayContext!, e.message);
+    //   throw e; // Optionally re-throw the exception
+    // }
+  }
+
 }

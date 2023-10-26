@@ -450,6 +450,8 @@
 
   "select_a_Payment_method": "اختر طريقة الدفع",
   "car_arrived": "وصلت السيارة للتو إلى وجهتك",
-  "tap_to_add_your_credit_card": "انقر لإضافة بطاقة الائتمان الخاصة بك"
+  "tap_to_add_your_credit_card": "انقر لإضافة بطاقة الائتمان الخاصة بك",
+  "add_your_credit_card": "أضف بطاقتك الائتمانية ..."
+
 
 }

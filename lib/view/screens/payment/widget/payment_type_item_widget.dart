@@ -9,15 +9,16 @@ class PaymentTypeItem extends StatelessWidget {
   final String title;
   final int index;
   final int selectedIndex;
+  final bool ?isDisabled;
 
-  const PaymentTypeItem({Key? key, required this.title, required this.index, required this.selectedIndex}) : super(key: key);
+  const PaymentTypeItem({Key? key, required this.title, this.isDisabled,required this.index, required this.selectedIndex}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PaymentController>(
         builder: (paymentController) {
           return GestureDetector(
-            onTap: ()=> paymentController.setPaymentType(index),
+            onTap: ()=> isDisabled==true?null:  paymentController.setPaymentType(index),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(Dimensions.paddingSizeDefault,Dimensions.paddingSizeDefault, Dimensions.paddingSizeDefault,Dimensions.paddingSizeDefault,),
               child: Row(mainAxisAlignment : MainAxisAlignment.spaceBetween, children: [
@@ -25,16 +26,16 @@ class PaymentTypeItem extends StatelessWidget {
                   Container(width: 20,height: 20,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(Dimensions.paddingSizeThree),
-                        color: index == selectedIndex? Theme.of(context).primaryColor: null,
-                        border: Border.all(width: 2, color: index == selectedIndex? Theme.of(context).primaryColor : Theme.of(context).hintColor)
+                        color:isDisabled==true?Theme.of(context).disabledColor: index == selectedIndex? Theme.of(context).primaryColor: null,
+                        border: Border.all(width: 2, color:isDisabled==true?Theme.of(context).disabledColor: index == selectedIndex? Theme.of(context).primaryColor : Theme.of(context).hintColor)
                     ),
                     child:  Center(child: Icon(Icons.check,
                       size: Dimensions.iconSizeSmall,
-                      color: index == selectedIndex? Colors.white: Theme.of(context).canvasColor,
+                      color: isDisabled==true?Colors.white.withOpacity(.4):index == selectedIndex? Colors.white: Theme.of(context).canvasColor,
                     )),
                   ),
                   const SizedBox(width: Dimensions.paddingSizeDefault),
-                  Text(title.tr, style: index == selectedIndex
+                  Text(title.tr, style:isDisabled==true?textMedium.copyWith(color: Theme.of(context).disabledColor): index == selectedIndex
                       ? textMedium.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color)
                       :textRegular.copyWith(color: Theme.of(context).hintColor),)
                 ],),

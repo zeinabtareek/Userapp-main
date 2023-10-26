@@ -19,6 +19,7 @@ class FindingDriverController extends GetxController{
 }
 handelState()async{
   if( Get.find<BaseMapController>().widgetNumber.value ==request[RequestState.findDriverState]){
+  // Get.find<BaseMapController>(). key.currentState?.contract();
     Future.delayed(const Duration(seconds: 5), () async {
       Get.find<BaseMapController>(). key.currentState!.expand();
       Get.find<BaseMapController>().changeState(request[RequestState.findDriverState]!);

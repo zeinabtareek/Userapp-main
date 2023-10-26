@@ -1,12 +1,20 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:moyasar/moyasar.dart';
+import 'package:ride_sharing_user_app/controller/base_controller.dart';
 import 'package:ride_sharing_user_app/data/api_checker.dart';
+import 'package:ride_sharing_user_app/helper/cache_helper.dart';
+import 'package:ride_sharing_user_app/helper/display_helper.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
+import 'package:ride_sharing_user_app/util/ui/overlay_helper.dart';
 import 'package:ride_sharing_user_app/view/screens/payment/repository/payment_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/payment/widget/digital_payment_model.dart';
+import 'package:ride_sharing_user_app/view/screens/where_to_go/controller/create_trip_controller.dart';
 
-class PaymentController extends GetxController implements GetxService{
+import '../../../../util/app_strings.dart';
+
+class PaymentController extends BaseController implements GetxService{
   final PaymentRepo paymentRepo;
 
   PaymentController({required this.paymentRepo});
@@ -61,19 +69,27 @@ class PaymentController extends GetxController implements GetxService{
     update();
   }
 
-
-///Moyaser gateway
+  // GetBuilder<CreateATripController>(
+  // init: CreateATripController(),
+  // // initState: Get.find<CreateATripController>().showTrip(),
+  // builder: (controller) =>
+  ///Moyaser gateway
   final paymentConfig = PaymentConfig(
     publishableApiKey: 'pk_test_gYHJb7Dzs3SUjghm2JFhLrFPdQRKzxb4V5W8FDib',
-    amount: 25758, // SAR 257.58
-    description: 'order #1324',
+    // amount:300,
+    amount: Get.find<CreateATripController>().orderModel.data?.finalPrice?.toInt()??1, // SAR 257.58
+     description: 'order #${Get.find<CreateATripController>().orderModel.data?.id}',
     metadata: {'size': '250g'},
     applePay: ApplePayConfig(merchantId: 'YOUR_MERCHANT_ID', label: 'YOUR_STORE_NAME', manual: false),
   );
 
-  void onPaymentResult(result) {
-    print('result $result');
+  Future<void> onPaymentResult(result) async {
+    print('result of payment ${result.toString()}');
     if (result is PaymentResponse) {
+       showCustomSnackBar(Strings.success.tr);
+      await CacheHelper.setValue(kay: Strings.transactionId, value: result.id);
+       // showCustomSnackBar(result.id);
+
       switch (result.status) {
         case PaymentStatus.paid:
         // handle success.
@@ -81,7 +97,32 @@ class PaymentController extends GetxController implements GetxService{
         case PaymentStatus.failed:
         // handle failure.
           break;
+        case PaymentStatus.authorized:
+        // handle authorized
+
+          break;
+        default:
       }
+      return;
+    }
+
+    // handle other type of failures.
+    if (result is ApiError) {
+      print(result.message);
+      showCustomSnackBar(result.message.toString());
+    }
+    if (result is AuthError) {
+      print(result.message);
+      showCustomSnackBar(result.message.toString());
+    }
+    if (result is ValidationError) {
+      print(result.errors);
+       showCustomSnackBar(result.errors.toString());
+
+    }
+    if (result is PaymentCanceledError) {
+      print(result);
+      showCustomSnackBar(result.toString());
     }
   }
 

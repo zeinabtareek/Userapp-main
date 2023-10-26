@@ -32,4 +32,7 @@ class TripFinishedController extends GetxController{
     Get.off(() => const PaymentScreen());
   });
   }
+
+
+
 }

@@ -242,6 +242,7 @@ class Strings {
   static const orderCanceled = 'order_canceled';//حالة الطلب
   static const selectAPaymentMethod = 'select_a_payment_method';
   static const carArrived = 'car_arrived';
+  static const transactionId = 'transaction_id';
 
 
 

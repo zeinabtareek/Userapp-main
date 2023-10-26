@@ -24,7 +24,7 @@ class DigitalCardPaymentWidget extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.only(right: Dimensions.paddingSizeDefault),
-        child: Container(width: 160,decoration: BoxDecoration(
+        child: Container(width: 200,decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
           color: digitalPaymentModel.color!.withOpacity(.125),
         ),child: Padding(

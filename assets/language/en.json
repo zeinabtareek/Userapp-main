@@ -444,7 +444,8 @@
   "order_canceled": "The order has been successfully cancelled",
   "select_a_payment_method": "Select a Payment",
   "tap_to_add_your_credit_card": "Tap to add your credit card",
-  "car_arrived": "The car has just arrived at your destination"
+  "car_arrived": "The car has just arrived at your destination",
+  "add_your_credit_card": "Add your credit card ..."
 
 
 

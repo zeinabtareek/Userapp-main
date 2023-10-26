@@ -38,7 +38,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
               if(Navigator.canPop(context))
               Get.back();
             },showBackButton: false,),
-            body: SingleChildScrollView(child: Column(children: [
+            body:  GetBuilder<CreateATripController>(
+              init: CreateATripController(),
+              // initState: Get.find<CreateATripController>().showTrip(),
+              builder: (controller) =>  SingleChildScrollView(child: Column(children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeExtraLarge),
                 child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
@@ -61,15 +64,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 const SizedBox(width: Dimensions.paddingSizeExtraSmall,),
                 Text('complete'.tr, style: textSemiBold.copyWith(color: Theme.of(context).primaryColor)),
               ],),
-              ///
-            GetBuilder<CreateATripController>(
-              init: CreateATripController(),
-              // initState: Get.find<CreateATripController>().showTrip(),
-              builder: (controller) =>     Padding(
+               Padding(
                 padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
                 child: Text(PriceConverter.convertPrice(context, double.parse(controller.orderModel.data?.finalPrice.toString()??'0.0')),style: textSemiBold.copyWith(fontSize: Dimensions.fontSizeOverLarge,color: Theme.of(context).textTheme.bodyMedium!.color)),
               ),
-              ),
+
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text('your'.tr, style: textMedium.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color),),
                 const SizedBox(width: Dimensions.paddingSizeExtraSmall,),
@@ -88,6 +87,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         itemBuilder: (context, index){
                       return PaymentTypeItem(
                           title: paymentController.paymentTypeList[index],
+                        isDisabled:index==2&&double.parse(paymentController.user?.wallet.toString()??'0.0')<double.parse(controller.orderModel.data?.finalPrice.toString()??'0.0')?true:false,
                         index: index,
                         selectedIndex: paymentController.paymentTypeSelectedIndex,
                       );
@@ -122,7 +122,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         children: [
                           TextSpan(text: 'available'.tr, style: textRegular.copyWith(color: Theme.of(context).hintColor)),
                           TextSpan(
-                            text: PriceConverter.convertPrice(context, 67),
+                            text: PriceConverter.convertPrice(context, double.parse(paymentController.user?.wallet??'0.0')),
                             style: textSemiBold.copyWith(color: Theme.of(context).hintColor)
                           ),
 
@@ -176,7 +176,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               builder: (controller) =>      TripFareSummery(fromPayment: true,paymentMethod: controller.orderModel.data?.paymentType.toString()??'',),)
 
             ],),),
-          );
+          ));
         }
       ),
       bottomNavigationBar: Container(
