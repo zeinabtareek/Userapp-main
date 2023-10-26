@@ -18,11 +18,7 @@ class CompleteDataReqModel {
   Future<Map<String, dynamic>> toMap() async {
     Map<String, dynamic> data = <String, dynamic>{};
     data["email"] = email;
-    // data['email'] = 'abeerelghool@gmail.com';
-
     data['address'] = address;
-    // TODO: remove identity_no key
-    data["identity_no"] = "9662837498739409658";
     data['img'] = await MultipartFile.fromFile(img!.path);
     return data;
   }
@@ -32,7 +28,7 @@ class CompleteDataReqModel {
     return toMap().toString();
   }
 
- Future< FormData> toForm() async{
-      return FormData.fromMap(await toMap());
+  Future<FormData> toForm() async {
+    return FormData.fromMap(await toMap());
   }
 }

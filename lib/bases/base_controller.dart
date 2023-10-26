@@ -38,15 +38,15 @@ class BaseController extends GetxController {
 
   @override
   void onInit() async {
-    if (await sl<AuthCases>().isAuthenticated()) {
-      user = await getUser;
+   await getUser;
+    // if (await sl<AuthCases>().isAuthenticated()) {
+    
       update();
       refresh();
-    }
+    // }
 
     super.onInit();
   }
-
 }
 
 class BaseStateWidget<T extends BaseController> extends StatelessWidget {

@@ -1,18 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/util/dimensions.dart';
-import 'package:ride_sharing_user_app/util/images.dart';
-import 'package:ride_sharing_user_app/util/text_style.dart';
-import 'package:ride_sharing_user_app/view/screens/home/controller/address_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/home/model/categoty_model.dart';
-import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/where_to_go/repository/search_service.dart';
-import 'package:ride_sharing_user_app/view/screens/where_to_go/widget/input_field_for_set_route.dart';
-import 'package:ride_sharing_user_app/view/screens/where_to_go/widget/saved_recent_items.dart';
-import 'package:ride_sharing_user_app/view/screens/where_to_go/widget/search_list_widget.dart';
-import 'package:ride_sharing_user_app/view/screens/where_to_go/widget/suggested_route_screen.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_divider.dart';
 
 import '../../../enum/view_state.dart';
 import '../../../util/app_strings.dart';
@@ -21,7 +9,8 @@ import '../../../util/dimensions.dart';
 import '../../../util/images.dart';
 import '../../../util/text_style.dart';
 import '../../widgets/custom_divider.dart';
-import '../map/map_screen.dart';
+import '../home/controller/address_controller.dart';
+import '../home/model/categoty_model.dart';
 import 'controller/create_trip_controller.dart';
 import 'controller/where_to_go_controller.dart';
 import 'widget/input_field_for_set_route.dart';

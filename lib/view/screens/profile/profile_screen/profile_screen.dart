@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/authenticate/domain/use-cases/auth_cases.dart';
-import 'package:ride_sharing_user_app/initialize_dependencies.dart';
-import 'package:ride_sharing_user_app/localization/localization_controller.dart';
-import 'package:ride_sharing_user_app/util/dimensions.dart';
-import 'package:ride_sharing_user_app/util/images.dart';
-import 'package:ride_sharing_user_app/util/text_style.dart';
-import 'package:ride_sharing_user_app/view/screens/history/history_screen.dart';
-import 'package:ride_sharing_user_app/authenticate/presentation/login-with-pass/sign_in_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/message/message_list.dart';
-import 'package:ride_sharing_user_app/view/screens/offer/offer_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/profile/edit_profile_screen/edit_profile_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/profile/widgets/profile_item.dart';
-import 'package:ride_sharing_user_app/view/screens/settings/setting_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/support/support.dart';
-import 'package:ride_sharing_user_app/view/screens/wallet/wallet_screen.dart';
-import 'package:ride_sharing_user_app/view/widgets/confirmation_dialog.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_image.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../../../authenticate/config/config.dart';
-import '../../../../authenticate/presentation/controller/auth_controller.dart';
+import '../../../../authenticate/domain/use-cases/auth_cases.dart';
+import '../../../../initialize_dependencies.dart';
+import '../../../../localization/localization_controller.dart';
 import '../../../../util/app_strings.dart';
 import '../../../../util/app_style.dart';
+import '../../../../util/dimensions.dart';
+import '../../../../util/images.dart';
+import '../../../../util/text_style.dart';
+import '../../../widgets/confirmation_dialog.dart';
+import '../../../widgets/custom_app_bar.dart';
+import '../../../widgets/custom_body.dart';
+import '../../../widgets/custom_image.dart';
+import '../../chat/chat_screen.dart';
+import '../../history/history_screen.dart';
+import '../../offer/offer_screen.dart';
+import '../../settings/setting_screen.dart';
+import '../../support/support.dart';
+import '../../wallet/wallet_screen.dart';
+import '../edit_profile_screen/edit_profile_screen.dart';
+import '../widgets/profile_item.dart';
 import 'controller/user_controller.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -34,7 +32,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double progressValue = 0.7;
     return Scaffold(
-      body: GetBuilder<UserController>(builder: (userController) {
+      body: GetBuilder<UserController>(builder: (controller) {
         return CustomBody(
           appBar: CustomAppBar(
             title: Strings.makeYourProfileToEarnPoint.tr,
@@ -72,46 +70,46 @@ class ProfileScreen extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Row(children: [
-                                        Text(
-                                            "${Strings.level.tr} : ${userController.userModel?.userLevelModel?.currentLevel}",
-                                            style: textBold.copyWith(
-                                                color:
-                                                    Theme.of(context).hintColor,
-                                                fontSize:
-                                                    Dimensions.fontSizeSmall)),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Image.asset(
-                                          userController
-                                                      .userModel
-                                                      ?.userLevelModel
-                                                      ?.currentLevel ==
-                                                  "1"
-                                              ? Images.level1
-                                              : userController
-                                                          .userModel
-                                                          ?.userLevelModel
-                                                          ?.currentLevel ==
-                                                      "2"
-                                                  ? Images.level2
-                                                  : userController
-                                                              .userModel
-                                                              ?.userLevelModel
-                                                              ?.currentLevel ==
-                                                          "3"
-                                                      ? Images.level3
-                                                      : userController
-                                                                  .userModel
-                                                                  ?.userLevelModel
-                                                                  ?.currentLevel ==
-                                                              "4"
-                                                          ? Images.level4
-                                                          : Images.level5,
-                                          width: Dimensions.iconSizeMedium,
-                                        )
-                                      ]),
+                                      // Row(children: [
+                                      //   // Text(
+                                      //   //     "${Strings.level.tr} : ${userController.userModel?.userLevelModel?.currentLevel}",
+                                      //   //     style: textBold.copyWith(
+                                      //   //         color:
+                                      //   //             Theme.of(context).hintColor,
+                                      //   //         fontSize:
+                                      //   //             Dimensions.fontSizeSmall)),
+                                      //   const SizedBox(
+                                      //     width: 5,
+                                      //   ),
+                                      //   // Image.asset(
+                                      //   //   userController
+                                      //   //               .userModel
+                                      //   //               ?.userLevelModel
+                                      //   //               ?.currentLevel ==
+                                      //   //           "1"
+                                      //   //       ? Images.level1
+                                      //   //       : userController
+                                      //   //                   .userModel
+                                      //   //                   ?.userLevelModel
+                                      //   //                   ?.currentLevel ==
+                                      //   //               "2"
+                                      //   //           ? Images.level2
+                                      //   //           : userController
+                                      //   //                       .userModel
+                                      //   //                       ?.userLevelModel
+                                      //   //                       ?.currentLevel ==
+                                      //   //                   "3"
+                                      //   //               ? Images.level3
+                                      //   //               : userController
+                                      //   //                           .userModel
+                                      //   //                           ?.userLevelModel
+                                      //   //                           ?.currentLevel ==
+                                      //   //                       "4"
+                                      //   //                   ? Images.level4
+                                      //   //                   : Images.level5,
+                                      //   //   width: Dimensions.iconSizeMedium,
+                                      //   // )
+                                      // ]),
                                       Row(
                                         children: [
                                           Text(
@@ -123,7 +121,7 @@ class ProfileScreen extends StatelessWidget {
                                                 .paddingSizeExtraSmall,
                                           ),
                                           Text(
-                                            '5'.tr,
+                                            "${controller.user?.rating?.toString()}",
                                             style: K.hintSmallTextStyle,
                                           ),
                                           const Icon(
@@ -162,14 +160,16 @@ class ProfileScreen extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   _buildColumnItem(
-                                      Strings.totalRide, '242', context),
+                                      Strings.totalRide,
+                                      controller.user?.ridesCount ?? "",
+                                      context),
                                   Container(
                                     width: 1,
                                     height: 40,
                                     color: Theme.of(context).primaryColor,
                                   ),
-                                  _buildColumnItem(
-                                      Strings.totalPoint, '242', context)
+                                  // _buildColumnItem(
+                                  //     Strings.totalPoint, '242', context)
                                 ],
                               )
                             ],
@@ -191,11 +191,10 @@ class ProfileScreen extends StatelessWidget {
                                     width: 2)),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(50),
-                              child: const CustomImage(
+                              child: CustomImage(
                                 height: 80,
                                 width: 80,
-                                image:
-                                    'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                                image: controller.user?.img ?? "",
                                 placeholder: Images.personPlaceholder,
                               ),
                             ),
@@ -213,7 +212,7 @@ class ProfileScreen extends StatelessWidget {
                               children: [
                                 Flexible(
                                   child: Text(
-                                    "Norman Bell",
+                                    controller.user?.viewName ?? "",
                                     style: textBold.copyWith(
                                         fontSize:
                                             Dimensions.fontSizeExtraLarge),
@@ -231,7 +230,10 @@ class ProfileScreen extends StatelessWidget {
                   ProfileMenuItem(
                     title: Strings.profile.tr,
                     icon: Images.profileProfile,
-                    onTap: () => Get.to(() => const EditProfileScreen()),
+                    onTap: () => Get.to(() => const EditProfileScreen(),
+                        binding: BindingsBuilder(() {
+                      controller.onInit();
+                    })),
                   ),
                   ProfileMenuItem(
                       title: Strings.myOffer.tr,
@@ -240,7 +242,7 @@ class ProfileScreen extends StatelessWidget {
                   ProfileMenuItem(
                     title: Strings.message.tr,
                     icon: Images.profileMessage,
-                    onTap: () => Get.to(const MessageListScreen()),
+                    onTap: () => Get.to(const ChatScreen()),
                   ),
                   ProfileMenuItem(
                     title: Strings.myWallet,
@@ -250,7 +252,7 @@ class ProfileScreen extends StatelessWidget {
                   ProfileMenuItem(
                     title: Strings.myTrips.tr,
                     icon: Images.profileMyTrip,
-                    onTap: () => Get.to(() => HistoryScreen(
+                    onTap: () => Get.to(() => const HistoryScreen(
                           fromPage: Strings.profile,
                         )),
                   ),

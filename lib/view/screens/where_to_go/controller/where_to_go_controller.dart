@@ -2,24 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:ride_sharing_user_app/controller/base_controller.dart';
-import 'package:ride_sharing_user_app/data/api_checker.dart';
-import 'package:ride_sharing_user_app/enum/view_state.dart';
-import 'package:ride_sharing_user_app/view/screens/where_to_go/controller/create_trip_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/choose_from_map/choose_from_map_screen.dart';
 
 import '../../../../controller/base_controller.dart';
 import '../../../../enum/view_state.dart';
 import '../../../../helper/location_permission.dart';
-import '../../../../util/app_strings.dart';
 import '../../../../util/ui/overlay_helper.dart';
 import '../../choose_from_map/choose_from_map_screen.dart';
-import '../../map/map_screen.dart';
 import '../../request_screens/screens/base_map/base_map_screen.dart';
 import '../../ride/controller/ride_controller.dart';
 import '../model/search_suggestion_model.dart';
 import '../model/suggested_route_model.dart';
 import '../repository/search_service.dart';
+import 'create_trip_controller.dart';
 
 class WhereToGoController extends BaseController implements GetxService {
   // final SetMapRepo setMapRepo;
@@ -40,18 +34,17 @@ class WhereToGoController extends BaseController implements GetxService {
   final fromNode = FocusNode();
   final extraNode = FocusNode();
   final extraNode2 = FocusNode();
-    var distance ;
-    var duration ;
+  var distance;
+  var duration;
   final extraNode3 = FocusNode();
   final toRoutNode = FocusNode();
-  final searchController=TextEditingController().obs;
-  final selectedSuggestedAddress=''.obs;
-  List listOfSuggestedPlaces=[
+  final searchController = TextEditingController().obs;
+  final selectedSuggestedAddress = ''.obs;
+  List listOfSuggestedPlaces = [
     'place one',
     'place two',
     'place three',
     'place four',
-
   ];
 
   ScrollController scrollController = ScrollController();
@@ -61,15 +54,16 @@ class WhereToGoController extends BaseController implements GetxService {
     super.dispose();
     scrollController.dispose();
     fromRouteController.clear();
-
   }
+
   @override
   void onInit() {
     super.onInit();
     // fromRouteController.text =  address ?? "";
     // Get.put(WhereToGoController(setMapRepo: Get.find()));
   }
-  List <String>extraRoutes=[];
+
+  List<String> extraRoutes = [];
   List<LatLng> selectedPoints = [];
   void setExtraRoute() {
     if (currentExtraRoute < 1) {
@@ -87,23 +81,22 @@ class WhereToGoController extends BaseController implements GetxService {
   }
 
   Future<double?> calculateDistance() async {
-    distance=  await Get.find<CreateATripController>().calculateDistance(
+    distance = await Get.find<CreateATripController>().calculateDistance(
       LatLng(37.7749, -122.4194), // San Francisco
       LatLng(
           37.7753, -122.4199), // Replace with your actual point 1 coordinates
     );
     return distance;
   }
-    Future<double?> calculateDuration() async {
-      duration=  await Get.find<CreateATripController>().calculateDuration(
+
+  Future<double?> calculateDuration() async {
+    duration = await Get.find<CreateATripController>().calculateDuration(
       LatLng(37.7749, -122.4194), // San Francisco
       LatLng(
           37.7753, -122.4199), // Replace with your actual point 1 coordinates
     );
     return duration;
   }
-
-
 
   void getSuggestedRouteList() async {
     // Response response = await setMapRepo.getSuggestedRouteList();
@@ -139,7 +132,7 @@ class WhereToGoController extends BaseController implements GetxService {
             }
           }
         } else {
-          // toRouteController.text =await getPlaceNameFromLatLng(point);
+          toRouteController.text =await getPlaceNameFromLatLng(point);
         }
       }
     });
@@ -175,29 +168,27 @@ class WhereToGoController extends BaseController implements GetxService {
     input.text = placeDescription;
   }
 
-  Future<String> getPlaceNameFromLatLng(LatLng latlng) async {
-    return searchServices.getPlaceNameFromLatLng(latlng);
-  }
 
-
-  validateData() async {
-    if(fromRouteController.text==''||toRouteController.text==''){
-      print('no');
-      OverlayHelper.showErrorToast(Get.overlayContext!, 'select_a_trip'.tr);
-    }
-    else {
-      print('yes');
-      // Get.to(() =>
-      //   MapScreen(
-      //   fromScreen: 'ride',
-      // ));
-      Get.to(BaseMapScreen());
-      //not needed
-      Get.find<RideController>().updateRideCurrentState(RideState.initial);
-      distance=await calculateDistance();
-      update();
+    Future<String> getPlaceNameFromLatLng(LatLng latlng) async {
+      return searchServices.getPlaceNameFromLatLng(latlng);
     }
 
+    validateData() async {
+      if (fromRouteController.text == '' || toRouteController.text == '') {
+        print('no');
+        OverlayHelper.showErrorToast(Get.overlayContext!, 'select_a_trip'.tr);
+      } else {
+        print('yes');
+        // Get.to(() =>
+        //   MapScreen(
+        //   fromScreen: 'ride',
+        // ));
+        Get.to(BaseMapScreen());
+        //not needed
+        Get.find<RideController>().updateRideCurrentState(RideState.initial);
+        distance = await calculateDistance();
+        update();
+      }
+    }
   }
 
-}

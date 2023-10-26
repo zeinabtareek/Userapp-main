@@ -60,4 +60,16 @@ class MsgModel extends BaseResModel<MsgModel> {
     
     return "MSG( msg $massage  status $status)";
   }
+
+  MsgModel copyWith({
+    String? massage,
+    int? status,
+    Map<String,dynamic>? stateData,
+  }) {
+    return MsgModel(
+      massage: massage ?? this.massage,
+      status: status ?? this.status,
+      stateData: stateData ?? this.stateData,
+    );
+  }
 }

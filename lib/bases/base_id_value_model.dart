@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 abstract class BaseIdValueModel<T> {
   String? get id;

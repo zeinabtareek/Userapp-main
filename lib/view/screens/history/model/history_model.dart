@@ -1,4 +1,4 @@
-import '../../request_screens/model/order/Vehicle.dart';
+import '../../../../bases/base_id_value_model.dart';
 
 class HistoryModel {
   int? status;
@@ -272,3 +272,47 @@ class Driver {
 //     return data;
 //   }
 // }
+class Vehicle {
+  int? id;
+  String? type;
+  String? brand;
+  String? model;
+  BaseIdNameModelString? factoryYear;
+  BaseIdNameModelString? color;
+  String? licenseImage;
+  String? img;
+
+  Vehicle(
+      {this.id,
+        this.type,
+        this.brand,
+        this.model,
+        this.factoryYear,
+        this.color,
+        this.licenseImage,
+        this.img});
+
+  Vehicle.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    type = json['type'];
+    brand = json['brand'];
+    model = json['model'];
+    factoryYear = BaseIdNameModelString.fromMap(json['factory_year']) ;
+    color =  BaseIdNameModelString.fromMap(json['color']) ;
+    licenseImage = json['license_image'];
+    img = json['img'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['type'] = this.type;
+    data['brand'] = this.brand;
+    data['model'] = this.model;
+    data['factory_year'] = this.factoryYear;
+    data['color'] = this.color;
+    data['license_image'] = this.licenseImage;
+    data['img'] = this.img;
+    return data;
+  }
+}

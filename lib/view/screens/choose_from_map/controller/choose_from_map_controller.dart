@@ -15,8 +15,7 @@ import '../../../../util/app_constants.dart';
 import '../../../../util/images.dart';
 import '../../where_to_go/model/search_suggestion_model.dart';
 import '../../where_to_go/repository/search_service.dart';
-import '../../where_to_go/where_to_go_screen.dart';
-
+import '../../where_to_go/where_to_go_screen.dart..';
 class ChooseFromMapController extends BaseController
     with MapViewHelper, MapHelper {
   List<LatLng> pickedPoints = [

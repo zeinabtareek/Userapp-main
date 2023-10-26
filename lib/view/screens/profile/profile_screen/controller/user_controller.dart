@@ -1,32 +1,29 @@
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ride_sharing_user_app/data/api_checker.dart';
+import 'package:ride_sharing_user_app/bases/base_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/offer/model/level_model.dart';
-import 'package:ride_sharing_user_app/view/screens/profile/repository/uer_repo.dart';
 
-class UserController extends GetxController implements GetxService {
-  final UserRepo userRepo;
-  UserController({required this.userRepo});
-    String defaultDailCode = "+966";
-  XFile? _pickedProfileFile ;
+class UserController extends BaseController implements GetxService {
+  UserController();
+  String defaultDailCode = "+966";
+  XFile? _pickedProfileFile;
   XFile? get pickedProfileFile => _pickedProfileFile;
 
-  XFile? _pickedIdentityImageFront ;
+  XFile? _pickedIdentityImageFront;
   XFile? get pickedIdentityImageFront => _pickedIdentityImageFront;
-  XFile? _pickedIdentityImageBack ;
+  XFile? _pickedIdentityImageBack;
   XFile? get pickedIdentityImageBack => _pickedIdentityImageBack;
 
+  TextEditingController fristNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
 
-  TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
   TextEditingController identityNumberController = TextEditingController();
-
 
   FocusNode fNameNode = FocusNode();
   FocusNode lNameNode = FocusNode();
@@ -35,34 +32,53 @@ class UserController extends GetxController implements GetxService {
   FocusNode forgetPasswordPhoneNode = FocusNode();
   FocusNode changePasswordPhoneNode = FocusNode();
 
-
   UserModel? userModel;
 
-  @override
-  void onInit() {
+  bool isEnabledForEdit = false;
+  collectData() async {
+    await getUser;
 
-    super.onInit();
-    getUserLevelInfo();
+    if (user != null) {
+      // print(" user ::: ${user?.toMap()} ");
+      fristNameController.text = user!.firstName!;
+      lastNameController.text = user!.lastName!;
+      phoneController.text = user!.phoneCode! + user!.phone!;
+      defaultDailCode = user!.phoneCode!;
+      emailController.text = user!.email??"";
+      addressController.text = user!.address??"";
+      update();
+    }
   }
 
-  void getUserLevelInfo() async {
-    Response response = await userRepo.getUserLevelInfo();
-    if (response.statusCode == 200) {
-      userModel = response.body;
-    } else {
-      ApiChecker.checkApi(response);
-    }
+  switchEdit(bool state) {
+    isEnabledForEdit = state;
     update();
   }
 
+  enableEdit() {
+    switchEdit(true);
+  }
+
+  disableEdit() {
+    switchEdit(false);
+  }
+
+  @override
+  void onInit() async {
+    await collectData();
+    super.onInit();
+  }
 
   void pickImage(bool isBack, bool isProfile) async {
-    if(isBack){
-      _pickedIdentityImageBack = (await ImagePicker().pickImage(source: ImageSource.gallery))!;
-    }else if(isProfile){
-      _pickedProfileFile = (await ImagePicker().pickImage(source: ImageSource.gallery))!;
-    } else{
-      _pickedIdentityImageFront = (await ImagePicker().pickImage(source: ImageSource.gallery))!;
+    if (isBack) {
+      _pickedIdentityImageBack =
+          (await ImagePicker().pickImage(source: ImageSource.gallery))!;
+    } else if (isProfile) {
+      _pickedProfileFile =
+          (await ImagePicker().pickImage(source: ImageSource.gallery))!;
+    } else {
+      _pickedIdentityImageFront =
+          (await ImagePicker().pickImage(source: ImageSource.gallery))!;
     }
     update();
   }

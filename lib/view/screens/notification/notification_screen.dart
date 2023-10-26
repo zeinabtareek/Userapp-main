@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/util/dimensions.dart';
-import 'package:ride_sharing_user_app/util/images.dart';
-import 'package:ride_sharing_user_app/util/text_style.dart';
-import 'package:ride_sharing_user_app/view/screens/notification/controller/notification_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/notification/widgets/activity_notification_tap.dart';
-import 'package:ride_sharing_user_app/view/screens/notification/widgets/notification_list_tile.dart';
-import 'package:ride_sharing_user_app/view/screens/notification/widgets/notification_shimmer.dart';
-import 'package:ride_sharing_user_app/view/screens/notification/widgets/offer_notification_page.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_image.dart';
 
 import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
+import '../../../util/dimensions.dart';
+import '../../../util/text_style.dart';
+import '../../widgets/custom_app_bar.dart';
+import '../../widgets/custom_body.dart';
 import '../../widgets/custom_tap_bar.dart';
+import 'controller/notification_controller.dart';
+import 'pagnaintion/model/get_notification_req_model.dart';
+import 'widgets/activity_notification_tap.dart';
 
 class NotificationScreen extends StatelessWidget {
-  NotificationScreen({Key? key}) : super(key: key) {
-    Get.find<NotificationController>().getNotificationList();
-  }
+  const NotificationScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +24,16 @@ class NotificationScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-        child: GetBuilder<NotificationController>(
-            builder: (notificationController) {
+        child: GetBuilder<NotificationController>(builder: (controller) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
                 child: CustomTapBar(
-                  tabController: notificationController.tabController,
+                  tabController: controller.tabController,
                   firstTap: Strings.activity.tr,
-                  secondTap: Strings.offer.tr, onTabChanged: (v) {  },
+                  secondTap: Strings.offer.tr,
+                  onTabChanged: controller.viewIndex,
                 ),
               ),
               // ),
@@ -56,10 +50,19 @@ class NotificationScreen extends StatelessWidget {
               ),
               Expanded(
                 child: TabBarView(
-                  controller: notificationController.tabController,
-                  children: const [
-                    ActivityNotificationPage(),
-                    OfferNotificationPage(),
+                  controller: controller.tabController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    Obx(
+                      () => controller.isShowActivity.isTrue
+                          ?  ActivityNotificationPage(type: NotificationType.activity,)
+                          : const SizedBox(),
+                    ),
+                    Obx(() => controller.isShowOffer.isTrue
+                        ? ActivityNotificationPage(
+                            type: NotificationType.offer,
+                          )
+                        : const SizedBox()),
                   ],
                 ),
               ),

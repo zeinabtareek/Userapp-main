@@ -12,27 +12,21 @@ import 'package:ride_sharing_user_app/view/screens/profile/profile_screen/profil
 import '../../../util/app_strings.dart';
 import '../../widgets/permission_dialog.dart';
 
-
-class BottomMenuController extends GetxController implements GetxService{
+class BottomMenuController extends GetxController implements GetxService {
   int _currentTab = 0;
   int get currentTab => _currentTab;
   final List<Widget> screen = [
     const HomeScreen(),
-    HistoryScreen(fromPage: Strings.home,),
-      NotificationScreen(),
+    const HistoryScreen(
+      fromPage: Strings.home,
+    ),
+    const NotificationScreen(),
     const ProfileScreen(),
   ];
   Widget _currentScreen = const HomeScreen();
   Widget get currentScreen => _currentScreen;
-onInit() async {
-  super.onInit();
-
-
-  // await _determinePosition();
-
-
-}
-  resetNavBar(){
+  @override
+  resetNavBar() {
     _currentScreen = const HomeScreen();
     _currentTab = 0;
   }
@@ -40,17 +34,19 @@ onInit() async {
   selectHomePage() {
     _currentScreen = const HomeScreen();
     _currentTab = 0;
-     update();
+    update();
   }
 
   selectActivityScreen() {
-    _currentScreen =   HistoryScreen(fromPage: Strings.home,);
+    _currentScreen = const HistoryScreen(
+      fromPage: Strings.home,
+    );
     _currentTab = 1;
     update();
   }
 
   selectNotificationScreen() {
-    _currentScreen =   NotificationScreen();
+    _currentScreen = const NotificationScreen();
     _currentTab = 2;
     update();
   }
@@ -107,6 +103,4 @@ onInit() async {
   //
   //   return Geolocator.getCurrentPosition();
   // }
-
-
 }

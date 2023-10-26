@@ -122,8 +122,8 @@ class MyApp extends StatelessWidget {
             locale: localizeController.locale,
             translations: Messages(languages: languages),
             fallbackLocale: Locale(AppConstants.languages[0].languageCode, AppConstants.languages[0].countryCode),
-            // initialRoute: RouteHelper.getSplashRoute(),
-            // getPages: RouteHelper.routes,
+            initialRoute: RouteHelper.getSplashRoute(),
+            getPages: RouteHelper.routes,
             defaultTransition: Transition.topLevel,
             transitionDuration:   const Duration(milliseconds: 500),
             // home:MapView(),
@@ -149,15 +149,7 @@ class MyApp extends StatelessWidget {
             // home:   HistoryScreen(fromPage: Strings.home,)/**/,
             // home: const WalletScreen()/**/,
             // home: const OnBoardingScreen2()/**/,
-            // home: TestWhereToGo(address :'haram 2000 gate '),
-            // home: InvoiceScreen(),
-            // home: BaseMapScreen(),
-            // home: HomeScreen1(),
-            // home: SplashScreen(),
-            home: DashboardScreen(),
-            // home: WalletScreen(),
-            // home: PaymentScreen(),
-            // home: TestPaymentScreen(),
+            // home: DashboardScreen(),
           ));
         });
       });
