@@ -1,36 +1,40 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/controller/base_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/history/model/history_model.dart';
-import 'package:ride_sharing_user_app/view/screens/history/model/support_model.dart';
 
-import '../../../../enum/view_state.dart';
-import '../../../../util/app_strings.dart';
-import '../controller/activity_controller.dart';
+import '../../../../pagination/typedef/page_typedef.dart';
+import '../../../../pagination/widgets/paginations_widgets.dart';
+import '../page-use-case/get_history_trips_use_case.dart';
+import '../page-use-case/model/req/get_trip_req_model.dart';
 import 'activity_item_view.dart';
 
-class CurrentTripsPage extends GetView<ActivityController> {
-  List<SupportData >model;
-  // List<HistoryData >model;
-    CurrentTripsPage({super.key ,required this.model});
+class CurrentTripsPage extends StatelessWidget {
+  final GetTripReqModel req;
+  // final RefreshController refreshController;
+  const CurrentTripsPage({
+    super.key,
+    required this. req,
+    // required this.refreshController,
+  });
 
   @override
   Widget build(BuildContext context) {
- 
-    return   ListView.builder(
-          itemBuilder: (context, index) {
-            // var item = controller.model.data![index];
-            //
-            return index==model.length ?
-            SizedBox(height: 200,):ActivityItemView(
-              activityItemModel: model[index],
-              isDetailsScreen: false,
-            );
-          },
-          itemCount: model.length+1,
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-
-     );
+    return GetBuilder<PaginateTripHistoryController>(
+        init: PaginateTripHistoryController(
+          GetHistoryTripsUseCase(req),
+        ),
+        builder: (con) {
+          return PaginateTripHistoryView(
+            listPadding: const EdgeInsets.only(top: 0, bottom: 90),
+            child: (entity) =>
+                ActivityItemView(data: entity, isDetailsScreen: false),
+            paginatedLst: (list) {
+              return SmartRefresherApp(
+                key: Key(req.normalFilterValue!.name),
+                controller: con,
+                list: list,
+              );
+            },
+          );
+        });
   }
 }

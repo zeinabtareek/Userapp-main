@@ -1,35 +1,45 @@
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import '../../bases/base_controller.dart';
+import '../../helper/di_container.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
+
 // socket_io_mixin
-mixin SocketIoMixin {
+mixin SocketIoMixin on GetxController {
   io.Socket? socket;
 
+  String serverUrl = "https://arabchance.com:8090/";
+  final String _tag = "Socket.IO";
+
+  String get tag => _tag;
   // Initialize the Socket?.IO connection
-  void initializeSocket(
-    String serverUrl, {
+  void initializeSocket({
     Function()? onConnect,
     Function(io.Socket socket)? onDisconnect,
   }) {
     socket = io.io(serverUrl, <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
+      // "driver_id": Get.find<BaseController>().user!.id,
     });
 
     // Define your event handlers here
     socket?.on('connect', (_) {
       if (kDebugMode) {
-        print('Connected to Socket.IO  On :: $serverUrl ');
+        print('Connected to $_tag  On :: $serverUrl ');
       }
-      // onConnect?.call();
+      onConnect?.call();
     });
 
     socket?.on('disconnect', (_) {
       if (kDebugMode) {
-        print('Disconnected from Socket.IO On :: $serverUrl ');
+        print('Disconnected from $_tag On :: $serverUrl ');
 
         // socket?.destroy();
       }
-      // onDisconnect?.call(socket!);
+      onDisconnect?.call(socket!);
     });
   }
 
@@ -38,19 +48,27 @@ mixin SocketIoMixin {
     socket?.connect();
   }
 
+  sendMassage(List<dynamic> args) {
+    print("  sendMassage $_tag $args ");
+    socket?.send([]);
+  }
+
   // Disconnect from the Socket?.IO server
   void disconnectSocket() {
+    print(" disconnectSocket $_tag ");
     socket?.disconnect();
   }
 
   // Send an event to the Socket?.IO server
   void sendSocketEvent<T>(String event, T data) {
+    print(" sendSocketEvent $_tag  $event  $data ");
     socket?.emit(event, data);
   }
 
   // Listen for a specific event and handle data
   void subscribeToEvent(String event, Function(dynamic data) onData) {
     if (socket != null) {
+      print(" subscribeToEvent $event $tag   ");
       socket!.on(event, onData);
     }
   }

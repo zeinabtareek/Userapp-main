@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/bases/base_controller.dart';
 import 'package:ride_sharing_user_app/helper/display_helper.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/view/screens/home/controller/banner_controller.dart';
@@ -21,27 +22,8 @@ import '../ride/controller/ride_controller.dart';
 import '../ride/widgets/ride_category.dart';
 import 'controller/category_controller.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends GetView<BaseController> {
   const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    Get.find<CategoryController>().getCategoryList();
-    printDeviceToken();
-    super.initState();
-    Get.find<BannerController>().getBannerList();
-    Get.find<PaymentController>().getDigitalPaymentMethodList();
-
-    Get.find<RideController>().resetControllerValue();
-
-    // Get.back();
-    // _checkPermission(context);
-  }
 
   void printDeviceToken() async {
     String? deviceToken = await FirebaseMessaging.instance.getToken();
@@ -52,10 +34,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomBody(
-        appBar: CustomAppBar(
-          title: '${Strings.goodMorning.tr} ${'John'}',
-          showBackButton: false,
-          isHome: true,
+        appBar: GetBuilder<BaseController>(
+          init: BaseController()..onInit(),
+          initState: (_) {},
+          builder: (_) {
+            return CustomAppBar(
+              title: '${Strings.goodMorning.tr} ${controller.user?.viewName}',
+              showBackButton: false,
+              isHome: true,
+            );
+          },
         ),
         body: Padding(
           padding: K.fixedPadding0,
@@ -70,7 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         Get.find<CategoryController>().getCategoryList(),
                     builder: (categoryController) {
                       return RideCategoryWidget();
-                    }), K.sizedBoxH0,
+                    }),
+                K.sizedBoxH0,
                 // const CategoryView(),
                 const HomeSearchWidget(),
                 const HomeMyAddress(

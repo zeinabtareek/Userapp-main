@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ride_sharing_user_app/bases/base_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/choose_from_map/choose_from_map_screen.dart';
 
-import '../../../../controller/base_controller.dart';
 import '../../../../enum/view_state.dart';
 import '../../../../helper/location_permission.dart';
 import '../model/search_suggestion_model.dart';

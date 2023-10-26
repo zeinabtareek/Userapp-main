@@ -83,7 +83,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       validator: widget.validator,
       maxLines: widget.maxLines,
       controller: widget.controller,
-    
+  
       focusNode: widget.focusNode,
       style: textRegular.copyWith(fontSize: Dimensions.fontSizeLarge),
       textInputAction: widget.inputAction,

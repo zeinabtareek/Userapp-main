@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/util/dimensions.dart';
-import 'package:ride_sharing_user_app/util/images.dart';
-import 'package:ride_sharing_user_app/util/text_style.dart';
-import 'package:ride_sharing_user_app/view/screens/map/map_screen.dart';
-import 'package:ride_sharing_user_app/view/widgets/weather_assistant.dart';
 
 import '../../util/app_strings.dart';
 import '../../util/app_style.dart';
+import '../../util/dimensions.dart';
+import '../../util/images.dart';
+import '../../util/text_style.dart';
+import '../screens/map/map_screen.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -17,12 +16,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool centerTitle;
   final bool isHome;
   final double? height;
+  final PreferredSizeWidget?bottom;
   const CustomAppBar({
     super.key,
     required this.title,
     this.showBackButton = true,
     this.onBackPressed,
     this.height,
+    this.bottom,
     this.centerTitle= false,
     this.showActionButton= true,  
     this.isHome = false});
@@ -111,6 +112,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           // ):const SizedBox()
         ],
         elevation: 0,
+        bottom:bottom ,
       ),
     );
   }

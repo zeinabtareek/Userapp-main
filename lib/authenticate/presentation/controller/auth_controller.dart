@@ -5,6 +5,7 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../bases/base_controller.dart';
 import '../../../helper/display_helper.dart';
 import '../../../initialize_dependencies.dart';
 import '../../../util/app_strings.dart';
@@ -24,20 +25,20 @@ import '../../data/models/res-models/user_model.dart';
 import '../../domain/use-cases/auth_cases.dart';
 import '../../enums/auth_enums.dart';
 import '../../helper/helper.dart';
-import '../verfictaion-screen/verification_screen.dart';
-import '../login-with-otp/otp_log_in_screen.dart';
 import '../complete-data-screen/complete_data_screen.dart';
-import '../sign-up/sign_up_screen.dart';
 import '../forgot_password/forget_password_screen.dart';
-import '../reset-password-screen/reset_password_screen.dart';
+import '../login-with-otp/otp_log_in_screen.dart';
 import '../login-with-pass/sign_in_screen.dart';
+import '../reset-password-screen/reset_password_screen.dart';
+import '../sign-up/sign_up_screen.dart';
+import '../verfictaion-screen/verification_screen.dart';
 
 const String defaultDailCode = "+966";
 
 class AuthController extends GetxController {
   var authBinding = BindingsBuilder(
     () {
-      Get.lazyPut(() => AuthController(sl()));
+      Get.put(AuthController(sl()));
     },
   );
   toForgetPassScreen() {
@@ -47,7 +48,9 @@ class AuthController extends GetxController {
 
   void _toHomeScreen() {
     Get.find<BottomMenuController>().resetNavBar();
-    Get.offAll(() => DashboardScreen());
+    Get.offAll(() => DashboardScreen(), binding: BindingsBuilder(() {
+      Get.lazyPut(() => BaseController()..getUser);
+    }));
   }
 
   toLoginOtpScreen(OtpState otpState) {
@@ -68,10 +71,11 @@ class AuthController extends GetxController {
   }
 
   void toSignInScreen() {
-    Get.offAll(
+    Get.off(
       () => SignInScreen(),
       binding: authBinding,
     );
+    initLoginWithPassScreen();
   }
 
   AuthCases authCases;
@@ -89,6 +93,19 @@ class AuthController extends GetxController {
     disposeResetScreen();
     disposeSignUp();
     super.onClose();
+  }
+
+  @override
+  void onInit() {
+    initLoginWithPassScreen();
+    initOtpScreen();
+    initCompleteDataScreen();
+    initResetScreen();
+    initVerificationScreen();
+    initForgetPassScreen();
+    initSignUp();
+
+    super.onInit();
   }
 
   /// [SignInScreen]
@@ -135,11 +152,11 @@ class AuthController extends GetxController {
       checkStatus(
         res,
         onError: (error) {
-          if (error!.data?.status == 403) {
+          if (error?.data?.status == 403) {
             _toVerificationScreen(
               loginPhoneController.text,
-              loginSelectCountry.value.dialCode!
-              , OtpState.loginWithOtp,
+              loginSelectCountry.value.dialCode!,
+              OtpState.loginWithOtp,
             );
           }
         },
@@ -153,6 +170,7 @@ class AuthController extends GetxController {
           final UserAuthModel user = res!.user!;
 
           await authCases.setUserDate(user);
+          // Get.find<BaseController>().getUser;
           // TODO:  isNotVerifiedPhone
 
           // TODO:  welcome toast
@@ -163,7 +181,7 @@ class AuthController extends GetxController {
   }
 
   Future<dynamic>? _toVerificationScreen(
-    String phone, String poneCode, OtpState state) {
+      String phone, String poneCode, OtpState state) {
     return Get.off(
       VerificationScreen(
         number: phone,
@@ -272,10 +290,9 @@ class AuthController extends GetxController {
           authCases.setUserDate(user);
           // toCompleteDataScreen();
           _toVerificationScreen(
-
-             regPhoneController.text,
-             regSelectCountry.value.dialCode!,
-             OtpState.register,
+            regPhoneController.text,
+            regSelectCountry.value.dialCode!,
+            OtpState.register,
           );
         },
       );
@@ -569,7 +586,8 @@ class AuthController extends GetxController {
     checkStatus(
       res,
       onSuccess: (res) {
-        _toHomeScreen();
+        // _toHomeScreen();
+        toCompleteDataScreen();
       },
     );
   }

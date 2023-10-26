@@ -7,8 +7,8 @@ import 'package:flutter_animarker/core/ripple_marker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ride_sharing_user_app/bases/base_controller.dart';
 
-import '../../../../controller/base_controller.dart';
 import '../../../../enum/view_state.dart';
 import '../../../../mxins/map/map_view_helper.dart';
 import '../../../../util/app_constants.dart';

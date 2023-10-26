@@ -3,15 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ride_sharing_user_app/bases/base_controller.dart';
 import 'package:ride_sharing_user_app/data/api_checker.dart';
 import 'package:ride_sharing_user_app/view/screens/history/model/activity_item_model.dart';
 import 'package:ride_sharing_user_app/view/screens/history/repository/history_repo.dart';
 
-import '../../../../controller/base_controller.dart';
 import '../../../../enum/view_state.dart';
 import '../model/history_model.dart';
 
-class ActivityController extends BaseController
+class ActivityController extends  BaseController
     with SingleGetTickerProviderMixin
     implements GetxService {
   // final ActivityRepo activityRepo;

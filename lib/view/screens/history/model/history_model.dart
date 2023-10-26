@@ -1,3 +1,5 @@
+import '../../../../bases/base_id_value_model.dart';
+
 class HistoryModel {
   int? status;
   String? message;
@@ -210,8 +212,8 @@ class Vehicle {
   String? type;
   String? brand;
   String? model;
-  String? factoryYear;
-  String? color;
+  BaseIdNameModelString? factoryYear;
+  BaseIdNameModelString? color;
   String? licenseImage;
   String? img;
 
@@ -230,8 +232,8 @@ class Vehicle {
     type = json['type'];
     brand = json['brand'];
     model = json['model'];
-    factoryYear = json['factory_year'];
-    color = json['color'];
+    factoryYear = BaseIdNameModelString.fromMap(json['factory_year']) ;
+    color =  BaseIdNameModelString.fromMap(json['color']) ;
     licenseImage = json['license_image'];
     img = json['img'];
   }

@@ -27,7 +27,7 @@ class _WithdrawAmountScreenState extends State<WithdrawAmountScreen> {
           body: Column(children: [
 
             CustomTitle(title: Strings.walletMoney.tr, color: Theme.of(context).textTheme.displayLarge!.color,),
-            const WalletMoneyAmountWidget(walletMoney: true,amount: '300',),
+            // const WalletMoneyAmountWidget(walletMoney: true,amount: '300',),
           ],)
       ),
       bottomNavigationBar: Padding(

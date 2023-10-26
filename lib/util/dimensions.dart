@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../localization/localization_controller.dart';
+
 class Dimensions {
   static double fontSizeExtraSmall = Get.context!.width >= 1300 ? 14 : 10;
   static double fontSizeSmall = Get.context!.width >= 1300 ? 16 : 12;
@@ -44,5 +46,10 @@ class Dimensions {
   static const double dropDownWidth = 100;
   static const double orderStatusIconHeight = 70;
   static const double weatherIconSize = 60;
+
+
+    static double headerCardHeight =
+      Get.find<LocalizationController>().isLtr ? 45 : 50;
+
 }
 

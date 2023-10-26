@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 import '../localization/language_model.dart';
 import 'images.dart';
 
@@ -6,12 +7,16 @@ class AppConstants {
   static const String appName = 'Hood';
   static const bool isDevelopment = true;
 
-  static const String baseUrl = 'http://172.16.13.22:8000';
+  // static const String baseUrl = 'http://172.16.13.22:8000';
+
+  static const String baseUrl = 'http://arabchance.com/Hood-Backend-Dashboard/public';
+
+
   // static const String baseUrl = 'http://hoodbackend.develobug.com';
   static const String getAllOrders = '/api/user/orders';
   static const String getAllHistory = '/api/user/orders?status=';
   static const String getAllTransactions = '/api/user/all_transactions';
-
+  static const String getNotification = '/api/user/notifications' ;
   ///****************
   static const String configUri = '/api/v1/config';
   static const String loginUri = '/api/v1/auth/login';

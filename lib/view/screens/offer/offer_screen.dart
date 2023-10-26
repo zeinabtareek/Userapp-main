@@ -19,7 +19,7 @@ class OfferScreen extends StatelessWidget {
       body: CustomBody(
         appBar: CustomAppBar(title: Strings.hereLotsOfOfferForYou.tr),
         body: GetBuilder<UserController>(initState: (_) {
-          Get.find<UserController>().getUserLevelInfo();
+          // Get.find<UserController>().getUserLevelInfo();
         }, builder: (userController) {
           return SingleChildScrollView(
             child: Padding(

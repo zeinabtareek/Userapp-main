@@ -4,7 +4,7 @@ import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
 
 class CustomBody extends StatelessWidget {
   final Widget body;
-  final CustomAppBar appBar;
+  final Widget appBar;
   const CustomBody({Key? key, required this.body, required this.appBar,}) : super(key: key);
 
   @override
