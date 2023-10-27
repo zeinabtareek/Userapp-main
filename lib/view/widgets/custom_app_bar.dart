@@ -1,3 +1,4 @@
+import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +17,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool centerTitle;
   final bool isHome;
   final double? height;
-  final PreferredSizeWidget?bottom;
+  final String? address;
+  final PreferredSizeWidget? bottom;
   const CustomAppBar({
     super.key,
     required this.title,
@@ -24,37 +26,61 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onBackPressed,
     this.height,
     this.bottom,
-    this.centerTitle= false,
-    this.showActionButton= true,  
-    this.isHome = false});
+    this.centerTitle = false,
+    this.showActionButton = true,
+    this.isHome = false,
+    this.address,
+  });
 
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
-      preferredSize:   Size.fromHeight( 150.0),
+      preferredSize: const Size.fromHeight(150.0),
       child: AppBar(
-        toolbarHeight: height??MediaQuery.of(context).size.height/12,
+        toolbarHeight: height ?? MediaQuery.of(context).size.height / 12,
         automaticallyImplyLeading: false,
         title: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title.tr, style: textRegular.copyWith(
-              fontSize:isHome?  Dimensions.fontSizeExtraLarge : Dimensions.fontSizeLarge,
-              color: Colors.white,
-            ),maxLines: 2,textAlign: TextAlign.center,),
-
-            isHome?GestureDetector(
-              onTap: ()=> Get.to(()=>   MapScreen(fromScreen: Strings.location)),
-              child:     Row(children:  [
-                Icon(Icons.place_outlined,color: Colors.white,),
-                K.sizedBoxH0,
-                SizedBox(
-                  width: MediaQuery.of(context).size.width/1.5,
-                    child: Text('15 Changi Business Park Cres, shihainaki \nSingapore', style: textRegular.copyWith(color: Colors.white, fontSize: Dimensions.fontSizeSmall,),maxLines: 3,))
-              ],),
-
-            ) : const SizedBox.shrink(),
+            Text(
+              title.tr,
+              style: textRegular.copyWith(
+                fontSize: isHome
+                    ? Dimensions.fontSizeExtraLarge
+                    : Dimensions.fontSizeLarge,
+                color: Colors.white,
+              ),
+              maxLines: 2,
+              textAlign: TextAlign.center,
+            ),
+            isHome
+                ? GestureDetector(
+                    onTap: () =>
+                        Get.to(() => MapScreen(fromScreen: Strings.location)),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.place_outlined,
+                          color: Colors.white,
+                        ),
+                        K.sizedBoxH0,
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width / 1.5,
+                            child: Text(
+                              address != null
+                                  ? address!
+                                  : '15 Changi Business Park Cres, shihainaki \nSingapore',
+                              style: textRegular.copyWith(
+                                color: Colors.white,
+                                fontSize: Dimensions.fontSizeSmall,
+                              ),
+                              maxLines: 3,
+                            ))
+                      ],
+                    ),
+                  )
+                : const SizedBox.shrink(),
           ],
         ),
 
@@ -63,22 +89,39 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         //   child:     Row(children:  [
         //       Icon(Icons.place_outlined,color: Colors.white,),
         //       SizedBox(width: Dimensions.paddingSizeSmall),
-              // Text('15 Changi Business Park Cres, shihainaki \nSingapore', style: textRegular.copyWith(color: Colors.white, fontSize: Dimensions.fontSizeSmall))
-            // ],),
+        // Text('15 Changi Business Park Cres, shihainaki \nSingapore', style: textRegular.copyWith(color: Colors.white, fontSize: Dimensions.fontSizeSmall))
+        // ],),
         //
         // ) : const SizedBox.shrink(),
         centerTitle: true,
         // centerTitle: centerTitle,
         excludeHeaderSemantics: true,
-        leading: showBackButton ? IconButton(
-          icon: const Icon(Icons.arrow_back),
-          color: Colors.white,
-          onPressed: () => onBackPressed != null ? onBackPressed!() : Navigator.pop(context),
-        ) :  SizedBox(child: Padding(
-          padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-          child: Image.asset(Images.logo,color: Colors.white,),
-        ),),
-        actions: const [
+        leading: showBackButton
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back),
+                color: Colors.white,
+                onPressed: () => onBackPressed != null
+                    ? onBackPressed!()
+                    : Navigator.pop(context),
+              )
+            : SizedBox(
+                child: Padding(
+                  padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+                  child: Image.asset(
+                    Images.logo,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+        actions: [
+          if (true) ...{
+            SizedBox(
+              height: 10,
+              width: 15,
+              child: ChuckerFlutter.chuckerButton,
+            ),
+          },
+
           // showActionButton?
           // InkWell(
           //   onTap: (){
@@ -112,7 +155,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           // ):const SizedBox()
         ],
         elevation: 0,
-        bottom:bottom ,
+        bottom: bottom,
       ),
     );
   }

@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_final_fields
 
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -24,6 +26,8 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
 
   PullToRefreshHandler? _handler;
 
+  final ScrollController scrollController = ScrollController();
+
   PaginationController(this.useCase, {this.refreshControllerr}) : super() {
     change(PaginationBlocInitial(), status: RxStatus.success());
     _handler = PullToRefreshHandler();
@@ -35,6 +39,7 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
   @override
   onClose() {
     _handler?.dispose();
+    scrollController.dispose();
     super.onClose();
   }
 
@@ -48,7 +53,14 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
     items.clear();
   }
 
-  onRefreshData() async {
+  moveScrollToMaxScrollExtent() {
+    if ((status) == RxStatus.success() &&
+        (state ?? PaginationLoading) == PaginationLoaded) {
+      scrollController.jumpTo(scrollController.position.maxScrollExtent);
+    }
+  }
+
+  onRefreshData({Function()? onLoadSucses}) async {
     // if (
     //   !canRefresh
 
@@ -61,6 +73,7 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
     await _handelRes(
       onSusses: () {
         _handler?.refreshCompleted();
+        // onLoadSucses?.call();
         change(PaginationLoaded<Entity>(items), status: RxStatus.success());
         // emit(PaginationLoaded<Entity>(items));
       },
@@ -145,23 +158,25 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
     Function()? onNoMoreData,
     Function()? onEmptyResList,
   }) async {
-    print(" pagination.page ${pagination.page}  ");
-    // useCase.req = useCase.req?.copyWith(pagination.page);
-    print(
-        " useCase.setPage(pagination.page!) ${useCase.setPage(pagination.page!)!.reqPage}  ");
+    try {
+      var res = await useCase.call(parm: useCase.setPage(pagination.page!));
 
-    var res = await useCase.call(parm: useCase.setPage(pagination.page!));
-    final isReturnData = res.data != null;
-    if (!isReturnData) {
-      onError?.call(res.error?.message);
-    } else {
-      _handelSucsesCase(
-        res,
-        onNoMoreData: () => onNoMoreData?.call(),
-        onSusses: () => onSusses?.call(),
-        onEmptyResList: () => onEmptyResList?.call(),
-      );
-      onSusses?.call();
+      final isReturnData = res.data != null && (res is DataSuccess);
+      if (!isReturnData) {
+        onError?.call(res.error?.message);
+      } else {
+        _handelSucsesCase(
+          res,
+          onNoMoreData: () => onNoMoreData?.call(),
+          onSusses: () => onSusses?.call(),
+          onEmptyResList: () => onEmptyResList?.call(),
+        );
+        onSusses?.call();
+      }
+    } on DioException catch (e) {
+      onError?.call(e.toString());
+    } catch (e) {
+      onError?.call(e.toString());
     }
   }
 
@@ -173,7 +188,7 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
   }) {
     pagination = res.data!.$1;
     var resList = res.data?.$2;
-    
+
     resList = resList?.cast<Entity>() ?? <Entity>[];
 
     if (resList.isEmpty) {

@@ -29,11 +29,12 @@ class HomeScreen extends GetView<BaseController> {
         appBar: GetBuilder<BaseController>(
           init: BaseController()..onInit(),
           initState: (_) {},
-          builder: (_) {
+          builder: (controller) {
             return CustomAppBar(
               title: '${Strings.goodMorning.tr} ${controller.user?.viewName}',
               showBackButton: false,
               isHome: true,
+              address: controller.myAddressString,
             );
           },
         ),
@@ -49,7 +50,7 @@ class HomeScreen extends GetView<BaseController> {
                     initState: (_) =>
                         Get.find<CategoryController>().getCategoryList(),
                     builder: (categoryController) {
-                      return RideCategoryWidget();
+                      return const RideCategoryWidget();
                     }),
                 K.sizedBoxH0,
                 // const CategoryView(),

@@ -46,7 +46,7 @@ class UserAuthModel {
     this.ridesCount,
   });
 
-  factory UserAuthModel.fromMap(Map<String, dynamic> json) {
+  factory UserAuthModel.fromMap(Map<String, dynamic> json, {String? msg}) {
     return UserAuthModel(
       id: json["id"],
       phoneCode: json["phone_code"],
@@ -107,7 +107,7 @@ class UserAuthModel {
   setIdentityNo(String identityNo) => this.identityNo = identityNo;
 
   String get tkn => token!;
-  String? get viewName =>" ${firstName} ${lastName}";
+  String? get viewName => "$firstName $lastName";
 
   @override
   bool operator ==(Object other) {

@@ -88,7 +88,7 @@ class EditProfileAccountInfo extends StatelessWidget {
               CustomButton(
                 radius: 50,
                 buttonText: Strings.updateProfile.tr,
-                onPressed: () => Get.back(),
+                onPressed: () {},
               )
             ],
           );

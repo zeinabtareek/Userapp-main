@@ -33,6 +33,7 @@ import '../data/api_client.dart';
 import '../localization/language_model.dart';
 import '../localization/localization_controller.dart';
 import '../theme/theme_controller.dart';
+import '../util/action_center/action_center.dart';
 import '../util/app_constants.dart';
 import '../util/connectivity.dart';
 import '../view/screens/history/controller/activity_controller.dart';
@@ -118,7 +119,12 @@ Future<Map<String, Map<String, String>>> init() async {
 
   Get.put<IConnectivityService>(ConnectivityService(Get.find<AbsLogger>()));
   Get.lazyPut<SupportController>(() => SupportController());
-  //
+  
+
+
+
+      Get.lazyPut<ActionCenter>(() => ActionCenter(Get.find<AbsLogger>()));
+
   // Retrieving localized data
   Map<String, Map<String, String>> languages = {};
   for (LanguageModel languageModel in AppConstants.languages) {
