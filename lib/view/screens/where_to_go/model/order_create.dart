@@ -38,23 +38,23 @@ class OrderData {
   String? note;
   List<ExtraRoutes>? extraRoutes;
   List<GoogleRoute>? googleRoute;
-   dynamic parcelDetails;
-   VehicleType? vehicleType;
+  dynamic parcelDetails;
+  VehicleType? vehicleType;
   bool? promoCode;
-   dynamic kmPrice;
-  late final dynamic  priceBeforeDiscount;
+  dynamic kmPrice;
+  late final dynamic priceBeforeDiscount;
   late final bool? promoCodeUsed;
-  late final dynamic  discountPercent;
-  late final dynamic   finalPrice;
+  late final dynamic discountPercent;
+  late final dynamic finalPrice;
   late final dynamic discountAmount;
-  late final bool ?isParcel;
+  late final bool? isParcel;
   late final Package? package;
   late dynamic driver;
   // late final Driver? driver;
   // late final User ?user;
-  late final String ?createdAt;
+  late final String? createdAt;
 
-  dynamic  tip;
+  dynamic tip;
   dynamic driverAmount;
   OrderData({
     this.id,
@@ -120,7 +120,7 @@ class OrderData {
       isParcel = json['is_parcel'];
       parcelDetails = json['parcel_details'];
       package =
-      json['package'] != null ? Package.fromJson(json['package']) : null;
+          json['package'] != null ? Package.fromJson(json['package']) : null;
       vehicleType = json['vehicle_type'] != null
           ? VehicleType.fromJson(json['vehicle_type'])
           : null;
@@ -135,7 +135,7 @@ class OrderData {
       tip = json['tip'];
       driverAmount = json['driver_amount'];
       createdAt = json['created_at'];
-    }catch(e){
+    } catch (e) {
       print(e);
     }
   }
@@ -151,7 +151,7 @@ class OrderData {
       data['to'] = to!.toJson();
     }
     data['status'] = status;
-    if (statusTimes!= null) {
+    if (statusTimes != null) {
       data['status_times'] = statusTimes!.map((v) => v.toJson()).toList();
     }
     data['distance'] = distance;
@@ -204,10 +204,10 @@ class From {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['lat'] = this.lat;
-    data['lng'] = this.lng;
-    data['location'] = this.location;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['from[lat]'] = lat;
+    data['from[lng]'] = lng;
+    data['from[location]'] = location;
     return data;
   }
 }
@@ -224,9 +224,9 @@ class StatusTimes {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['time'] = this.time;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['time'] = time;
     return data;
   }
 }
@@ -243,9 +243,9 @@ class GoogleRoute {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['lat'] = this.lat;
-    data['lng'] = this.lng;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['lat'] = lat;
+    data['lng'] = lng;
     return data;
   }
 }
@@ -260,11 +260,11 @@ class Package {
 
   Package(
       {this.id,
-        this.name,
-        this.img,
-        this.kmPrice,
-        this.isParcel,
-        this.hasChild});
+      this.name,
+      this.img,
+      this.kmPrice,
+      this.isParcel,
+      this.hasChild});
 
   Package.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -276,13 +276,13 @@ class Package {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['img'] = this.img;
-    data['km_price'] = this.kmPrice;
-    data['is_parcel'] = this.isParcel;
-    data['has_child'] = this.hasChild;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['img'] = img;
+    data['km_price'] = kmPrice;
+    data['is_parcel'] = isParcel;
+    data['has_child'] = hasChild;
     return data;
   }
 }
@@ -303,19 +303,14 @@ class VehicleType {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['img'] = this.img;
-    data['km_price'] = this.kmPrice;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['img'] = img;
+    data['km_price'] = kmPrice;
     return data;
   }
 }
-
-
-
-
-
 
 // class OrderData {
 //   OrderData({
@@ -471,7 +466,6 @@ class VehicleType {
 //
 // }
 
-
 ///zeinab
 class ExtraRoutes {
   ExtraRoutes({
@@ -483,43 +477,62 @@ class ExtraRoutes {
   late final String lng;
   late final String location;
 
-  ExtraRoutes.fromJson(Map<String, dynamic> json){
+  ExtraRoutes.fromJson(Map<String, dynamic> json) {
     lat = json['lat'];
     lng = json['lng'];
     location = json['location'];
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['lat'] = lat;
-    _data['lng'] = lng;
-    _data['location'] = location;
-    return _data;
-  }
-}class To {
-  To({
-      this.lat,
-      this.lng,
-      this.location,
-  });
-  late final String? lat;
-  late final String ?lng;
-  late final String ?location;
-
-  To.fromJson(Map<String, dynamic> json){
-    lat = json['lat'];
-    lng = json['lng'];
-    location = json['location'];
+    final data = <String, dynamic>{};
+    data['lat'] = lat;
+    data['lng'] = lng;
+    data['location'] = location;
+    return data;
   }
 
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['lat'] = lat;
-    _data['lng'] = lng;
-    _data['location'] = location;
-    return _data;
+  Map<String, dynamic> toGoogleRouteJson(int index) {
+    final data = <String, dynamic>{};
+    data['google_route[$index][lat]'] = lat;
+    data['google_route[$index][lng]'] = lng;
+    // data['google_route[$index][location]'] = location;
+    return data;
+  }
+
+  Map<String, dynamic> toExtraRoutesJson(int index) {
+    final data = <String, dynamic>{};
+    data['extra_routes[$index][lat]'] = lat;
+    data['extra_routes[$index][lng]'] = lng;
+    data['extra_routes[$index][location]'] = location;
+    return data;
   }
 }
+
+class To {
+  To({
+    this.lat,
+    this.lng,
+    this.location,
+  });
+  late final String? lat;
+  late final String? lng;
+  late final String? location;
+
+  To.fromJson(Map<String, dynamic> json) {
+    lat = json['lat'];
+    lng = json['lng'];
+    location = json['location'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['to[lat]'] = lat;
+    data['to[lng]'] = lng;
+    data['to[location]'] = location;
+    return data;
+  }
+}
+
 class Driver {
   Driver({
     required this.id,
@@ -542,7 +555,7 @@ class Driver {
   late final bool isOnline;
   late final Vehicle vehicle;
 
-  Driver.fromJson(Map<String, dynamic> json){
+  Driver.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     phoneCode = json['phone_code'];
     phone = json['phone'];
@@ -555,19 +568,20 @@ class Driver {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['phone_code'] = phoneCode;
-    _data['phone'] = phone;
-    _data['email'] = email;
-    _data['img'] = img;
-    _data['first_name'] = firstName;
-    _data['last_name'] = lastName;
-    _data['is_online'] = isOnline;
-    _data['vehicle'] = vehicle.toJson();
-    return _data;
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['phone_code'] = phoneCode;
+    data['phone'] = phone;
+    data['email'] = email;
+    data['img'] = img;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['is_online'] = isOnline;
+    data['vehicle'] = vehicle.toJson();
+    return data;
   }
 }
+
 class Vehicle {
   Vehicle({
     required this.id,
@@ -588,28 +602,28 @@ class Vehicle {
   late final String licenseImage;
   late final String img;
 
-  Vehicle.fromJson(Map<String, dynamic> json){
+  Vehicle.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
     brand = json['brand'];
     model = json['model'];
-    factoryYear = BaseIdNameModelString.fromMap( json['factory_year']);
-    color =BaseIdNameModelString.fromMap( json['color']);
+    factoryYear = BaseIdNameModelString.fromMap(json['factory_year']);
+    color = BaseIdNameModelString.fromMap(json['color']);
     licenseImage = json['license_image'];
     img = json['img'];
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['type'] = type;
-    _data['brand'] = brand;
-    _data['model'] = model;
-    _data['factory_year'] = factoryYear;
-    _data['color'] = color;
-    _data['license_image'] = licenseImage;
-    _data['img'] = img;
-    return _data;
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['type'] = type;
+    data['brand'] = brand;
+    data['model'] = model;
+    data['factory_year'] = factoryYear;
+    data['color'] = color;
+    data['license_image'] = licenseImage;
+    data['img'] = img;
+    return data;
   }
 }
 // /// lat : "21.23443"

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -23,9 +22,11 @@ class EditProfileReqModel {
     data['last_name'] = lName;
     data["email"] = email;
     data['address'] = address;
-    data['img'] = await MultipartFile.fromFile(img!.path);
+    if (img != null) {
+      data['img'] = await MultipartFile.fromFile(img!.path);
+    }
     return data;
   }
 
-  Future< FormData> toForm() async => FormData.fromMap(await toMap());
+  Future<FormData> toForm() async => FormData.fromMap(await toMap());
 }

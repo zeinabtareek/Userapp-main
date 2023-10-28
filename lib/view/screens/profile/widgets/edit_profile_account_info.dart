@@ -85,11 +85,12 @@ class EditProfileAccountInfo extends StatelessWidget {
                     ]),
               )),
               const SizedBox(height: 30),
-              CustomButton(
-                radius: 50,
-                buttonText: Strings.updateProfile.tr,
-                onPressed: () {},
-              )
+              Obx(() => CustomButton(
+                    radius: 50,
+                    isLoading: controller.isLoading.isTrue,
+                    buttonText: Strings.updateProfile.tr,
+                    onPressed: controller.submitEdit,
+                  ))
             ],
           );
         });

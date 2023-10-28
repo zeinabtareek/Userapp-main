@@ -51,7 +51,8 @@ class RideExpendableBottomSheet extends StatelessWidget {
             
               // widget.isGetPrice?
               // GetPrice(image: Images.car,title: 'SUVww',):// const RideExpendableBottomSheet(isGetPrice: null,),
-              BikeRideDetailsWidgets(image: Images.car  , title: 'SUV', )
+            // TODO:  ponts  
+              BikeRideDetailsWidgets(image: Images.car  , title: 'SUV',points: [], )
             ])),
       );
     });

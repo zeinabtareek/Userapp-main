@@ -162,4 +162,50 @@ class UserAuthModel {
   String toString() {
     return 'User(id: $id, phoneCode: $phoneCode, phone: $phone, email: $email, img: $img, firstName: $firstName, lastName: $lastName, username: $username, address: $address, identityNo: $identityNo, isActive: $isActive, isBanned: $isBanned, isDataCompleted: $isDataCompleted, rating: $rating, lang: $lang, theme: $theme, country: $country, token: $token, createdAt: $createdAt)';
   }
+
+  UserAuthModel copyWith({
+    String? id,
+    String? phoneCode,
+    String? phone,
+    String? email,
+    String? img,
+    String? firstName,
+    String? lastName,
+    String? username,
+    String? address,
+    String? identityNo,
+    bool? isActive,
+    bool? isBanned,
+    bool? isDataCompleted,
+    int? rating,
+    dynamic? lang,
+    dynamic? theme,
+    Country? country,
+    String? token,
+    DateTime? createdAt,
+    String? ridesCount,
+  }) {
+    return UserAuthModel(
+      id: id ?? this.id,
+      phoneCode: phoneCode ?? this.phoneCode,
+      phone: phone ?? this.phone,
+      email: email ?? this.email,
+      img: img ?? this.img,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      username: username ?? this.username,
+      address: address ?? this.address,
+      identityNo: identityNo ?? this.identityNo,
+      isActive: isActive ?? this.isActive,
+      isBanned: isBanned ?? this.isBanned,
+      isDataCompleted: isDataCompleted ?? this.isDataCompleted,
+      rating: rating ?? this.rating,
+      lang: lang ?? this.lang,
+      theme: theme ?? this.theme,
+      country: country ?? this.country,
+      token: token ?? this.token,
+      createdAt: createdAt ?? this.createdAt,
+      ridesCount: ridesCount ?? this.ridesCount,
+    );
+  }
 }

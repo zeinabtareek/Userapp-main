@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ride_sharing_user_app/authenticate/data/models/res-models/user_model.dart';
 import 'package:ride_sharing_user_app/bases/base_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/offer/model/level_model.dart';
 import 'package:ride_sharing_user_app/view/screens/profile/model/edit_profile_req_model.dart';
@@ -102,7 +103,19 @@ class UserController extends BaseController implements GetxService {
       );
       isLoading(true);
       final res = await userRepo?.updateProfile(req);
+
       isLoading(false);
+      if (res is UserAuthModel) {
+        var token = user!.tkn;
+
+      
+        await setUser(res.copyWith(token: token),);
+        await getUser;
+        update();
+        refresh();
+        // TODO: sucses toast
+        Get.back();
+      }
     }, checkConnection: true);
   }
 
