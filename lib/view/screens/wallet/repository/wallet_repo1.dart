@@ -1,9 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
 import '../../../../helper/network/dio_integration.dart';
 import '../../../../helper/network/error_handler.dart';
 import '../../../../util/app_constants.dart';
+import '../../../../util/ui/overlay_helper.dart';
+import '../../dashboard/dashboard_screen.dart';
 import '../model/wallet_model.dart';
 
 class WalletRepository {
@@ -20,8 +23,10 @@ class WalletRepository {
       if (response.statusCode == 200) {
         final model = WalletModel.fromJson(response.data);
         return model;
-        // return model.data;
-      } else {
+        return model.data;
+      }
+
+      else {
         throw UnimplementedError();
       }
     } catch (e) {
@@ -30,5 +35,67 @@ class WalletRepository {
       }
       throw UnimplementedError();
     }
+  }
+
+
+  withdrawWallet({ required int amount,note, transactionId})async{
+      try {
+        final response = await dio!.post(AppConstants.withdrawWallet,
+            data: {
+              'amount':amount,
+              'note':note,
+              'transaction_id':transactionId
+            }
+        );
+        debugPrint('######${response.data}');
+        if (response.statusCode == 200) {
+          print('response.statusCode ${response.statusCode}');
+          OverlayHelper.showSuccessToast(Get.overlayContext!,response.data['message'].toString());
+          Get.back();
+          print(response);
+        }
+        else  if(response.statusCode == 422){
+          OverlayHelper.showErrorToast(Get.overlayContext!, response.data['message'].toString());
+        }
+        else {
+          throw UnimplementedError();
+        }
+      } catch (e) {
+        print(e);
+        throw UnimplementedError();
+      }
+
+
+    // print('response.statusCode ${response.statusCode}');
+    }
+  chargeWallet({ required int amount,  transactionId})async{
+    try {
+      final response = await dio!.post(AppConstants.chargeWallet,
+          data: {
+            'amount':amount,
+
+            'transaction_id':transactionId
+          }
+      );
+      debugPrint('######${response.data}');
+      if (response.statusCode == 200) {
+        print('response.statusCode ${response.statusCode}');
+        OverlayHelper.showSuccessToast(Get.overlayContext!,response.data['message'].toString());
+        Get.back();
+        print(response);
+      }
+      else  if(response.statusCode == 422){
+        OverlayHelper.showErrorToast(Get.overlayContext!, response.data['message'].toString());
+      }
+      else {
+        throw UnimplementedError();
+      }
+    } catch (e) {
+      print(e);
+      throw UnimplementedError();
+    }
+
+
+    // print('response.statusCode ${response.statusCode}');
   }
 }

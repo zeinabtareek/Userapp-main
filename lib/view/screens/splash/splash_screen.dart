@@ -179,7 +179,7 @@ final controller =Get.put(SplashController());
           children: [  SizedBox(
               height: 300,
               child: Image.asset(Images.splashLogo)),
-            SizedBox(height: 50),
+            // SizedBox(height: 50),
             SizedBox(
               width: MediaQuery
                   .of(context)

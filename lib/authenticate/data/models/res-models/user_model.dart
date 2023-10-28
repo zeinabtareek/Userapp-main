@@ -21,7 +21,7 @@ class UserAuthModel {
   dynamic theme;
   Country? country;
   String? token;
-  String? wallet;
+  int? wallet;
   DateTime? createdAt;
   String? ridesCount;
   UserAuthModel({

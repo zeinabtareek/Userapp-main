@@ -2,8 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:moyasar/moyasar.dart';
-import 'package:ride_sharing_user_app/controller/base_controller.dart';
-import 'package:ride_sharing_user_app/data/api_checker.dart';
+ import 'package:ride_sharing_user_app/data/api_checker.dart';
 import 'package:ride_sharing_user_app/helper/cache_helper.dart';
 import 'package:ride_sharing_user_app/helper/display_helper.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
@@ -12,6 +11,7 @@ import 'package:ride_sharing_user_app/view/screens/payment/repository/payment_re
 import 'package:ride_sharing_user_app/view/screens/payment/widget/digital_payment_model.dart';
 import 'package:ride_sharing_user_app/view/screens/where_to_go/controller/create_trip_controller.dart';
 
+import '../../../../bases/base_controller.dart';
 import '../../../../util/app_strings.dart';
 
 class PaymentController extends BaseController implements GetxService{
@@ -69,19 +69,28 @@ class PaymentController extends BaseController implements GetxService{
     update();
   }
 
-  // GetBuilder<CreateATripController>(
-  // init: CreateATripController(),
-  // // initState: Get.find<CreateATripController>().showTrip(),
-  // builder: (controller) =>
+
+  // amount: Get.find<CreateATripController>().orderModel.data?.finalPrice?.toInt()??1, // SAR 257.58
   ///Moyaser gateway
-  final paymentConfig = PaymentConfig(
-    publishableApiKey: 'pk_test_gYHJb7Dzs3SUjghm2JFhLrFPdQRKzxb4V5W8FDib',
-    // amount:300,
-    amount: Get.find<CreateATripController>().orderModel.data?.finalPrice?.toInt()??1, // SAR 257.58
-     description: 'order #${Get.find<CreateATripController>().orderModel.data?.id}',
-    metadata: {'size': '250g'},
-    applePay: ApplePayConfig(merchantId: 'YOUR_MERCHANT_ID', label: 'YOUR_STORE_NAME', manual: false),
-  );
+  // final paymentConfig = PaymentConfig(
+  //   publishableApiKey: 'pk_test_gYHJb7Dzs3SUjghm2JFhLrFPdQRKzxb4V5W8FDib',
+  //   amount:amount,
+  //    description: 'order #${Get.find<CreateATripController>().orderModel.data?.id}',
+  //   metadata: {'size': '250g'},
+  //   applePay: ApplePayConfig(merchantId: 'YOUR_MERCHANT_ID', label: 'YOUR_STORE_NAME', manual: false),
+  // );
+
+
+  paymentConfigFunc(int amount){
+    return PaymentConfig(
+      publishableApiKey: 'pk_test_gYHJb7Dzs3SUjghm2JFhLrFPdQRKzxb4V5W8FDib',
+      amount:amount,
+      description: 'order #${Get.find<CreateATripController>().orderModel.data?.id}',
+      metadata: {'size': '250g'},
+      applePay: ApplePayConfig(merchantId: 'YOUR_MERCHANT_ID', label: 'YOUR_STORE_NAME', manual: false),
+    );
+  }
+
 
   Future<void> onPaymentResult(result) async {
     print('result of payment ${result.toString()}');

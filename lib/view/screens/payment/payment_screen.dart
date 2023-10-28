@@ -18,6 +18,7 @@ import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
 import '../wallet/widget/use_voucher_code.dart';
 import '../where_to_go/controller/create_trip_controller.dart';
+import 'credit_card_screen.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({Key? key}) : super(key: key);
@@ -122,7 +123,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         children: [
                           TextSpan(text: 'available'.tr, style: textRegular.copyWith(color: Theme.of(context).hintColor)),
                           TextSpan(
-                            text: PriceConverter.convertPrice(context, double.parse(paymentController.user?.wallet??'0.0')),
+                            text: PriceConverter.convertPrice(context, double.parse(paymentController.user?.wallet.toString()??'0.0')),
                             style: textSemiBold.copyWith(color: Theme.of(context).hintColor)
                           ),
 
@@ -144,8 +145,23 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           padding: EdgeInsets.zero,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index){
-                          return DigitalCardPaymentWidget(digitalPaymentModel: paymentController.digitalPaymentMethodList[index],
-                            index: index,);
+                          return DigitalCardPaymentWidget(
+
+                            digitalPaymentModel: paymentController.digitalPaymentMethodList[index],
+                            index: index,
+                          onTap:  (){
+                            Get.find<PaymentController>().setDigitalPaymentType(index);
+                            Get.to(()=>CreditCardScreen(
+                              paymentConfig: paymentController.paymentConfigFunc( Get.find<CreateATripController>().orderModel.data?.finalPrice?.toInt()??1, ),
+                              onPaymentResult: paymentController.onPaymentResult,
+                              amount: Get.find<CreateATripController>().orderModel.data?.finalPrice?.toInt()??1,
+                            ));
+                            ///f
+
+                          },
+
+
+                          );
 
                       }),
                     ),

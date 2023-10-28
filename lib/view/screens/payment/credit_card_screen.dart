@@ -11,8 +11,16 @@ import '../../widgets/custom_body.dart';
 import 'controller/payment_controller.dart';
 
 class CreditCardScreen extends StatelessWidget {
-    CreditCardScreen({Key? key}) : super(key: key);
-final controller =Get.put(PaymentController(paymentRepo: Get.find()));
+  PaymentConfig paymentConfig;
+   Function onPaymentResult;
+  int amount;
+    CreditCardScreen({Key? key,
+    required this.paymentConfig,
+    required this.amount,
+    required this.onPaymentResult
+
+    }) : super(key: key);
+// final controller =Get.put(PaymentController(paymentRepo: Get.find()));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,28 +40,20 @@ final controller =Get.put(PaymentController(paymentRepo: Get.find()));
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeExtraLarge),
                   child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
-                    Text('payment'.tr, style: textSemiBold.copyWith(color: Theme.of(context).primaryColor)),
-                    // Container(padding: const EdgeInsets.symmetric(horizontal : Dimensions.paddingSizeExtraSmall, vertical: Dimensions.paddingSizeThree),
-                    //     decoration: BoxDecoration(
-                    //       color: Theme.of(context).primaryColor.withOpacity(.2),
-                    //   borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
-                    // ),child: Row(children: [
-                    //   Text('cash'.tr, style: textMedium.copyWith(color: Theme.of(context).primaryColor)),
-                    //   const SizedBox(width: Dimensions.paddingSizeExtraSmall,),
-                    //   SizedBox(width: Dimensions.iconSizeSmall, child: Image.asset(Images.cash))
-                    // ],))
-                  ],),
+                    Text('payment'.tr, style: textSemiBold.copyWith(color: Theme.of(context).primaryColor)),],),
 
 
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.center,children: [
-                  Text('add_your_credit_card'.tr),
+                  Text('add_your_credit_card'.tr+'$amount'),
                   const SizedBox(width: Dimensions.paddingSizeExtraSmall,),
                   Text('complete'.tr, style: textSemiBold.copyWith(color: Theme.of(context).primaryColor)),
                 ],),
                 CreditCard(
-                  config: controller.paymentConfig,
-                  onPaymentResult: controller.onPaymentResult,
+                  config: paymentConfig,
+                  // config: controller.paymentConfig,
+                  // onPaymentResult: controller.onPaymentResult,
+                  onPaymentResult:  onPaymentResult,
                 ),
               ],
             ),

@@ -24,7 +24,7 @@ handelState()async{
       Get.find<BaseMapController>(). key.currentState!.expand();
       Get.find<BaseMapController>().changeState(request[RequestState.findDriverState]!);
 
-
+      Get.find<BaseMapController>().update();
 
       Get.find<CreateATripController>().showTrip(orderId:'');
 

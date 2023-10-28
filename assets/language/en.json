@@ -445,7 +445,17 @@
   "select_a_payment_method": "Select a Payment",
   "tap_to_add_your_credit_card": "Tap to add your credit card",
   "car_arrived": "The car has just arrived at your destination",
-  "add_your_credit_card": "Add your credit card ..."
+  "remark_hint": "Type Remark Note",
+  "send_withdraw_request": "Send Withdraw Request",
+  "enter_amount": "Enter Amount",
+  "withdraw_amount": "Withdraw Amount",
+  "add_withdraw_amount_first": "Add the withdrawal amount first",
+  "withdraw_successfully": "Your withdrawal has been completed successfully",
+  "add_your_credit_card": "Add your credit card ...",
+  "charge_amount": "Charge the wallet amount",
+  "send_charge_request": "Submit recharge request",
+  "add_charge_amount_first": "Add the recharge wallet amount first ً"
+
 
 
 

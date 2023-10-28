@@ -117,4 +117,20 @@ class K {
   static SizedBox sizedBoxW0 = const SizedBox(
     width: Dimensions.paddingSizeDefault,
   );
+
+  static List<int>  suggestedAmount = [
+    1000,
+    2000,
+    3000,
+    4000,
+    5000,
+    10000,
+    15000,
+    20000
+  ];
+
+  static UnderlineInputBorder underlineInputBorder = UnderlineInputBorder(
+    borderSide:
+    BorderSide(width: 1, color: Theme.of(Get.context!).primaryColor),
+  );
 }

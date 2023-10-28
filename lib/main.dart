@@ -42,6 +42,7 @@ import 'package:ride_sharing_user_app/view/screens/support/support.dart';
 import 'package:ride_sharing_user_app/view/screens/test.dart';
 import 'package:ride_sharing_user_app/view/screens/test_payment.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/wallet_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/wallet/wallet_withdraw_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/widget/payment_method_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/widget/use_voucher_code.dart';
 import 'package:ride_sharing_user_app/view/screens/where_to_go/test_where_to_go.dart';
@@ -122,8 +123,8 @@ class MyApp extends StatelessWidget {
             locale: localizeController.locale,
             translations: Messages(languages: languages),
             fallbackLocale: Locale(AppConstants.languages[0].languageCode, AppConstants.languages[0].countryCode),
-            initialRoute: RouteHelper.getSplashRoute(),
-            getPages: RouteHelper.routes,
+            // initialRoute: RouteHelper.getSplashRoute(),
+            // getPages: RouteHelper.routes,
             defaultTransition: Transition.topLevel,
             transitionDuration:   const Duration(milliseconds: 500),
             // home:MapView(),
@@ -149,7 +150,9 @@ class MyApp extends StatelessWidget {
             // home:   HistoryScreen(fromPage: Strings.home,)/**/,
             // home: const WalletScreen()/**/,
             // home: const OnBoardingScreen2()/**/,
+            home: WalletScreen(),
             // home: DashboardScreen(),
+            // home: WalletWithdrawScreen(),
           ));
         });
       });

@@ -8,9 +8,12 @@ import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/controller/wallet_controller.dart';
 
 class WalletMoneyAmountWidget extends StatelessWidget {
-  const WalletMoneyAmountWidget({
+  void Function()? onTap;
+    WalletMoneyAmountWidget({
     Key? key,
-  }) : super(key: key);
+    bool ?isWithDraw,
+  required this.onTap
+  }) : super(key: key, );
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class WalletMoneyAmountWidget extends StatelessWidget {
         init: WalletController(),
         builder: (controller) {
           return InkWell(
-            onTap: () {},
+            onTap: onTap,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(
                   Dimensions.paddingSizeDefault,
@@ -74,10 +77,13 @@ class WalletMoneyAmountWidget extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            size: Dimensions.iconSizeMedium,
-                            color: Theme.of(context).primaryColor,
+                          IconButton(
+                            onPressed:  onTap,
+                            icon: Icon(
+                              Icons.arrow_forward_ios,
+                              size: Dimensions.iconSizeMedium,
+                              color: Theme.of(context).primaryColor,
+                            ),
                           )
                         ],
                       ),

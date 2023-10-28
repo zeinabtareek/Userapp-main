@@ -11,17 +11,19 @@ import '../credit_card_screen.dart';
 class DigitalCardPaymentWidget extends StatelessWidget {
   final DigitalPaymentModel digitalPaymentModel;
   final int index;
-  const DigitalCardPaymentWidget({Key? key, required this.digitalPaymentModel, required this.index}) : super(key: key);
+  void Function()? onTap;
+    DigitalCardPaymentWidget({Key? key, required this.digitalPaymentModel,
+    required this.index,
+    required this.onTap
+
+
+
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Get.find<PaymentController>().setDigitalPaymentType(index);
-        Get.to(()=>CreditCardScreen());
-        ///f
-
-      },
+      onTap:onTap,
       child: Padding(
         padding: const EdgeInsets.only(right: Dimensions.paddingSizeDefault),
         child: Container(width: 200,decoration: BoxDecoration(

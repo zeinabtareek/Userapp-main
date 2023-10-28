@@ -8,7 +8,9 @@ import 'package:ride_sharing_user_app/view/screens/wallet/widget/custom_title.da
 import '../../../../pagination/typedef/page_typedef.dart';
 import '../../../../pagination/widgets/paginations_widgets.dart';
 import '../../../../util/app_strings.dart';
+import '../charge_withdraw_screen.dart';
 import '../pagnation/get_all_transactions_use_case.dart';
+import '../wallet_withdraw_screen.dart';
 import 'wallet_money_amount_widget.dart';
 
 class WalletMoneyScreen extends StatelessWidget {
@@ -21,8 +23,11 @@ class WalletMoneyScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: Dimensions.paddingSizeDefault),
-        const WalletMoneyAmountWidget(),
+        // const SizedBox(height: Dimensions.paddingSizeDefault),
+          WalletMoneyAmountWidget(onTap: () {
+            Get.to(() =>   ChargeWithdrawScreen());
+
+          },),
         InkWell(
           onTap: () {
             // Get.to(() => const PaymentMethodScreen());
@@ -40,7 +45,7 @@ class WalletMoneyScreen extends StatelessWidget {
                 ),
                 TextButton(
                     onPressed: () {
-                      // Get.to(() => const PaymentMethodScreen());
+                      Get.to(() => const WalletWithdrawScreen());
                     },
                     child: const Text(Strings.withdraw))
                 // IconButton(onPressed: (){},

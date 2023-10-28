@@ -9,6 +9,7 @@ import '../../../widgets/animated_widget.dart';
 import '../../home/controller/category_controller.dart';
 import '../../home/model/categoty_model.dart';
 import '../../parcel/parcel_home_screen.dart';
+import '../../request_screens/controller/base_map_controller.dart';
 import '../../where_to_go/where_to_go_screen.dart';
 import '../controller/ride_controller.dart';
 
@@ -66,6 +67,10 @@ class RideSubCategoryWidget extends StatelessWidget {
                           else{
                             rideController
                                 .selectedSubPackage(listOfSubCategory[index]);
+
+
+                            Get.find<BaseMapController>().key.currentState!.contract();
+                            Get.find<BaseMapController>().update();
                             print('you are choosing the car type from where to go${rideController.selectedSubPackage.value?.id} ');
 
                           }

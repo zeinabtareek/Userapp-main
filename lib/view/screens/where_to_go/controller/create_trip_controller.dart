@@ -78,6 +78,7 @@ class CreateATripController extends BaseController {
             .  key.currentState!.contract();
         Get.find<BaseMapController>()
             .changeState(request[RequestState.findDriverState]!);
+         Get.find<BaseMapController>().update();
         setState(ViewState.idle);
       }, checkConnection: true);
 
