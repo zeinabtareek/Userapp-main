@@ -54,10 +54,11 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
   }
 
   moveScrollToMaxScrollExtent() {
-    if ((status) == RxStatus.success() &&
-        (state ?? PaginationLoading) == PaginationLoaded) {
-      scrollController.jumpTo(scrollController.position.maxScrollExtent);
-    }
+    scrollController.animateTo(
+      scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 800),
+      curve: Curves.bounceIn,
+    );
   }
 
   onRefreshData({Function()? onLoadSucses}) async {

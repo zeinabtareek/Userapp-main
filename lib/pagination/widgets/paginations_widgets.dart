@@ -206,10 +206,8 @@ class PaginationChatListView<UseCase extends MainPaginateListUseCase, Entity,
     super.key,
     required this.child,
     this.listPadding,
-this.scrollController,
   });
 
-  final ScrollController? scrollController;
   final EdgeInsetsGeometry? listPadding;
   @override
   Widget build(BuildContext context) {
@@ -231,18 +229,25 @@ this.scrollController,
       }
       if (state is PaginationLoaded && state.items.isNotEmpty) {
         var items = state.items.reversed.toList();
-        return ListView.separated(
-          controller: scrollController,
-          shrinkWrap: true,
-          padding: kMaterialListPadding,
-          physics: const BouncingScrollPhysics(),
-          separatorBuilder: (context, index) => const SizedBox(height: 10),
-          itemBuilder: (context, index) {
-            Entity item = items[index];
-            return child(item);
-          },
-          itemCount: items.length,
-        );
+        return Builder(builder: (context) {
+          WidgetsBinding.instance.addPostFrameCallback(
+            (timeStamp) {
+              controller.moveScrollToMaxScrollExtent();
+            },
+          );
+          return ListView.separated(
+            controller: controller.scrollController,
+            shrinkWrap: true,
+            padding: kMaterialListPadding,
+            physics: const BouncingScrollPhysics(),
+            separatorBuilder: (context, index) => const SizedBox(height: 10),
+            itemBuilder: (context, index) {
+              Entity item = items[index];
+              return child(item);
+            },
+            itemCount: items.length,
+          );
+        });
       }
 
       if (state is PaginationLoaded && state.items.isEmpty ||
@@ -255,17 +260,24 @@ this.scrollController,
         return const Center(child: Text("PaginationBlocInitial"));
       }
       if (state is PaginationNoMoreData && state.items.isNotEmpty) {
-        return ListView.separated(
-          controller: scrollController,
-          padding: listPadding,
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          separatorBuilder: (context, index) => const SizedBox(height: 10),
-          itemBuilder: (context, index) {
-            Entity item = state.items[index];
-            return child(item);
-          },
-          itemCount: state.items.length,
-        );
+        return Builder(builder: (context) {
+          WidgetsBinding.instance.addPostFrameCallback(
+            (timeStamp) {
+              controller.moveScrollToMaxScrollExtent();
+            },
+          );
+          return ListView.separated(
+            controller: controller.scrollController,
+            padding: listPadding,
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            separatorBuilder: (context, index) => const SizedBox(height: 10),
+            itemBuilder: (context, index) {
+              Entity item = state.items[index];
+              return child(item);
+            },
+            itemCount: state.items.length,
+          );
+        });
       }
 
       return const SizedBox();

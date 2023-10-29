@@ -92,7 +92,7 @@ class MsgChatResModelItem {
   DateTime? readAt;
   String? senderType;
   DateTime? createdAt;
-  String? msg;
+  dynamic msg;
 
   // TODO:  msgStuts
   bool? isMe;
@@ -208,10 +208,37 @@ class MsgChatResModelItem {
     }
   }
 
+  factory MsgChatResModelItem.fromSocketMap(Map<String, dynamic> map) {
+    /*
+ message: {id: 909a7d1e-ceb9-43bb-b4ca-08e4f5161d35,
+  msg: V,
+   msg_type: text, 
+   sender_type: user,
+    read_at: null,
+     created_at: 2023-10-28 23:00:41,} 
+   */
+    return MsgChatResModelItem(
+      id: map['id'],
+      msg: map['msg'],
+      isMe: false,
+      msgType: MsgType.values
+          .firstWhere((element) => element.name == map["msg_type"]),
+      senderType:
+          map['sender_type'] != null ? map['sender_type'] as String : null,
+      readAt: map['read_at'] != null ? DateTime.parse(map['read_at']) : null,
+      createdAt:
+          map['created_at'] != null ? DateTime.parse(map['created_at']) : null,
+    );
+  }
   String toJson() => json.encode(toMap());
 
   factory MsgChatResModelItem.fromJson(String source) =>
       MsgChatResModelItem.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'MsgChatResModelItem(id: $id, chatType: $chatType, order: $order, user: $user, driver: $driver, admin: $admin, lastMsg: $lastMsg, msgType: $msgType, readAt: $readAt, senderType: $senderType, createdAt: $createdAt, msg: $msg, isMe: $isMe)';
+  }
 }
 
 class Driver {
@@ -263,7 +290,7 @@ class Driver {
           (map['first_name'] != null ? map['first_name'] as String : null) ??
               (map['name'] != null ? map['name'] as String : null),
       lastName: map['last_name'] != null ? map['last_name'] as String : null,
-      vehicle: map['vehicle']!=null? Vehicle.fromJson(map['vehicle']): null,
+      vehicle: map['vehicle'] != null ? Vehicle.fromJson(map['vehicle']) : null,
       username: map['user_name'] != null ? map['user_name'] as String : null,
     );
   }
