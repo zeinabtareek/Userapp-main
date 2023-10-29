@@ -21,10 +21,11 @@ class SetDestinationScreen extends StatelessWidget {
   String? address;
   CategoryModel? categoryModel;
 
-
   bool fromCat;
-  SetDestinationScreen({Key? key, this.address,   this.categoryModel, required this. fromCat}) : super(key: key);
-final controller =Get.put(CreateATripController());
+  SetDestinationScreen(
+      {Key? key, this.address, this.categoryModel, required this.fromCat})
+      : super(key: key);
+  final controller = Get.put(CreateATripController());
   // @override
   // void initState() {
   //   super.initState();
@@ -33,37 +34,36 @@ final controller =Get.put(CreateATripController());
   @override
   Widget build(BuildContext context) {
     // final controller = Get.put(WhereToGoController(setMapRepo: Get.find()));
-    return   Scaffold(
+    return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
         iconTheme:
-        IconThemeData(color: Theme.of(context).textTheme.bodyMedium!.color),
+            IconThemeData(color: Theme.of(context).textTheme.bodyMedium!.color),
       ),
       body: GetBuilder<WhereToGoController>(
-          init: WhereToGoController( ),
+          init: WhereToGoController(),
           builder: (setMapController) {
             return SingleChildScrollView(
               controller: setMapController.scrollController,
-
               child: Stack(children: [
                 Padding(
                   padding: K.fixedPadding0,
                   child: Column(
                     children: [
                       Container(
-                        decoration:
-                        BoxDecoration(
+                        decoration: BoxDecoration(
                             color: Theme.of(context).primaryColor,
-                            borderRadius:
-                            BorderRadius.circular(Dimensions.paddingSizeSmall)),
+                            borderRadius: BorderRadius.circular(
+                                Dimensions.paddingSizeSmall)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(categoryModel?.categoryTitle.toString()??'ll'),
+                                Text(categoryModel?.categoryTitle.toString() ??
+                                    'll'),
                                 Padding(
                                   padding: const EdgeInsets.fromLTRB(
                                       Dimensions.paddingSizeSmall,
@@ -108,37 +108,80 @@ final controller =Get.put(CreateATripController());
                                   child: Padding(
                                     padding: K.fixedPadding0,
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         ///First Text Field
                                         FocusScope(
                                           child: Focus(
                                             onFocusChange: (focus) {
                                               if (!focus) {
-                                                if (setMapController.searchController.value != null) {
-                                                  setMapController.searchController.value =
-                                                      setMapController.fromRouteController;
-                                                } else if (setMapController.selectedSuggestedAddress.value != '') {
-                                                  setMapController.selectedSuggestedAddress.value = '';
+                                                if (setMapController
+                                                        .searchController
+                                                        .value !=
+                                                    null) {
+                                                  setMapController
+                                                          .searchController
+                                                          .value =
+                                                      setMapController
+                                                          .fromRouteController;
+                                                } else if (setMapController
+                                                        .selectedSuggestedAddress
+                                                        .value !=
+                                                    '') {
+                                                  setMapController
+                                                      .selectedSuggestedAddress
+                                                      .value = '';
                                                 } else {
-                                                  setMapController.fromRouteController.text = ''; // Clear the address
+                                                  setMapController
+                                                          .fromRouteController
+                                                          .text =
+                                                      ''; // Clear the address
                                                 }
                                               }
                                             },
-                                            child: GetBuilder<AddressController>(
-                                              builder: (addressController) => InputField(
-                                                controller: address != null
-                                                    ? TextEditingController(text: address.toString())
-                                                    : setMapController.fromRouteController,
+                                            child:
+                                                GetBuilder<AddressController>(
+                                              builder: (addressController) =>
+                                                  InputField(
+                                                enabled: true,
+                                                readOnly: true,
+                                                controller: setMapController
+                                                    .fromRouteController,
                                                 node: setMapController.fromNode,
-                                                hint: Strings.enterCurrentLocationRoute.tr,
+                                                hint: Strings
+                                                    .enterCurrentLocationRoute
+                                                    .tr,
+                                                onClear: () {
+                                     
+
+                                                  setMapController
+                                                      .selectedPoints
+                                                      .removeAt(0);
+
+                                                  setMapController
+                                                      .fromRouteController
+                                                      .clear();
+                                                  setMapController.update();
+                                                },
                                                 onTap: () async {
-                                                  await setMapController.checkPermissionBeforeNavigation(context);
+                                                  await setMapController
+                                                      .checkPermissionBeforeNavigation(
+                                                    context,
+                                                  );
                                                 },
                                                 onChange: (v) {
-                                                  setMapController.searchPlacesFrom(v);
-                                                  print(v);
+                                       
+                                                  setMapController
+                                                      .selectedPoints
+                                                      .removeAt(0);
+
+                                                  setMapController
+                                                      .fromRouteController
+                                                      .clear();
+                                                  setMapController.update();
                                                 },
                                               ),
                                             ),
@@ -149,44 +192,79 @@ final controller =Get.put(CreateATripController());
                                                 color: Colors.white)),
 
                                         ListView.builder(
-                                          itemCount: setMapController.currentExtraRoute,
+                                          itemCount: setMapController
+                                              .currentExtraRoute,
                                           shrinkWrap: true,
-                                          physics: const NeverScrollableScrollPhysics(),
-                                          padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
-
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical:
+                                                  Dimensions.paddingSizeSmall),
                                           itemBuilder: (context, index) {
-                                            List<TextEditingController>itemControllers = [
-                                              setMapController. extraRouteController,
-                                              setMapController.    extraRouteController2,
+                                            List<TextEditingController>
+                                                itemControllers = [
+                                              setMapController
+                                                  .extraRouteController,
+                                              setMapController
+                                                  .extraRouteController2,
                                               // controller.  extraRouteController3,
                                             ];
-                                            List<FocusNode>itemFocusNodes = [
-                                              setMapController. extraNode,
-                                              setMapController.    extraNode2,
+                                            List<FocusNode> itemFocusNodes = [
+                                              setMapController.extraNode,
+                                              setMapController.extraNode2,
                                             ];
-                                            TextEditingController itemController = itemControllers[index];
-                                            FocusNode itemFocusNode = itemFocusNodes[index];
-                                            return   FocusScope(
+                                            TextEditingController
+                                                itemController =
+                                                itemControllers[index];
+                                            FocusNode itemFocusNode =
+                                                itemFocusNodes[index];
+                                            return FocusScope(
                                               child: Focus(
                                                 onFocusChange: (focus) {
                                                   if (focus) {
-                                                    setMapController.searchController.value = itemController;
+                                                    setMapController
+                                                        .searchController
+                                                        .value = itemController;
                                                   }
                                                 },
                                                 child: InputField(
+                                                  enabled: true,
+                                                  readOnly: true,
                                                   controller: itemController,
                                                   node: itemFocusNode,
-                                                  hint: Strings.enterExtraRoute.tr,
-                                                  onTap: () async => await setMapController.checkPermissionBeforeNavigation(context),
+                                                  hint: Strings
+                                                      .enterExtraRoute.tr,
+                                                  onTap: () async =>
+                                                      await setMapController
+                                                          .checkPermissionBeforeNavigation(
+                                                    context,
+                                                  ),
                                                   onChange: (v) {
-                                                    setMapController.searchPlacesFrom(v);
-                                                    print(v);
+                                                    if (setMapController
+                                                        .selectedPoints
+                                                        .isNotEmpty) {
+                                                      setMapController
+                                                          .selectedPoints
+                                                          .removeAt(index + 1);
+                                                    } else {
+                                                      setMapController
+                                                          .selectedPoints
+                                                          .removeAt(index);
+                                                    }
+                                                    itemController.clear();
+                                                    setMapController.update();
+                                                  },
+                                                  onClear: () {
+                                                    setMapController
+                                                        .selectedPoints
+                                                        .removeAt(index + 1);
+                                                    itemController.clear();
+                                                    setMapController.update();
                                                   },
                                                 ),
                                               ),
                                               // ),
                                               // ),
-
                                             );
                                           },
                                         ),
@@ -197,28 +275,65 @@ final controller =Get.put(CreateATripController());
                                                 child: Focus(
                                                   onFocusChange: (focus) {
                                                     if (focus) {
-                                                      setMapController.searchController.value = setMapController.toRouteController;
+                                                      setMapController
+                                                              .searchController
+                                                              .value =
+                                                          setMapController
+                                                              .toRouteController;
                                                     }
                                                   },
                                                   child: InputField(
-                                                      controller:
-                                                      setMapController.toRouteController,
-                                                      hint: Strings
-                                                          .enterDestinationRoute.tr,
-                                                      node: setMapController.toRoutNode, onTap: () async => await setMapController.checkPermissionBeforeNavigation(context),
-                                                      onChange: (v) {
-                                                        setMapController.searchPlacesFrom(v);
-                                                        print(v);
-                                                      }),
+                                                    enabled: true,
+                                                    readOnly: true,
+                                                    controller: setMapController
+                                                        .toRouteController,
+                                                    hint: Strings
+                                                        .enterDestinationRoute
+                                                        .tr,
+                                                    node: setMapController
+                                                        .toRoutNode,
+                                                    onClear: () {
+                                                      setMapController
+                                                          .toRouteController
+                                                          .clear();
+
+                                                      if (setMapController
+                                                          .isExtraPointIsEmpty) {
+                                                        setMapController
+                                                            .extraPoints
+                                                            .removeLast();
+                                                      }
+                                                      setMapController.update();
+                                                    },
+                                                    onTap: () async =>
+                                                        await setMapController
+                                                            .checkPermissionBeforeNavigation(
+                                                      context,
+                                                    ),
+                                                    onChange: (v) {
+                                                      setMapController
+                                                          .toRouteController
+                                                          .clear();
+
+                                                      if (setMapController
+                                                          .isExtraPointIsEmpty) {
+                                                        setMapController
+                                                            .selectedPoints
+                                                            .removeLast();
+                                                      }
+                                                      setMapController.update();
+                                                    },
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                             const SizedBox(
-                                              width: Dimensions.paddingSizeSmall,
+                                              width:
+                                                  Dimensions.paddingSizeSmall,
                                             ),
                                             GestureDetector(
-                                              onTap: () =>
-                                                  setMapController.setExtraRoute(),
+                                              onTap: () => setMapController
+                                                  .setExtraRoute(),
                                               child: Container(
                                                   height: 40,
                                                   width: 40,
@@ -228,14 +343,13 @@ final controller =Get.put(CreateATripController());
                                                         .withOpacity(.35),
                                                     borderRadius: BorderRadius
                                                         .circular(Dimensions
-                                                        .paddingSizeExtraSmall),
+                                                            .paddingSizeExtraSmall),
                                                   ),
                                                   child: const Icon(Icons.add,
                                                       color: Colors.white)),
                                             )
                                           ],
                                         ),
-                         
                                       ],
                                     ),
                                   ),
@@ -249,7 +363,8 @@ final controller =Get.put(CreateATripController());
                                   Dimensions.paddingSizeExtraLarge,
                                   Dimensions.paddingSizeExtraLarge),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     Strings.youCanAddMultipleRouteTo.tr,
@@ -258,26 +373,23 @@ final controller =Get.put(CreateATripController());
                                         color: Colors.white.withOpacity(.75)),
                                   ),
 
-
                                   ///Done
                                   GestureDetector(
                                     onTap: () async {
                                       ///Zeinab uncomment this
 
-
-
                                       setMapController.validateData();
 
-                                       // await Get.find<CreateATripController>().createATrip();
+                                      // await Get.find<CreateATripController>().createATrip();
                                       //  await Get.find<CreateATripController>().createATrip();
                                       // var x= await controller.createATrip();
                                       // print(';;;${x.data?.id}');
-
                                     },
                                     child: Text(
                                       Strings.done.tr,
                                       style: textRegular.copyWith(
-                                          fontSize: Dimensions.fontSizeExtraLarge,
+                                          fontSize:
+                                              Dimensions.fontSizeExtraLarge,
                                           color: Theme.of(context)
                                               .colorScheme
                                               .onSecondary
@@ -310,8 +422,6 @@ final controller =Get.put(CreateATripController());
                             ),
                             GestureDetector(
                                 onTap: () {
-
-
                                   // Get.to(ChooseFromMapScreen());
                                 },
                                 child: SavedAndRecentItem(
@@ -339,61 +449,67 @@ final controller =Get.put(CreateATripController());
 
                             ///suggestions
 
-
                             GetBuilder<AddressController>(
                               init: AddressController(),
-                              builder: (addressController)=>
-
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: Dimensions.paddingSizeDefault),
-                                    child: ListView.builder(
-                                        shrinkWrap: true,
-                                        physics: const NeverScrollableScrollPhysics(),
-                                        padding: EdgeInsets.zero,
-                                        itemCount:  addressController.addressModel.data?.length,
-                                        // itemCount:  setMapController.listOfSuggestedPlaces.length,
-                                        itemBuilder: (context, index) {
-                                          return InkWell(
-                                            child: Padding(
-                                              padding: K.fixedPadding1,
-                                              child: Row(
-                                                children: [
-                                                  Container(
-                                                    // padding: K.fixedPadding0,
-                                                      decoration: BoxDecoration(
-                                                          color: Theme.of(context)
-                                                              .hintColor
-                                                              .withOpacity(.08),
-                                                          borderRadius: BorderRadius
-                                                              .circular(Dimensions
+                              builder: (addressController) => Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: Dimensions.paddingSizeDefault),
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    padding: EdgeInsets.zero,
+                                    itemCount: addressController
+                                        .addressModel.data?.length,
+                                    // itemCount:  setMapController.listOfSuggestedPlaces.length,
+                                    itemBuilder: (context, index) {
+                                      return InkWell(
+                                        child: Padding(
+                                          padding: K.fixedPadding1,
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                  // padding: K.fixedPadding0,
+                                                  decoration: BoxDecoration(
+                                                      color: Theme.of(context)
+                                                          .hintColor
+                                                          .withOpacity(.08),
+                                                      borderRadius: BorderRadius
+                                                          .circular(Dimensions
                                                               .paddingSizeExtraSmall)),
-                                                      child: Icon(
-                                                        Icons.place_outlined,
-                                                        color: Theme.of(context)
-                                                            .primaryColor
-                                                            .withOpacity(.5),
-                                                      )),
-                                                  const SizedBox(
-                                                    width: Dimensions.paddingSizeSmall,
-                                                  ),
-                                                  Text('${addressController.addressModel.data?[index].location}'),
-                                                ],
+                                                  child: Icon(
+                                                    Icons.place_outlined,
+                                                    color: Theme.of(context)
+                                                        .primaryColor
+                                                        .withOpacity(.5),
+                                                  )),
+                                              const SizedBox(
+                                                width:
+                                                    Dimensions.paddingSizeSmall,
                                               ),
-                                            ),
-                                            onTap: (){
-                                              address=addressController.addressModel.data?[index].location??'';
-                                              addressController.update();
-                                              setMapController. scrollController.animateTo(
-                                                0,
-                                                duration: Duration(milliseconds: 500),
-                                                curve: Curves.easeInOut,
-                                              );
-
-                                            },
+                                              Text(
+                                                  '${addressController.addressModel.data?[index].location}'),
+                                            ],
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          address = addressController
+                                                  .addressModel
+                                                  .data?[index]
+                                                  .location ??
+                                              '';
+                                          addressController.update();
+                                          setMapController.scrollController
+                                              .animateTo(
+                                            0,
+                                            duration: const Duration(
+                                                milliseconds: 500),
+                                            curve: Curves.easeInOut,
                                           );
-                                        }),
-                                  ),
+                                        },
+                                      );
+                                    }),
+                              ),
                               // Padding(
                               //   padding: const EdgeInsets.all(
                               //       Dimensions.paddingSizeDefault),
@@ -441,18 +557,20 @@ final controller =Get.put(CreateATripController());
                 ),
                 Obx(() => setMapController.searchResultsFrom.isNotEmpty
                     ? setMapController.state == ViewState.busy
-                    ? const Center(
-                  child: CupertinoActivityIndicator(),
-                )
-                    : Positioned(
-                    top: 280,
-                    left: 15,
-                    right: 15,
-                    child: SearchListWidget(
-                      listOfSearchedPlaces: setMapController.searchResultsFrom,
-                      onTap: (item) {},
-                      inputTextField: setMapController.searchController.value,
-                    ))
+                        ? const Center(
+                            child: CupertinoActivityIndicator(),
+                          )
+                        : Positioned(
+                            top: 280,
+                            left: 15,
+                            right: 15,
+                            child: SearchListWidget(
+                              listOfSearchedPlaces:
+                                  setMapController.searchResultsFrom,
+                              onTap: (item) {},
+                              inputTextField:
+                                  setMapController.searchController.value,
+                            ))
                     : const SizedBox())
               ]),
             );

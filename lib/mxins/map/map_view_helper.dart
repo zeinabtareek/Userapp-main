@@ -222,8 +222,7 @@ mixin MapViewHelper on GetxController {
 
     // Adjust the distance for the zoom level calculation
     double zoomLevel = zoomConst -  log(distance) / log(2);
-    print(" zoomLevel $zoomLevel ");
-    print(" maxZoom $maxZoom ");
+
     // Ensure the zoom level is within bounds
     if (zoomLevel < 0) {
       return 0;

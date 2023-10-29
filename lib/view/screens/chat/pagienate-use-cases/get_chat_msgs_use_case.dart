@@ -39,12 +39,12 @@ class GetChatMsgsUseCase
       for (var element in res.data['data']["messages"]) {
         list.add(MsgChatResModelItem.fromSingleMsg(element, res.data['data']));
       }
-       if (list.isNotEmpty) {
+      if (list.isNotEmpty) {
         var controller = Get.find<ChatController>();
-        controller.chatId = list.first.order?.id;
+        controller.orderId = list.first.order?.id;
 
         controller.canChat(
-          list.first.order?.canChatInOrder ?? false,
+          list.first.order?.canChatInOrder ?? true,
         );
       }
       // return DataSuccess((paginationApiModel, list));

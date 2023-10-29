@@ -2,29 +2,37 @@ import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:ride_sharing_user_app/data/api_client.dart';
 import 'package:ride_sharing_user_app/view/screens/offer/model/level_model.dart';
 
-class UserRepo {
-  final ApiClient apiClient;
-  UserRepo({required this.apiClient});
+import '../../../../authenticate/data/models/base_model.dart';
+import '../../../../authenticate/data/models/res-models/user_model.dart';
+import '../../../../helper/network/dio_integration.dart';
+import '../../../../util/app_constants.dart';
+import '../model/edit_profile_req_model.dart';
 
-  Future<Response> getUserLevelInfo() async {
-    UserModel userLevelModel = UserModel();
+class UserRepo {
+  
+
+  
+
+  Future<UserAuthModel> updateProfile(
+    EditProfileReqModel updateProfileReqModel,
+  ) async {
     try {
-      userLevelModel = UserModel(
-          userName: "Norman bell",
-          totalRide: 120,
-          totalPoint: 580,
-          userLevelModel: UserLevelModel(
-            targetPoint: 1000,
-            earnedPoint: 400,
-            nextLevel: "2",
-            currentLevel: "1"
-          )
+      final res = await DioUtilNew.dio!.post(
+        AppConstants.updateProfile,
+        data: await updateProfileReqModel.toForm(),
       );
-      Response response = Response(body: userLevelModel, statusCode: 200);
-      return response;
-    } catch (e) {
-      return const Response(
-          statusCode: 404, statusText: 'on boarding data not found');
+
+      if (res.data['status'] == 200) {
+        return UserAuthModel.fromMap(
+          res.data['data'],
+          msg: res.data['message'],
+        );
+      } else {
+        throw MsgModel.fromJson(res.data);
+      }
+    } on Exception catch (e) {
+      throw MsgModel(massage: e.toString());
     }
   }
+
 }

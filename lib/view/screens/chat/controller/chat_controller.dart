@@ -1,12 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:ride_sharing_user_app/mxins/sokcit-io/socket_io_mixin.dart';
 
 import '../../../../bases/base_controller.dart';
 import '../../../../pagination/typedef/page_typedef.dart';
 import '../models/req/send_msg_req_model.dart';
+import '../models/res/msg_chat_res_model_item.dart';
 import '../repository/chat_repo.dart';
 
 class ChatController extends BaseController
@@ -15,6 +17,8 @@ class ChatController extends BaseController
   final ChatRepo chatRepo;
 
   ChatController({required this.chatRepo});
+
+  String? orderId;
 
   String? chatId;
 
@@ -28,9 +32,8 @@ class ChatController extends BaseController
     update();
   }
 
-  final Rxn<XFile> _pickedImageFile = Rxn(null);
-  Rxn<XFile> get pickedImageFile => _pickedImageFile;
-  set setPickedImg(XFile? file) => _pickedImageFile(file);
+  Rxn<File> pickedImageFile = Rxn();
+
   RxBool get canShowTextFelid => (pickedImageFile.value == null).obs;
 
   // FilePickerResult? _otherFile;
@@ -70,6 +73,7 @@ class ChatController extends BaseController
   final GlobalKey<FormState> conversationKey = GlobalKey<FormState>();
 
   RxBool canChat = false.obs;
+  PaginateChatMsgsController? paginateChatMsgsController;
 
   // setCanShat(bool state ,String id) async {
   //   canChat = state;
@@ -83,41 +87,82 @@ class ChatController extends BaseController
     await getUser;
   }
 
-  void initChat() {
+  void initChat() async {
     conversationController.text = '';
     isLoading(false);
-    _pickedImageFile.value = null;
+    pickedImageFile.value = null;
     initializeSocket(
       onConnect: () {
         sendMassage(["user_id", "${user!.id}"]);
         subscribeToEvent("user-notification.${user!.id}", (data) {
-         if (kDebugMode) {
-           print(" received data $data  $tag ");
-         }
+          if (kDebugMode) {
+            print(" received data $data  $tag ");
+          }
 
           var controller = Get.find<PaginateChatMsgsController>();
-          controller.onRefreshData(
-              // onLoadSucses: () => controller.scrollController.jumpTo(
-              //     controller.scrollController.position.maxScrollExtent)
-
-              );
+          var msg = MsgChatResModelItem.fromSocketMap(data['data']['message']);
+          // print(" msg ::: ${msg.toString()} ");
+          controller.items.insert(0, msg);
+          controller.update();
         });
       },
     );
     connectSocket();
+    await Future.delayed(const Duration(seconds: 1));
+    if (chatId != null) {
+      paginateChatMsgsController = Get.find<PaginateChatMsgsController>();
+    }
   }
+
+  /*
+  
+  void initChat() async {
+    conversationController.text = '';
+    isLoading(false);
+    pickedImageFile.value = null;
+    initializeSocket(
+      onConnect: () {
+        sendMassage(["driver_id", "${user!.id}"]);
+        subscribeToEvent("driver-notification.${user!.id}", (data) {
+          if (kDebugMode) {
+            print(" received data $data  $tag ");
+          }
+
+          var msg = MsgChatResModelItem.fromSocketMap(data['data']['message']);
+          // print(" msg ::: ${msg.toString()} ");
+          var controller = Get.find<PaginateChatMsgsController>();
+          controller.items.insert(0, msg);
+          controller.update();
+          controller.moveScrollToMaxScrollExtent();
+        });
+      },
+    );
+    connectSocket();
+    await Future.delayed(const Duration(seconds: 1));
+    if (chatId != null) {
+      paginateChatMsgsController = Get.find<PaginateChatMsgsController>();
+
+      // WidgetsBinding.instance.addPostFrameCallback(
+      //   (timeStamp) {
+      //     paginateChatMsgsController?.moveScrollToMaxScrollExtent();
+      //   },
+      // );
+    }
+  }
+
+   */
 
   // void pickMultipleImage(bool isRemove,{int? index}) async {
   //   if(isRemove) {
   //     if(index != null){
-  //       _pickedImageFiles!.removeAt(index);
+  //       pickedImageFiles!.removeAt(index);
   //       _selectedImageList.removeAt(index);
   //     }
   //   }else {
-  //     _pickedImageFiles = await ImagePicker().pickMultiImage(imageQuality: 40);
-  //     if (_pickedImageFiles != null) {
-  //       for(int i =0; i< _pickedImageFiles!.length; i++){
-  //         _selectedImageList.add(MultipartBody('files[$i]',_pickedImageFiles![i]));
+  //     pickedImageFiles = await ImagePicker().pickMultiImage(imageQuality: 40);
+  //     if (pickedImageFiles != null) {
+  //       for(int i =0; i< pickedImageFiles!.length; i++){
+  //         _selectedImageList.add(MultipartBody('files[$i]',pickedImageFiles![i]));
   //       }
   //     }
   //   }
@@ -143,7 +188,7 @@ class ChatController extends BaseController
   // }
 
   // cleanOldData(){
-  //   _pickedImageFiles = [];
+  //   pickedImageFiles = [];
   //   _selectedImageList = [];
   //   _otherFile = null;
   //   _file = null;
@@ -159,19 +204,30 @@ class ChatController extends BaseController
     final bool nesState = await actionCenter.execute(
       () async {
         isLoading.value = true;
+        SendMsgReqModel req = _getReqBody().getIdForChat(
+          orderId: _userTypeIndex == 0 ? orderId : null,
+        );
         await chatRepo.sendMsg(
-          _getReqBody().getIdForChat(
-            orderId: _userTypeIndex == 0 ? chatId : null,
-          ),
+          req,
         );
         isLoading.value = false;
-        _pickedImageFile.value = null;
+        pickedImageFile.value = null;
         conversationController.clear();
-        // Get.find<PaginateChatMsgsController>().onRefreshData();
-        // scrollToMax();
 
-        await Future.delayed(const Duration(milliseconds: 300));
-        scrollToMax();
+        if (paginateChatMsgsController?.items.isEmpty ?? true) {
+          paginateChatMsgsController?.onRefreshData();
+        } else {
+          var msg = req.toMsg(user!);
+          paginateChatMsgsController?.items.insert(
+            0,
+            msg,
+          );
+        }
+
+        paginateChatMsgsController?.update();
+        pickedImageFile.value = null;
+        canChat(true);
+        conversationController.clear();
       },
       checkConnection: true,
     );
@@ -179,9 +235,9 @@ class ChatController extends BaseController
 
   SendMsgReqModel _getReqBody() {
     SendMsgReqModel req;
-    if (_pickedImageFile.value != null) {
+    if (pickedImageFile.value != null) {
       req = SendMsgReqModel(
-        msg: _pickedImageFile.value,
+        msg: pickedImageFile.value,
       );
     } else {
       req = SendMsgReqModel(
