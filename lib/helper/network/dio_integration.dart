@@ -1,3 +1,4 @@
+import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -14,6 +15,7 @@ class DioUtilNew {
       _dio = Dio(_getOptions());
       _dio!.interceptors.add(AuthInterceptor());
       _dio!.interceptors.add(ErrorInterceptor());
+      _dio!.interceptors.add(ChuckerDioInterceptor());
 
       // _dio!.interceptors.add(LoggingInterceptor());
       _dio!.interceptors.add((PrettyDioLogger(

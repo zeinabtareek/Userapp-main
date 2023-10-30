@@ -79,11 +79,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(onTap: widget.onTap,
+    return TextFormField(
+      onTap: widget.onTap,
       validator: widget.validator,
       maxLines: widget.maxLines,
       controller: widget.controller,
-  
       focusNode: widget.focusNode,
       style: textRegular.copyWith(fontSize: Dimensions.fontSizeLarge),
       textInputAction: widget.inputAction,
@@ -140,9 +140,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
             color: Theme.of(context).hintColor),
         filled: true,
         contentPadding: EdgeInsets.symmetric(
-            horizontal: widget.prefix
-                ? Dimensions.paddingSizeExtraSmall
-                : Dimensions.paddingSizeDefault),
+          horizontal: widget.prefix
+              ? Dimensions.paddingSizeExtraSmall
+              : Dimensions.paddingSizeDefault,
+          vertical: 10,
+        ),
         prefixIcon: widget.prefix == false
             ? null
             : widget.prefixIcon != null
@@ -238,7 +240,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ? FocusScope.of(context).requestFocus(widget.nextFocus)
           : null,
       onChanged: widget.onChanged,
-      
     );
   }
 

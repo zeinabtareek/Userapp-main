@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'ride_category.dart';
 
 import '../../../../util/app_strings.dart';
@@ -34,9 +35,13 @@ import 'trip_fare_summery.dart';
 class BikeRideDetailsWidgets extends StatelessWidget {
   String image;
   String title;
-
-  BikeRideDetailsWidgets({Key? key, required this.image, required this.title})
-      : super(key: key);
+  List<LatLng> points;
+  BikeRideDetailsWidgets({
+    Key? key,
+    required this.image,
+    required this.title,
+    required this.points,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +57,7 @@ class BikeRideDetailsWidgets extends StatelessWidget {
               title,
               image,
               (state) => rideController.updateRideCurrentState(state),
-              rideController.isBiddingOn),
+              rideController.isBiddingOn,points),
         );
       },
     );
@@ -60,7 +65,7 @@ class BikeRideDetailsWidgets extends StatelessWidget {
 }
 
 Widget getshetWidget(RideState state, BuildContext context, String title,
-    String image, Function(RideState state) update, bool isBiddingOn) {
+    String image, Function(RideState state) update, bool isBiddingOn,List<LatLng> points) {
   if (state == RideState.initial) {
     return GetBuilder<RideController>(
         //rideController.selectedPackage.value?
@@ -105,7 +110,9 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
                 const SizedBox(
                   height: Dimensions.paddingSizeDefault,
                 ),
-                  TripFareSummery(paymentMethod: 'cash',),
+                const TripFareSummery(
+                  paymentMethod: 'cash',
+                ),
                 const SizedBox(
                   height: Dimensions.paddingSizeDefault,
                 ),
@@ -171,17 +178,15 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
         FindingRiderWidget(fromPage: Strings.ride),
       ],
     );
-  }
-  else if (state == RideState.getPrice) {
+  } else if (state == RideState.getPrice) {
     return Column(children: [
       GetPriceWidget(
         image: Images.car,
+        points:points ,
         title: 'Suv.',
       ),
     ]);
-  }
-
-  else if (state == RideState.acceptingRider) {
+  } else if (state == RideState.acceptingRider) {
     return const Column(children: [
       RiderDetailsWidget(
         fromNotification: false,
@@ -201,19 +206,13 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
       child: Column(children: [
         TollTipWidget(title: Strings.riderDetails.tr),
         K.sizedBoxH0,
-
         ContactWidget(),
         K.sizedBoxH0,
-
         K.sizedBoxH0,
-
         const EstimatedFareAndDistance(),
-
         K.sizedBoxH0,
-
         RouteWidget(),
         K.sizedBoxH0,
-
         CustomButton(
           buttonText: Strings.cancelRide.tr,
           transparent: true,
@@ -251,7 +250,9 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
         ),
         const SizedBox(
           height: Dimensions.paddingSizeDefault,
-        ),///zeinab 200
+        ),
+
+        ///zeinab 200
         ContactWidget(),
         const SizedBox(
           height: Dimensions.paddingSizeDefault,
@@ -263,7 +264,6 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
               img:
                   "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
               lastName: "smith"),
-
         ),
         const SizedBox(
           height: Dimensions.paddingSizeDefault,

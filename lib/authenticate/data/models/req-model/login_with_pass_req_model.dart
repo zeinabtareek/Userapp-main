@@ -28,4 +28,14 @@ class LoginWithPassReqModel implements LoginReqModel {
       password: data['password'],
     );
   }
+
+  LoginWithPassReqModel copyWith({
+    BasePhoneReqModel? phoneReqModel,
+    String? password,
+  }) {
+    return LoginWithPassReqModel(
+      phoneReqModel: phoneReqModel ?? this.phoneReqModel,
+      password: password ?? this.password,
+    );
+  }
 }

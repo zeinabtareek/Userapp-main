@@ -42,7 +42,9 @@ class ChooseFromMapScreen extends StatelessWidget {
           builder: (controller) {
             if (points!=null) {
   controller.pickedPoints = points!;
+
 }
+
             return WillPopScope(
               onWillPop: () {
                 controller.searchResultsFrom.clear();
