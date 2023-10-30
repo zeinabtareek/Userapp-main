@@ -166,7 +166,7 @@ class InitialRequestWidget extends StatelessWidget {
             //   ),
             // ),
 
-            Text(controller.user?.wallet.toString()??''),
+            // Text(controller.user?.wallet.toString()??''),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
@@ -266,11 +266,14 @@ class InitialRequestWidget extends StatelessWidget {
             const SizedBox(
               height: Dimensions.paddingSizeDefault,
             ),
-            CustomTextField(
-              prefix: false,
-              controller: controller.noteController,
-              borderRadius: Dimensions.radiusLarge,
-              hintText: Strings.addNote.tr,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomTextField(
+                prefix: false,
+                controller: controller.noteController,
+                borderRadius: Dimensions.radiusLarge,
+                hintText: Strings.addNote.tr,
+              ),
             ),
             const SizedBox(
               height: Dimensions.paddingSizeDefault,
