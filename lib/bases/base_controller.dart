@@ -1,17 +1,19 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/authenticate/data/models/res-models/user_model.dart';
 import 'package:ride_sharing_user_app/authenticate/domain/use-cases/auth_cases.dart';
-import 'package:ride_sharing_user_app/helper/di_container.dart';
 
 import '../enum/view_state.dart';
 import '../helper/logger/logger.dart';
 import '../initialize_dependencies.dart';
+import '../mxins/map/map_view_helper.dart';
 import '../util/action_center/action_center.dart';
+import '../view/screens/where_to_go/repository/search_service.dart';
 import '../view/widgets/error_widget.dart';
 
-class BaseController extends GetxController {
+class BaseController extends GetxController with MapHelper {
   final _state = ViewState.idle.obs;
 
   ViewState get state => _state.value;
@@ -36,16 +38,27 @@ class BaseController extends GetxController {
   Future<UserAuthModel?> get getUser async =>
       user = await sl<AuthCases>().getUserData();
 
+  String? myAddressString;
   @override
   void onInit() async {
-   await getUser;
-    // if (await sl<AuthCases>().isAuthenticated()) {
-    
-      update();
-      refresh();
-    // }
+    await getUser;
+
+    update();
+    refresh();
+    var currntLoction = MapHelper.getCurrentPosition().then((value) async {
+      if (value is Position) {
+        myAddressString = await getPlaceNameFromLatLng(
+            LatLng(value.latitude, value.longitude));
+        update();
+      }
+    });
 
     super.onInit();
+  }
+
+  var currntLoction = MapHelper.getCurrentPosition();
+  Future<String> getPlaceNameFromLatLng(LatLng latlng) async {
+    return SearchServices().getPlaceNameFromLatLng(latlng);
   }
 }
 

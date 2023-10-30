@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/enum/view_state.dart';
 import 'package:ride_sharing_user_app/helper/price_converter.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
@@ -19,9 +20,13 @@ import '../../ride/widgets/confirmation_trip_dialog.dart';
 class FindDriverCustomBtn2 extends StatelessWidget {
   final String fromPage;
   final bool whoWillPay;
+  final List<LatLng> points;
 
   const FindDriverCustomBtn2(
-      {Key? key, required this.fromPage, required this.whoWillPay})
+      {Key? key,
+      required this.fromPage,
+      required this.whoWillPay,
+      required this.points})
       : super(key: key);
 
   @override
@@ -43,13 +48,11 @@ class FindDriverCustomBtn2 extends StatelessWidget {
                     : Strings.findDeliveryMan.tr,
             onPressed: () async {
               if (fromPage == 'ride') {
-
-                Get.find<CreateATripController>().createATrip();
+                Get.find<CreateATripController>().createATrip(points);
                 // Get.find<CreateATripController>().state==ViewState.busy?
                 Get.find<RideController>()
                     .updateRideCurrentState(RideState.findingRider);
-              //
-
+                //
               } else {
                 print('555555');
 

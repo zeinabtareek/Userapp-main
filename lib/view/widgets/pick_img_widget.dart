@@ -14,11 +14,13 @@ class ImagePick extends StatelessWidget {
   final Function() deleteImg;
   final double? hight;
   final double? width;
+  final Widget? pickWidget;
   ImagePick({
     super.key,
     required this.onSelectImg,
     required this.deleteImg,
     this.hight,
+    this.pickWidget,
     this.width,
   });
 
@@ -51,42 +53,39 @@ class ImagePick extends StatelessWidget {
             radius: const Radius.circular(Dimensions.paddingSizeSmall),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
-              child:
-                  // authController.pickedIdentityImageFront != null
-                  isPickedImg
-                      ? Stack(
-                          alignment: FractionalOffset.bottomLeft,
-                          children: [
-                            // StatefulBuilder(builder: ())
-                            Image.file(
-                              File(selectedFile.value!.path),
-                              width: width ?? Dimensions.identityImageWidth,
-                              height: hight ?? Dimensions.identityImageHeight,
-                              fit: BoxFit.cover,
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                selectedFile.value = null;
+              child: isPickedImg
+                  ? Stack(
+                      alignment: FractionalOffset.bottomLeft,
+                      children: [
+                        // StatefulBuilder(builder: ())
+                        Image.file(
+                          File(selectedFile.value!.path),
+                          width: width ?? Dimensions.identityImageWidth,
+                          height: hight ?? Dimensions.identityImageHeight,
+                          fit: BoxFit.cover,
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            selectedFile.value = null;
 
-                                deleteImg.call();
-                              },
-                              icon: const Icon(
-                                Icons.close,
-                                size: 25,
-                                color: Colors.teal,
-                              ),
-                            ),
-                          ],
-                        )
-                      : InkWell(
-                          onTap: pickImg,
-                          child: SizedBox(
-                            height: hight ?? Dimensions.identityImageHeight,
-                            width: width ?? Dimensions.identityImageWidth,
-                            child: Image.asset(Images.cameraPlaceholder,
-                                width: 50),
+                            deleteImg.call();
+                          },
+                          icon: const Icon(
+                            Icons.close,
+                            size: 25,
+                            color: Colors.teal,
                           ),
                         ),
+                      ],
+                    )
+                  : InkWell(
+                      onTap: pickImg,
+                      child:pickWidget?? SizedBox(
+                        height: hight ?? Dimensions.identityImageHeight,
+                        width: width ?? Dimensions.identityImageWidth,
+                        child: Image.asset(Images.cameraPlaceholder, width: 50),
+                      ),
+                    ),
             ),
           ),
         ),

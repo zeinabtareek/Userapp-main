@@ -713,8 +713,15 @@ class AuthController extends GetxController {
 
     checkStatus(
       res,
-      onSuccess: (res) {
-        toSignInScreen();
+      onSuccess: (res) async {
+        if (await authCases.isContainsAuthUserData()) {
+          final authData = await authCases.getAuthUserData();
+          authCases.saveAuthUserData(
+            authData!.copyWith(password: resetConfirmPasswordController.text),
+          );
+        }
+        Get.back();
+        // TODO: suses toast
       },
       showSuccessToast: true,
     );

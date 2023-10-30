@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animarker/widgets/animarker.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:ride_sharing_user_app/enum/request_states.dart';
 import 'package:ride_sharing_user_app/view/screens/request_screens/widgets/fixed_header.dart';
 
@@ -32,10 +33,10 @@ import '../../../ride/widgets/ride_details_widget.dart';
 import '../../../ride/widgets/rider_details_widget.dart';
 import '../../../ride/widgets/rise_fare_widget.dart';
 import '../../../where_to_go/controller/create_trip_controller.dart';
+import '../../controller/base_map_controller.dart';
 import '../../widgets/common_map_widget.dart';
 import '../../widgets/fifth_widget/fifth_widget.dart';
 import '../../widgets/first_widget/initial_widget.dart';
-import '../../controller/base_map_controller.dart';
 
 // import '../../widgets/fourth_widget/fourth_widget.dart';
 import '../../widgets/fourth_widget/fourth_widget.dart';
@@ -43,9 +44,14 @@ import '../../widgets/second_widget/second_widget.dart';
 import '../../widgets/third_widget/third_widget.dart';
 
 class BaseMapScreen extends StatelessWidget {
-  BaseMapScreen({super.key});
+  BaseMapScreen({
+    Key? key,
+    required this.points,
+  }) : super(key: key);
 
   final controller = Get.put(BaseMapController());
+
+ final List<LatLng> points;
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +114,9 @@ class BaseMapScreen extends StatelessWidget {
                                             .value
                                             ?.categoryTitle
                                             .toString() ??
-                                        '')
+                                        '',
+                                    points: points,
+                                  )
 
                                 ///Get Price
                                 : controller.widgetNumber.value ==
@@ -203,8 +211,8 @@ class BaseMapScreen extends StatelessWidget {
 
                 //optional; default: Duration(milliseconds: 250)
                 //The durations of the animations.
-                animationDurationExtend: Duration(milliseconds: 500),
-                animationDurationContract: Duration(milliseconds: 250),
+                animationDurationExtend: const Duration(milliseconds: 500),
+                animationDurationContract: const Duration(milliseconds: 250),
 
                 //optional; default: Curves.ease
                 //The curves of the animations.
