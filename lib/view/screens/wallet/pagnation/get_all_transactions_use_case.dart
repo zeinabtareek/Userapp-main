@@ -44,7 +44,7 @@ class GetAllTransactionsUseCase
   _handelWalletAmount(WalletData data) {
     if (req!.page == 1 && req!.reqPage == 1) {
       Get.find<WalletController>().refreshAmount(data.walletAfter.toString());
-    }
+     }
   }
 
   @override

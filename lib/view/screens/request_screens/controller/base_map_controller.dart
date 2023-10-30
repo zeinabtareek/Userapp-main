@@ -29,10 +29,14 @@ class BaseMapController extends GetxController {
 
   double get persistentContentHeight => _persistentContentHeight;
   bool showRiderRequest = false;
+
+  // String orderId='test';
+  String ?orderId;
    @override
   onInit()async{
     super.onInit();
-
+    await checkRideStateToFindingDriver();
+    print('order state $orderId');
     await _getCurrantLocation();
     Timer? timer;
     timer = Timer.periodic(const Duration(milliseconds: 1000), (_) {
@@ -43,9 +47,31 @@ class BaseMapController extends GetxController {
           showRiderRequest = true;
         }
       });
-
-
   }
+
+
+
+
+
+
+  ///check whether there is a previous
+
+ checkRideStateToFindingDriver ()async{
+   if(orderId==null){
+     widgetNumber.value = request[RequestState.initialState]!;
+   } else{
+   widgetNumber.value = request[RequestState.driverAcceptState]!;
+ }
+   update();
+ }
+
+
+
+
+
+
+
+
 
 
   onBackPressed() {

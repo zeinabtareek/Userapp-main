@@ -174,6 +174,7 @@ class SecondWidget extends StatelessWidget {
                       builder: (baseMapController) => CustomButton(
                           buttonText: Strings.findDriver.tr,
                           radius: 50,
+                          isLoading:Get.find<CreateATripController>().state==ViewState.busy?true:false ,
                           onPressed: () async {
                             ///zeinab here we will create a trip
                             baseMapController.  key.currentState!.contract();

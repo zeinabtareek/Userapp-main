@@ -150,8 +150,8 @@ class MyApp extends StatelessWidget {
             // home:   HistoryScreen(fromPage: Strings.home,)/**/,
             // home: const WalletScreen()/**/,
             // home: const OnBoardingScreen2()/**/,
-            home: WalletScreen(),
-            // home: DashboardScreen(),
+            // home: WalletScreen(),
+            home: DashboardScreen(),
             // home: WalletWithdrawScreen(),
           ));
         });

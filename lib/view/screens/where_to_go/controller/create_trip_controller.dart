@@ -25,6 +25,12 @@ class CreateATripController extends BaseController {
 
   ///create a trip function
   Future<CreateOrderModel> createATrip() async {
+setState(ViewState.busy);
+
+
+
+
+
     List<ExtraRoutes> extraRoutes = [
       ExtraRoutes(lat: '21.123', lng: '21.124', location: 'Location 1'),
       ExtraRoutes(lat: '21.125', lng: '21.126', location: 'Location 2'),
@@ -87,12 +93,13 @@ class CreateATripController extends BaseController {
         print(" ::: error");
       }
 
+      setState(ViewState.idle);
       return createOrderModel; // Return the acceptedOrderData object
     } on CustomException catch (e) {
       OverlayHelper.showErrorToast(Get.overlayContext!, e.message);
     }
 
-    throw Exception(
+throw Exception(
         "Unexpected error occurred"); // Throw an exception if none of the catch blocks are executed
     update();
   }
@@ -154,7 +161,7 @@ class CreateATripController extends BaseController {
          setState(ViewState.busy);
 
            orderModel=
-           await services.showTripDetails(orderId:'b0a49d66-14e2-4236-bf1b-771e1f84a2fc');
+           await services.showTripDetails(orderId:'33025f39-3e56-4431-9586-7b81a5716ff1');
          // Get.find<BaseMapController>().changeState(request[RequestState.riderDetailsState]!);//riderDetailsState
          print(orderModel.data?.driver);
          print(orderModel.data?.vehicleType?.id);

@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:ride_sharing_user_app/view/screens/where_to_go/where_to_go_screen.dart';
 
+import '../../../../../enum/request_states.dart';
 import '../../../../../util/app_strings.dart';
 import '../../../../../util/app_style.dart';
 import '../../../../../util/dimensions.dart';
@@ -39,6 +41,7 @@ class ThirdWidget extends StatelessWidget { //
               padding: EdgeInsets.zero,
               animation: true,
               animationDuration: 1000,
+              restartAnimation: true,
               lineHeight: 4.0,
               percent: baseMapController.percent / 100,
               progressColor: Theme.of(context).primaryColor,
@@ -69,6 +72,17 @@ class ThirdWidget extends StatelessWidget { //
                 borderColor: Theme.of(Get.context!).primaryColor,
                 onPressed: () async {
                   Get.find<MapController>().notifyMapController();
+
+
+                  // Get.find<BaseMapController>().widgetNumber.value =   request[RequestState.initialState]!;
+                  Get.find<BaseMapController>().checkRideStateToFindingDriver();
+                  // ...
+
+
+                  Get.find<BaseMapController>().update();
+                  Get.back();
+
+                  // Get.offUntil(SetDestinationScreen, (route) => false);
                 },
                 fontSize: Dimensions.fontSizeDefault,
               )),

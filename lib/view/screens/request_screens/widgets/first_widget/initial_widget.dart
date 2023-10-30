@@ -78,65 +78,158 @@ class InitialRequestWidget extends StatelessWidget {
             ),
             // const TripFareSummery(),
             K.sizedBoxH0,
-            Container(
-                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
-                    color: Theme.of(context).primaryColor.withOpacity(0.15)),
-                padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-                child: Center(
-                child: CustomDropDown(
+            ///Previous before i try the tocheck wallet
+            // Container(
+            //      decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
+            //         color: Theme.of(context).primaryColor.withOpacity(0.15)),
+            //     padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+            //     child: Center(
+            //     child: CustomDropDown(
+            //
+            //       icon: Icon(
+            //         Icons.expand_more,
+            //         color: Theme.of(context).primaryColor.withOpacity(0.5),
+            //       ),
+            //       maxListHeight: 200,
+            //       items: controller.paymentOptions
+            //           .map((item) =>
+            //           CustomDropdownMenuItem<
+            //               String>(
+            //             value: item,
+            //             child:SizedBox(
+            //               width: 200,
+            //               child: Row(
+            //                   mainAxisAlignment: MainAxisAlignment.start,
+            //                   children: [
+            //                   Image.asset(
+            //                   Images.profileMyWallet,
+            //                   height: 15,
+            //                   width: 15,
+            //                 ), K.sizedBoxW0,
+            //               Text(
+            //                   item.tr,
+            //                   style: textRegular.copyWith(
+            //                       color: item !=
+            //                           controller.initialSelectItem
+            //                           ? Theme.of(
+            //                           context)
+            //                           .textTheme
+            //                           .bodyMedium!
+            //                           .color!
+            //                           .withOpacity(
+            //                           0.5)
+            //                           : Theme.of(
+            //                           context)
+            //                           .primaryColor),
+            //                 ),
+            //                 ]),
+            //             ),
+            //
+            //           ))
+            //
+            //           .toList(),
+            //       // hintText: Strings.select.tr,
+            //       isRowHint: true,
+            //       rowWidget:Row(
+            //         children: [
+            //           Image.asset(
+            //             Images.profileMyWallet,
+            //             height: 15,
+            //             width: 15,
+            //           ), K.sizedBoxW0,
+            //           Text(
+            //             Strings.selectAPaymentMethod.tr,
+            //             maxLines: 1,
+            //             overflow: TextOverflow.clip,
+            //           ),
+            //         ],
+            //       ),
+            //       borderRadius: 5,
+            //       onChanged: (selectedItem) {
+            //         controller.initialSelectItem =
+            //             selectedItem ?? Strings.all;
+            //         if (controller.initialSelectItem ==
+            //             Strings.custom) {
+            //           showDialog(
+            //               context: context,
+            //               builder: (_) =>
+            //                   CustomCalender(
+            //                     onChanged: (value) {
+            //                       Get.back();
+            //                     },
+            //                   ));
+            //         }
+            //         controller.update();
+            //       },
+            //     ),
+            //   ),
+            // ),
 
+            Text(controller.user?.wallet.toString()??''),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
+                color: Theme.of(context).primaryColor.withOpacity(0.15),
+              ),
+              padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+              child: Center(
+                child: CustomDropDown(
                   icon: Icon(
                     Icons.expand_more,
                     color: Theme.of(context).primaryColor.withOpacity(0.5),
                   ),
                   maxListHeight: 200,
                   items: controller.paymentOptions
-                      .map((item) =>
-                      CustomDropdownMenuItem<
-                          String>(
-                        value: item,
-                        child:SizedBox(
-                          width: 200,
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                              Image.asset(
+                      .where((item) =>
+                  !((item == 'wallet') && (controller.user?.wallet == 0)))
+                      .map(
+                        (item) => CustomDropdownMenuItem<String>(
+                      value: item,
+                      child: SizedBox(
+                        width: 200,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Image.asset(
                               Images.profileMyWallet,
                               height: 15,
                               width: 15,
-                            ), K.sizedBoxW0,
-                          Text(
+                              color: (item == 'wallet' && controller.user?.wallet == 0)
+                                  ? Theme.of(context).disabledColor
+                                  : Theme.of(context).primaryColor,
+                            ),
+                            K.sizedBoxW0,
+                            Text(
                               item.tr,
                               style: textRegular.copyWith(
-                                  color: item !=
-                                      controller.initialSelectItem
-                                      ? Theme.of(
-                                      context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .color!
-                                      .withOpacity(
-                                      0.5)
-                                      : Theme.of(
-                                      context)
-                                      .primaryColor),
+                                color: item != controller.initialSelectItem
+                                    ? Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .color!
+                                    .withOpacity(0.5)
+                                    : (item == 'wallet' &&
+                                    controller.user?.wallet == 0)
+                                    ? Theme.of(context).disabledColor
+                                    : Theme.of(context).primaryColor,
+                              ),
                             ),
-                            ]),
+                          ],
                         ),
-
-                      ))
-
+                      ),
+                    ),
+                  )
                       .toList(),
-                  // hintText: Strings.select.tr,
                   isRowHint: true,
-                  rowWidget:Row(
+                  rowWidget: Row(
                     children: [
                       Image.asset(
                         Images.profileMyWallet,
                         height: 15,
                         width: 15,
-                      ), K.sizedBoxW0,
+                      ),
+                      K.sizedBoxW0,
                       Text(
                         Strings.selectAPaymentMethod.tr,
                         maxLines: 1,
@@ -146,24 +239,30 @@ class InitialRequestWidget extends StatelessWidget {
                   ),
                   borderRadius: 5,
                   onChanged: (selectedItem) {
-                    controller.initialSelectItem =
-                        selectedItem ?? Strings.all;
-                    if (controller.initialSelectItem ==
-                        Strings.custom) {
-                      showDialog(
+                    if (selectedItem == 'wallet' && (controller.user?.wallet == 0)) {
+                      // Do nothing or show a message indicating that the wallet balance is zero
+                      print('Wallet balance is zero. Cannot select "wallet" option.');
+                    } else {
+                      // Execute only if the selected item is not 'wallet' with zero balance
+                      controller.initialSelectItem = selectedItem!;
+                      if (controller.initialSelectItem == Strings.custom) {
+                        showDialog(
                           context: context,
-                          builder: (_) =>
-                              CustomCalender(
-                                onChanged: (value) {
-                                  Get.back();
-                                },
-                              ));
+                          builder: (_) => CustomCalender(
+                            onChanged: (value) {
+                              Get.back();
+                            },
+                          ),
+                        );
+                      }
+                      controller.update();
                     }
-                    controller.update();
                   },
                 ),
               ),
             ),
+
+
             const SizedBox(
               height: Dimensions.paddingSizeDefault,
             ),
