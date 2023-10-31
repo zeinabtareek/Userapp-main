@@ -63,21 +63,35 @@ class BaseMapController extends BaseController {
           showRiderRequest = true;
         }
       });
-
-
   }
 
 
 
 
-checkRideStateToFindingDriver() async {
-    if (orderId == getOrderId()) {
-      widgetNumber.value = request[RequestState.initialState]!;
-    } else {
-      widgetNumber.value = request[RequestState.driverAcceptState]!;
-    }
-    update();
-  }
+
+
+  ///check whether there is a previous
+
+ checkRideStateToFindingDriver ()async{
+   if(orderId==getOrderId()){
+     widgetNumber.value = request[RequestState.initialState]!;
+   } else{
+   widgetNumber.value = request[RequestState.driverAcceptState]!;
+ }
+   update();
+ }
+
+
+
+
+
+
+
+
+
+
+
+
   onBackPressed() {
     Get.find<RideController>().resetControllerValue();
     Get.back();
