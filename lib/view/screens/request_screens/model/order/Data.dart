@@ -99,14 +99,14 @@ class OrderData {
   VehicleType? vehicleType;
   dynamic promoCode;
   Driver? driver;
-  int ?kmPrice;
-  int ?priceBeforeDiscount;
+  dynamic kmPrice;
+  dynamic priceBeforeDiscount;
   bool ?promoCodeUsed;
-  int ?discountPercent;
-  int ?finalPrice;
-  int ?discountAmount;
-  int ?tip;
-  int ?driverAmount;
+  dynamic discountPercent;
+  dynamic  finalPrice;
+  dynamic discountAmount;
+  dynamic tip;
+  dynamic driverAmount;
   String ?createdAt;
 
   Map<String, dynamic> toJson() {

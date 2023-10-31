@@ -61,7 +61,11 @@ class BaseMapScreen extends StatelessWidget {
             appBar: CustomAppBar(
                 title: Strings.theDeliverymanNeedYou.tr,
                 onBackPressed: controller.onBackPressed),
-            body: GetBuilder<BaseMapController>(builder: (controller) {
+            body: GetBuilder<BaseMapController>(
+
+
+                init:BaseMapController() ,
+                builder: (controller) {
               return ExpandableBottomSheet(
                 key: controller.key,
                 enableToggle: true,

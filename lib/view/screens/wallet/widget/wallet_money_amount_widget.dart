@@ -62,9 +62,7 @@ class WalletMoneyAmountWidget extends StatelessWidget {
                                 () => Text(
                                   PriceConverter.convertPrice(
                                     context,
-                                    double.parse(
-                                      controller.amount.value.toString(),
-                                    ),
+                                    double.parse(   controller.amount.value.toString(),  ),
                                   ),
                                   style: textBold.copyWith(
                                     fontSize: Dimensions.fontSizeExtraLarge,

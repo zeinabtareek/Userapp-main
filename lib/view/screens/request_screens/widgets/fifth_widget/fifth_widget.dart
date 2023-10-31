@@ -13,6 +13,7 @@ import '../../../history/widgets/rider_details.dart';
 import '../../../map/controller/map_controller.dart';
 import '../../../parcel/widgets/tolltip_widget.dart';
 import '../../../payment/payment_screen.dart';
+import '../../../ride/controller/ride_controller.dart';
 import '../../../ride/widgets/confirmation_trip_dialog.dart';
 import '../../../where_to_go/controller/create_trip_controller.dart';
 import '../../controller/trip_finish_controller.dart';
@@ -42,6 +43,7 @@ class FifthWidget extends StatelessWidget {
                   // update(RideState.completeRide);
                   //Get.back();
                   Get.find<MapController>().notifyMapController();
+
                   Get.off(() => const PaymentScreen());
                 },
               );

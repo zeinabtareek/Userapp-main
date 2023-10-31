@@ -49,29 +49,35 @@ class BaseMapController extends BaseController {
   @override
   onInit() async {
     super.onInit();
+        await _getCurrantLocation();
 
-    // if (getOrderId() != null) {
-    //   Get.find<RideController>().updateRideCurrentState(RideState.findingRider);
-    //   print('new trip data   $orderId');
-
-    //   Get.find<BaseMapController>().key.currentState!.contract();
-    //   Get.find<BaseMapController>()
-    //       .changeState(request[RequestState.findDriverState]!);
-    //   Get.find<BaseMapController>().update();
-    // }
-
-    await _getCurrantLocation();
+    await checkRideStateToFindingDriver();
+    print('order state $orderId');
 
     Timer? timer;
     timer = Timer.periodic(const Duration(milliseconds: 1000), (_) {
-      percent += 50;
-      if (percent >= 100) {
-        timer!.cancel();
-        showRiderRequest = true;
-      }
-    });
+
+        percent += 50;
+        if (percent >= 100) {
+          timer!.cancel();
+          showRiderRequest = true;
+        }
+      });
+
+
   }
 
+
+
+
+checkRideStateToFindingDriver() async {
+    if (orderId == getOrderId()) {
+      widgetNumber.value = request[RequestState.initialState]!;
+    } else {
+      widgetNumber.value = request[RequestState.driverAcceptState]!;
+    }
+    update();
+  }
   onBackPressed() {
     Get.find<RideController>().resetControllerValue();
     Get.back();

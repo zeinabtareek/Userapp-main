@@ -39,6 +39,7 @@ class AppConstants {
   static const String changePaymentType = "/api/user/change_payment_type";
   static const String withdrawWallet = "/api/user/withdraw";
   static const String chargeWallet = "/api/user/charge";
+  // static const String chargeWallet = "/api/driver/points_to_money";
   // static const String cancelTrip = "/api/user/orders/";
 
 

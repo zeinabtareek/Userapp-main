@@ -25,7 +25,13 @@ class WalletMoneyScreen extends StatelessWidget {
       children: [
         // const SizedBox(height: Dimensions.paddingSizeDefault),
           WalletMoneyAmountWidget(onTap: () {
-            Get.to(() =>   ChargeWithdrawScreen());
+            Get.to(() =>   ChargeWithdrawScreen())!.then((value) async {
+              print("value ::::   $value");
+              // if(value==true){
+
+              await  Get.find<PaginateAllTransactionsController>()..onRefreshData();
+              // }
+            });
 
           },),
         InkWell(
@@ -48,9 +54,6 @@ class WalletMoneyScreen extends StatelessWidget {
                       Get.to(() => const WalletWithdrawScreen());
                     },
                     child: const Text(Strings.withdraw))
-                // IconButton(onPressed: (){},
-                //   icon: Icon(Icons.arrow_forward_ios_outlined,color: Theme.of(context).primaryColor,size: 18,),
-                // ),
               ],
             ),
           ),
@@ -83,6 +86,14 @@ class WalletMoneyScreen extends StatelessWidget {
                 );
               }),
         )
+
+
+        ///
+
+
+
+
+
         // Expanded(
         //   child: ListView.builder(
         //       itemCount: walletController.model.data?.length,

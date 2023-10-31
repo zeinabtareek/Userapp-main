@@ -13,6 +13,8 @@ import 'package:ride_sharing_user_app/view/screens/where_to_go/controller/create
 
 import '../../../../bases/base_controller.dart';
 import '../../../../util/app_strings.dart';
+import '../../ride/controller/ride_controller.dart';
+import '../widget/review_screen.dart';
 
 class PaymentController extends BaseController implements GetxService{
   final PaymentRepo paymentRepo;
@@ -36,7 +38,8 @@ class PaymentController extends BaseController implements GetxService{
   }
 
   List<String> paymentTypeList = ['cash_pay', 'digital_pay', 'use_wallet_money'];
-  int paymentTypeSelectedIndex = 0;
+  int ?paymentTypeSelectedIndex    ;
+  // int paymentTypeSelectedIndex = 0;
   void setPaymentType(int index){
     paymentTypeSelectedIndex = index;
     update();
@@ -56,9 +59,36 @@ class PaymentController extends BaseController implements GetxService{
     tipAmount = amount;
     update();
   }
+@override
+    onInit() async{
+    // TODO: implement onInit
+    super.onInit();
 
 
-  void getDigitalPaymentMethodList() async {
+    await getDigitalPaymentMethodList();
+    await checkUserFirstSelection();
+
+
+
+  }
+
+  checkUserFirstSelection()async{
+//['cash', 'digital', 'wallet',];
+    if(Get.find<RideController>().initialSelectItem=='cash'){
+      paymentTypeSelectedIndex=0;
+    }
+    else if(Get.find<RideController>().initialSelectItem=='digital'){
+      paymentTypeSelectedIndex=1;
+
+    } else if(Get.find<RideController>().initialSelectItem=='wallet'){
+      paymentTypeSelectedIndex=2;
+
+    }
+update();
+  }
+
+
+    getDigitalPaymentMethodList() async {
     Response response = await paymentRepo.getActivityList();
     if (response.statusCode == 200) {
       digitalPaymentMethodList = [];
@@ -98,6 +128,7 @@ class PaymentController extends BaseController implements GetxService{
        showCustomSnackBar(Strings.success.tr);
       await CacheHelper.setValue(kay: Strings.transactionId, value: result.id);
        // showCustomSnackBar(result.id);
+       Get.off(()=> const ReviewScreen());
 
       switch (result.status) {
         case PaymentStatus.paid:
