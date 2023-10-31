@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/bases/base_controller.dart';
+import 'package:ride_sharing_user_app/helper/cache_helper.dart';
 import 'package:ride_sharing_user_app/mxins/map/map_view_helper.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'package:ride_sharing_user_app/view/screens/where_to_go/model/order_create.dart';
@@ -17,10 +18,12 @@ import '../model/create_order_body.dart';
 import '../repository/create_trip_repo.dart';
 import '../repository/search_service.dart';
 
-class CreateATripController extends BaseController {
+class CreateATripController extends BaseMapController {
   final services = CreateTripRepo();
 
   CreateOrderModel createOrderModel = CreateOrderModel();
+
+
 
   String? get packageId => Get.find<RideController>().selectedPackage.value?.id;
 
@@ -71,11 +74,11 @@ class CreateATripController extends BaseController {
       for (var element in resList.points) {
         list.add(
           ExtraRoutes(
-            lat: element.latitude.toString(),
-            lng: element.longitude.toString(),
-            location:""
-            //  await getPlaceNameFromLatLng(element.toLatLng),
-          ),
+              lat: element.latitude.toString(),
+              lng: element.longitude.toString(),
+              location: ""
+              //  await getPlaceNameFromLatLng(element.toLatLng),
+              ),
         );
       }
       return list;
@@ -96,11 +99,11 @@ class CreateATripController extends BaseController {
           for (var element in resList.points) {
             list.add(
               ExtraRoutes(
-                lat: element.latitude.toString(),
-                lng: element.longitude.toString(),
-                location:""
-                //  await getPlaceNameFromLatLng(element.toLatLng),
-              ),
+                  lat: element.latitude.toString(),
+                  lng: element.longitude.toString(),
+                  location: ""
+                  //  await getPlaceNameFromLatLng(element.toLatLng),
+                  ),
             );
           }
         }
@@ -130,6 +133,8 @@ class CreateATripController extends BaseController {
     LatLng destination = points.last;
     dynamic distance = await calculateDistance(source, destination);
     List<ExtraRoutes> extraRoute = await extraRoutes(points);
+    String time = "12";
+    //  await calculateDuration(source, destination);
 
     List<ExtraRoutes> gogleR = await googleRoutes(
       source,
@@ -146,20 +151,24 @@ class CreateATripController extends BaseController {
         setState(ViewState.busy);
 
         createOrderModel = await services.createATrip(
-            createOrderBody: CreateOrderBody(
-          orderType: 'trip',
-          packageId: packageId,
-          from: await _form(source),
-          to: await _to(destination),
-          extraRoutes: extraRoute,
-          time: '12',
-          distance: num.parse(distance.toString()),
-          note: note,
-          vehicleTypeId: vehicleTypeId,
-          paymentType: paymentType,
-          googleRoutes: gogleR,
-        ));
+          createOrderBody: CreateOrderBody(
+            orderType: 'trip',
+            packageId: packageId,
+            from: await _form(source),
+            to: await _to(destination),
+            extraRoutes: extraRoute,
+            time: time,
+            distance: num.parse(distance.toString()),
+            note: note,
+            vehicleTypeId: vehicleTypeId,
+            paymentType: paymentType,
+            googleRoutes: gogleR,
+          ),
+        );
+        orderId = createOrderModel.data!.id!;
+        print('order ::::  id $orderId');
 
+        setOrderId(orderId!);
         Get.find<RideController>()
             .updateRideCurrentState(RideState.findingRider);
         print('new trip data   ${createOrderModel.data?.id}');
@@ -167,7 +176,7 @@ class CreateATripController extends BaseController {
         Get.find<BaseMapController>().key.currentState!.contract();
         Get.find<BaseMapController>()
             .changeState(request[RequestState.findDriverState]!);
-         Get.find<BaseMapController>().update();
+        Get.find<BaseMapController>().update();
         setState(ViewState.idle);
       }, checkConnection: true);
 
@@ -216,8 +225,9 @@ class CreateATripController extends BaseController {
       LatLng(sourceLatitude, sourceLongitude),
       LatLng(disLatitude, disLongitude),
     );
-    final duration = result['duration'];
+    final duration = result['duration'].toString();
     print('Duration: $duration');
+    return duration;
   }
 
 // calculate
@@ -243,13 +253,12 @@ class CreateATripController extends BaseController {
 
   ///show trip
   OrderModel orderModel = OrderModel();
-  showTrip({orderId}) async {
+  showTrip() async {
     try {
       var result = await actionCenter.execute(() async {
         setState(ViewState.busy);
 
-        orderModel = await services.showTripDetails(
-            orderId: 'b0a49d66-14e2-4236-bf1b-771e1f84a2fc');
+        orderModel = await services.showTripDetails(orderId: orderId);
         // Get.find<BaseMapController>().changeState(request[RequestState.riderDetailsState]!);//riderDetailsState
         print(orderModel.data?.driver);
         print(orderModel.data?.vehicleType?.id);
@@ -279,7 +288,4 @@ class CreateATripController extends BaseController {
     path: 'test@gmail.com',
     query: 'subject=support Feedback&body=',
   );
-
-
-
 }

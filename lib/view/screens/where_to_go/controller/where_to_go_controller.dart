@@ -212,9 +212,9 @@ class WhereToGoController extends BaseController implements GetxService {
       //   MapScreen(
       //   fromScreen: 'ride',
       // ));
-      Get.to(BaseMapScreen(
-        points: _getPoints!,
-      ));
+      Get.to(() => BaseMapScreen(
+            points: _getPoints!,
+          ));
       //not needed
       Get.find<RideController>().updateRideCurrentState(RideState.initial);
       distance = await calculateDistance();

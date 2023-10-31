@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:ride_sharing_user_app/authenticate/domain/use-cases/auth_cases.dart';
 
+import '../../../../initialize_dependencies.dart';
 import '../../../../pagination/widgets/paginations_widgets.dart';
 import '../../../../util/dimensions.dart';
 import '../../../../util/text_style.dart';
@@ -14,8 +16,8 @@ class ConversationBubble extends PaginationViewItem<MsgChatResModelItem> {
 
   @override
   Widget build(BuildContext context) {
-
-    print(" data.msg ${data.msg} runtype ${data.msg.runtimeType}   msgType ${data.msgType}");
+    print(
+        " data.msg ${data.msg} runtype ${data.msg.runtimeType}   msgType ${data.msgType}");
     return Column(
       crossAxisAlignment:
           data.isMe! ? CrossAxisAlignment.end : CrossAxisAlignment.start,
@@ -88,9 +90,17 @@ class ConversationBubble extends PaginationViewItem<MsgChatResModelItem> {
                                   Dimensions.paddingSizeDefault),
                               child: data.msgType == MsgType.text
                                   ? Text(data.msg ?? "")
-                                  : data.msg is String && data.msgType == MsgType.image
-                                      ? Image.network(data.msg ?? "")
-                                      : Image.file(File((data.msg as File).path)),
+                                  : data.msg is String &&
+                                          data.msgType == MsgType.image
+                                      ? Image.network(
+                                          data.msg ?? "",
+                                          headers: {
+                                            "Authorization":
+                                                "Bearer ${sl<AuthCases>().getUserData()}"
+                                          },
+                                        )
+                                      : Image.file(
+                                          File((data.msg as File).path)),
                             ),
                           ),
                         ),

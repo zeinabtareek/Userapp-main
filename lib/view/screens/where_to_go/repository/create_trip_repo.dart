@@ -17,7 +17,7 @@ import '../model/order_create.dart';
 
 class CreateTripRepo {
   final dio = DioUtilNew.dio;
-  createATrip({required CreateOrderBody createOrderBody}) async {
+Future<CreateOrderModel> createATrip({required CreateOrderBody createOrderBody}) async {
     final data = createOrderBody.toJson();
 
     final res = await dio!.post(
