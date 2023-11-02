@@ -1,17 +1,18 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/util/dimensions.dart';
-import 'package:ride_sharing_user_app/util/images.dart';
-import 'package:ride_sharing_user_app/util/text_style.dart';
-import 'package:ride_sharing_user_app/view/screens/profile/widgets/edit_profile_account_info.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_image.dart';
 
 import '../../../../util/app_strings.dart';
 import '../../../../util/app_style.dart';
+import '../../../../util/dimensions.dart';
+import '../../../../util/images.dart';
+import '../../../../util/text_style.dart';
+import '../../../widgets/custom_app_bar.dart';
+import '../../../widgets/custom_body.dart';
+import '../../../widgets/custom_image.dart';
 import '../profile_screen/controller/user_controller.dart';
+import '../widgets/edit_profile_account_info.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
@@ -160,30 +161,30 @@ class _EditProfileScreenState extends State<EditProfileScreen>
               //   ],
               // ),
 
-              GetBuilder<UserController>(
-                builder: (controller) {
-                  return Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        // Text(Strings.accountInfo.tr),
-                        TextButton(
-                          onPressed: controller.enableEdit,
-                          child: const Text(
-                            "Edit",
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: controller.disableEdit,
-                          child: const Text(
-                            "save",
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-                },
-              ),
+              // GetBuilder<UserController>(
+              //   builder: (controller) {
+              //     return Center(
+              //       child: Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //         children: [
+              //           // Text(Strings.accountInfo.tr),
+              //           TextButton(
+              //             onPressed: controller.enableEdit,
+              //             child: const Text(
+              //               "Edit",
+              //             ),
+              //           ),
+              //           TextButton(
+              //             onPressed: controller.disableEdit,
+              //             child: const Text(
+              //               "save",
+              //             ),
+              //           )
+              //         ],
+              //       ),
+              //     );
+              //   },
+              // ),
               K.sizedBoxH0,
 
               const Expanded(

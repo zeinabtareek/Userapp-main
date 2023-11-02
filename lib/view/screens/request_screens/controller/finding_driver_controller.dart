@@ -1,39 +1,56 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/mxins/sokcit-io/socket_io_mixin.dart';
-import 'package:ride_sharing_user_app/view/screens/request_screens/controller/base_map_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/where_to_go/controller/create_trip_controller.dart';
 
 import '../../../../enum/request_states.dart';
+import '../../where_to_go/controller/create_trip_controller.dart';
+import 'base_map_controller.dart';
 
-class FindingDriverController extends CreateATripController with SocketIoMixin {
+class FindingDriverController extends CreateATripController {
   ///handle future state only for testing
+  ///
+  String? oId;
   @override
   onInit() async {
     super.onInit();
-    String? oId = getOrderId();
+    oId = getOrderId();
+    handelSocket();
+
+    await handelState();
+  }
+
+  void handelSocket() {
     initializeSocket(
       onConnect: () {
         sendSocketEvent("current_order", {
-          "status": "driver_accept",
+          // "status": "driver_accept",
+          "status": "pending",
           "order_id": oId,
         });
 
-        subscribeToEvent("map_$oId", (data) {
+        // subscribeToEvent("map_$oId", (data) {
+
+        subscribeToEvent("map", (data) {
           if (kDebugMode) {
             print(" received data $data  $tag ");
             // showTrip();
           }
-          // if (data["order_id"].toString() == getOrderId()) {
-          if (true) {
-            showTrip();
+          if (data is List) {
+            bool isMyOrder = data.first['order_id'].toString() == oId;
+            // if (data["order_id"].toString() == getOrderId()) {
+            if (isMyOrder) {
+              disconnectSocket();
+
+              showTrip();
+              // unsubscribeFromEvent("map");
+            }
           }
         });
       },
+      onDisconnect: (socket) {
+        socket.off("map");
+      },
     );
     connectSocket();
-
-    await handelState();
   }
 
   handelState() async {

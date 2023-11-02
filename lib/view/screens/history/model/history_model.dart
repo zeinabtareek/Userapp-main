@@ -33,7 +33,7 @@ class HistoryModel {
 class HistoryData {
   String? id;
   String? status;
-  int? distance;
+  num? distance;
   int? time;
   String? paymentType;
   From? from;

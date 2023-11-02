@@ -3,11 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ride_sharing_user_app/authenticate/data/models/res-models/user_model.dart';
-import 'package:ride_sharing_user_app/bases/base_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/offer/model/level_model.dart';
-import 'package:ride_sharing_user_app/view/screens/profile/model/edit_profile_req_model.dart';
-import 'package:ride_sharing_user_app/view/screens/profile/repository/uer_repo.dart';
+
+import '../../../../../authenticate/data/models/res-models/user_model.dart';
+import '../../../../../bases/base_controller.dart';
+import '../../../../../util/ui/overlay_helper.dart';
+import '../../../offer/model/level_model.dart';
+import '../../model/edit_profile_req_model.dart';
+import '../../repository/uer_repo.dart';
 
 class UserController extends BaseController implements GetxService {
   UserRepo? userRepo;
@@ -39,12 +41,15 @@ class UserController extends BaseController implements GetxService {
 
   UserModel? userModel;
 
-  bool isEnabledForEdit = false;
+  bool isEnabledForEdit = true;
+
+  RxBool isCanUpdate = false.obs;
   collectData() async {
     await getUser;
 
     if (user != null) {
       // print(" user ::: ${user?.toMap()} ");
+      isCanUpdate(false);
       fristNameController.text = user!.firstName!;
       lastNameController.text = user!.lastName!;
       phoneController.text = user!.phoneCode! + user!.phone!;
@@ -53,19 +58,6 @@ class UserController extends BaseController implements GetxService {
       addressController.text = user!.address ?? "";
       update();
     }
-  }
-
-  switchEdit(bool state) {
-    isEnabledForEdit = state;
-    update();
-  }
-
-  enableEdit() {
-    switchEdit(true);
-  }
-
-  disableEdit() {
-    switchEdit(false);
   }
 
   @override
@@ -108,14 +100,17 @@ class UserController extends BaseController implements GetxService {
       if (res is UserAuthModel) {
         var token = user!.tkn;
 
-      
-        await setUser(res.copyWith(token: token),);
+        await setUser(
+          res.copyWith(token: token),
+        );
         await getUser;
         update();
         refresh();
-        // TODO: sucses toast
+        OverlayHelper.showSuccessToast(Get.overlayContext!, "Success");
         Get.back();
       }
+
+      
     }, checkConnection: true);
   }
 

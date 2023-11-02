@@ -24,7 +24,9 @@ class NotificationScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-        child: GetBuilder<NotificationController>(builder: (controller) {
+        child: GetBuilder<NotificationController>(
+         init: NotificationController(), 
+          builder: (controller) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

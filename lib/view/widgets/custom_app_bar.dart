@@ -19,6 +19,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double? height;
   final String? address;
   final PreferredSizeWidget? bottom;
+  final Widget? actionWidget;
   const CustomAppBar({
     super.key,
     required this.title,
@@ -30,6 +31,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showActionButton = true,
     this.isHome = false,
     this.address,
+    this.actionWidget,
   });
 
   @override
@@ -121,6 +123,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: ChuckerFlutter.chuckerButton,
             ),
           },
+          if (actionWidget != null) ...{actionWidget!}
 
           // showActionButton?
           // InkWell(

@@ -5,7 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/view/screens/history/history_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/home/home_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/home/screens/home_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/notification/notification_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/profile/profile_screen/profile_screen.dart';
 

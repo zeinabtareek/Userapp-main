@@ -1,16 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import '../../bases/base_controller.dart';
-import '../../helper/di_container.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 // socket_io_mixin
 mixin SocketIoMixin on GetxController {
   io.Socket? socket;
 
-  String serverUrl = "https://arabchance.com:8090/";
+   String serverUrl = "http://63.250.36.228:8090";
+  // String serverUrl = "https://arabchance.com:8090";
+
   final String _tag = "Socket.IO";
 
   String get tag => _tag;
@@ -69,7 +68,23 @@ mixin SocketIoMixin on GetxController {
   void subscribeToEvent(String event, Function(dynamic data) onData) {
     if (socket != null) {
       print(" subscribeToEvent $event $tag   ");
-      socket!.on(event, onData);
+      socket!.on(event, (data) {
+        if (kDebugMode) {
+          print("  $tag   received on  $event: $data ");
+        }
+        onData.call(data);
+      });
     }
+  }
+
+  void unsubscribeFromEvent(String event) {
+    if (socket != null) {
+      print("$tag Unsubscribing from event $event");
+      socket?.off(event);
+    }
+  }
+
+  bool isSocketConnected() {
+    return socket?.connected ?? false;
   }
 }

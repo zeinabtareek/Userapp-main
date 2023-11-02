@@ -14,7 +14,7 @@ import 'package:ride_sharing_user_app/helper/notification_helper.dart';
 import 'package:ride_sharing_user_app/util/app_strings.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/history/history_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/home/home_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/home/screens/home_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/invoice/screens/invoice_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/message/message_list.dart';
 import 'package:ride_sharing_user_app/view/screens/message/message_screen.dart';
@@ -124,7 +124,7 @@ class MyApp extends StatelessWidget {
                         PointerDeviceKind.touch
                       },
                     ),
-                    theme: themeController.darkTheme ? darkTheme : lightTheme,
+                    theme: themeController.isDarkTheme ? darkTheme : lightTheme,
                     locale: localizeController.locale,
                     translations: Messages(languages: languages),
                     fallbackLocale: Locale(
@@ -158,6 +158,7 @@ class MyApp extends StatelessWidget {
                     // home: const WalletScreen()/**/,
                     // home: const OnBoardingScreen2()/**/,
                     // home: DashboardScreen(),
+                    // home: BaseMapScreen(points: []),
                   ));
         });
       });

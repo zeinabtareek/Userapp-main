@@ -2,17 +2,19 @@ import 'dart:async';
 
 import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:ride_sharing_user_app/bases/base_controller.dart';
 
+import '../../../../bases/base_controller.dart';
 import '../../../../enum/request_states.dart';
 import '../../../../helper/cache_helper.dart';
 import '../../../../mxins/map/map_view_helper.dart';
+import '../../../../mxins/sokcit-io/socket_io_mixin.dart';
 import '../../ride/controller/ride_controller.dart';
 
-class BaseMapController extends BaseController {
+class BaseMapController extends BaseController with SocketIoMixin {
   GlobalKey<ExpandableBottomSheetState> key = GlobalKey();
   var expansionStatus = ExpansionStatus.contracted.obs;
   var widgetNumber = 0.obs;
@@ -36,9 +38,13 @@ class BaseMapController extends BaseController {
 
   static const String orderIdKey = "orderIdKey";
 
-  void setOrderId(String orderId) async {
+  void setOrderId(String? orderId) async {
     this.orderId = orderId;
-    CacheHelper.setValue(kay: orderIdKey, value: orderId);
+    if (orderId != null) {
+      CacheHelper.setValue(kay: orderIdKey, value: orderId);
+    } else {
+      CacheHelper.deleteOneValue(kay: orderIdKey);
+    }
   }
 
   String? getOrderId() {
@@ -49,48 +55,30 @@ class BaseMapController extends BaseController {
   @override
   onInit() async {
     super.onInit();
-        await _getCurrantLocation();
-
-    await checkRideStateToFindingDriver();
-    print('order state $orderId');
+    await _getCurrantLocation();
+    // setOrderId(null);
+    // await checkRideStateToFindingDriver();
 
     Timer? timer;
     timer = Timer.periodic(const Duration(milliseconds: 1000), (_) {
-
-        percent += 50;
-        if (percent >= 100) {
-          timer!.cancel();
-          showRiderRequest = true;
-        }
-      });
+      percent += 50;
+      if (percent >= 100) {
+        timer!.cancel();
+        showRiderRequest = true;
+      }
+    });
   }
-
-
-
-
-
 
   ///check whether there is a previous
 
- checkRideStateToFindingDriver ()async{
-   if(orderId==getOrderId()){
-     widgetNumber.value = request[RequestState.initialState]!;
-   } else{
-   widgetNumber.value = request[RequestState.driverAcceptState]!;
- }
-   update();
- }
-
-
-
-
-
-
-
-
-
-
-
+  checkRideStateToFindingDriver() async {
+    if (getOrderId() == null) {
+      widgetNumber.value = request[RequestState.initialState]!;
+    } else {
+      widgetNumber.value = request[RequestState.driverAcceptState]!;
+    }
+    update();
+  }
 
   onBackPressed() {
     Get.find<RideController>().resetControllerValue();
@@ -121,5 +109,66 @@ class BaseMapController extends BaseController {
     key.currentState!.contract();
     expansionStatus.value = key.currentState!.expansionStatus;
     widgetNumber.value = value;
+    update();
+  }
+
+  void listonOnNotificationSocketAfterAccept() async {
+    await getUser;
+    if (getOrderId() != null) {
+      initializeSocket(
+        onConnect: () {
+          trackDriverLocationOnOrder();
+          sendMassage(["user_id", "${user!.id}"]);
+          subscribeToEvent("user-notification.${user!.id}", (data) {
+            if ((data["data"]['order_id'].toString()) == getOrderId()) {
+              if (data["data"]["notify_type"] == "change_order_status") {
+                String? status = (data["data"]["status"].toString());
+                if (status == "start_trip") {
+                  changeState(request[RequestState.tripOngoing]!);
+                  
+                } else if (status == "finished") {
+                  disconnectSocket();
+                  changeState(request[RequestState.tripFinishedState]!);
+                  
+                } else if (status == "cancel") {
+                  disconnectSocket();
+                  // TODO:
+                  changeState(request[RequestState.initialState]!);
+                  
+                }
+
+                //
+              }
+            }
+          });
+        },
+        onDisconnect: (socket) {
+          unsubscribeFromEvent("user-notification.${user?.id}");
+        },
+      );
+      connectSocket();
+    }
+  }
+
+  void trackDriverLocationOnOrder() {
+    String? oId = getOrderId();
+    sendSocketEvent("current_order", {
+      "status": "driver_accept",
+      "order_id": oId,
+    });
+
+    subscribeToEvent("map_$oId", (data) {
+      if (kDebugMode) {
+        print(" received data $data  $tag ");
+        // showTrip();
+      }
+      // if (data is List) {
+      // bool isMyOrder = data.first['order_id'].toString() == oId;
+      // // if (data["order_id"].toString() == getOrderId()) {
+      // if (isMyOrder) {
+      //   showTrip();
+      // }
+      // }
+    });
   }
 }

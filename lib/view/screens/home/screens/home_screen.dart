@@ -2,17 +2,17 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../bases/base_controller.dart';
-import '../../../helper/display_helper.dart';
-import '../../../util/app_strings.dart';
-import '../../../util/app_style.dart';
-import '../../widgets/custom_app_bar.dart';
-import '../../widgets/custom_body.dart';
-import '../ride/widgets/ride_category.dart';
-import 'controller/category_controller.dart';
-import 'widgets/banner_view.dart';
-import 'widgets/home_my_address.dart';
-import 'widgets/home_search_widget.dart';
+import '../../../../bases/base_controller.dart';
+import '../../../../helper/display_helper.dart';
+import '../../../../util/app_strings.dart';
+import '../../../../util/app_style.dart';
+import '../../../widgets/custom_app_bar.dart';
+import '../../../widgets/custom_body.dart';
+import '../../ride/widgets/ride_category.dart';
+import '../controller/category_controller.dart';
+import '../widgets/banner_view.dart';
+import '../widgets/home_my_address.dart';
+import '../widgets/home_search_widget.dart';
 
 class HomeScreen extends GetView<BaseController> {
   const HomeScreen({Key? key}) : super(key: key);

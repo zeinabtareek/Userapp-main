@@ -1,8 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:ride_sharing_user_app/data/api_client.dart';
-import 'package:ride_sharing_user_app/util/images.dart';
-import 'package:ride_sharing_user_app/view/screens/home/model/address_model.dart';
 
 import '../../../../helper/network/dio_integration.dart';
 import '../../../../util/app_constants.dart';
@@ -42,17 +38,17 @@ class AddressRepo {
   //   }
   // }
 
-
   final dio = DioUtilNew.dio;
 
-  getAddressList()async{//  List<BannerData>? data;
+  getAddressList() async {
+    //  List<BannerData>? data;
 
     try {
       final response = await dio!.get(AppConstants.getAddress);
 
       debugPrint('######addressList${response.data}');
       if (response.statusCode == 200) {
-        final  model =  AddressModel.fromJson(response.data);
+        final model = AddressModel.fromJson(response.data);
         print('model $model');
         return model;
       } else {
@@ -64,13 +60,13 @@ class AddressRepo {
     }
   }
 
-  getSuggestedAddressList()async{
+  getSuggestedAddressList() async {
     try {
       final response = await dio!.get(AppConstants.getAddressSuggestions);
 
       debugPrint('######addressList${response.data}');
       if (response.statusCode == 200) {
-        final  model =  AddressModel.fromJson(response.data);
+        final model = AddressModel.fromJson(response.data);
         print('model $model');
         return model;
       } else {
@@ -82,5 +78,46 @@ class AddressRepo {
     }
   }
 
+  postAddress(AddressData address) async {
+    try {
+      final response = await dio!.post(
+        address.id == null
+            ? AppConstants.getAddress
+            : "${AppConstants.getAddress}/${address.id}",
+        data: address.id != null ? address.toUpdateJson() : address.toJson(),
+      );
 
+      debugPrint('######addressList${response.data}');
+      if (response.statusCode == 200) {
+        final model = AddressData.fromJson(response.data);
+        print('model $model');
+        return model;
+      } else {
+        throw UnimplementedError();
+      }
+    } catch (e) {
+      print(e);
+      throw UnimplementedError();
+    }
+  }
+
+  Future<bool> deleteAddress(AddressData address) async {
+    try {
+      final response = await dio!.delete(
+        "${AppConstants.getAddress}/${address.id}",
+      );
+
+      debugPrint('######addressList${response.data}');
+      if (response.statusCode == 200) {
+        // final model = AddressData.fromJson(response.data);
+        // print('model $model');
+        return true;
+      } else {
+        throw UnimplementedError();
+      }
+    } catch (e) {
+      print(e);
+      throw UnimplementedError();
+    }
+  }
 }

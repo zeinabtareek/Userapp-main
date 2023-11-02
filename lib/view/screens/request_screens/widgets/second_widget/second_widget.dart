@@ -14,7 +14,6 @@ import '../../../../widgets/custom_text_field.dart';
 import '../../../parcel/widgets/route_widget.dart';
 import '../../../ride/controller/ride_controller.dart';
 import '../../../where_to_go/controller/create_trip_controller.dart';
-import '../../controller/base_map_controller.dart';
 
 class SecondWidget extends StatelessWidget {
   String image;
@@ -183,14 +182,16 @@ class SecondWidget extends StatelessWidget {
                     ),
                     //   baseMapController.changeState(request[RequestState.getPriceState]!);
 
-                    GetBuilder<BaseMapController>(
-                        init: BaseMapController(),
-                        builder: (baseMapController) => CustomButton(
+                    GetBuilder<CreateATripController>(
+                        init: CreateATripController(),
+                        builder: (baseMapController) => Obx(() => CustomButton(
                             buttonText: Strings.findDriver.tr,
                             radius: 50,
+                            isLoading:
+                                baseMapController.isLoadingCreateATrip.isTrue,
                             onPressed: () async {
                               ///zeinab here we will create a trip
-                              baseMapController.key.currentState!.contract();
+                              baseMapController.key.currentState?.contract();
                               if (Get.find<RideController>()
                                       .initialSelectItem ==
                                   'wallet') {
@@ -200,7 +201,7 @@ class SecondWidget extends StatelessWidget {
                               await Get.find<CreateATripController>()
                                   .createATrip(points);
                               baseMapController.update();
-                            })),
+                            }))),
                     K.sizedBoxH0,
                     K.sizedBoxH0,
                   ],

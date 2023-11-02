@@ -33,6 +33,7 @@ class CustomTextField extends StatefulWidget {
   final Function()? onPressedSuffix;
   final Function(CountryCode countryCode)? onCountryChanged;
   final Function()? onTap;
+  final bool readOnly;
   const CustomTextField({
     super.key,
     this.hintText = 'Write something...',
@@ -60,6 +61,7 @@ class CustomTextField extends StatefulWidget {
     this.suffixIcon,
     this.onPressedSuffix,
     this.validator,
+    this.readOnly = false,
   });
 
   @override
@@ -81,6 +83,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return TextFormField(
       onTap: widget.onTap,
+      readOnly: widget.readOnly,
       validator: widget.validator,
       maxLines: widget.maxLines,
       controller: widget.controller,
