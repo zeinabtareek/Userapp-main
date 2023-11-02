@@ -18,7 +18,7 @@ import '../../../widgets/custom_image.dart';
 import '../../chat/chat_screen.dart';
 import '../../history/history_screen.dart';
 import '../../offer/offer_screen.dart';
-import '../../settings/setting_screen.dart';
+import '../../settings/screen/setting_screen.dart';
 import '../../support/support.dart';
 import '../../wallet/wallet_screen.dart';
 import '../edit_profile_screen/edit_profile_screen.dart';
@@ -242,7 +242,7 @@ class ProfileScreen extends StatelessWidget {
                   ProfileMenuItem(
                     title: Strings.message.tr,
                     icon: Images.profileMessage,
-                    onTap: () => Get.to(const ChatScreen()),
+                    onTap: () => Get.to(()=> const ChatScreen()),
                   ),
                   ProfileMenuItem(
                     title: Strings.myWallet,
@@ -259,12 +259,12 @@ class ProfileScreen extends StatelessWidget {
                   ProfileMenuItem(
                     title: Strings.helpSupport.tr,
                     icon: Images.profileHelpSupport,
-                    onTap: () => Get.to(const HelpAndSupportScreen()),
+                    onTap: () => Get.to(()=> const HelpAndSupportScreen()),
                   ),
                   ProfileMenuItem(
                     title: Strings.settings.tr,
                     icon: Images.profileSetting,
-                    onTap: () => Get.to(const SettingScreen()),
+                    onTap: () => Get.to(()=> const SettingScreen()),
                   ),
                   ProfileMenuItem(
                     title: Strings.logout.tr,

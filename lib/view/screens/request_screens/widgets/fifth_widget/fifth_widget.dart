@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/view/screens/request_screens/controller/base_map_controller.dart';
 
 import '../../../../../util/app_strings.dart';
 import '../../../../../util/dimensions.dart';
@@ -43,6 +44,7 @@ class FifthWidget extends StatelessWidget {
                   // update(RideState.completeRide);
                   //Get.back();
                   Get.find<MapController>().notifyMapController();
+                  Get.find<BaseMapController>().setOrderId(null);
 
                   Get.off(() => const PaymentScreen());
                 },

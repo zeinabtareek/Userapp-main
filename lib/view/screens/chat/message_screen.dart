@@ -14,7 +14,7 @@ import 'pagienate-use-cases/get_chat_msgs_use_case.dart';
 import 'widget/message_bubble.dart';
 
 class MessageScreen extends GetView<ChatController> {
-  final String chatId;
+  final String? chatId;
   MessageScreen({super.key, required this.chatId}) {
     controller.chatId = chatId;
   }

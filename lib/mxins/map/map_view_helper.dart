@@ -276,12 +276,15 @@ mixin MapHelper on GetxController {
       if (state == false) {
         return null;
       } else {
-        return toAppSetting().then((value) async {
-          if (value == false) {
-            return await getCurrentPosition();
-          }
-          return null;
-        });
+        // return toAppSetting()
+        //     .then((value) async {
+        //   if (value == false) {
+        //     return await getCurrentPosition();
+        //   }
+        //   return null;
+        // });
+        toAppSetting();
+
       }
     }
 
@@ -298,11 +301,13 @@ mixin MapHelper on GetxController {
       if (!state) {
         return null;
       } else {
-        toSystemSetting().then((value) async {
-          if (value == false) {
-            await getCurrentPosition();
-          }
-        });
+        toSystemSetting();
+
+        //     .then((value) async {
+        //   if (value == false) {
+        //     await getCurrentPosition();
+        //   }
+        // });
       }
     }
 

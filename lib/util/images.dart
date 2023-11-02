@@ -18,13 +18,21 @@ class Images {
   static const String email = 'assets/image/email.png';
   static const String identity = 'assets/image/identity.png';
   static const String location = 'assets/image/location.png';
+  static const String homeCar = 'assets/image/home-car.png';
+
+  static const String homeHome = 'assets/image/home-home.png';
+  static const String homeLock = 'assets/image/home-lock.png';
+  static const String homeWork = 'assets/image/home-work.png';
+  
   static const String hand = 'assets/image/hand.png';
   static const String homeActive = 'assets/image/home_active.png';
   static const String homeOutline = 'assets/image/home_outline.png';
   static const String activityActive = 'assets/image/activity_active.png';
   static const String activityOutline = 'assets/image/activity_outline.png';
-  static const String notificationActive = 'assets/image/notification_active.png';
-  static const String notificationOutline = 'assets/image/notification_outline.png';
+  static const String notificationActive =
+      'assets/image/notification_active.png';
+  static const String notificationOutline =
+      'assets/image/notification_outline.png';
   static const String profileActive = 'assets/image/profile_active.png';
   static const String profileOutline = 'assets/image/profile_outline.png';
   static const String cloud = 'assets/image/cloud.png';
@@ -85,9 +93,12 @@ class Images {
   static const String parcelDocument = 'assets/image/parcel_document.png';
   static const String parcelBox = 'assets/image/parcel_box.png';
   static const String parcelDeliveryman = 'assets/image/parcel_deliveryman.png';
-  static const String findingDeliveryman = 'assets/image/finding_deliveryman.png';
-  static const String findinDeliveryman = 'assets/image/findin_delivery_man.png';
-  static const String distanceCalculated = 'assets/image/distance_calculated_icon.png';
+  static const String findingDeliveryman =
+      'assets/image/finding_deliveryman.png';
+  static const String findinDeliveryman =
+      'assets/image/findin_delivery_man.png';
+  static const String distanceCalculated =
+      'assets/image/distance_calculated_icon.png';
   static const String parcelDetails = 'assets/image/parcel_details.png';
   static const String pickLocation = 'assets/image/pick_location.png';
   static const String addLocation = 'assets/image/add_location.png';
@@ -131,21 +142,18 @@ class Images {
   static const String search = 'assets/image/search.png';
   static const String close = 'assets/image/close.png';
   static const String deliveryTruck = 'assets/image/delivery_truck.png';
-  static const String  locationTrack = 'assets/image/location_track.png';
-  static const String  banner = 'assets/image/Banner.png';
-  static const String  package2 = 'assets/image/package2.png';
-  static const String  doc = 'assets/image/document-text.png';
-  static const String  timer = 'assets/image/Time_circle.png';
-  static const String  chatGif= 'assets/image/chat.gif';
-  static const String  packageGif= 'assets/image/package.gif';
-  static const String  parcelIcon= 'assets/image/parcel_icon.png';
-  static const String  statusIcon= 'assets/image/status.png';
+  static const String locationTrack = 'assets/image/location_track.png';
+  static const String banner = 'assets/image/Banner.png';
+  static const String package2 = 'assets/image/package2.png';
+  static const String doc = 'assets/image/document-text.png';
+  static const String timer = 'assets/image/Time_circle.png';
+  static const String chatGif = 'assets/image/chat.gif';
+  static const String packageGif = 'assets/image/package.gif';
+  static const String parcelIcon = 'assets/image/parcel_icon.png';
+  static const String statusIcon = 'assets/image/status.png';
   // static const String  statusIcon= 'assets/image/delivery_truck.png';
-  static const String  reloadIcon= 'assets/image/reload.png';
+  static const String reloadIcon = 'assets/image/reload.png';
   static const String error = 'assets/image/error.png';
-
-
-
 
   //svg
   static const String splashBgOne = 'assets/svg/splash_bg_one.svg';
@@ -159,11 +167,8 @@ class Images {
   static const String onboard2 = 'assets/svg/onboard2.svg';
   static const String onboard3 = 'assets/svg/onboard3.svg';
 
-
-
   static const String successSvg = 'assets/svg/sucess.svg';
   static const String infoIcon = 'assets/svg/info_icon.svg';
   static const String warning = 'assets/svg/warning.svg';
   static const String errorIcon = 'assets/svg/error_icon.svg';
-
 }

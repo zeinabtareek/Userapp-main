@@ -28,7 +28,7 @@ class ThirdWidget extends StatelessWidget { //
   @override
   Widget build(BuildContext context) {
     return GetBuilder<FindingDriverController>(
-      init:FindingDriverController() ,
+      init:FindingDriverController() ..handelSocket(),
         builder: (findingDriverController) {
       return Column(
         children: [

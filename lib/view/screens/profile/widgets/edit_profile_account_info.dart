@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/util/images.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_text_field.dart';
 
 import '../../../../authenticate/presentation/widgets/test_field_title.dart';
 import '../../../../util/app_strings.dart';
+import '../../../../util/images.dart';
+import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_text_field.dart';
 import '../profile_screen/controller/user_controller.dart';
 
 class EditProfileAccountInfo extends StatelessWidget {
@@ -34,6 +34,7 @@ class EditProfileAccountInfo extends StatelessWidget {
                         prefixIcon: Images.person,
                         controller: controller.fristNameController,
                         inputAction: TextInputAction.next,
+                        onChanged: (_) => controller.isCanUpdate(true),
                       ),
                       const TextFieldTitle(
                         title: "last name",
@@ -46,6 +47,7 @@ class EditProfileAccountInfo extends StatelessWidget {
                         prefixIcon: Images.person,
                         controller: controller.lastNameController,
                         inputAction: TextInputAction.next,
+                        onChanged: (_) => controller.isCanUpdate(true),
                       ),
                       TextFieldTitle(
                         title: Strings.phone.tr,
@@ -69,6 +71,7 @@ class EditProfileAccountInfo extends StatelessWidget {
                         prefixIcon: Images.email,
                         controller: controller.emailController,
                         inputAction: TextInputAction.next,
+                        onChanged: (_) => controller.isCanUpdate(true),
                       ),
                       TextFieldTitle(
                         title: Strings.address.tr,
@@ -81,15 +84,19 @@ class EditProfileAccountInfo extends StatelessWidget {
                         prefixIcon: Images.location,
                         controller: controller.addressController,
                         inputAction: TextInputAction.next,
+                        onChanged: (_) => controller.isCanUpdate(true),
                       ),
                     ]),
               )),
               const SizedBox(height: 30),
-              Obx(() => CustomButton(
-                    radius: 50,
-                    isLoading: controller.isLoading.isTrue,
-                    buttonText: Strings.updateProfile.tr,
-                    onPressed: controller.submitEdit,
+              Obx(() => Visibility(
+                    visible: controller.isCanUpdate.isTrue,
+                    child: CustomButton(
+                      radius: 50,
+                      isLoading: controller.isLoading.isTrue,
+                      buttonText: Strings.updateProfile.tr,
+                      onPressed: controller.submitEdit,
+                    ),
                   ))
             ],
           );

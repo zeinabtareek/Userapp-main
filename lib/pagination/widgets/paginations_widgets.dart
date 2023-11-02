@@ -43,7 +43,7 @@ class PaginationListView<UseCase extends MainPaginateListUseCase, Entity,
       if (state is PaginationError) {
         return const Center(child: Icon(Icons.refresh));
       }
-      if (state is PaginationLoaded && state.items.isNotEmpty) {
+      if ((state is PaginationLoaded) && state.items.isNotEmpty) {
         return ListView.separated(
           padding: listPadding,
           separatorBuilder: (context, index) => const SizedBox(height: 10),

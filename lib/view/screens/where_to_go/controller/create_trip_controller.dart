@@ -1,28 +1,31 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:ride_sharing_user_app/bases/base_controller.dart';
-import 'package:ride_sharing_user_app/helper/cache_helper.dart';
-import 'package:ride_sharing_user_app/mxins/map/map_view_helper.dart';
-import 'package:ride_sharing_user_app/util/app_constants.dart';
-import 'package:ride_sharing_user_app/view/screens/where_to_go/model/order_create.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../enum/request_states.dart';
 import '../../../../enum/view_state.dart';
+import '../../../../mxins/map/map_view_helper.dart';
 import '../../../../util/action_center/exceptions.dart';
+import '../../../../util/app_constants.dart';
 import '../../../../util/ui/overlay_helper.dart';
 import '../../request_screens/controller/base_map_controller.dart';
 import '../../request_screens/model/order/OrderModel.dart';
 import '../../ride/controller/ride_controller.dart';
 import '../model/create_order_body.dart';
+import '../model/order_create.dart';
 import '../repository/create_trip_repo.dart';
 import '../repository/search_service.dart';
 
-class CreateATripController extends BaseMapController {
+class CreateATripController extends BaseMapController  {
   final services = CreateTripRepo();
 
   CreateOrderModel createOrderModel = CreateOrderModel();
 
+  @override
+  void onInit() async {
+    // await listonOnNotificationSocketAfterAccept();
+    super.onInit();
+  }
 
 
   String? get packageId => Get.find<RideController>().selectedPackage.value?.id;
@@ -128,6 +131,7 @@ class CreateATripController extends BaseMapController {
   }
 
   ///create a trip function
+  RxBool isLoadingCreateATrip = false.obs;
   Future<CreateOrderModel> createATrip(List<LatLng> points) async {
     LatLng source = points.first; // Example source coordinate (San Francisco)
     LatLng destination = points.last;
@@ -149,6 +153,7 @@ class CreateATripController extends BaseMapController {
     try {
       var result = await actionCenter.execute(() async {
         setState(ViewState.busy);
+        isLoadingCreateATrip(true);
 
         createOrderModel = await services.createATrip(
           createOrderBody: CreateOrderBody(
@@ -178,11 +183,13 @@ class CreateATripController extends BaseMapController {
             .changeState(request[RequestState.findDriverState]!);
         Get.find<BaseMapController>().update();
         setState(ViewState.idle);
+        isLoadingCreateATrip(false);
       }, checkConnection: true);
 
       if (!result) {
         setState(ViewState.error);
         print(" ::: error");
+        isLoadingCreateATrip(false);
       }
 
       return createOrderModel; // Return the acceptedOrderData object
@@ -215,7 +222,6 @@ class CreateATripController extends BaseMapController {
   }
 
   ///calculate duration
-
   calculateDuration(LatLng source, LatLng dis) async {
     double sourceLatitude = source.latitude ?? 0.0;
     double sourceLongitude = source.longitude ?? 0.0;

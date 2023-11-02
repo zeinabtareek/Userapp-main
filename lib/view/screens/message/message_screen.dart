@@ -1,20 +1,17 @@
 import 'dart:io';
-import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/util/dimensions.dart';
-import 'package:ride_sharing_user_app/util/images.dart';
-import 'package:ride_sharing_user_app/view/screens/message/controller/message_controller.dart';
-import 'package:ride_sharing_user_app/view/screens/message/widget/chat_list_widget.dart';
-import 'package:ride_sharing_user_app/view/screens/message/widget/chat_text_field.dart';
-import 'package:ride_sharing_user_app/view/screens/message/widget/message_bubble.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
-import 'package:ride_sharing_user_app/view/widgets/custom_body.dart';
-import '../../../util/app_strings.dart';
-import '../../../util/app_style.dart';
 
-class MessageScreen extends StatelessWidget {
-  const MessageScreen({Key? key}) : super(key: key);
+import '../../../util/app_strings.dart';
+import '../../widgets/custom_app_bar.dart';
+import '../../widgets/custom_body.dart';
+import 'controller/message_controller.dart';
+import 'widget/chat_list_widget.dart';
+import 'widget/chat_text_field.dart';
+
+class MessageOldScreen extends StatelessWidget {
+  const MessageOldScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
