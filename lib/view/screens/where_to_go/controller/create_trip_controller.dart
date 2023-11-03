@@ -1,26 +1,32 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:ride_sharing_user_app/bases/base_controller.dart';
-import 'package:ride_sharing_user_app/mxins/map/map_view_helper.dart';
-import 'package:ride_sharing_user_app/util/app_constants.dart';
-import 'package:ride_sharing_user_app/view/screens/where_to_go/model/order_create.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../enum/request_states.dart';
 import '../../../../enum/view_state.dart';
+import '../../../../mxins/map/map_view_helper.dart';
 import '../../../../util/action_center/exceptions.dart';
+import '../../../../util/app_constants.dart';
 import '../../../../util/ui/overlay_helper.dart';
 import '../../request_screens/controller/base_map_controller.dart';
 import '../../request_screens/model/order/OrderModel.dart';
 import '../../ride/controller/ride_controller.dart';
 import '../model/create_order_body.dart';
+import '../model/order_create.dart';
 import '../repository/create_trip_repo.dart';
 import '../repository/search_service.dart';
 
-class CreateATripController extends BaseController {
+class CreateATripController extends BaseMapController  {
   final services = CreateTripRepo();
 
   CreateOrderModel createOrderModel = CreateOrderModel();
+
+  @override
+  void onInit() async {
+    // await listonOnNotificationSocketAfterAccept();
+    super.onInit();
+  }
+
 
   String? get packageId => Get.find<RideController>().selectedPackage.value?.id;
 
@@ -71,11 +77,11 @@ class CreateATripController extends BaseController {
       for (var element in resList.points) {
         list.add(
           ExtraRoutes(
-            lat: element.latitude.toString(),
-            lng: element.longitude.toString(),
-            location:""
-            //  await getPlaceNameFromLatLng(element.toLatLng),
-          ),
+              lat: element.latitude.toString(),
+              lng: element.longitude.toString(),
+              location: ""
+              //  await getPlaceNameFromLatLng(element.toLatLng),
+              ),
         );
       }
       return list;
@@ -96,11 +102,11 @@ class CreateATripController extends BaseController {
           for (var element in resList.points) {
             list.add(
               ExtraRoutes(
-                lat: element.latitude.toString(),
-                lng: element.longitude.toString(),
-                location:""
-                //  await getPlaceNameFromLatLng(element.toLatLng),
-              ),
+                  lat: element.latitude.toString(),
+                  lng: element.longitude.toString(),
+                  location: ""
+                  //  await getPlaceNameFromLatLng(element.toLatLng),
+                  ),
             );
           }
         }
@@ -125,11 +131,14 @@ class CreateATripController extends BaseController {
   }
 
   ///create a trip function
+  RxBool isLoadingCreateATrip = false.obs;
   Future<CreateOrderModel> createATrip(List<LatLng> points) async {
     LatLng source = points.first; // Example source coordinate (San Francisco)
     LatLng destination = points.last;
     dynamic distance = await calculateDistance(source, destination);
     List<ExtraRoutes> extraRoute = await extraRoutes(points);
+    String time = "12";
+    //  await calculateDuration(source, destination);
 
     List<ExtraRoutes> gogleR = await googleRoutes(
       source,
@@ -144,22 +153,27 @@ class CreateATripController extends BaseController {
     try {
       var result = await actionCenter.execute(() async {
         setState(ViewState.busy);
+        isLoadingCreateATrip(true);
 
         createOrderModel = await services.createATrip(
-            createOrderBody: CreateOrderBody(
-          orderType: 'trip',
-          packageId: packageId,
-          from: await _form(source),
-          to: await _to(destination),
-          extraRoutes: extraRoute,
-          time: '12',
-          distance: num.parse(distance.toString()),
-          note: note,
-          vehicleTypeId: vehicleTypeId,
-          paymentType: paymentType,
-          googleRoutes: gogleR,
-        ));
+          createOrderBody: CreateOrderBody(
+            orderType: 'trip',
+            packageId: packageId,
+            from: await _form(source),
+            to: await _to(destination),
+            extraRoutes: extraRoute,
+            time: time,
+            distance: num.parse(distance.toString()),
+            note: note,
+            vehicleTypeId: vehicleTypeId,
+            paymentType: paymentType,
+            googleRoutes: gogleR,
+          ),
+        );
+        orderId = createOrderModel.data!.id!;
+        print('order ::::  id $orderId');
 
+        setOrderId(orderId!);
         Get.find<RideController>()
             .updateRideCurrentState(RideState.findingRider);
         print('new trip data   ${createOrderModel.data?.id}');
@@ -167,13 +181,15 @@ class CreateATripController extends BaseController {
         Get.find<BaseMapController>().key.currentState!.contract();
         Get.find<BaseMapController>()
             .changeState(request[RequestState.findDriverState]!);
-         Get.find<BaseMapController>().update();
+        Get.find<BaseMapController>().update();
         setState(ViewState.idle);
+        isLoadingCreateATrip(false);
       }, checkConnection: true);
 
       if (!result) {
         setState(ViewState.error);
         print(" ::: error");
+        isLoadingCreateATrip(false);
       }
 
       return createOrderModel; // Return the acceptedOrderData object
@@ -206,7 +222,6 @@ class CreateATripController extends BaseController {
   }
 
   ///calculate duration
-
   calculateDuration(LatLng source, LatLng dis) async {
     double sourceLatitude = source.latitude ?? 0.0;
     double sourceLongitude = source.longitude ?? 0.0;
@@ -216,8 +231,9 @@ class CreateATripController extends BaseController {
       LatLng(sourceLatitude, sourceLongitude),
       LatLng(disLatitude, disLongitude),
     );
-    final duration = result['duration'];
+    final duration = result['duration'].toString();
     print('Duration: $duration');
+    return duration;
   }
 
 // calculate
@@ -243,11 +259,16 @@ class CreateATripController extends BaseController {
 
   ///show trip
   OrderModel orderModel = OrderModel();
+  showTrip() async {
+    try {
+      var result = await actionCenter.execute(() async {
+        setState(ViewState.busy);
   showTrip({orderId}) async {
     try {
       var result = await actionCenter.execute(() async {
         setState(ViewState.busy);
 
+        orderModel = await services.showTripDetails(orderId: orderId);
         orderModel = await services.showTripDetails(
             orderId: 'b0a49d66-14e2-4236-bf1b-771e1f84a2fc');
         // Get.find<BaseMapController>().changeState(request[RequestState.riderDetailsState]!);//riderDetailsState
@@ -279,7 +300,4 @@ class CreateATripController extends BaseController {
     path: 'test@gmail.com',
     query: 'subject=support Feedback&body=',
   );
-
-
-
 }

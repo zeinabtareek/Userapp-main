@@ -19,6 +19,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double? height;
   final String? address;
   final PreferredSizeWidget? bottom;
+  final Widget? actionWidget;
   const CustomAppBar({
     super.key,
     required this.title,
@@ -30,6 +31,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showActionButton = true,
     this.isHome = false,
     this.address,
+    this.actionWidget,
   });
 
   @override
@@ -39,6 +41,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: AppBar(
         toolbarHeight: height ?? MediaQuery.of(context).size.height / 12,
         automaticallyImplyLeading: false,
+        backgroundColor: Theme.of(context).primaryColor,
         title: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +73,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                             child: Text(
                               address != null
                                   ? address!
-                                  : '15 Changi Business Park Cres, shihainaki \nSingapore',
+                                  : 'No address',
                               style: textRegular.copyWith(
                                 color: Colors.white,
                                 fontSize: Dimensions.fontSizeSmall,
@@ -121,6 +124,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: ChuckerFlutter.chuckerButton,
             ),
           },
+          if (actionWidget != null) ...{actionWidget!}
 
           // showActionButton?
           // InkWell(

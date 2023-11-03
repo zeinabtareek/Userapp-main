@@ -1,17 +1,18 @@
 class From {
   From({
-      this.lat, 
-      this.lng, 
-      this.location,});
+    this.lat,
+    this.lng,
+    this.location,
+  });
 
   From.fromJson(dynamic json) {
-    lat = json['lat'];
-    lng = json['lng'];
-    location = json['location'];
+    lat = json['lat'].toString();
+    lng = json['lng'].toString();
+    location = json['location'].toString();
   }
   String? lat;
-  String ?lng;
-  String ?location;
+  String? lng;
+  String? location;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -20,5 +21,4 @@ class From {
     map['location'] = location;
     return map;
   }
-
 }

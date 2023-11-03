@@ -26,7 +26,7 @@ class CacheHelper {
     return null;
   }
 
-  static Object? getValue({
+  static T? getValue<T>({
     required String kay,
     dynamic onNullVal,
   }) =>

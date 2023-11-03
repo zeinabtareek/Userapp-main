@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ride_sharing_user_app/util/dimensions.dart';
-import 'package:ride_sharing_user_app/util/text_style.dart';
+
+import '../../util/dimensions.dart';
+import '../../util/text_style.dart';
 
 class CustomButton extends StatelessWidget {
   final Function()? onPressed;
@@ -17,11 +18,13 @@ class CustomButton extends StatelessWidget {
   final Color? borderColor;
   final Color? textColor;
   final Color? backgroundColor;
+    final Color? loadingColor;
   final Color? iconColor;
   final bool boldText;
   final bool isLoading;
+  
   final Widget ? image;
-  const CustomButton({super.key, this.onPressed, required this.buttonText, this.isLoading =false,this.transparent = false, this.margin = EdgeInsets.zero,
+  const CustomButton({super.key, this.onPressed, required this.buttonText, this.isLoading =false,this.transparent = false, this.margin = EdgeInsets.zero,this.loadingColor,
     this.width = Dimensions.webMaxWidth, this.height = 45, this.fontSize, this.iconColor, this.radius = 5, this.icon,this.image,this.showBorder = false,this.borderWidth=1, this.borderColor, this.textColor, this.backgroundColor,this.boldText = true});
 
   @override
@@ -45,7 +48,7 @@ class CustomButton extends StatelessWidget {
         style: flatButtonStyle,
         child:isLoading ?Padding(
           padding:   EdgeInsets.all(Dimensions.paddingSizeSeven),
-          child: CircularProgressIndicator.adaptive(backgroundColor: backgroundColor??Colors.white,),
+          child: CircularProgressIndicator.adaptive(backgroundColor: loadingColor?? backgroundColor??Colors.white,),
         ):
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           icon != null ? Padding(

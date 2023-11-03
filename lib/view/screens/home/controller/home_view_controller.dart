@@ -7,13 +7,15 @@ import 'package:flutter_animarker/core/ripple_marker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ride_sharing_user_app/bases/base_controller.dart';
 import 'dart:ui' as ui;
 import '../../../../helper/location_permission.dart';
+import '../../../../mxins/map/map_view_helper.dart';
 import '../../../../util/images.dart';
 import '../../../widgets/permission_dialog.dart';
 import '../widgets/home_map_view.dart';
 
-class HomeViewController extends GetxController {
+class HomeViewController extends BaseController {
   GoogleMapController? mapController;
   final markers = <MarkerId, Marker>{};
   final controller = Completer<GoogleMapController>();
@@ -28,8 +30,20 @@ class HomeViewController extends GetxController {
   onInit() async {
     super.onInit();
 
-    _position = await determinePosition();
+    // _position = await MapHelper.getCurrentPosition();
+
   }
+
+
+getPermission()async{
+  _position = await MapHelper.getCurrentPosition().then((value) async {
+    if (value is Position) {
+      myAddressString = await getPlaceNameFromLatLng(
+          LatLng(value.latitude, value.longitude));
+      update();
+    }
+  });
+}
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
@@ -64,70 +78,61 @@ class HomeViewController extends GetxController {
     update();
   }
 
-  Future<Position?> determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
+  // Future<Position?> determinePosition() async {
+  //   bool serviceEnabled;
+  //   LocationPermission permission;
+  //
+  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //   if (!serviceEnabled) {
+  //     showDialog(
+  //         context: Get.context!,
+  //         barrierDismissible: false,
+  //         builder: (context) => const PermissionDialog());
+  //     Get.back();
+  //
+  //     return Future.error('Location services are disabled.');
+  //   }
+  //
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       showDialog(
+  //           context: Get.context!,
+  //           barrierDismissible: false,
+  //           builder: (context) => const PermissionDialog());
+  //
+  //       return Future.error('Location permissions are denied');
+  //     }
+  //   }
+  //
+  //   if (permission == LocationPermission.deniedForever) {
+  //     showDialog(
+  //         context: Get.context!,
+  //         barrierDismissible: false,
+  //         builder: (context) => const PermissionDialog());
+  //
+  //     return Future.error(
+  //         'Location permissions are permanently denied, we cannot request permissions.');
+  //   }
+  //
+  //   _position = await Geolocator.getCurrentPosition();
+  //   print(position?.latitude);
+  //   mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+  //       target: LatLng(position?.latitude ?? 0.0, position?.longitude ?? 0.0),
+  //       zoom: 17)));
+  //   var marker = RippleMarker(
+  //       markerId: kMarkerId,
+  //       position: LatLng(position?.latitude ?? 0.0, position?.longitude ?? 0.0),
+  //       ripple: false,
+  //       icon: BitmapDescriptor.fromBytes(
+  //           await getBytesFromAsset(Images.carIcon, 100)),
+  //       onTap: () {});
+  //   // setState(() {
+  //   markers[kMarkerId] = marker;
+  //   // });
+  //   update();
+  //   return position;
+  // }
 
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      showDialog(
-          context: Get.context!,
-          barrierDismissible: false,
-          builder: (context) => const PermissionDialog());
-      Get.back();
-
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        showDialog(
-            context: Get.context!,
-            barrierDismissible: false,
-            builder: (context) => const PermissionDialog());
-
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      showDialog(
-          context: Get.context!,
-          barrierDismissible: false,
-          builder: (context) => const PermissionDialog());
-
-      // Permissions are denied forever, handle appropriately.
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    _position = await Geolocator.getCurrentPosition();
-    print(position?.latitude);
-    mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(position?.latitude ?? 0.0, position?.longitude ?? 0.0),
-        zoom: 17)));
-    var marker = RippleMarker(
-        markerId: kMarkerId,
-        position: LatLng(position?.latitude ?? 0.0, position?.longitude ?? 0.0),
-        ripple: false,
-        icon: BitmapDescriptor.fromBytes(
-            await getBytesFromAsset(Images.carIcon, 100)),
-        onTap: () {});
-    // setState(() {
-    markers[kMarkerId] = marker;
-    // });
-    update();
-    return position;
-  }
-// convertLocation() async {
-//   GeoData data = await Geocoder2.getDataFromCoordinates(
-//       latitude: pickedPosition.value.latitude,
-//       longitude: pickedPosition.value.longitude,
-//       googleMapApiKey: AppConstants.mapKey);
-//   print(data.address);
-//   addressEditingController.text = data.address;
-//   _address.value.value = addressEditingController.text;
-// }
 }

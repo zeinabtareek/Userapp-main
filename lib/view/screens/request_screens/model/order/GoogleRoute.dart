@@ -4,8 +4,8 @@ class GoogleRoute {
       this.lng,});
 
   GoogleRoute.fromJson(dynamic json) {
-    lat = json['lat'];
-    lng = json['lng'];
+    lat = json['lat'].toString();
+    lng = json['lng'].toString();
   }
   String ?lat;
   String ?lng;

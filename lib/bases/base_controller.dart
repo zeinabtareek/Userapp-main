@@ -39,24 +39,18 @@ class BaseController extends GetxController with MapHelper {
       user = await sl<AuthCases>().getUserData();
 
   String? myAddressString;
+  var currntLoction ;
   @override
   void onInit() async {
     await getUser;
 
     update();
     refresh();
-    var currntLoction = MapHelper.getCurrentPosition().then((value) async {
-      if (value is Position) {
-        myAddressString = await getPlaceNameFromLatLng(
-            LatLng(value.latitude, value.longitude));
-        update();
-      }
-    });
+
 
     super.onInit();
   }
 
-  var currntLoction = MapHelper.getCurrentPosition();
   Future<String> getPlaceNameFromLatLng(LatLng latlng) async {
     return SearchServices().getPlaceNameFromLatLng(latlng);
   }

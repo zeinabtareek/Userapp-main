@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 import '../authenticate/config/config.dart';
 import '../view/screens/dashboard/dashboard_screen.dart';
-import '../view/screens/home/home_screen.dart';
+import '../view/screens/home/screens/home_screen.dart';
 import '../view/screens/splash/splash_screen.dart';
 
 class RouteHelper {
