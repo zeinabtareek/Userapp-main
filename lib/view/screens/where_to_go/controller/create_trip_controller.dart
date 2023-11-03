@@ -267,6 +267,10 @@ class CreateATripController extends BaseMapController  {
     try {
       var result = await actionCenter.execute(() async {
         setState(ViewState.busy);
+  showTrip({orderId}) async {
+    try {
+      var result = await actionCenter.execute(() async {
+        setState(ViewState.busy);
 
         orderModel = await services.showTripDetails(orderId: orderId);
         orderModel = await services.showTripDetails(
