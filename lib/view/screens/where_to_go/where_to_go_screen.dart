@@ -155,8 +155,6 @@ class SetDestinationScreen extends StatelessWidget {
                                                     .enterCurrentLocationRoute
                                                     .tr,
                                                 onClear: () {
-                                     
-
                                                   setMapController
                                                       .selectedPoints
                                                       .removeAt(0);
@@ -173,7 +171,6 @@ class SetDestinationScreen extends StatelessWidget {
                                                   );
                                                 },
                                                 onChange: (v) {
-                                       
                                                   setMapController
                                                       .selectedPoints
                                                       .removeAt(0);
@@ -403,33 +400,56 @@ class SetDestinationScreen extends StatelessWidget {
                         ),
                       ),
                       K.sizedBoxH0,
-                      Container(
-                        decoration: K.boxDecorationWithPrimaryBorder,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SavedAndRecentItem(
-                              title: Strings.saved.tr,
-                              icon: Images.homeOutline,
-                              subTitle: '1 Willich St Singapore',
-                              isSeeMore: true,
-                            ),
-                            const SavedAndRecentItem(
-                              title: 'saved',
-                              icon: Images.editProfileLocation,
-                              subTitle: 'Bidadari Park Dive Singapore',
-                              isSeeMore: true,
-                            ),
-                            GestureDetector(
-                                onTap: () {
-                                  // Get.to(ChooseFromMapScreen());
-                                },
-                                child: SavedAndRecentItem(
-                                    title: Strings.setFromMap.tr,
-                                    icon: Images.setFromMap,
-                                    subTitle: Strings.chooseFromMap.tr)),
-                          ],
-                        ),
+                      GetBuilder<AddressController>(
+                        init: AddressController()..getAddressList(),
+                        initState: (state) =>
+                            Get.find<AddressController>()..getAddressList(),
+                        builder: (controller) {
+                          if (controller.addressModel.data != null &&
+                              controller.addressModel.data!.isNotEmpty) {
+                            return Container(
+                              decoration: K.boxDecorationWithPrimaryBorder,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: K.fixedPadding0,
+                                    child: Text(
+                                      Strings.saved.tr,
+                                      style: textMedium.copyWith(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: Dimensions.fontSizeLarge),
+                                    ),
+                                  ),
+                                  if (controller.addressModel.data != null &&
+                                      controller
+                                          .addressModel.data!.isNotEmpty) ...{
+                                    ...controller.addressModel.data!
+                                        .where((element) => element.isHaveData)
+                                        .toList()
+                                        .map((e) => SavedAndRecentItem(
+                                              title: "",
+                                              icon: e.icon!,
+                                              subTitle: e.name!,
+                                              isSeeMore: true,
+                                            ))
+                                        .toList(),
+                                  },
+                                  GestureDetector(
+                                      onTap: () {
+                                        // Get.to(ChooseFromMapScreen());
+                                      },
+                                      child: SavedAndRecentItem(
+                                          title: Strings.setFromMap.tr,
+                                          icon: Images.setFromMap,
+                                          subTitle: Strings.chooseFromMap.tr)),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return const SizedBox();
+                          }
+                        },
                       ),
                       K.sizedBoxH0,
                       Container(
@@ -450,7 +470,8 @@ class SetDestinationScreen extends StatelessWidget {
                             ///suggestions
 
                             GetBuilder<AddressController>(
-                              init: AddressController(),
+                              init: AddressController()
+                                ..getSuggestedAddressList(),
                               builder: (addressController) => Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: Dimensions.paddingSizeDefault),

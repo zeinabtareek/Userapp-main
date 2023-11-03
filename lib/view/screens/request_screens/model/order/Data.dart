@@ -86,8 +86,8 @@ class OrderData {
   To ?to;
   String? status;
   List<StatusTimes> ?statusTimes;
-  dynamic distance;
-  dynamic time;
+  num? distance;
+  num? time;
   String ?paymentType;
   dynamic transactionId;
   String ?note;

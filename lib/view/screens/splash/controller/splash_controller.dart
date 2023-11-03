@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/authenticate/data/models/res-models/user_model.dart';
-import 'package:ride_sharing_user_app/authenticate/presentation/complete-data-screen/complete_data_screen.dart';
 
 import '../../../../authenticate/config/config.dart';
 import '../../../../authenticate/domain/use-cases/auth_cases.dart';

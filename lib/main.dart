@@ -11,11 +11,11 @@ import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/authenticate/domain/use-cases/auth_cases.dart';
 import 'package:ride_sharing_user_app/firebase_options.dart';
 import 'package:ride_sharing_user_app/helper/notification_helper.dart';
+import 'package:ride_sharing_user_app/theme/dark_theme.dart';
 import 'package:ride_sharing_user_app/util/app_strings.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/history/history_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/home/home_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/invoice/screens/invoice_screen.dart';
+ import 'package:ride_sharing_user_app/view/screens/invoice/screens/invoice_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/message/message_list.dart';
 import 'package:ride_sharing_user_app/view/screens/message/message_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/n/test_polyline_screen.dart';
@@ -58,6 +58,8 @@ import 'authenticate/presentation/sign-up/sign_up_screen.dart';
 import 'helper/cache_helper.dart';
 import 'helper/route_helper.dart';
 import 'initialize_dependencies.dart';
+import 'theme/dark_theme.dart';
+
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -124,7 +126,8 @@ class MyApp extends StatelessWidget {
                         PointerDeviceKind.touch
                       },
                     ),
-                    theme: themeController.darkTheme ? darkTheme : lightTheme,
+                    theme:  darkTheme ,
+                    // theme: themeController.darkTheme ? darkTheme : lightTheme,
                     locale: localizeController.locale,
                     translations: Messages(languages: languages),
                     fallbackLocale: Locale(

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../util/app_constants.dart';
 
 class ThemeController extends GetxController {
   final SharedPreferences sharedPreferences;
@@ -9,7 +10,7 @@ class ThemeController extends GetxController {
   }
 
   bool _darkTheme = false;
-  bool get darkTheme => _darkTheme;
+  bool get isDarkTheme => _darkTheme;
 
   void toggleTheme() {
     _darkTheme = !_darkTheme;
@@ -17,7 +18,7 @@ class ThemeController extends GetxController {
     update();
   }
 
-  void changeThemeSetting(bool theme){
+  void changeThemeSetting(bool theme) {
     _darkTheme = theme;
     sharedPreferences.setBool(AppConstants.theme, theme);
     update();

@@ -5,9 +5,9 @@ class To {
       this.location,});
 
   To.fromJson(dynamic json) {
-    lat = json['lat'];
-    lng = json['lng'];
-    location = json['location'];
+    lat = json['lat'].toString();
+    lng = json['lng'].toString();
+    location = json['location'].toString();
   }
   String? lat;
   String ?lng;

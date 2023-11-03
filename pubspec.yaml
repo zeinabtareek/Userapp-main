@@ -65,6 +65,7 @@ dependencies:
   top_snackbar_flutter: null
   url_launcher: ^6.1.14
   moyasar: ^2.0.2
+  flutter_screenutil:
 
 dependency_overrides:
   #  modal_bottom_sheet:

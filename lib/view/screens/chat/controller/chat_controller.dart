@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/mxins/sokcit-io/socket_io_mixin.dart';
 
 import '../../../../bases/base_controller.dart';
+import '../../../../mxins/sokcit-io/socket_io_mixin.dart';
 import '../../../../pagination/typedef/page_typedef.dart';
 import '../models/req/send_msg_req_model.dart';
 import '../models/res/msg_chat_res_model_item.dart';
@@ -25,6 +25,7 @@ class ChatController extends BaseController
   List<String> userType = ['customer', 'admin'];
 
   int _userTypeIndex = 0;
+  bool get isOrderType => _userTypeIndex == 0;
   int get userTypeIndex => _userTypeIndex;
 
   void setUserTypeIndex(int index) {
@@ -205,7 +206,7 @@ class ChatController extends BaseController
       () async {
         isLoading.value = true;
         SendMsgReqModel req = _getReqBody().getIdForChat(
-          orderId: _userTypeIndex == 0 ? orderId : null,
+          orderId: isOrderType ? orderId : null,
         );
         await chatRepo.sendMsg(
           req,
