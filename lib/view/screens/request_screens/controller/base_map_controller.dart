@@ -2,51 +2,83 @@ import 'dart:async';
 
 import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../../bases/base_controller.dart';
 import '../../../../enum/request_states.dart';
+import '../../../../helper/cache_helper.dart';
 import '../../../../mxins/map/map_view_helper.dart';
+import '../../../../mxins/sokcit-io/socket_io_mixin.dart';
 import '../../ride/controller/ride_controller.dart';
 
-class BaseMapController extends GetxController {
-  GlobalKey<ExpandableBottomSheetState> key = new GlobalKey();
+class BaseMapController extends BaseController with SocketIoMixin {
+  GlobalKey<ExpandableBottomSheetState> key = GlobalKey();
   var expansionStatus = ExpansionStatus.contracted.obs;
   var widgetNumber = 0.obs;
 
   Completer<GoogleMapController> mapCompleter =
-  Completer<GoogleMapController>();
+      Completer<GoogleMapController>();
   GoogleMapController? _mapController;
-  late   LatLng _initialPosition =   LatLng(23.83721, 90.363715);
+  late LatLng _initialPosition = const LatLng(23.83721, 90.363715);
   LatLng get initialPosition => _initialPosition;
 
   late Position _position;
   Position get position => _position;
 
-    final double _persistentContentHeight = 500;
-     double percent = 0;
+  final double _persistentContentHeight = 500;
+  double percent = 0;
 
   double get persistentContentHeight => _persistentContentHeight;
   bool showRiderRequest = false;
-   @override
-  onInit()async{
-    super.onInit();
 
-    await _getCurrantLocation();
-    Timer? timer;
-    timer = Timer.periodic(const Duration(milliseconds: 1000), (_) {
+  String? orderId;
 
-        percent += 50;
-        if (percent >= 100) {
-          timer!.cancel();
-          showRiderRequest = true;
-        }
-      });
+  static const String orderIdKey = "orderIdKey";
 
-
+  void setOrderId(String? orderId) async {
+    this.orderId = orderId;
+    if (orderId != null) {
+      CacheHelper.setValue(kay: orderIdKey, value: orderId);
+    } else {
+      CacheHelper.deleteOneValue(kay: orderIdKey);
+    }
   }
 
+  String? getOrderId() {
+    if (!CacheHelper.instance!.containsKey(orderIdKey)) return null;
+    return orderId = CacheHelper.getValue<String?>(kay: orderIdKey);
+  }
+
+  @override
+  onInit() async {
+    super.onInit();
+    await _getCurrantLocation();
+    // setOrderId(null);
+    // await checkRideStateToFindingDriver();
+
+    Timer? timer;
+    timer = Timer.periodic(const Duration(milliseconds: 1000), (_) {
+      percent += 50;
+      if (percent >= 100) {
+        timer!.cancel();
+        showRiderRequest = true;
+      }
+    });
+  }
+
+  ///check whether there is a previous
+
+  checkRideStateToFindingDriver() async {
+    if (getOrderId() == null) {
+      widgetNumber.value = request[RequestState.initialState]!;
+    } else {
+      widgetNumber.value = request[RequestState.driverAcceptState]!;
+    }
+    update();
+  }
 
   onBackPressed() {
     Get.find<RideController>().resetControllerValue();
@@ -56,8 +88,6 @@ class BaseMapController extends GetxController {
   void setMapController(GoogleMapController mapController) {
     _mapController = mapController;
   }
-
-
 
   Future _getCurrantLocation() async {
     try {
@@ -74,12 +104,71 @@ class BaseMapController extends GetxController {
     setMapController(gController);
   }
 
-  changeState(int value){
-
-   // key.currentState!.expand();
-   key.currentState!.contract();
-     expansionStatus.value =
-        key.currentState!.expansionStatus;
+  changeState(int value) {
+    // key.currentState!.expand();
+    key.currentState!.contract();
+    expansionStatus.value = key.currentState!.expansionStatus;
     widgetNumber.value = value;
+    update();
+  }
+
+  void listonOnNotificationSocketAfterAccept() async {
+    await getUser;
+    if (getOrderId() != null) {
+      initializeSocket(
+        onConnect: () {
+          trackDriverLocationOnOrder();
+          sendMassage(["user_id", "${user!.id}"]);
+          subscribeToEvent("user-notification.${user!.id}", (data) {
+            if ((data["data"]['order_id'].toString()) == getOrderId()) {
+              if (data["data"]["notify_type"] == "change_order_status") {
+                String? status = (data["data"]["status"].toString());
+                if (status == "start_trip") {
+                  changeState(request[RequestState.tripOngoing]!);
+                  
+                } else if (status == "finished") {
+                  disconnectSocket();
+                  changeState(request[RequestState.tripFinishedState]!);
+                  
+                } else if (status == "cancel") {
+                  disconnectSocket();
+                  // TODO:
+                  changeState(request[RequestState.initialState]!);
+                  
+                }
+
+                //
+              }
+            }
+          });
+        },
+        onDisconnect: (socket) {
+          unsubscribeFromEvent("user-notification.${user?.id}");
+        },
+      );
+      connectSocket();
+    }
+  }
+
+  void trackDriverLocationOnOrder() {
+    String? oId = getOrderId();
+    sendSocketEvent("current_order", {
+      "status": "driver_accept",
+      "order_id": oId,
+    });
+
+    subscribeToEvent("map_$oId", (data) {
+      if (kDebugMode) {
+        print(" received data $data  $tag ");
+        // showTrip();
+      }
+      // if (data is List) {
+      // bool isMyOrder = data.first['order_id'].toString() == oId;
+      // // if (data["order_id"].toString() == getOrderId()) {
+      // if (isMyOrder) {
+      //   showTrip();
+      // }
+      // }
+    });
   }
 }

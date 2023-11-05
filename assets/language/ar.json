@@ -456,11 +456,11 @@
   "car_arrived": "وصلت السيارة للتو إلى وجهتك",
   "tap_to_add_your_credit_card": "انقر لإضافة بطاقة الائتمان الخاصة بك",
 
-  "add_withdraw_amount_first": "أضف مبلغ السحب أولاً",
   "withdraw_successfully": "لقد تم السحب بنجاح",
   "add_your_credit_card": "أضف بطاقتك الائتمانية ...",
   "charge_amount": "شحن مبلغ المحفظة",
   "send_charge_request": "إرسال طلب شحن المحفظة",
+  "add_withdraw_amount_first": "أضف مبلغ السحب أولاً",
   "add_charge_amount_first": "أضف مبلغ شحن المحفظة أولاً"
 
 

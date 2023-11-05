@@ -1,14 +1,10 @@
-
-
-
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../util/app_style.dart';
 import '../../../../util/dimensions.dart';
 import '../../../../util/text_style.dart';
+import '../../ride/model/address_model.dart';
 
 class SavedAndRecentItem extends StatelessWidget {
   final String title;
@@ -16,14 +12,16 @@ class SavedAndRecentItem extends StatelessWidget {
   final String subTitle;
   final bool isSeeMore;
   final Function()? onTap;
+  final AddressData? addressData;
 
   const SavedAndRecentItem(
       {Key? key,
-        required this.title,
-        required this.icon,
-        required this.subTitle,
-        this.isSeeMore = false,
-        this.onTap})
+      required this.title,
+      required this.icon,
+      required this.subTitle,
+      this.isSeeMore = false,
+      this.addressData,
+      this.onTap})
       : super(key: key);
 
   @override
@@ -53,7 +51,7 @@ class SavedAndRecentItem extends StatelessWidget {
               children: [
                 Container(
                   padding:
-                  const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                      const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
                   decoration: BoxDecoration(
                       color: Theme.of(context).hintColor.withOpacity(.08),
                       borderRadius: BorderRadius.circular(

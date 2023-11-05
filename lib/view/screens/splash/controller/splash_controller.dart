@@ -7,18 +7,12 @@ import '../../../../authenticate/domain/use-cases/auth_cases.dart';
 import '../../../../initialize_dependencies.dart';
 import '../../dashboard/dashboard_screen.dart';
 
-class  SplashController extends GetxController{
-
-
-
+class SplashController extends GetxController {
   @override
   void onInit() {
-     super.onInit();
+    super.onInit();
 
-
-     Timer(
-         Duration(seconds: 5), () async {
-
+    Timer(const Duration(seconds: 5), () async {
       Future.delayed(const Duration(milliseconds: 2500), () async {
         if (await sl<AuthCases>().isAuthenticated()) {
           Get.offAll(DashboardScreen());
@@ -26,13 +20,7 @@ class  SplashController extends GetxController{
           //  Get.off(const OnBoardingScreen2());
           Get.offAllNamed(AuthScreenPath.loginScreenWithPassRouteName);
         }
-      });     });
-  }
-
-
-  @override
-  void onClose() {
-
-    super.onClose();
+      });
+    });
   }
 }

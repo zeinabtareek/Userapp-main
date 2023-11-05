@@ -272,7 +272,7 @@ class CustomDropdownMenuItem<T> extends StatelessWidget {
   final T value;
   final Widget child;
 
-  const CustomDropdownMenuItem({super.key, required this.value, required this.child});
+  const CustomDropdownMenuItem({super.key, required this.value, required this.child,  });
 
   @override
   Widget build(BuildContext context) {

@@ -6,6 +6,7 @@ import 'package:ride_sharing_user_app/enum/view_state.dart';
 import 'package:ride_sharing_user_app/view/screens/payment/controller/payment_controller.dart';
 
 import '../../../../helper/display_helper.dart';
+import '../../../../pagination/typedef/page_typedef.dart';
 import '../../../../util/app_strings.dart';
 import '../../payment/credit_card_screen.dart';
 import '../repository/wallet_repo1.dart';
@@ -23,7 +24,7 @@ class WalletController extends BaseController implements GetxService {
   @override
   void onInit() {
     super.onInit();
-  }
+   }
 
   @override
   void dispose() {
@@ -135,25 +136,22 @@ back(){
    int.parse( chargeAmountController.text),
        transactionId:transactionId );
     chargeAmountController.clear();
-     setState(ViewState.idle);
+      setState(ViewState.idle);
+    update();
+
   }
 
 
-navigateToPayment({required bool isCharge}){
-
-    int amount=(isCharge==true)?int.parse( chargeAmountController.text,):int.parse( amountController.text,);
+  navigateToPayment({required bool isCharge}){
+  int amount=(isCharge==true)?int.parse( chargeAmountController.text,):int.parse( amountController.text,);
   Get.off(()=>CreditCardScreen(
     paymentConfig: Get.find<PaymentController>().paymentConfigFunc( amount),
     onPaymentResult:isCharge==true?onPaymentResultCharge:onPaymentResult,
-    amount: amount
-  )
-  );
+    amount: amount));  update();
 }
 
 
-
-
-   onPaymentResult(result) async {
+  onPaymentResult(result) async {
     print('result of payment ${result.toString()}');
       if (result is PaymentResponse) {
         showCustomSnackBar(Strings.success.tr);
@@ -192,6 +190,8 @@ navigateToPayment({required bool isCharge}){
       showCustomSnackBar(result.toString());
     }
   }
+
+
   onPaymentResultCharge(result) async {
     print('result of payment ${result.toString()}');
     if (result is PaymentResponse) {
@@ -230,8 +230,11 @@ navigateToPayment({required bool isCharge}){
       print(result);
       showCustomSnackBar(result.toString());
     }
+
+
+    update();
   }
 
 
 
-}
+   }

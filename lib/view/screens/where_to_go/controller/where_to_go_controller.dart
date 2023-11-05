@@ -54,17 +54,27 @@ class WhereToGoController extends BaseController implements GetxService {
     super.dispose();
     scrollController.dispose();
     fromRouteController.clear();
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    // fromRouteController.text =  address ?? "";
-    // Get.put(WhereToGoController(setMapRepo: Get.find()));
+    for (var element in [
+      fromRouteController,
+      fromNode,
+      toRoutNode,
+      toRouteController,
+      extraRouteController,
+      extraRouteController2,
+      extraRouteController3,
+      extraNode,
+      extraNode2,
+      extraNode3,
+    ]) {
+      element.dispose();
+    }
   }
 
   List<String> extraRoutes = [];
+  List<LatLng> extraPoints = [];
+
   List<LatLng> selectedPoints = [];
+
   void setExtraRoute() {
     if (currentExtraRoute < 1) {
       // if (currentExtraRoute < 2) {
@@ -82,18 +92,18 @@ class WhereToGoController extends BaseController implements GetxService {
 
   Future<double?> calculateDistance() async {
     distance = await Get.find<CreateATripController>().calculateDistance(
-      LatLng(37.7749, -122.4194), // San Francisco
-      LatLng(
-          37.7753, -122.4199), // Replace with your actual point 1 coordinates
+      selectedPoints.first,
+// TODO:  recheck
+      selectedPoints.last, // Replace with your actual point 1 coordinates
     );
     return distance;
   }
 
   Future<double?> calculateDuration() async {
     duration = await Get.find<CreateATripController>().calculateDuration(
-      LatLng(37.7749, -122.4194), // San Francisco
-      LatLng(
-          37.7753, -122.4199), // Replace with your actual point 1 coordinates
+      selectedPoints.first,
+// TODO:  recheck
+      selectedPoints.last, // Replace with your actual point 1 coordinates
     );
     return duration;
   }
@@ -115,27 +125,45 @@ class WhereToGoController extends BaseController implements GetxService {
     });
   }
 
+  bool get isExtraPointIsEmpty => extraRoutes.isEmpty;
+  bool get isHaveSourcePoint => selectedPoints.length == 1;
+
+  bool get isHaveDPoint => selectedPoints.length >= 2;
   Future<void> goToScreenAndRecodeSelect() async {
-    Get.to(() => ChooseFromMapScreen(selectedPoints))!.then((point) async {
-      print(" before check $point ");
+    Get.to(() => ChooseFromMapScreen(_getPoints))!.then((point) async {
       if (point != null) {
-        print(" point $point ");
-        selectedPoints.add(point);
-        if (selectedPoints.length == 1) {
+        if (!(selectedPoints.length >= 2)) {
+          selectedPoints.add(point);
+        } else {
+          extraPoints.add(point);
+        }
+
+        if (isHaveSourcePoint) {
           fromRouteController.text = await getPlaceNameFromLatLng(point);
-        } else if (selectedPoints.length >= 2) {
-          if (currentExtraRoute == 0) {
+        } else if (isHaveDPoint) {
+          if (isExtraPointIsEmpty) {
             toRouteController.text = await getPlaceNameFromLatLng(point);
           } else {
-            for (var i = 0; i < currentExtraRoute; i++) {
-              extraRouteController.text = await getPlaceNameFromLatLng(point);
-            }
+            // for (var i = 0; i < currentExtraRoute; i++) {
+            extraRouteController.text = await getPlaceNameFromLatLng(point);
+            // }
           }
         } else {
-          toRouteController.text =await getPlaceNameFromLatLng(point);
+          toRouteController.text = await getPlaceNameFromLatLng(point);
         }
+        update();
       }
     });
+  }
+
+  List<LatLng>? get _getPoints {
+    if (selectedPoints.isEmpty) {
+      return null;
+    } else if (selectedPoints.length >= 2) {
+      return selectedPoints;
+    } else {
+      return [selectedPoints.first, ...extraPoints, selectedPoints.last];
+    }
   }
 
   /// ***********************SearchController********************************
@@ -168,27 +196,29 @@ class WhereToGoController extends BaseController implements GetxService {
     input.text = placeDescription;
   }
 
-
-    Future<String> getPlaceNameFromLatLng(LatLng latlng) async {
-      return searchServices.getPlaceNameFromLatLng(latlng);
-    }
-
-    validateData() async {
-      if (fromRouteController.text == '' || toRouteController.text == '') {
-        print('no');
-        OverlayHelper.showErrorToast(Get.overlayContext!, 'select_a_trip'.tr);
-      } else {
-        print('yes');
-        // Get.to(() =>
-        //   MapScreen(
-        //   fromScreen: 'ride',
-        // ));
-        Get.to(BaseMapScreen());
-        //not needed
-        Get.find<RideController>().updateRideCurrentState(RideState.initial);
-        distance = await calculateDistance();
-        update();
-      }
-    }
+  @override
+  Future<String> getPlaceNameFromLatLng(LatLng latlng) async {
+    return searchServices.getPlaceNameFromLatLng(latlng);
   }
 
+  validateData() async {
+    print(" _getPoints $_getPoints ");
+    if (_getPoints == null) {
+      print('no');
+      OverlayHelper.showErrorToast(Get.overlayContext!, 'select_a_trip'.tr);
+    } else {
+      print('yes');
+      // Get.to(() =>
+      //   MapScreen(
+      //   fromScreen: 'ride',
+      // ));
+      Get.to(() => BaseMapScreen(
+            points: _getPoints!,
+          ));
+      //not needed
+      Get.find<RideController>().updateRideCurrentState(RideState.initial);
+      distance = await calculateDistance();
+      update();
+    }
+  }
+}

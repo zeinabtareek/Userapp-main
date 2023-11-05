@@ -7,9 +7,6 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 
-import '../../../../enum/request_states.dart';
-import 'base_map_controller.dart';
-
 class TimerController extends GetxController {
   static const maxSeconds = 6  ;
   // static const maxSeconds = 60 * 3;
@@ -60,17 +57,17 @@ class TimerController extends GetxController {
         stopTimer(rest: false);
         resetTimer();
 
-        Get.find<BaseMapController>()
-            .  key.currentState!.contract();
-        Get.find<BaseMapController>()
-            .changeState(request[RequestState.tripOngoing]!);
-        Get.find<BaseMapController>()
-            .update();
+        // Get.find<BaseMapController>()
+        //     .  key.currentState!.contract();
+        // Get.find<BaseMapController>()
+        //     .changeState(request[RequestState.tripOngoing]!);
+        // Get.find<BaseMapController>()
+        //     .update();
         ///this part  will be removed after socket
-        Timer(const Duration(seconds: 7), () {
-          Get.find<BaseMapController>().changeState(request[RequestState.tripFinishedState]!);
-          Get.find<BaseMapController>().update();
-        });
+        // Timer(const Duration(seconds: 7), () {
+        //   Get.find<BaseMapController>().changeState(request[RequestState.tripFinishedState]!);
+        //   Get.find<BaseMapController>().update();
+        // });
 
 
 

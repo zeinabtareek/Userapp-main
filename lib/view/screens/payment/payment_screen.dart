@@ -90,10 +90,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           title: paymentController.paymentTypeList[index],
                         isDisabled:index==2&&double.parse(paymentController.user?.wallet.toString()??'0.0')<double.parse(controller.orderModel.data?.finalPrice.toString()??'0.0')?true:false,
                         index: index,
-                        selectedIndex: paymentController.paymentTypeSelectedIndex,
+                        selectedIndex: paymentController.paymentTypeSelectedIndex??0,
+                        // selectedIndex: paymentController.paymentTypeSelectedIndex,
                       );
                     }),
                   ),
+
+
+
+                  // //Text(paymentController.user?.wallet.toString()??""),
+                  Text(paymentController.digitalPaymentMethodList.length.toString()??""),
                   // paymentController.paymentTypeSelectedIndex == 1?
                   // GestureDetector(
                   //   onTap: (){
@@ -141,11 +147,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   children: [
                     SizedBox(height: 160,
                       child: ListView.builder(
+                        // itemCount: 2,
                         itemCount: paymentController.digitalPaymentMethodList.length,
                           padding: EdgeInsets.zero,
+                          shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index){
-                          return DigitalCardPaymentWidget(
+                          return
+                            // Text('data');
+
+                            DigitalCardPaymentWidget(
 
                             digitalPaymentModel: paymentController.digitalPaymentMethodList[index],
                             index: index,
@@ -157,11 +168,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               amount: Get.find<CreateATripController>().orderModel.data?.finalPrice?.toInt()??1,
                             ));
                             ///f
-
+                          // sss
                           },
-
-
                           );
+
+
+
 
                       }),
                     ),

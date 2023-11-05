@@ -136,9 +136,9 @@ class TestWhereToGo extends StatelessWidget {
                             .enterCurrentLocationRoute
                             .tr,
                         onTap: () async {
-                          await setMapController
-                              .checkPermissionBeforeNavigation(
-                              context);
+                          // await setMapController
+                          //     .checkPermissionBeforeNavigation(
+                          //     context);
                         },
                         onChange: (v) {
                           if(address ==null){

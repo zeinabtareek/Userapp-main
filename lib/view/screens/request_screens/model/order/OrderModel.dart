@@ -1,4 +1,4 @@
-import 'Data.dart';
+import 'Data.dart' as d;
 
 class OrderModel {
   OrderModel({
@@ -9,11 +9,11 @@ class OrderModel {
   OrderModel.fromJson(dynamic json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? OrderData.fromJson(json['data']) : null;
+    data = json['data'] != null ?d. OrderData.fromJson(json['data']) : null;
   }
   int? status;
   String? message;
-  OrderData? data;
+ d. OrderData? data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

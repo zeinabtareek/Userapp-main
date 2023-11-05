@@ -33,6 +33,7 @@ class CustomTextField extends StatefulWidget {
   final Function()? onPressedSuffix;
   final Function(CountryCode countryCode)? onCountryChanged;
   final Function()? onTap;
+  final bool readOnly;
   const CustomTextField({
     super.key,
     this.hintText = 'Write something...',
@@ -60,6 +61,7 @@ class CustomTextField extends StatefulWidget {
     this.suffixIcon,
     this.onPressedSuffix,
     this.validator,
+    this.readOnly = false,
   });
 
   @override
@@ -79,11 +81,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(onTap: widget.onTap,
+    return TextFormField(
+      onTap: widget.onTap,
+      readOnly: widget.readOnly,
       validator: widget.validator,
       maxLines: widget.maxLines,
       controller: widget.controller,
-  
       focusNode: widget.focusNode,
       style: textRegular.copyWith(fontSize: Dimensions.fontSizeLarge),
       textInputAction: widget.inputAction,
@@ -140,9 +143,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
             color: Theme.of(context).hintColor),
         filled: true,
         contentPadding: EdgeInsets.symmetric(
-            horizontal: widget.prefix
-                ? Dimensions.paddingSizeExtraSmall
-                : Dimensions.paddingSizeDefault),
+          horizontal: widget.prefix
+              ? Dimensions.paddingSizeExtraSmall
+              : Dimensions.paddingSizeDefault,
+          vertical: 10,
+        ),
         prefixIcon: widget.prefix == false
             ? null
             : widget.prefixIcon != null
@@ -238,7 +243,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ? FocusScope.of(context).requestFocus(widget.nextFocus)
           : null,
       onChanged: widget.onChanged,
-      
     );
   }
 

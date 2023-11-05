@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/view/screens/request_screens/controller/base_map_controller.dart';
 
 import '../../../../../util/app_strings.dart';
 import '../../../../../util/dimensions.dart';
@@ -13,6 +14,7 @@ import '../../../history/widgets/rider_details.dart';
 import '../../../map/controller/map_controller.dart';
 import '../../../parcel/widgets/tolltip_widget.dart';
 import '../../../payment/payment_screen.dart';
+import '../../../ride/controller/ride_controller.dart';
 import '../../../ride/widgets/confirmation_trip_dialog.dart';
 import '../../../where_to_go/controller/create_trip_controller.dart';
 import '../../controller/trip_finish_controller.dart';
@@ -42,6 +44,8 @@ class FifthWidget extends StatelessWidget {
                   // update(RideState.completeRide);
                   //Get.back();
                   Get.find<MapController>().notifyMapController();
+                  Get.find<BaseMapController>().setOrderId(null);
+
                   Get.off(() => const PaymentScreen());
                 },
               );

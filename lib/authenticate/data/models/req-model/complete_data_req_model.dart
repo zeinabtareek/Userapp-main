@@ -7,7 +7,6 @@ class CompleteDataReqModel {
   String? address;
   // String? identityNo;
   File? img;
-  MultipartFile? uploadImg;
   CompleteDataReqModel({
     required this.email,
     required this.address,

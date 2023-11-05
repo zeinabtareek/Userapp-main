@@ -19,14 +19,8 @@ class ChargeWithdrawScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body:
-
-        Stack(
-          children: [
-
-
-
-        CustomBody(
+        body:   Stack(
+          children: [   CustomBody(
         appBar: CustomAppBar(title: 'charge_amount'.tr,onBackPressed: (){
           controller.back();
           Get.back();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/enum/view_state.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
@@ -38,9 +39,13 @@ import '../../../widgets/custom_category_card.dart';
 class GetPriceWidget extends StatelessWidget {
   String image;
   String title;
-
-  GetPriceWidget({Key? key, required this.image, required this.title})
-      : super(key: key);
+  List<LatLng> points;
+  GetPriceWidget({
+    Key? key,
+    required this.image,
+    required this.title,
+    required this.points,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +63,6 @@ class GetPriceWidget extends StatelessWidget {
                     fontWeight: FontWeight.w600),
               ),
               K.sizedBoxH0,
-
               Center(
                 child: GestureDetector(
                   onTap: () {},
@@ -84,7 +88,9 @@ class GetPriceWidget extends StatelessWidget {
                       Strings.price.tr,
                       style: textRegular.copyWith(
                           fontSize: Dimensions.fontSizeLarge),
-                    ), ///zeinab get price
+                    ),
+
+                    ///zeinab get price
                     const SizedBox(width: Dimensions.paddingSizeSmall),
                     //getOrderPrice
                     rideController.priceData.priceBeforeDiscount == null
@@ -177,10 +183,10 @@ class GetPriceWidget extends StatelessWidget {
               const SizedBox(
                 height: Dimensions.paddingSizeDefault,
               ),
-              const FindDriverCustomBtn2(
+               FindDriverCustomBtn2(
                 fromPage: 'ride',
                 whoWillPay: true,
-
+                points: points,
               ),
               K.sizedBoxH0,
               K.sizedBoxH0,
