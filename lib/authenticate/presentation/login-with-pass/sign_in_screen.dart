@@ -128,17 +128,16 @@ class SignInScreen extends GetView<AuthController> {
                   ),
                 ),
                 Row(children: [
-                  const Expanded(
-                    child: Divider(),
+                    Expanded(
+                    child: Divider(color: Theme.of(context).hintColor,),
                   ),
-                  K.sizedBoxH1,
-                  Text(
+                  K.sizedBoxW0,                  Text(
                     Strings.or.tr,
                     style: K.hintMediumTextStyle,
                   ),
-                  K.sizedBoxH1,
-                  const Expanded(
-                    child: Divider(),
+                  K.sizedBoxW0,
+                    Expanded(
+                    child: Divider(color: Theme.of(context).hintColor,),
                   ),
                 ]),
                 CustomButton(

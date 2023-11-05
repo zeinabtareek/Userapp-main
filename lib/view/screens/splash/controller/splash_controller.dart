@@ -12,15 +12,17 @@ class SplashController extends GetxController {
   void onInit() {
     super.onInit();
 
-    Timer(const Duration(seconds: 5), () async {
-      Future.delayed(const Duration(milliseconds: 2500), () async {
-        if (await sl<AuthCases>().isAuthenticated()) {
+    // Timer(const Duration(seconds: 5), () async {
+    //   Future.delayed(const Duration(milliseconds: 2500), () async {
+    Future.delayed(const Duration(milliseconds: 2000), () async {
+
+      if (await sl<AuthCases>().isAuthenticated()) {
           Get.offAll(DashboardScreen());
         } else {
           //  Get.off(const OnBoardingScreen2());
           Get.offAllNamed(AuthScreenPath.loginScreenWithPassRouteName);
         }
-      });
+      // });
     });
   }
 }

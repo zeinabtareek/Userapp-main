@@ -6,6 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/authenticate/domain/use-cases/auth_cases.dart';
@@ -112,56 +113,64 @@ class MyApp extends StatelessWidget {
                   },
                   // app_navigator_observer
 
-                  child: GetMaterialApp(
-                    title: AppConstants.appName,
-                    debugShowCheckedModeBanner: false,
-                    navigatorObservers: [
-                      ScreenObserver(),
-                      ChuckerFlutter.navigatorObserver
-                    ],
-                    navigatorKey: Get.key,
-                    scrollBehavior: const MaterialScrollBehavior().copyWith(
-                      dragDevices: {
-                        PointerDeviceKind.mouse,
-                        PointerDeviceKind.touch
-                      },
-                    ),
-                    theme:  darkTheme ,
-                    // theme: themeController.darkTheme ? darkTheme : lightTheme,
-                    locale: localizeController.locale,
-                    translations: Messages(languages: languages),
-                    fallbackLocale: Locale(
-                        AppConstants.languages[0].languageCode,
-                        AppConstants.languages[0].countryCode),
-                    initialRoute: RouteHelper.getSplashRoute(),
-                    getPages: RouteHelper.routes,
-                    defaultTransition: Transition.topLevel,
-                    transitionDuration: const Duration(milliseconds: 500),
-                    // home:MapView(),
-                    // ParcelHomeScreen(),
-                    // AnimatedWidget(items:['2','3','4','5','6'] ,isVertical: false,widget:  itemTrackHistory(onTap: (){
-                    //   Get.to(()=>OrderDetails());},
-                    //     title: 'Nintendo Swich Oled',
-                    //     subTitle: 'Order ID: JB39029910020'),),
-                    // AnimatedWidget(
-                    //   items: myList,
-                    //   isVertical: isVertical,
-                    //   widget: myWidget,),
-                    //   home: HelpAndSupportScreen(),
-                    //   home: AnimatedContainerExample(),
-                    //   home: ParcelHomeScreen(),
-                    //   home: ParcelNotificationScreen(),
-                    //   home: AddShipmenScreen(),
-                    //   home: AddShipmenScreen(),
-                    //   home: SplashScreen()/**/,
-                    //   home: const MessageListScreen()/**/,
-                    //   home: const MessageScreen()/**/,
-                    // home: const UseCouponScreen()/**/,
-                    // home:   HistoryScreen(fromPage: Strings.home,)/**/,
-                    // home: const WalletScreen()/**/,
-                    // home: const OnBoardingScreen2()/**/,
-                    // home: DashboardScreen(),
-                  ));
+                  child:  ScreenUtilInit(
+                  designSize: const Size(460, 847),
+          builder: (context, child) {
+            SystemChrome.setPreferredOrientations([
+              DeviceOrientation.portraitUp,
+              DeviceOrientation.portraitDown,
+            ]);
+            return GetMaterialApp(
+              title: AppConstants.appName,
+              debugShowCheckedModeBanner: false,
+              navigatorObservers: [
+                ScreenObserver(),
+                ChuckerFlutter.navigatorObserver
+              ],
+              navigatorKey: Get.key,
+              scrollBehavior: const MaterialScrollBehavior().copyWith(
+                dragDevices: {
+                  PointerDeviceKind.mouse,
+                  PointerDeviceKind.touch
+                },
+              ),
+              // theme:  darkTheme ,
+              theme: themeController.isDarkTheme ? darkTheme : lightTheme,
+              locale: localizeController.locale,
+              translations: Messages(languages: languages),
+              fallbackLocale: Locale(
+                  AppConstants.languages[0].languageCode,
+                  AppConstants.languages[0].countryCode),
+              initialRoute: RouteHelper.getSplashRoute(),
+              getPages: RouteHelper.routes,
+              defaultTransition: Transition.topLevel,
+              transitionDuration: const Duration(milliseconds: 500),
+              // home:MapView(),
+              // ParcelHomeScreen(),
+              // AnimatedWidget(items:['2','3','4','5','6'] ,isVertical: false,widget:  itemTrackHistory(onTap: (){
+              //   Get.to(()=>OrderDetails());},
+              //     title: 'Nintendo Swich Oled',
+              //     subTitle: 'Order ID: JB39029910020'),),
+              // AnimatedWidget(
+              //   items: myList,
+              //   isVertical: isVertical,
+              //   widget: myWidget,),
+              //   home: HelpAndSupportScreen(),
+              //   home: AnimatedContainerExample(),
+              //   home: ParcelHomeScreen(),
+              //   home: ParcelNotificationScreen(),
+              //   home: AddShipmenScreen(),
+              //   home: AddShipmenScreen(),
+              //   home: SplashScreen()/**/,
+              //   home: const MessageListScreen()/**/,
+              //   home: const MessageScreen()/**/,
+              // home: const UseCouponScreen()/**/,
+              // home:   HistoryScreen(fromPage: Strings.home,)/**/,
+              // home: const WalletScreen()/**/,
+              // home: const OnBoardingScreen2()/**/,
+              // home: DashboardScreen(),
+            );
+          }));
         });
       });
     });
