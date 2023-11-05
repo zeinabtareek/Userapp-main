@@ -12,7 +12,7 @@ dependencies:
   barbecue: null
   cached_network_image: ^3.2.3
   carousel_slider: ^4.1.1
-  connectivity: null
+  connectivity:
   connectivity_plus: ^3.0.2
   country_code_picker:
     git:
