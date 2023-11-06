@@ -41,12 +41,12 @@ dependencies:
   flutter_staggered_animations: null
   flutter_svg:
   flutter_widget_from_html_core: ^0.8.5+1
-  geocoder2: null
-  geocoding: null
+  geocoder2:
+  geocoding:
   geolocator: ^9.0.1
   get: ^4.6.5
   get_it: ^7.6.4
-  google_maps_flutter: ^2.2.3
+  google_maps_flutter:
   image_picker: ^0.8.6
   intl: ^0.17.0
   loading_overlay_pro: ^2.1.1

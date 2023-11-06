@@ -265,7 +265,8 @@ class ChooseFromMapController extends BaseController
   searchPlacesFrom(String searchTerm) async {
     setState(ViewState.busy);
     searchResultsFrom.value = await searchServices.getAutoCompleteFrom(
-        search: searchTerm.toString(), country: 'eg');
+        search: searchTerm.toString(), );
+        // search: searchTerm.toString(), country: 'eg');
     print(
         'data ${searchResultsFrom.value} length is ${searchResultsFrom.length}');
     setState(ViewState.idle);

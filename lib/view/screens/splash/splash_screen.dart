@@ -160,46 +160,38 @@
 // }
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../util/images.dart';
 import 'controller/splash_controller.dart';
 
 class SplashScreen extends StatelessWidget {
-    SplashScreen({Key? key}) : super(key: key);
-final controller =Get.put(SplashController());
+  SplashScreen({super.key});
+  final controller=Get.put(SplashController());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child:  Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [  SizedBox(
-              height: 300,
-              child: Image.asset(Images.splashLogo)),
-            // SizedBox(height: 50),
-            SizedBox(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width - 100,
-              child: RotatedBox(
-                quarterTurns: 2,
-                child: LinearProgressIndicator(
-                  minHeight: 2,
-                  // color: Colors.white,
-                  color: Theme.of(context).primaryColor,
-                    backgroundColor: Theme.of(context).primaryColorDark
-                  // backgroundColor: k.mainColor.withOpacity(0.5),
-                ),
-              ),
+    return  AnnotatedRegion(
+            value: const SystemUiOverlayStyle(
+              statusBarColor: Color(0xff288c7b),
+              statusBarIconBrightness: Brightness.dark,
+            ),
+            child: Scaffold(
+                backgroundColor: Color(0xff288c7b),
+                // backgroundColor: Theme.of(context).primaryColor,//
+                body:
+                Center(
+                  child: Image.asset(
+                    Images.splash,
+                    // height: 100,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                )
             )
-          ],
-        ),
 
-      ),
+
     );
   }
 }

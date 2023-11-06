@@ -7,6 +7,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:ride_sharing_user_app/authenticate/data/models/res-models/country_model.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'dart:convert' as convert;
 
@@ -15,13 +16,14 @@ import '../model/search_suggestion_model.dart';
 
 class SearchServices {
   Completer<GoogleMapController> _controller = Completer();
+  String _country='sa';
 
 // https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&components=country:eg&types=(cities)&key=${K.googleKeyAPi}
   Future<List<Predictions>> getAutoCompleteFrom(
   // Future<List<Suggestion>> getAutoCompleteFrom(
-      {required String search, String country = 'eg'}) async {
+      {required String search,  }) async {
     var url =
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&components=country:$country&key=${AppConstants.mapKey}';
+        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&components=country:$_country&key=${AppConstants.mapKey}';
         // 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&components=country:$country&key=AIzaSyCzuhU5w3Ah8t2x2pIKXzsGoATsdzVNK9I';
     var response = await http.get(Uri.parse(url));
     var json = convert.jsonDecode(response.body);

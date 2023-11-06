@@ -23,7 +23,8 @@ class Images {
   static const String homeHome = 'assets/image/home-home.png';
   static const String homeLock = 'assets/image/home-lock.png';
   static const String homeWork = 'assets/image/home-work.png';
-  
+  static const String splash = "assets/image/splash.gif";
+
   static const String hand = 'assets/image/hand.png';
   static const String homeActive = 'assets/image/home_active.png';
   static const String homeOutline = 'assets/image/home_outline.png';

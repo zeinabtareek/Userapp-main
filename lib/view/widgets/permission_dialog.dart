@@ -22,7 +22,7 @@ class PermissionDialog extends StatelessWidget {
             const SizedBox(height: Dimensions.paddingSizeLarge),
             Text(
               Strings.youDeniedLocationPermission.tr,
-              textAlign: TextAlign.justify,
+              textAlign: TextAlign.center,
               style: TextStyle(fontSize: Dimensions.fontSizeExtraLarge),
             ),
             const SizedBox(height: Dimensions.paddingSizeLarge),
