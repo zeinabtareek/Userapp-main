@@ -96,7 +96,9 @@ class MyApp extends StatelessWidget {
       _route();
     }
     return GetBuilder<ThemeController>(builder: (themeController) {
-      return GetBuilder<LocalizationController>(builder: (localizeController) {
+      return GetBuilder<LocalizationController>(
+    //  init: LocalizationController().. ,   
+        builder: (localizeController) {
         return GetBuilder<ConfigController>(builder: (configController) {
           return (GetPlatform.isWeb && configController.config == null)
               ? const SizedBox()
@@ -112,6 +114,7 @@ class MyApp extends StatelessWidget {
 
                   child: GetMaterialApp(
                     title: AppConstants.appName,
+                  
                     debugShowCheckedModeBanner: false,
                     navigatorObservers: [
                       ScreenObserver(),

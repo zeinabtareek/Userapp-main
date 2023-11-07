@@ -70,4 +70,11 @@ abstract class RemoteApiAuth {
   Future<HttpResponse<MsgModel>> changePass(
     @Body() ChangePasswordReqModel req,
   );
+
+
+    @POST(AuthLib.deleteAccount)
+  Future<HttpResponse<MsgModel>> deleteAccount();
+  @POST(AuthLib.logout)
+  Future<HttpResponse<MsgModel>> logout();
+
 }

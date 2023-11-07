@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:ride_sharing_user_app/authenticate/presentation/controller/auth_controller.dart';
 
-import '../../../../authenticate/config/config.dart';
 import '../../../../authenticate/domain/use-cases/auth_cases.dart';
 import '../../../../initialize_dependencies.dart';
 import '../../../../localization/localization_controller.dart';
@@ -242,7 +242,7 @@ class ProfileScreen extends StatelessWidget {
                   ProfileMenuItem(
                     title: Strings.message.tr,
                     icon: Images.profileMessage,
-                    onTap: () => Get.to(()=> const ChatScreen()),
+                    onTap: () => Get.to(() => const ChatScreen()),
                   ),
                   ProfileMenuItem(
                     title: Strings.myWallet,
@@ -259,52 +259,42 @@ class ProfileScreen extends StatelessWidget {
                   ProfileMenuItem(
                     title: Strings.helpSupport.tr,
                     icon: Images.profileHelpSupport,
-                    onTap: () => Get.to(()=> const HelpAndSupportScreen()),
+                    onTap: () => Get.to(() => const HelpAndSupportScreen()),
                   ),
                   ProfileMenuItem(
                     title: Strings.settings.tr,
                     icon: Images.profileSetting,
-                    onTap: () => Get.to(()=> const SettingScreen()),
+                    onTap: () => Get.to(() => const SettingScreen()),
                   ),
-                  ProfileMenuItem(
-                    title: Strings.logout.tr,
-                    icon: Images.profileLogout,
-                    divider: false,
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (_) {
-                            return ConfirmationDialog(
-                              icon: Images.profileLogout,
-                              title: Strings.logout.tr,
-                              description:
-                                  Strings.doYouWantToLogOutThisAccount.tr,
-                              onYesPressed: () {
-                                // TODO:
-                                // print(" auth c state ${Get.isRegistered<AuthController>()} ");
-                                sl<AuthCases>().setUserDate(null).then((_) {
-                                  Get.back();
-                                  Get.offAllNamed(AuthScreenPath
-                                      .loginScreenWithPassRouteName);
-                                });
-
-                                // Get.lazyPut(() => FAuthController(
-                                //     authRepo: FAuthRepo(
-                                //         apiClient: Get.find(),
-                                //         sharedPreferences: Get.find())));
-
-                                // Get.find<FAuthController>()
-                                //     .clearSharedData()
-                                //     .then((condition) {
-
-                                // });
-                                // Get.find<AuthController>().clearSharedData().then((condition) {
-                                //   Get.back();
-                                //   Get.offAll(  SignInScreen());
-                                // });
-                              },
-                            );
-                          });
+                  GetBuilder<AuthController>(
+                    init: AuthController(sl()),
+                    autoRemove: false,
+                    builder: (controller) {
+                      return ProfileMenuItem(
+                        title: Strings.logout.tr,
+                        icon: Images.profileLogout,
+                        divider: false,
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) {
+                                return ConfirmationDialog(
+                                  icon: Images.profileLogout,
+                                  title: Strings.logout.tr,
+                                  description:
+                                      Strings.doYouWantToLogOutThisAccount.tr,
+                                  onYesPressed: () async {
+                                    if (await sl<AuthCases>()
+                                        .isAuthenticated()) {
+                                      await controller.logOut();
+                                      controller.initLoginWithPassScreen();
+                                      await sl<AuthCases>().setUserDate(null);
+                                    }
+                                  },
+                                );
+                              });
+                        },
+                      );
                     },
                   ),
                   const SizedBox(

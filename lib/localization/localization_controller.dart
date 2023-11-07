@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:jiffy/jiffy.dart';
 
 class LocalizationController extends GetxController {
   final SharedPreferences sharedPreferences;
@@ -12,7 +13,8 @@ class LocalizationController extends GetxController {
     loadCurrentLanguage();
   }
 
-  Locale _locale = Locale(AppConstants.languages[0].languageCode, AppConstants.languages[0].countryCode);
+  Locale _locale = Locale(AppConstants.languages[0].languageCode,
+      AppConstants.languages[0].countryCode);
   bool _isLtr = true;
   int _selectIndex = 0;
   List<LanguageModel> _languages = [];
@@ -22,18 +24,25 @@ class LocalizationController extends GetxController {
   int get selectIndex => _selectIndex;
   List<LanguageModel> get languages => _languages;
 
-  void setLanguage(Locale locale) {
+  void setLanguage(Locale locale) async {
     Get.updateLocale(locale);
     _locale = locale;
     _isLtr = !intl.Bidi.isRtlLanguage(_locale.languageCode);
+    // !intl.Intl.withLocale(locale, () => null)=_locale.languageCode;
+    await Jiffy.setLocale(_locale.languageCode);
     saveLanguage(_locale);
     update();
   }
 
   void loadCurrentLanguage() async {
-    _locale = Locale(sharedPreferences.getString(AppConstants.languageCode) ?? AppConstants.languages[0].languageCode,
-        sharedPreferences.getString(AppConstants.countryCode) ?? AppConstants.languages[0].countryCode);
+    _locale = Locale(
+        sharedPreferences.getString(AppConstants.languageCode) ??
+            AppConstants.languages[0].languageCode,
+        sharedPreferences.getString(AppConstants.countryCode) ??
+            AppConstants.languages[0].countryCode);
     _isLtr = !intl.Bidi.isRtlLanguage(_locale.languageCode);
+    await Jiffy.setLocale(_locale.languageCode);
+    Get.locale = _locale;
     update();
   }
 
@@ -70,5 +79,4 @@ class LocalizationController extends GetxController {
       _languages = AppConstants.languages;
     }
   }
-
 }

@@ -29,6 +29,8 @@ class SecondWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isKeyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
+
     return GetBuilder<RideController>(
         init: RideController(rideRepo: Get.find()),
         builder: (rideController) {
@@ -70,39 +72,42 @@ class SecondWidget extends StatelessWidget {
                       ),
                     ),
                     // K.sizedBoxH0,
-                    RouteWidget(),
-                    const SizedBox(
-                      height: Dimensions.paddingSizeDefault,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(
-                          Dimensions.paddingSizeExtraSmall),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            Strings.price.tr,
-                            style: textRegular.copyWith(
-                                fontSize: Dimensions.fontSizeLarge),
-                          ),
-
-                          ///zeinab get price
-                          const SizedBox(width: Dimensions.paddingSizeSmall),
-                          rideController.priceData.priceBeforeDiscount == null
-                              ? const Text('0.0')
-                              : Text(
-                                  '${rideController.priceData.priceBeforeDiscount} ',
-                                  style: textSemiBold.copyWith(
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .color!
-                                          .withOpacity(0.8),
-                                      fontSize: Dimensions.fontSizeLarge),
-                                ),
-                        ],
+                    if (!isKeyboardIsOpen) RouteWidget(),
+                    if (!isKeyboardIsOpen)
+                      const SizedBox(
+                        height: Dimensions.paddingSizeDefault,
                       ),
-                    ),
+                    if (!isKeyboardIsOpen)
+                      Padding(
+                        padding: const EdgeInsets.all(
+                            Dimensions.paddingSizeExtraSmall),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              Strings.price.tr,
+                              style: textRegular.copyWith(
+                                  fontSize: Dimensions.fontSizeLarge),
+                            ),
+
+                            ///zeinab get price
+                            const SizedBox(width: Dimensions.paddingSizeSmall),
+                            rideController.priceData.priceBeforeDiscount == null
+                                ? const Text('0.0')
+                                : Text(
+                                    '${rideController.priceData.priceBeforeDiscount} ',
+                                    style: textSemiBold.copyWith(
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .color!
+                                            .withOpacity(0.8),
+                                        fontSize: Dimensions.fontSizeLarge),
+                                  ),
+                          ],
+                        ),
+                      ),
+                    // if (!isKeyboardIsOpen)
                     const SizedBox(
                       height: Dimensions.paddingSizeDefault,
                     ),
@@ -118,33 +123,39 @@ class SecondWidget extends StatelessWidget {
                     const SizedBox(
                       height: Dimensions.paddingSizeDefault,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: CustomTextField(
-                            prefix: false,
-                            controller: rideController.promoCodeController,
-                            borderRadius: Dimensions.radiusLarge,
-                            hintText: Strings.promoCode.tr,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0).copyWith(
+                        bottom: MediaQuery.of(context).viewInsets.bottom,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: CustomTextField(
+                              prefix: false,
+                              controller: rideController.promoCodeController,
+                              borderRadius: Dimensions.radiusLarge,
+                              hintText: Strings.promoCode.tr,
+                            ),
                           ),
-                        ),
-                        K.sizedBoxW0,
-                        Obx(() => Expanded(
-                              child: CustomButton(
-                                  isLoading: rideController.loading.value,
-                                  radius: 50,
-                                  buttonText: Strings.apply.tr,
-                                  onPressed: () {
-                                    // rideController.calculateDistance();
-                                    rideController.getPromoCodeDiscount();
-                                    //
-                                    // rideController
-                                    //     .updateRideCurrentState(RideState.findingRider);
-                                  }),
-                            ))
-                      ],
+                          K.sizedBoxW0,
+                          Obx(() => Expanded(
+                                child: CustomButton(
+                                    isLoading: rideController.loading.value,
+                                    radius: 50,
+                                    buttonText: Strings.apply.tr,
+                                    onPressed: () {
+                                      // rideController.calculateDistance();
+                                      rideController.getPromoCodeDiscount();
+                                      //
+                                      // rideController
+                                      //     .updateRideCurrentState(RideState.findingRider);
+                                    }),
+                              ))
+                        ],
+                      ),
                     ),
+                    
                     const SizedBox(
                       height: Dimensions.paddingSizeDefault,
                     ),
@@ -181,29 +192,31 @@ class SecondWidget extends StatelessWidget {
                       height: Dimensions.paddingSizeDefault,
                     ),
                     //   baseMapController.changeState(request[RequestState.getPriceState]!);
-
-                    GetBuilder<CreateATripController>(
-                        init: CreateATripController(),
-                        builder: (baseMapController) => Obx(() => CustomButton(
-                            buttonText: Strings.findDriver.tr,
-                            radius: 50,
-                            isLoading:
-                                baseMapController.isLoadingCreateATrip.isTrue,
-                            onPressed: () async {
-                              ///zeinab here we will create a trip
-                              baseMapController.key.currentState?.contract();
-                              if (Get.find<RideController>()
-                                      .initialSelectItem ==
-                                  'wallet') {
-                                baseMapController.changeState(
-                                    request[RequestState.findDriverState]!);
-                              }
-                              await Get.find<CreateATripController>()
-                                  .createATrip(points);
-                              baseMapController.update();
-                            }))),
-                    K.sizedBoxH0,
-                    K.sizedBoxH0,
+                    if (!isKeyboardIsOpen)
+                      GetBuilder<CreateATripController>(
+                          init: CreateATripController(),
+                          builder: (baseMapController) => Obx(() =>
+                              CustomButton(
+                                  buttonText: Strings.findDriver.tr,
+                                  radius: 50,
+                                  isLoading: baseMapController
+                                      .isLoadingCreateATrip.isTrue,
+                                  onPressed: () async {
+                                    ///zeinab here we will create a trip
+                                    baseMapController.key.currentState
+                                        ?.contract();
+                                    if (Get.find<RideController>()
+                                            .initialSelectItem ==
+                                        'wallet') {
+                                      baseMapController.changeState(request[
+                                          RequestState.findDriverState]!);
+                                    }
+                                    await Get.find<CreateATripController>()
+                                        .createATrip(points);
+                                    baseMapController.update();
+                                  }))),
+                    if (!isKeyboardIsOpen) K.sizedBoxH0,
+                    if (!isKeyboardIsOpen) K.sizedBoxH0,
                   ],
                 ),
               ),

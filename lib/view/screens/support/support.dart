@@ -6,6 +6,7 @@ import '../../../util/dimensions.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_body.dart';
 import '../../widgets/custom_tap_bar.dart';
+import 'controller/support_controller.dart';
 import 'widgets/complains_page.dart';
 import 'widgets/help_and_support.dart';
 
@@ -24,12 +25,14 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen>
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
+    Get.put(SupportController());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: CustomBody(
         appBar: CustomAppBar(
           title: Strings.doYouNeedHelp.tr,
@@ -44,7 +47,8 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen>
               CustomTapBar(
                 tabController: tabController,
                 firstTap: Strings.helpSupport.tr,
-                secondTap: Strings.complains.tr, onTabChanged: (v) {},
+                secondTap: Strings.complains.tr,
+                onTabChanged: (v) {},
               ),
               Expanded(
                   child: TabBarView(

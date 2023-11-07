@@ -78,6 +78,7 @@ class BaseMapScreen extends StatelessWidget {
                         target: controller.initialPosition,
                         zoom: 16,
                       ),
+                      
                     ),
 
                     expandableContent: Container(

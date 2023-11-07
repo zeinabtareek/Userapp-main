@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
+import '../../../../helper/date_converter.dart';
 import '../../../../pagination/typedef/page_typedef.dart';
 import '../../../../pagination/widgets/paginations_widgets.dart';
 import '../../../../util/dimensions.dart';
@@ -64,9 +65,9 @@ class NotificationWidget extends PaginationViewItem<NotificationModel> {
         ),
         margin: const EdgeInsets.symmetric(vertical: 2),
         child: NotificationListTile(
-          title: data.title,
-          desc: data.body,
-          timer: data.createdAt.toString(),
+          title: data.title??"",
+          desc: data.body??"",
+          timer: DateConverter.fromNow(data.createdAt),
           image: data.img ?? "",
         ));
   }

@@ -56,31 +56,28 @@ class RideController extends BaseController implements GetxService {
   double heightOfTypes = 0.0;
   bool isExpanded = false;
   dynamic distance = 0.0;
-  var duration ;
+  var duration;
 
-
-
-
-   final List<String> _paymentOptions = ['cash', 'digital', 'wallet',];
+  final List<String> _paymentOptions = [
+    'cash',
+    'digital',
+    'wallet',
+  ];
   List<String> get paymentOptions => _paymentOptions;
-  var initialSelectItem ;
+  var initialSelectItem;
   // var initialSelectItem= 'digital';
-
-
-
-
 
   @override
   onInit() async {
     super.onInit();
     // await getPrice();
     // initialSelectItem = _paymentOptions.first;
-     inputFarePriceController.text = "0.00";
+    inputFarePriceController.text = "0.00";
     // distance=await  Get.find<WhereToGoController>().calculateDistance();
   }
 
   @override
-    dispose() {
+  dispose() {
     // TODO: implement dispose
     super.dispose();
     promoCodeController.clear();
@@ -92,26 +89,25 @@ class RideController extends BaseController implements GetxService {
     heightOfTypes = 0.0;
     isExpanded = false;
   }
+
   // var distance ;
   Future<double?> calculateDistance() async {
-    distance=  await Get.find<CreateATripController>().calculateDistance(
+    distance = await Get.find<CreateATripController>().calculateDistance(
       const LatLng(33.7749, -122.4194), // San Francisco
-      const LatLng(37.7753, -122.4199), // Replace with your actual point 1 coordinates
+      const LatLng(
+          37.7753, -122.4199), // Replace with your actual point 1 coordinates
     );
     return distance;
   }
 
-
-
   Future<double?> calculateDuration() async {
-    duration=  await Get.find<CreateATripController>().calculateDuration(
-      LatLng(37.7749, -122.4194), // San Francisco
-      LatLng(
+    duration = await Get.find<CreateATripController>().calculateDuration(
+      const LatLng(37.7749, -122.4194), // San Francisco
+      const LatLng(
           37.7753, -122.4199), // Replace with your actual point 1 coordinates
     );
     return duration;
   }
-
 
   void vehicleToggle() {
     isExpanded = !isExpanded;
@@ -183,7 +179,7 @@ class RideController extends BaseController implements GetxService {
   /// Set Rate For The Trip
   TextEditingController promoCodeController = TextEditingController();
   OrderPriceData priceData = OrderPriceData();
-final loading=false.obs;
+  final loading = false.obs;
   getPromoCodeDiscount() async {
     loading.value = true;
     try {
@@ -194,12 +190,12 @@ final loading=false.obs;
         } else {
           double? distance = await calculateDistance();
           priceData = await rideRepo.getPrice(
-            packageId: selectedPackage.value!.id,
-            vehicleTypeId: selectedSubPackage.value!.id,
-            promoCode: promoCodeController.text,
-              distance: 22
-            // distance: distance,
-          );
+              packageId: selectedPackage.value!.id,
+              vehicleTypeId: selectedSubPackage.value!.id,
+              promoCode: promoCodeController.text,
+              distance: Get.find<WhereToGoController>().distance
+              // distance: distance,
+              );
           OverlayHelper.showSuccessToast(Get.overlayContext!, Strings.done.tr);
           print('priceData $priceData');
         }
@@ -215,23 +211,19 @@ final loading=false.obs;
       print(e);
     } finally {
       loading.value = false; // Stop the loading indicator
-  update(); // Trigger a rebuild of the GetBuilder widget
-
+      update(); // Trigger a rebuild of the GetBuilder widget
     }
-   }
+  }
 
-
-getOrderPrice()async{
-  setState(ViewState.busy);
-  priceData= await   rideRepo.getPrice(
-                  packageId: selectedPackage.value!.id,
-                  vehicleTypeId: selectedSubPackage.value!.id,
-                  promoCode: promoCodeController.text,
-                  distance: 22
-                  // distance: distance
-
-  );
-  setState(ViewState.idle);
-
-}
+  getOrderPrice() async {
+    setState(ViewState.busy);
+    priceData = await rideRepo.getPrice(
+      packageId: selectedPackage.value!.id,
+      vehicleTypeId: selectedSubPackage.value!.id,
+      promoCode: promoCodeController.text,
+      distance: Get.find<WhereToGoController>().distance,
+      // distance: distance
+    );
+    setState(ViewState.idle);
+  }
 }
