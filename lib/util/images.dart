@@ -1,4 +1,6 @@
 class Images {
+    static const String delete = 'assets/image/delete.png';
+
   static const String logo = 'assets/image/logo.png';
   static const String splashLogo = 'assets/image/logo.png';
   // static const String splashLogo = 'assets/image/splash_logo.png';

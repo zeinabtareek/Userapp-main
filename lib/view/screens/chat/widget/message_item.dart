@@ -18,12 +18,13 @@ class MessageItem extends PaginationViewItem<MsgChatResModelItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Get.to(() => MessageScreen(
-            chatId: data.id!,
-          ),binding: BindingsBuilder(() {
-                   // ignore: avoid_single_cascade_in_expression_statements
+      onTap: () => Get.to(
+          () => MessageScreen(
+                chatId: data.id!,
+              ), binding: BindingsBuilder(() {
+        // ignore: avoid_single_cascade_in_expression_statements
         Get.find<ChatController>()..initChat();
-          })),
+      })),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(Dimensions.paddingSizeDefault, 0,
             Dimensions.paddingSizeDefault, Dimensions.paddingSizeSmall),
@@ -85,15 +86,27 @@ class MessageItem extends PaginationViewItem<MsgChatResModelItem> {
                             data.msgType == MsgType.text
                                 ? data.lastMsg!
                                 : MsgType.image.name,
-                            style: textMedium.copyWith(
-                              fontSize: Dimensions.fontSizeSmall,
-                              color:
-                                  // isRead
-                                  //     ? Theme.of(context).textTheme.bodyLarge!.color
-                                  //     :
+                            style: data.msgType == MsgType.text
+                                ? textMedium.copyWith(
+                                    fontSize: Dimensions.fontSizeSmall,
+                                    color:
+                                        // isRead
+                                        //     ? Theme.of(context).textTheme.bodyLarge!.color
+                                        //     :
 
-                                  Theme.of(context).hintColor,
-                            ),
+                                        Theme.of(context).hintColor,
+                                  )
+                                : textBold.copyWith(
+                                    fontSize: Dimensions.fontSizeSmall,
+                                    color:
+                                        // isRead
+                                        //     ? Theme.of(context).textTheme.bodyLarge!.color
+                                        //     :
+
+                                        Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(0.6),
+                                  ),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),

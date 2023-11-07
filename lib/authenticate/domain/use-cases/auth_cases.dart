@@ -89,4 +89,12 @@ class AuthCases {
   FDM checkOtpCode(LoginWithOtpReqModel req) async {
     return _data.checkOtpCode(req);
   }
+
+    logout() {
+    return _data.logout();
+  }
+
+  deleteAcc() {
+    return _data.deleteAcc();
+  }
 }

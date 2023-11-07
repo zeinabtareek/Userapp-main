@@ -726,4 +726,29 @@ class AuthController extends GetxController {
       showSuccessToast: true,
     );
   }
+
+
+
+  
+ Future logOut() async {
+    final res = await authCases.logout();
+    checkStatus(
+      res,
+      onSuccess: (res) {
+        toSignInScreen();
+      },
+      showSuccessToast: true,
+    );
+  }
+
+  deleteAccount() async {
+    final res = await authCases.deleteAcc();
+    checkStatus(
+      res,
+      onSuccess: (res) {
+        toSignInScreen();
+      },
+      showSuccessToast: true,
+    );
+  }
 }

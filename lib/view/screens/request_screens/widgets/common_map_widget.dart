@@ -37,6 +37,8 @@ class CommonMapWidget extends StatelessWidget {
               compassEnabled: true,
               mapType: MapType.normal,
               initialCameraPosition: initialCameraPosition,
+              // markers: Set(),
+              // TODO: 
               onMapCreated: onMapCreated,
             ),
           ),

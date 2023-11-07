@@ -1,7 +1,11 @@
 import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
+import 'package:get/utils.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../initialize_dependencies.dart';
 import '../../util/app_constants.dart';
 import 'auth_interceptor.dart';
 import 'error_interceptor.dart';
@@ -34,7 +38,8 @@ class DioUtilNew {
   }
 
   static BaseOptions _getOptions() {
-    String dummyTokken= "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTcyLjE2LjEzLjIyOjgwMDAvYXBpL3VzZXIvcmVnaXN0ZXIiLCJpYXQiOjE2OTczNzQyNDMsImV4cCI6MTcyODkxMDI0MywibmJmIjoxNjk3Mzc0MjQzLCJqdGkiOiJLamdZT0JPS1FySG4yV25PIiwic3ViIjoiNCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.c7PABQys4zgwReXLFYmcDVXkqCSyb1JpP4b-Ip7cGGs";
+    String dummyTokken =
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTcyLjE2LjEzLjIyOjgwMDAvYXBpL3VzZXIvcmVnaXN0ZXIiLCJpYXQiOjE2OTczNzQyNDMsImV4cCI6MTcyODkxMDI0MywibmJmIjoxNjk3Mzc0MjQzLCJqdGkiOiJLamdZT0JPS1FySG4yV25PIiwic3ViIjoiNCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.c7PABQys4zgwReXLFYmcDVXkqCSyb1JpP4b-Ip7cGGs";
     // String dummyTokken= "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTcyLjE2LjEzLjIyOjgwMDAvYXBpL3VzZXIvcmVnaXN0ZXIiLCJpYXQiOjE2OTYxNDc4OTYsImV4cCI6MTcyNzY4Mzg5NiwibmJmIjoxNjk2MTQ3ODk2LCJqdGkiOiJIcnJmVmVOekRacnNOWGw2Iiwic3ViIjoiMyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.hBdTurknwBexgqzpuPKnXSAT1Mozo078oCABjfqAvyA";
     BaseOptions options = BaseOptions(
       followRedirects: false,
@@ -48,13 +53,14 @@ class DioUtilNew {
       'Content-type': 'application/json',
       'Accept': 'application/json',
       // 'Authorization': "Bearer ${CacheHelper.getData(key: AppConstants.token)}",
-      'Authorization': 'Bearer $dummyTokken',
-      AppConstants.acceptLanguage: 'en'
+      // 'Authorization': 'Bearer $dummyTokken',
+      AppConstants.acceptLanguage:   Get.find<SharedPreferences>().getString(AppConstants.languageCode) ??
+              AppConstants.languages[0].languageCode,
+      // AppConstants.acceptLanguage: "ar"
 
+      // AppConstants.acceptLanguage: languageCode ?? AppConstants.languages[0].languageCode,
 
-    // AppConstants.acceptLanguage: languageCode ?? AppConstants.languages[0].languageCode,
-
-    //     CacheHelper.getData(key: AppConstants.languageCode) == "en"
+      //     CacheHelper.getData(key: AppConstants.languageCode) == "en"
       //         ? "en-US"
       //         : "ar-EG"
     };

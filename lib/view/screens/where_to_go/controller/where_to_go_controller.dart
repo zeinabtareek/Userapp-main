@@ -215,7 +215,16 @@ class WhereToGoController extends BaseController implements GetxService {
       // ));
       Get.to(() => BaseMapScreen(
             points: _getPoints!,
-          ));
+          ))?.then((value) {
+        selectedPoints = [];
+        fromRouteController.text = '';
+        toRouteController.text = '';
+        extraPoints = [];
+        extraRouteController.text = '';
+        extraRouteController2.text = '';
+        extraRouteController3.text = '';
+        update();
+      });
       //not needed
       Get.find<RideController>().updateRideCurrentState(RideState.initial);
       distance = await calculateDistance();

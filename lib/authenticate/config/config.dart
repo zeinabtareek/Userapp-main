@@ -35,6 +35,8 @@ class AuthLib {
 
   static const String changePassEndPoint = "change_password";
   static const String checkOtpEndPoint = "check_code";
+    static const String logout = 'logout';
+  static const String deleteAccount = 'delete_account';
 
   static List<GetPage> authPages = [
     GetPage(

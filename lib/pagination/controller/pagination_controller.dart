@@ -48,6 +48,8 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
   bool get canFetchMore => pagination.hasNext == true;
 
   _restData() {
+    _handler!.refreshController!.headerMode!.value = RefreshStatus.idle;
+    _handler!.refreshController!.footerMode!.value = LoadStatus.idle;
     pagination.page = 1;
     pagination.hasPrevious = false;
     items.clear();
@@ -95,7 +97,7 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
       onNoMoreData: () {
         _handler?.loadNoData();
         change(
-          PaginationNoMoreData(items),
+          PaginationLoaded(items),
           status: RxStatus.success(),
         );
       },
@@ -140,10 +142,10 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
         },
         onNoMoreData: () {
           _handler?.loadNoData();
-          // change(
-          //   PaginationNoMoreData(items),
-          //   status: RxStatus.success(),
-          // );
+          change(
+            PaginationLoaded(items),
+            status: RxStatus.success(),
+          );
         },
         onEmptyResList: () {
           // TODO:  show toast here no data found

@@ -1,9 +1,8 @@
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:jiffy/jiffy.dart';
 
 class DateConverter {
-
   static String formatDate(DateTime dateTime) {
     return DateFormat('yyyy-MM-dd hh:mm:ss a').format(dateTime);
   }
@@ -21,11 +20,13 @@ class DateConverter {
   }
 
   static String dateTimeStringToDateTime(String dateTime) {
-    return DateFormat('dd MMM yyyy  ${_timeFormatter()}').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime));
+    return DateFormat('dd MMM yyyy  ${_timeFormatter()}')
+        .format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime));
   }
 
   static String dateTimeStringToDateOnly(String dateTime) {
-    return DateFormat('dd MMM yyyy').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime));
+    return DateFormat('dd MMM yyyy')
+        .format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTime));
   }
 
   static DateTime dateTimeStringToDate(String dateTime) {
@@ -33,15 +34,19 @@ class DateConverter {
   }
 
   static DateTime isoStringToLocalDate(String dateTime) {
-    return DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').parse(dateTime,true).toLocal();
+    return DateFormat('yyyy-MM-ddTHH:mm:ss.SSS')
+        .parse(dateTime, true)
+        .toLocal();
   }
 
   static String isoStringToLocalString(String dateTime) {
-    return DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.parse(dateTime).toLocal());
+    return DateFormat('yyyy-MM-dd HH:mm:ss')
+        .format(DateTime.parse(dateTime).toLocal());
   }
 
   static String isoStringToDateTimeString(String dateTime) {
-    return DateFormat('dd MMM yyyy  ${_timeFormatter()}').format(isoStringToLocalDate(dateTime));
+    return DateFormat('dd MMM yyyy  ${_timeFormatter()}')
+        .format(isoStringToLocalDate(dateTime));
   }
 
   static String isoStringToLocalDateOnly(String dateTime) {
@@ -49,7 +54,8 @@ class DateConverter {
   }
 
   static String stringToLocalDateOnly(String dateTime) {
-    return DateFormat('dd MMM yyyy').format(DateFormat('yyyy-MM-dd').parse(dateTime));
+    return DateFormat('dd MMM yyyy')
+        .format(DateFormat('yyyy-MM-dd').parse(dateTime));
   }
 
   static String localDateToIsoString(DateTime dateTime) {
@@ -64,8 +70,6 @@ class DateConverter {
     return DateFormat('HH:mm').parse(time);
   }
 
-
-
   static String _timeFormatter() {
     return 'HH:mm a';
     // return Get.find<SplashController>().configModel.timeformat == '24' ? 'HH:mm' : 'hh:mm a';
@@ -75,23 +79,23 @@ class DateConverter {
     int firstValue = minMinute;
     int secondValue = maxMinute;
     String type = 'min';
-    if(minMinute >= 525600) {
+    if (minMinute >= 525600) {
       firstValue = (minMinute / 525600).floor();
       secondValue = (maxMinute / 525600).floor();
       type = 'year';
-    }else if(minMinute >= 43200) {
+    } else if (minMinute >= 43200) {
       firstValue = (minMinute / 43200).floor();
       secondValue = (maxMinute / 43200).floor();
       type = 'month';
-    }else if(minMinute >= 10080) {
+    } else if (minMinute >= 10080) {
       firstValue = (minMinute / 10080).floor();
       secondValue = (maxMinute / 10080).floor();
       type = 'week';
-    }else if(minMinute >= 1440) {
+    } else if (minMinute >= 1440) {
       firstValue = (minMinute / 1440).floor();
       secondValue = (maxMinute / 1440).floor();
       type = 'day';
-    }else if(minMinute >= 60) {
+    } else if (minMinute >= 60) {
       firstValue = (minMinute / 60).floor();
       secondValue = (maxMinute / 60).floor();
       type = 'hour';
@@ -100,11 +104,23 @@ class DateConverter {
   }
 
   static String localDateToIsoStringAMPM(DateTime dateTime) {
-    return DateFormat('${_timeFormatter()} | d-MMM-yyyy ').format(dateTime.toLocal());
+    return DateFormat('${_timeFormatter()} | d-MMM-yyyy ')
+        .format(dateTime.toLocal());
   }
+
   static String localToIsoString(DateTime dateTime) {
     return DateFormat('d MMMM yyyy,d hh:mm aa').format(dateTime.toLocal());
   }
 
-
+  static String fromNow(dynamic time) {
+    if (time is DateTime) {
+      return Jiffy.parseFromDateTime(time).fromNow();
+    } else if (time is String) {
+      return Jiffy.parse(time).fromNow();
+    } else if (time is Jiffy) {
+      return time.fromNow();
+    } else {
+      throw UnsupportedError(" Wrong time data type ");
+    }
+  }
 }

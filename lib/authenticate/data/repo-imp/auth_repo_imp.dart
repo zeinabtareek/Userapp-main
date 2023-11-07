@@ -209,6 +209,35 @@ class AuthRepoImp implements AuthRepo {
       return DataFailedErrorMsg(e.toString(), null);
     }
   }
+  
+  Future deleteAcc() async {
+    try {
+      var res = await remoteApiAuth.deleteAccount();
+
+      if (res.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(res.data);
+      } else {
+        return DataFailedErrorMsg(res.data.msg ?? "", res.data);
+      }
+    } catch (e) {
+      return DataFailedErrorMsg(e.toString(), null);
+    }
+  }
+
+  @override
+  Future logout() async {
+    try {
+      var res = await remoteApiAuth.logout();
+
+      if (res.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(res.data);
+      } else {
+        return DataFailedErrorMsg(res.data.msg ?? "", res.data);
+      }
+    } catch (e) {
+      return DataFailedErrorMsg(e.toString(), null);
+    }
+  }
 
   // @override
   // Future<DataState<MsgModel>> checkOtpCode(LoginWithOtpReqModel req) {
