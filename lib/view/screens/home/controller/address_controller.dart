@@ -37,7 +37,7 @@ class AddressController extends BaseController implements GetxService {
     await getSuggestedAddressList();
   }
 
-  static List<String> staticAddressNames = ["Home", "Office", "Journey", "Mall"];
+  static List<String> staticAddressNames = ["home", "office", "journey", "mall"];
 
   static List<String> staticAddressIcons = [
     Images.homeHome,

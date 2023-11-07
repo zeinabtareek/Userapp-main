@@ -125,7 +125,7 @@ class RouteWidget extends StatelessWidget {
                   const SizedBox(width: Dimensions.paddingSizeSmall),
 
 
-                    Text('${whereToGoController.distance} km'),
+                    Text('${whereToGoController.distance} ${'km'.tr}'),
                     // Text('${whereToGoController.duration} duration'),
                 ],
               ),

@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../../view/widgets/custom_loading.dart';
+import '../../view/widgets/custom_no_data.dart';
 import '../controller/pagination_controller.dart';
 import '../state/pagination_bloc_state.dart';
 import '../use-case/main_paginate_list_use_case.dart';
@@ -58,6 +61,7 @@ class PaginationListView<UseCase extends MainPaginateListUseCase, Entity,
       if (state is PaginationLoaded && state.items.isEmpty ||
           state is PaginationNoDataFoundState) {
         // TODO:  NoDataFoundWidget
+        // return   customNoDataWidget();
         return const Center(child: Text("NoDataFound"));
       }
       if (state is PaginationBlocInitial) {
@@ -117,13 +121,16 @@ class PaginationListViewInTabBar<UseCase extends MainPaginateListUseCase,
           alignment: Alignment.center,
           // TODO:  loadingWidget
           // child: const LoadingWidget(),
-          child: const Center(
-            child: CupertinoActivityIndicator(),
+          child: Center(
+            child: customLoading(width: 150.w),
+
+            //child: CupertinoActivityIndicator( ),
           ),
         );
       }
       if (state is PaginationError) {
         return const Center(child: Icon(Icons.error));
+        // return const Center(child: Icon(Icons.error));
       }
       if (state is PaginationLoaded && state.items.isNotEmpty) {
         return paginatedLst(
@@ -143,7 +150,8 @@ class PaginationListViewInTabBar<UseCase extends MainPaginateListUseCase,
       if (state is PaginationLoaded && state.items.isEmpty ||
           state is PaginationNoDataFoundState) {
         // TODO:  NoDataFoundWidget
-        return const Center(child: Text("NoDataFound"));
+        return   customNoDataWidget();
+        // return const Center(child: Text("NoDataFound"));
       }
       if (state is PaginationBlocInitial) {
         // TODO:
@@ -218,10 +226,15 @@ class PaginationChatListView<UseCase extends MainPaginateListUseCase, Entity,
           width: 500,
           alignment: Alignment.center,
           // TODO:  loadingWidget
-          child: const Center(
-            child: CircularProgressIndicator.adaptive(),
+          child:
+          // const Center(
+          //   child: CircularProgressIndicator.adaptive(),
+          // ),
+          Center(
+            child: customLoading(width: 150.w),
+
+            //child: CupertinoActivityIndicator( ),
           ),
-          // child: const LoadingWidget(),
         );
       }
       if (state is PaginationError) {
@@ -253,6 +266,7 @@ class PaginationChatListView<UseCase extends MainPaginateListUseCase, Entity,
       if (state is PaginationLoaded && state.items.isEmpty ||
           state is PaginationNoDataFoundState) {
         // TODO:  NoDataFoundWidget
+        // return   customNoDataWidget();
         return const Center(child: Text("NoDataFound"));
       }
       if (state is PaginationBlocInitial) {

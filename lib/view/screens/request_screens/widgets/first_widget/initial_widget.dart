@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/ui/overlay_helper.dart';
+import 'package:ride_sharing_user_app/view/screens/where_to_go/controller/where_to_go_controller.dart';
 
 import '../../../../../enum/request_states.dart';
 import '../../../../../util/app_strings.dart';
@@ -226,6 +227,11 @@ class InitialRequestWidget extends StatelessWidget {
                                   OverlayHelper.showWarningToast(
                                       context, Strings.selectAPaymentMethod.tr);
                                   // print('select a type');
+                                }
+                                else if(Get.find<WhereToGoController>().distance==null){
+                                  OverlayHelper.showWarningToast(
+                                      context, Strings.wait.tr);
+
                                 }
                               })),
                       K.sizedBoxH0,

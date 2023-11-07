@@ -2,9 +2,11 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../view/screens/profile/widgets/pick_image_widget.dart';
 import 'display_helper.dart';
 
 class CustomPickHelper {
@@ -17,7 +19,28 @@ class CustomPickHelper {
     }
     return null;
   }
+  static Future <File?> showPickImageBottomSheet(BuildContext context) {
+    File ? file;
+    return showModalBottomSheet<File?>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return   PickImageWidget(
+          onCameraTap: () async{
 
+            file= await pickImage(ImageSource.camera);
+            Navigator.of(context).pop(file);
+
+          },
+          onGalleryTap: () async{
+            file= await pickImage(ImageSource.gallery);
+            Navigator.of(context).pop(file);
+
+          },);
+      },
+    );
+    return Future.value(file);
+  }
   static Future<File?> pickVideo(ImageSource imageSource) async {
     XFile? file = await ImagePicker().pickVideo(source: imageSource);
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/bases/base_controller.dart';
 import 'package:ride_sharing_user_app/enum/view_state.dart';
@@ -52,7 +53,7 @@ class ComplainsPage extends GetView<SupportController> {
                           .color!
                           .withOpacity(0.5),
                     ),
-                    maxListHeight: 200,
+                    maxListHeight: 300.h,
                     items: controller.complains
                         .map((item) => CustomDropdownMenuItem<ComplainResModel>(
                               value: item,

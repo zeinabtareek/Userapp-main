@@ -92,7 +92,7 @@ class AddOrUpdateAddressScreen extends GetView<AddressController> {
                       isLoading: controller.isLoading.isTrue,
                       textColor: Colors.white,
                       radius: 20,
-                      buttonText: "delete Saved Address ",
+                      buttonText:'delete_saved_address'.tr,
                       onPressed: () {
                         controller.deleteAddress(
                           address: address!,
