@@ -1,6 +1,3 @@
-
-
-
 class OrderPriceModel {
   int? status;
   String? message;
@@ -11,7 +8,8 @@ class OrderPriceModel {
   OrderPriceModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new OrderPriceData.fromJson(json['data']) : null;
+    data =
+        json['data'] != null ? new OrderPriceData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -26,22 +24,23 @@ class OrderPriceModel {
 }
 
 class OrderPriceData {
-  int? kmPrice;
-  int? distance;
-  int? priceBeforeDiscount;
+  num? kmPrice;
+  num? distance;
+  num? priceBeforeDiscount;
   bool? promoCodeUsed;
-  int? discountPercent;
-  int? discountAmount;
-  int? finalPrice;
+  num? discountPercent;
+  num? discountAmount;
+  num? finalPrice;
 
-  OrderPriceData(
-      {this.kmPrice,
-        this.distance,
-        this.priceBeforeDiscount,
-        this.promoCodeUsed,
-        this.discountPercent,
-        this.discountAmount,
-        this.finalPrice});
+  OrderPriceData({
+    this.kmPrice,
+    this.distance,
+    this.priceBeforeDiscount,
+    this.promoCodeUsed,
+    this.discountPercent,
+    this.discountAmount,
+    this.finalPrice,
+  });
 
   OrderPriceData.fromJson(Map<String, dynamic> json) {
     kmPrice = json['km_price'];

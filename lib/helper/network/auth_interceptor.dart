@@ -9,17 +9,21 @@ class AuthInterceptor extends InterceptorsWrapper {
   Future onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     if (await sl<AuthCases>().isAuthenticated()) {
-    // if (false) {
+      // if (false) {
       UserAuthModel? user = await sl<AuthCases>().getUserData();
 
-      options.headers.addAll({"Authorization": "Bearer ${user!.tkn}"});
+      options.headers.addAll({
+        "Authorization": "Bearer ${user!.tkn}",
+      });
     } else {
       // TODO: remove
       String dummyTokken =
           // "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FyYWJjaGFuY2UuY29tL0hvb2QtQmFja2VuZC1EYXNoYm9hcmQvcHVibGljL2FwaS91c2VyL2xvZ2luIiwiaWF0IjoxNjk4MzExODcyLCJleHAiOjE3Mjk4NDc4NzIsIm5iZiI6MTY5ODMxMTg3MiwianRpIjoidHJPc1UyM3ZwYjJhR21UZiIsInN1YiI6IjEwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.vjXPuBqwOeClZMiRSf2J3lM8t5b5XkJ_EK9ye37rA3w";
 
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FyYWJjaGFuY2UuY29tL0hvb2QtQmFja2VuZC1EYXNoYm9hcmQvcHVibGljL2FwaS91c2VyL2xvZ2luIiwiaWF0IjoxNjk3NjA5NTM0LCJleHAiOjE3MjkxNDU1MzQsIm5iZiI6MTY5NzYwOTUzNCwianRpIjoiVm5tRjUxcjQ0R2ZqN1NleSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.yG-uhU_pA3DhsjKBX_Mbc4oVyDO5-HJ-TCBLPyDHUjU";
-      options.headers.addAll({"Authorization": "Bearer $dummyTokken",});
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FyYWJjaGFuY2UuY29tL0hvb2QtQmFja2VuZC1EYXNoYm9hcmQvcHVibGljL2FwaS91c2VyL2xvZ2luIiwiaWF0IjoxNjk3NjA5NTM0LCJleHAiOjE3MjkxNDU1MzQsIm5iZiI6MTY5NzYwOTUzNCwianRpIjoiVm5tRjUxcjQ0R2ZqN1NleSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.yG-uhU_pA3DhsjKBX_Mbc4oVyDO5-HJ-TCBLPyDHUjU";
+      options.headers.addAll({
+        "Authorization": "Bearer $dummyTokken",
+      });
     }
 
     return super.onRequest(options, handler);

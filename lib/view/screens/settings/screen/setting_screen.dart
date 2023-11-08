@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../authenticate/config/config.dart';
+import '../../../../authenticate/domain/use-cases/auth_cases.dart';
 import '../../../../authenticate/presentation/controller/auth_controller.dart';
 import '../../../../authenticate/presentation/reset-password-screen/reset_password_screen.dart';
 import '../../../../initialize_dependencies.dart';
@@ -8,6 +10,7 @@ import '../../../../theme/theme_controller.dart';
 import '../../../../util/dimensions.dart';
 import '../../../../util/images.dart';
 import '../../../../util/text_style.dart';
+import '../../../widgets/confirmation_dialog.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/custom_body.dart';
 import '../../../widgets/custom_button.dart';
@@ -264,8 +267,6 @@ class SettingScreen extends StatelessWidget {
                           )),
                     );
                   }),
-             
-             
                   ListTile(
                     title: Text(
                       'change_password'.tr,
@@ -286,6 +287,34 @@ class SettingScreen extends StatelessWidget {
                           },
                         ),
                       );
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
+                      'delete_acc'.tr,
+                      style: textMedium.copyWith(),
+                    ),
+                    leading: Image.asset(Images.delete,
+                        width: 20,
+                        height: 20,
+                        color: Theme.of(context).primaryColor),
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return ConfirmationDialog(
+                              icon: Images.delete,
+                              title: 'delete_acc'.tr,
+                              description:
+                                  'do_you_want_to_delete_this_account'.tr,
+                              onYesPressed: () async {
+                                if (await sl<AuthCases>().isAuthenticated()) {
+                                  await sl<AuthCases>().deleteAcc();
+                                  await sl<AuthCases>().setUserDate(null);
+                                }
+                              },
+                            );
+                          });
                     },
                   ),
                   const Spacer(),

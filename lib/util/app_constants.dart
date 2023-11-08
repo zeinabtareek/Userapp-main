@@ -19,6 +19,8 @@ class AppConstants {
   static const String getAllTransactions = '/api/user/all_transactions';
   static const String getNotification = '/api/user/notifications';
 
+  static const String getComplainTypes = '/api/user/complain_types';
+
   ///****************
   static const String configUri = '/api/v1/config';
   static const String loginUri = '/api/v1/auth/login';

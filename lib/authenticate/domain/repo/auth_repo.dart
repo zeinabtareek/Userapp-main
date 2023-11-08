@@ -57,4 +57,6 @@ abstract class AuthRepo {
   Future<void> saveAuthUserData(LoginWithPassReqModel? loginWithPassReqModel);
 
   Future<bool> isContainsAuthUserData();
+    Future  logout();
+  Future  deleteAcc();
 }

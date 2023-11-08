@@ -16,7 +16,7 @@ import 'widget/message_bubble.dart';
 class MessageScreen extends GetView<ChatController> {
   final String? chatId;
   MessageScreen({super.key, required this.chatId}) {
-    controller.chatId = chatId;
+    controller.chatId.value = chatId;
   }
 
   @override
@@ -40,30 +40,31 @@ class MessageScreen extends GetView<ChatController> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SizedBox(
-                height: (Get.height / 5) * 3.5 -
-                    MediaQuery.of(context).viewInsets.bottom,
-                child: controller.chatId != null
-                    ? GetBuilder<PaginateChatMsgsController>(
-                        init: PaginateChatMsgsController(
-                          GetChatMsgsUseCase(
-                            GetChatMsgsReqModel(
-                              1,
-                              chatId: controller.chatId!,
+              child: Obx(() => SizedBox(
+                    height: (Get.height / 5) * 3.5 -
+                        MediaQuery.of(context).viewInsets.bottom,
+                    child: controller.chatId.value != null
+                        ? GetBuilder<PaginateChatMsgsController>(
+                            init: PaginateChatMsgsController(
+                              GetChatMsgsUseCase(
+                                GetChatMsgsReqModel(
+                                  1,
+                                  chatId: controller.chatId.value!,
+                                ),
+                              ),
                             ),
+                            builder: (con) {
+                              return PaginateChatMsgsView(
+                                listPadding:
+                                    const EdgeInsets.only(right: 30, left: 30),
+                                child: (entity) =>
+                                    ConversationBubble(data: entity),
+                              );
+                            })
+                        : const Center(
+                            child: Text("Empty Chat"),
                           ),
-                        ),
-                        builder: (con) {
-                          return PaginateChatMsgsView(
-                            listPadding:
-                                const EdgeInsets.only(right: 30, left: 30),
-                            child: (entity) => ConversationBubble(data: entity),
-                          );
-                        })
-                    : const Center(
-                        child: Text("Empty Chat"),
-                      ),
-              ),
+                  )),
             ),
             Obx(() => Visibility(
                   visible: controller.canChat.value,
@@ -141,23 +142,16 @@ class MessageScreen extends GetView<ChatController> {
                                     )),
                                 Row(
                                   children: [
-                                 ImagePick(
-                                  
-                                          width:
-                                              Dimensions.identityImageWidth / 2,
-                                          hight:
-                                              Dimensions.identityImageHeight /
-                                                  2,
-                                          deleteImg: () {
-                                            controller.pickedImageFile.value =
-                                                null;
-                                          },
-                                          onSelectImg: (img) {
-                                            controller.pickedImageFile.value =
-                                                img;
-                                      
-                                          },
-                                        ),
+                                    ImagePick(
+                                      width: Dimensions.identityImageWidth / 2,
+                                      hight: Dimensions.identityImageHeight / 2,
+                                      deleteImg: () {
+                                        controller.pickedImageFile.value = null;
+                                      },
+                                      onSelectImg: (img) {
+                                        controller.pickedImageFile.value = img;
+                                      },
+                                    ),
 
                                     // Obx(
                                     //   () {
