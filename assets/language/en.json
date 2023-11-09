@@ -468,6 +468,8 @@
   "hr": "Hr","select_a_Payment_method": "Select a payment method",
   "delete_saved_address": "Delete saved address",
   "wait": "Please Wait",
-  "your_selected_car_type": "your selected car type is "
+  "your_selected_car_type": "your selected car type is ",
+  "pay_with_apple_pay": "Pay your ride using Apple pay payment method ...",
+  "click_on_btn_to_finish_your_billing": "Click the button to finalize your payment"
 
 }

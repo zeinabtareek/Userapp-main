@@ -175,6 +175,9 @@ class InitialRequestWidget extends StatelessWidget {
                             }
                             controller.update();
                           }
+
+                          print(' initialSelectItem ${controller.initialSelectItem}' );
+
                         },
                       ),
                     ),

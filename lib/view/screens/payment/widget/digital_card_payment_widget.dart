@@ -52,9 +52,9 @@ class DigitalCardPaymentWidget extends StatelessWidget {
               //   child: Text(digitalPaymentModel.expireDate!, style: textRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color),),
               // ),
               SizedBox(
-                  width: Dimensions.iconSizeLarge,
-                  height: Dimensions.iconSizeLarge,
-                  child: Image.asset(digitalPaymentModel.icon!))
+              //    width: Dimensions.iconSizeDoubleExtraLarge,
+                  height: Dimensions.iconSizeExtraLarge,
+                  child: Image.asset(digitalPaymentModel.icon!,fit: BoxFit.fill,))
             ],
           ),
         ),),

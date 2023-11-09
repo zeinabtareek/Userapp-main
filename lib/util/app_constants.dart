@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/main.dart';
 
 import '../localization/language_model.dart';
 import 'images.dart';
@@ -74,7 +75,9 @@ class AppConstants {
 
 //map api key
 
-  static const String mapKey = 'AIzaSyBvK3ADi17SjO55E46KGr2RT5vSj2nyRpI';
+  static  String get mapKey =>dotenv.get("map_Key");
+    static String get paymentApiKey => dotenv.get("paymentApiKey");
+
 
   static List<LanguageModel> languages = [
     LanguageModel(

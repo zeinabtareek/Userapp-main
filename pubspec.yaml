@@ -67,7 +67,9 @@ dependencies:
   url_launcher: ^6.1.14
   moyasar: ^2.0.2
   flutter_screenutil:
-  lottie:
+  lottie: 
+  flutter_dotenv: ^5.1.0
+
 dependency_overrides:
   #  modal_bottom_sheet:
   #    git:
@@ -92,6 +94,7 @@ flutter:
     - assets/language/
     - assets/svg/
     - assets/lottie/
+    - .env
 
   fonts:
     - family: SFProText

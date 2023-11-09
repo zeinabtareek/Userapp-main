@@ -11,6 +11,9 @@ import '../../widgets/custom_float_action_btn.dart';
 import '../chat/controller/chat_controller.dart';
 import '../chat/message_screen.dart';
 import '../chat/repository/chat_repo.dart';
+import '../home/controller/banner_controller.dart';
+import '../support/controller/support_controller.dart';
+import '../support/support.dart';
 import 'bottom_menu_controller.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -116,22 +119,49 @@ class DashboardScreen extends StatelessWidget {
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.startFloat,
             //
-            floatingActionButton: customFloatActionButton(
-                image: Images.chat,
-                onPressed: () {
-                  Get.to(
-                    () => MessageScreen(
-                      chatId: null,
-                    ),
-                    binding: BindingsBuilder(
-                      () {
-                        // ignore: avoid_single_cascade_in_expression_statements
-                        Get.put(ChatController(chatRepo: ChatRepo()))
-                          ..canChat(true)..setUserTypeIndex(1);
-                      },
-                    ),
-                  );
-                }));
+            floatingActionButton: Builder(builder: (context) {
+              BannerController bannerController = Get.find<BannerController>();
+              bool isLabelVisible;
+              return Obx(
+                () => Badge(
+                  alignment: AlignmentDirectional.topEnd,
+                  backgroundColor: Colors.red,
+                  isLabelVisible: isLabelVisible =
+                      bannerController.unReedCount.value != 0 &&
+                          bannerController.unReedCount.value != null,
+                  label: Text("${bannerController.unReedCount.value ?? ""}"),
+                  child: customFloatActionButton(
+                    image: Images.chat,
+                    onPressed: () {
+                      // if (isLabelVisible) {
+
+                      if (false) {
+                        Get.to(
+                          () => MessageScreen(
+                            chatId: null,
+                          ),
+                          binding: BindingsBuilder(
+                            () {
+                              // ignore: avoid_single_cascade_in_expression_statements
+                              Get.put(ChatController(chatRepo: ChatRepo()))
+                                ..canChat(true)
+                                ..setUserTypeIndex(1);
+                            },
+                          ),
+                        );
+                      } else {
+                        Get.to(() => const HelpAndSupportScreen(),
+                            binding: BindingsBuilder(() {
+                          // ignore: avoid_single_cascade_in_expression_statements
+                          Get.put(SupportController())
+                            ..setHelpAndSupportIndex(1);
+                        }));
+                      }
+                    },
+                  ),
+                ),
+              );
+            }));
       }),
     );
   }

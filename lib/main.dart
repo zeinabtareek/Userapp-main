@@ -9,6 +9,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import 'package:moyasar/moyasar.dart';
 import 'package:ride_sharing_user_app/authenticate/domain/use-cases/auth_cases.dart';
 import 'package:ride_sharing_user_app/firebase_options.dart';
 import 'package:ride_sharing_user_app/helper/notification_helper.dart';
@@ -16,7 +17,7 @@ import 'package:ride_sharing_user_app/theme/dark_theme.dart';
 import 'package:ride_sharing_user_app/util/app_strings.dart';
 import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/history/history_screen.dart';
- import 'package:ride_sharing_user_app/view/screens/invoice/screens/invoice_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/invoice/screens/invoice_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/message/message_list.dart';
 import 'package:ride_sharing_user_app/view/screens/message/message_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/n/test_polyline_screen.dart';
@@ -53,7 +54,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'app_navigator_observer.dart';
 import 'authenticate/presentation/sign-up/sign_up_screen.dart';
 import 'helper/cache_helper.dart';
@@ -61,10 +62,10 @@ import 'helper/route_helper.dart';
 import 'initialize_dependencies.dart';
 import 'theme/dark_theme.dart';
 
-
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
+DotEnv dotenv = DotEnv();
 Future<void> main() async {
   if (ResponsiveHelper.isMobilePhone) {
     HttpOverrides.global = MyHttpOverrides();
@@ -81,6 +82,11 @@ Future<void> main() async {
   await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
   FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
   await initializeDependencies();
+  try {
+    await dotenv.load(fileName: ".env");
+  }catch(e){
+    print('the env file error id::: ${e.toString()}');
+  }
   ChuckerFlutter.showOnRelease = true;
   runApp(MyApp(languages: languages));
 }
@@ -105,8 +111,8 @@ class MyApp extends StatelessWidget {
     }
     return GetBuilder<ThemeController>(builder: (themeController) {
       return GetBuilder<LocalizationController>(
-    //  init: LocalizationController().. ,   
-        builder: (localizeController) {
+          //  init: LocalizationController().. ,
+          builder: (localizeController) {
         return GetBuilder<ConfigController>(builder: (configController) {
           return (GetPlatform.isWeb && configController.config == null)
               ? const SizedBox()
@@ -120,64 +126,70 @@ class MyApp extends StatelessWidget {
                   },
                   // app_navigator_observer
 
-                  child:  ScreenUtilInit(
-                  designSize: const Size(460, 847),
-          builder: (context, child) {
-            SystemChrome.setPreferredOrientations([
-              DeviceOrientation.portraitUp,
-              DeviceOrientation.portraitDown,
-            ]);
-            return GetMaterialApp(
-              title: AppConstants.appName,
-              debugShowCheckedModeBanner: false,
-              navigatorObservers: [
-                ScreenObserver(),
-                ChuckerFlutter.navigatorObserver
-              ],
-              navigatorKey: Get.key,
-              scrollBehavior: const MaterialScrollBehavior().copyWith(
-                dragDevices: {
-                  PointerDeviceKind.mouse,
-                  PointerDeviceKind.touch
-                },
-              ),
-              // theme:  darkTheme ,
-              theme: themeController.isDarkTheme ? darkTheme : lightTheme,
-              locale: localizeController.locale,
-              translations: Messages(languages: languages),
-              fallbackLocale: Locale(
-                  AppConstants.languages[0].languageCode,
-                  AppConstants.languages[0].countryCode),
-              initialRoute: RouteHelper.getSplashRoute(),
-              getPages: RouteHelper.routes,
-              defaultTransition: Transition.topLevel,
-              transitionDuration: const Duration(milliseconds: 500),
-              // home:MapView(),
-              // ParcelHomeScreen(),
-              // AnimatedWidget(items:['2','3','4','5','6'] ,isVertical: false,widget:  itemTrackHistory(onTap: (){
-              //   Get.to(()=>OrderDetails());},
-              //     title: 'Nintendo Swich Oled',
-              //     subTitle: 'Order ID: JB39029910020'),),
-              // AnimatedWidget(
-              //   items: myList,
-              //   isVertical: isVertical,
-              //   widget: myWidget,),
-              //   home: HelpAndSupportScreen(),
-              //   home: AnimatedContainerExample(),
-              //   home: ParcelHomeScreen(),
-              //   home: ParcelNotificationScreen(),
-              //   home: AddShipmenScreen(),
-              //   home: AddShipmenScreen(),
-              //   home: SplashScreen()/**/,
-              //   home: const MessageListScreen()/**/,
-              //   home: const MessageScreen()/**/,
-              // home: const UseCouponScreen()/**/,
-              // home:   HistoryScreen(fromPage: Strings.home,)/**/,
-              // home: const WalletScreen()/**/,
-              // home: const OnBoardingScreen2()/**/,
-              // home: DashboardScreen(),
-            );
-          }));
+                  child: ScreenUtilInit(
+                      designSize: const Size(460, 847),
+                      builder: (context, child) {
+                        SystemChrome.setPreferredOrientations([
+                          DeviceOrientation.portraitUp,
+                          DeviceOrientation.portraitDown,
+                        ]);
+                        return GetMaterialApp(
+                          title: AppConstants.appName,
+                          debugShowCheckedModeBanner: false,
+                          navigatorObservers: [
+                            ScreenObserver(),
+                            ChuckerFlutter.navigatorObserver
+                          ],
+                          navigatorKey: Get.key,
+                          scrollBehavior:
+                              const MaterialScrollBehavior().copyWith(
+                            dragDevices: {
+                              PointerDeviceKind.mouse,
+                              PointerDeviceKind.touch
+                            },
+                          ),
+                          // theme:  darkTheme ,
+                          theme: themeController.isDarkTheme
+                              ? darkTheme
+                              : lightTheme,
+                          locale: localizeController.locale,
+                          translations: Messages(languages: languages),
+                          fallbackLocale: Locale(
+                              AppConstants.languages[0].languageCode,
+                              AppConstants.languages[0].countryCode),
+                          initialRoute: RouteHelper.getSplashRoute(),
+                          getPages: RouteHelper.routes,
+                          defaultTransition: Transition.topLevel,
+                          transitionDuration: const Duration(milliseconds: 500),
+
+                         // home:CoffeeShop(),
+                         // home:PaymentScreen(),
+                          // home:MapView(),
+                          // ParcelHomeScreen(),
+                          // AnimatedWidget(items:['2','3','4','5','6'] ,isVertical: false,widget:  itemTrackHistory(onTap: (){
+                          //   Get.to(()=>OrderDetails());},
+                          //     title: 'Nintendo Swich Oled',
+                          //     subTitle: 'Order ID: JB39029910020'),),
+                          // AnimatedWidget(
+                          //   items: myList,
+                          //   isVertical: isVertical,
+                          //   widget: myWidget,),
+                          //   home: HelpAndSupportScreen(),
+                          //   home: AnimatedContainerExample(),
+                          //   home: ParcelHomeScreen(),
+                          //   home: ParcelNotificationScreen(),
+                          //   home: AddShipmenScreen(),
+                          //   home: AddShipmenScreen(),
+                          //   home: SplashScreen()/**/,
+                          //   home: const MessageListScreen()/**/,
+                          //   home: const MessageScreen()/**/,
+                          // home: const UseCouponScreen()/**/,
+                          // home:   HistoryScreen(fromPage: Strings.home,)/**/,
+                          // home: const WalletScreen()/**/,
+                          // home: const OnBoardingScreen2()/**/,
+                          // home: DashboardScreen(),
+                        );
+                      }));
         });
       });
     });
@@ -191,4 +203,99 @@ class MyHttpOverrides extends HttpOverrides {
       ..badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
   }
+}
+
+class CoffeeShop extends StatefulWidget {
+  const CoffeeShop({super.key});
+
+  @override
+  State<CoffeeShop> createState() => _CoffeeShopState();
+}
+
+class _CoffeeShopState extends State<CoffeeShop> {
+  final paymentConfig = PaymentConfig(
+      publishableApiKey: 'pk_live_FCa4d7npfFhebunCGs7gyxS5uLsuxiBKT8SwKnP4',
+      // publishableApiKey: 'pk_test_r6eZg85QyduWZ7PNTHT56BFvZpxJgNJ2PqPMDoXA',
+      amount: 100, // SAR 1
+      description: 'order #1324',
+      metadata: {'size': '250g'},
+      creditCard: CreditCardConfig(saveCard: false, manual: false),
+      applePay: ApplePayConfig(
+          // merchantId: 'merchant.hooduser',
+          merchantId: 'merchant.mysr.fghurayri',
+          label: 'Hood User',
+          manual: true)
+  );
+
+  void onPaymentResult(result) {
+    if (result is PaymentResponse) {
+      showToast(context, result.status.name);
+      switch (result.status) {
+        case PaymentStatus.paid:
+        // handle success.
+          break;
+        case PaymentStatus.failed:
+        // handle failure.
+          break;
+        case PaymentStatus.authorized:
+        // handle authorized
+
+          break;
+        default:
+      }
+      return;
+    }
+
+    // handle other type of failures.
+    if (result is ApiError) {
+      print('result1 :::$result');
+    }
+    if (result is AuthError) {
+
+      print('result 2 :::$result');
+    }
+    if (result is ValidationError) {
+      print('result 3 :::${result.message}');
+    }
+    if (result is PaymentCanceledError) {
+      print('result 4 :::$result');
+    }
+  }
+
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      body: Center(
+        child: Column(
+          children: [
+            Container(
+              color: Colors.red,
+              height: 200,
+              width: 300,
+
+              child: ApplePay(
+                config: paymentConfig,
+                onPaymentResult: onPaymentResult,
+              ),
+            ),
+            const Text("or"),
+            // CreditCard(
+            //   config: paymentConfig,
+            //   onPaymentResult: onPaymentResult,
+            // )
+          ],
+        ),
+      ),
+
+    );
+  }
+}
+
+
+void showToast(context, status) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(
+      "Status: $status",
+      style: const TextStyle(fontSize: 20),
+    ),
+  ));
 }

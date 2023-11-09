@@ -46,7 +46,7 @@ class FifthWidget extends StatelessWidget {
                   Get.find<MapController>().notifyMapController();
                   Get.find<BaseMapController>().setOrderId(null);
 
-                  Get.off(() => const PaymentScreen());
+                  Get.off(() =>   PaymentScreen());
                 },
               );
             });

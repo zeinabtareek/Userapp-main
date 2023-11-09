@@ -10,37 +10,34 @@ class BannerController extends BaseController implements GetxService {
 
   BannerController({required this.bannerRepo});
 
-  final  banners =<BannerData> [].obs;
+  final banners = <BannerData>[].obs;
   // List<BannerData> banners =<BannerData> [];
 
   int? _currentIndex = 0;
 
   int? get currentIndex => _currentIndex;
 
-  final loading=false.obs;
-  onInit()async{
+  final loading = false.obs;
+  onInit() async {
     super.onInit();
 
-   await getBannerList();
-
-
+    await getBannerList();
   }
 
-
+  RxnNum unReedCount = RxnNum();
   Future<void> getBannerList() async {
-
-    try{
-    loading.value=true;
-     BannerModel response = await bannerRepo.getSlider();
-       banners.value = [];
+    try {
+      loading.value = true;
+      var res = await bannerRepo.getSlider();
+      BannerModel response = res.$1;
+      unReedCount.value = res.$2;
+      banners.value = [];
       banners.value.addAll(response.data as Iterable<BannerData>);
-    loading.value=false;
-
-  }catch(e){
+      loading.value = false;
+    } catch (e) {
       print(e);
     }
     update();
-
   }
 
   void setCurrentIndex(int index, bool notify) {

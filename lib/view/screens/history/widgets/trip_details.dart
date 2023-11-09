@@ -121,7 +121,8 @@ class ActivityScreenTripDetails extends StatelessWidget {
                 color: Theme.of(context).primaryColor.withOpacity(0.2)
               ),
               padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall,vertical: Dimensions.paddingSizeExtraSmall),
-              child: Text('222',style: textBold.copyWith(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).primaryColor),),
+           ///TODO zeinab add the price here
+              child: Text('${tripDetails.finalPrice!.toString()}',style: textBold.copyWith(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).primaryColor),),
             )]
           ),
 
@@ -136,8 +137,7 @@ class ActivityScreenTripDetails extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Text(tripDetails.paymentType!.tr,style: textRegular.copyWith(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).primaryColor),),
             )]
-          )
-        ],
+          )     ],
         ),
       )
       ],

@@ -123,7 +123,7 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
             Get.back();
           });
           await Future.delayed(const Duration(seconds: 0)).then((value) async {
-            Get.offAll(() => const PaymentScreen());
+            Get.offAll(() =>   PaymentScreen());
           });
         } else {
           Get.find<ParcelController>()
@@ -162,7 +162,7 @@ class _FindingRiderWidgetState extends State<FindingRiderWidget> {
             Get.back();
           });
           Future.delayed(const Duration(seconds: 0)).then((value) async {
-            Get.offAll(() => const PaymentScreen());
+            Get.offAll(() =>   PaymentScreen());
           });
         }
 
