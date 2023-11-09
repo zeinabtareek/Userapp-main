@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/bases/base_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/support/repository/help_and_support_repository.dart';
@@ -12,12 +13,15 @@ import '../../history/model/support_model.dart';
 import '../model/complain_res_model.dart';
 import '../model/help_model.dart';
 
-class SupportController extends BaseController {
+class SupportController extends BaseController
+    with GetTickerProviderStateMixin {
   final HelpAndSupportRepo helpAndSupportRepo = HelpAndSupportRepo();
 
   RxList<ComplainResModel> complains = <ComplainResModel>[].obs;
 
-  Rxn<ComplainResModel> initialSelectItem=Rxn();
+  TabController? tabController;
+
+  Rxn<ComplainResModel> initialSelectItem = Rxn();
   final feedBackController = TextEditingController();
   final ActionCenter _actionCenter = ActionCenter(Get.find<AbsLogger>());
   int _helpAndSupportIndex = 0;
@@ -26,7 +30,9 @@ class SupportController extends BaseController {
   onInit() async {
     // TODO: implement onInit
     super.onInit();
-   await getComplains();
+    tabController = TabController(length: 2, vsync: this);
+
+    await getComplains();
     await getAllSetting();
 
     // initialSelectItem = complainsList.first;
@@ -62,9 +68,11 @@ class SupportController extends BaseController {
 
   void setHelpAndSupportIndex(int index) {
     _helpAndSupportIndex = index;
+    tabController?.index = index;
     update();
   }
 
+  RxBool isLoading = false.obs;
   submitComplain() async {
     if (initialSelectItem.value == null) {
       OverlayHelper.showErrorToast(
@@ -72,12 +80,12 @@ class SupportController extends BaseController {
     } else if (feedBackController.text.isEmpty) {
       OverlayHelper.showErrorToast(Get.overlayContext!, 'write_complain'.tr);
     } else {
-      setState(ViewState.busy);
+      isLoading(true);
       await helpAndSupportRepo.submitComplain(
         message: feedBackController.text,
         complainTypeId: initialSelectItem.value!.id,
       );
-      setState(ViewState.idle);
+      isLoading(false);
     }
   }
 

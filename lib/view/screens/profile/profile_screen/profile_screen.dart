@@ -19,6 +19,7 @@ import '../../chat/chat_screen.dart';
 import '../../history/history_screen.dart';
 import '../../offer/offer_screen.dart';
 import '../../settings/screen/setting_screen.dart';
+import '../../support/controller/support_controller.dart';
 import '../../support/support.dart';
 import '../../wallet/wallet_screen.dart';
 import '../edit_profile_screen/edit_profile_screen.dart';
@@ -259,7 +260,10 @@ class ProfileScreen extends StatelessWidget {
                   ProfileMenuItem(
                     title: Strings.helpSupport.tr,
                     icon: Images.profileHelpSupport,
-                    onTap: () => Get.to(() => const HelpAndSupportScreen()),
+                    onTap: () => Get.to(() => const HelpAndSupportScreen(),binding: BindingsBuilder(() {
+                      // ignore: avoid_single_cascade_in_expression_statements
+                      Get.put(SupportController())..setHelpAndSupportIndex(1);
+                    })),
                   ),
                   ProfileMenuItem(
                     title: Strings.settings.tr,

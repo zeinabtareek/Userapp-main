@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 // class TValidator {
@@ -91,33 +90,27 @@ class TValidator {
   static const String tMustHaveValue = 'must have value';
 
   static const String tWrongEmail = 'Wrong Email';
- static const String tWrongConfirmedPassword = 'wrong confirmed password';
+  static const String tWrongConfirmedPassword = 'wrong confirmed password';
+  static const String tMustChoose = "Must Choose";
 
-static const String tThePasswordMustBeAtLeast8CharactersLong =
+  static const String tThePasswordMustBeAtLeast8CharactersLong =
       "The password must be at least 8 characters long";
-  static  Map<String, dynamic> arV = {
-      tWrongConfirmedPassword: 'كلمة مرور مؤكدة خاطئة',
-
-      tWrongEmail: "بريد الكترونى خاطئي",
-        "MustWrite": " من فضلك إكتب",
+  static Map<String, dynamic> arV = {
+    tWrongConfirmedPassword: 'كلمة مرور مؤكدة خاطئة',
+    tWrongEmail: "بريد الكترونى خاطئي",
+    "MustWrite": " من فضلك إكتب",
     "must have value": "يجب أن يكون لها قيمة",
-      tThePasswordMustBeAtLeast8CharactersLong: "يجب لا يقل الباسورد عن ٨ خانات",
-
+    tThePasswordMustBeAtLeast8CharactersLong: "يجب لا يقل الباسورد عن ٨ خانات",
   };
 
   static Map<String, dynamic> enV = {
-      tWrongEmail: "Wrong Email",
-        tWrongConfirmedPassword: 'wrong confirmed password',
-          "MustWrite": "You Must Write",
+    tWrongEmail: "Wrong Email",
+    tWrongConfirmedPassword: 'wrong confirmed password',
+    "MustWrite": "You Must Write",
     "must have value": "You Must Write",
-      tThePasswordMustBeAtLeast8CharactersLong:
+    tThePasswordMustBeAtLeast8CharactersLong:
         "The password must be at least 8 characters long",
- 
-
-
-
   };
-  
 
   static String? names(String? value) {
     if (value != null && value.isNotEmpty) {
@@ -145,30 +138,13 @@ static const String tThePasswordMustBeAtLeast8CharactersLong =
     }
   }
 
-  // static String? egyptianNumberValidator(String? value,
-  //     {String? hint, required bool isRequired}) {
-  //   if (isRequired) {
-  //     if ((value == null || value.isEmpty)) {
-  //       return "${mustWrite.tr} ${hint!}";
-  //     } else if (!(value != null &&
-  //         value.startsWith("01") &&
-  //         value.length == 11)) {
-  //       return tWrongNumber.tr;
-  //     } else {
-  //       return null;
-  //     }
-  //   } else {
-  //     return null;
-  //   }
-  // }
-
   static String? confirmPasswordValidate(
       {required String? value,
-      required String password,
+      required String comparePassword,
       required String? hint}) {
     if (value == null || value.isEmpty) {
       return "${mustWrite.tr} ${hint!}";
-    } else if (!(value == password)) {
+    } else if (!(value == comparePassword)) {
       return tWrongConfirmedPassword.tr;
     } else {
       return null;
@@ -188,16 +164,16 @@ static const String tThePasswordMustBeAtLeast8CharactersLong =
     }
   }
 
-  // static String? dropDown(
-  //   String? value,
-  //   String? hint,
-  // ) {
-  //   if (value == null || value.isEmpty) {
-  //     return "${tMustChoose.tr} ${hint!}";
-  //   } else {
-  //     return null;
-  //   }
-  // }
+  static String? dropDown(
+    String? value,
+    String? hint,
+  ) {
+    if (value == null || value.isEmpty) {
+      return "${tMustChoose.tr} ${hint!}";
+    } else {
+      return null;
+    }
+  }
 
   // static String? website(String? value) {
   //   if (value != null && value.isNotEmpty) {
