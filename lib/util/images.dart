@@ -21,12 +21,12 @@ class Images {
   static const String identity = 'assets/image/identity.png';
   static const String location = 'assets/image/location.png';
   static const String homeCar = 'assets/image/home-car.png';
-
+    static const String gallery = 'assets/image/gallery.png';
   static const String homeHome = 'assets/image/home-home.png';
   static const String homeLock = 'assets/image/home-lock.png';
   static const String homeWork = 'assets/image/home-work.png';
   static const String splash = "assets/image/splash.gif";
-
+    static const String noData = 'assets/lottie/no_data.json';
   static const String hand = 'assets/image/hand.png';
   static const String homeActive = 'assets/image/home_active.png';
   static const String homeOutline = 'assets/image/home_outline.png';
@@ -174,4 +174,5 @@ class Images {
   static const String infoIcon = 'assets/svg/info_icon.svg';
   static const String warning = 'assets/svg/warning.svg';
   static const String errorIcon = 'assets/svg/error_icon.svg';
+    static const String loading = 'assets/lottie/loading.json';
 }

@@ -73,7 +73,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                             child: Text(
                               address != null
                                   ? address!
-                                  : 'No address',
+                                  : 'no_address'.tr,
                               style: textRegular.copyWith(
                                 color: Colors.white,
                                 fontSize: Dimensions.fontSizeSmall,

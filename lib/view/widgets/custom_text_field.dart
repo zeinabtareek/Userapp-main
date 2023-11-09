@@ -135,7 +135,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderSide: BorderSide(
               width: widget.showBorder ? 0.5 : 0.5,
               color: Theme.of(context).primaryColor),
-        ),
+        ),    disabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(widget.borderRadius),
+        borderSide: BorderSide(
+            width: widget.showBorder ? 0.5 : 0.5,
+            color: Theme.of(context).hintColor.withOpacity(0.5)),
+      ),
         hintText: widget.hintText,
         fillColor: widget.fillColor ?? Theme.of(context).cardColor,
         hintStyle: textRegular.copyWith(
@@ -152,17 +157,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ? null
             : widget.prefixIcon != null
                 ? Container(
-                    margin: EdgeInsets.only(
-                        right: widget.fillColor != null ? 0 : 10),
+                    margin: EdgeInsetsDirectional.only(
+                        end: widget.fillColor != null ? 0 : 10),
                     width: widget.prefixHeight,
                     padding: const EdgeInsets.all(1),
                     decoration: BoxDecoration(
                       color: widget.fillColor != null
                           ? Colors.transparent
                           : Theme.of(context).primaryColor.withOpacity(0.1),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(widget.borderRadius),
-                        bottomLeft: Radius.circular(widget.borderRadius),
+                      borderRadius: BorderRadiusDirectional.only(
+                        topStart: Radius.circular(widget.borderRadius),
+                        bottomStart: Radius.circular(widget.borderRadius),
                       ),
                     ),
                     child: Center(
@@ -174,13 +179,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     decoration: BoxDecoration(
                       color: widget.fillColor ??
                           Theme.of(context).primaryColor.withOpacity(0.1),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(widget.borderRadius),
-                        bottomLeft: Radius.circular(widget.borderRadius),
+                      borderRadius: BorderRadiusDirectional.only(
+                        topStart: Radius.circular(widget.borderRadius),
+                        bottomStart: Radius.circular(widget.borderRadius),
                       ),
                     ),
-                    margin: const EdgeInsets.only(right: 10),
-                    padding: const EdgeInsets.only(left: 15),
+                    // margin: const EdgeInsets.only(right: 10),
+                    // padding: const EdgeInsets.only(left: 15),
                     child: Center(
                       child: CodePickerWidget(
                         flagWidth: 25,
@@ -220,9 +225,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     color: widget.fillColor != null
                         ? Colors.transparent
                         : Theme.of(context).primaryColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(widget.borderRadius),
-                      bottomLeft: Radius.circular(widget.borderRadius),
+                    borderRadius: BorderRadiusDirectional.only(
+                      topStart: Radius.circular(widget.borderRadius),
+                      bottomStart: Radius.circular(widget.borderRadius),
                     ),
                   ),
                   child: Center(

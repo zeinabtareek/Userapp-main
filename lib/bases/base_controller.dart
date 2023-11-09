@@ -11,6 +11,8 @@ import '../initialize_dependencies.dart';
 import '../mxins/map/map_view_helper.dart';
 import '../util/action_center/action_center.dart';
 import '../view/screens/where_to_go/repository/search_service.dart';
+import '../view/widgets/custom_loading.dart';
+import '../view/widgets/custom_no_data.dart';
 import '../view/widgets/error_widget.dart';
 
 class BaseController extends GetxController with MapHelper {
@@ -89,11 +91,13 @@ class BaseStateWidget<T extends BaseController> extends StatelessWidget {
       builder: (ctx) {
         if (ctx.state == ViewState.busy) {
 // TODO:Loading Widget
-          return const Center(
-            child: CupertinoActivityIndicator(),
-          );
+//           return const Center(
+//             child: CupertinoActivityIndicator(),
+//           );
+        return customLoading();
         } else if (ctx.state == ViewState.noDate) {
-          return Center(child: Text(emptyWord));
+          return   customNoDataWidget();
+          // return Center(child: Text(emptyWord));
         } else if (ctx.state == ViewState.idle) {
           return successWidget;
         } else if (ctx.state == ViewState.error) {

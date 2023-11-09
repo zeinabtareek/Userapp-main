@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../bases/base_controller.dart';
@@ -12,6 +13,7 @@ import '../../ride/widgets/ride_category.dart';
 import '../controller/category_controller.dart';
 import '../controller/home_view_controller.dart';
 import '../widgets/banner_view.dart';
+import '../widgets/home_map_view.dart';
 import '../widgets/home_my_address.dart';
 import '../widgets/home_search_widget.dart';
 
@@ -61,7 +63,9 @@ class HomeScreen extends GetView<BaseController> {
                 const HomeMyAddress(
                   fromPage: Strings.home,
                 ),
-                // HomeMapView()
+                HomeMapView(),
+
+                SizedBox(height: 200.h,),
               ],
             ),
           ),

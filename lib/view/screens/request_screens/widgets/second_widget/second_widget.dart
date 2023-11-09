@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/enum/view_state.dart';
+import 'package:ride_sharing_user_app/view/widgets/custom_loading.dart';
 
 import '../../../../../enum/request_states.dart';
 import '../../../../../util/app_strings.dart';
@@ -41,8 +42,7 @@ class SecondWidget extends StatelessWidget {
                   ? Positioned.fill(
                       child: Center(
                       // color: Colors.grey.withOpacity(.6),
-                      child: CircularProgressIndicator(
-                          color: Theme.of(context).primaryColor),
+                      child: customLoading()
                     ))
                   : const SizedBox(),
               IgnorePointer(
@@ -54,7 +54,7 @@ class SecondWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'your selected car type is : $title',
+                      '${'your_selected_car_type'.tr}: $title',
                       style: textRegular.copyWith(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w600),

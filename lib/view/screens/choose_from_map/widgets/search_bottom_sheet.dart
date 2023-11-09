@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../util/app_strings.dart';
@@ -68,7 +69,7 @@ class SearchBottom extends StatelessWidget {
               Obx(
                 () => AnimatedContainer(
                     height: controller.isContainerVisible.value ? 50 : 0,
-                    // color: Colors.red,
+
                     duration: const Duration(milliseconds: 500),
                     decoration: getBoxShadow(),
                     child: TextFormField(
@@ -107,8 +108,9 @@ class SearchBottom extends StatelessWidget {
   getInputDecoration(hint, icon, isContainerVisible) {
     return InputDecoration(
       icon: Container(
-        margin: const EdgeInsets.only(
-          left: 20,
+        margin:   EdgeInsetsDirectional .only(
+          start: 20.w,
+          bottom: 10.h,
         ),
         width: 10,
         height: 10,
@@ -119,7 +121,10 @@ class SearchBottom extends StatelessWidget {
       hintStyle: isContainerVisible
           ? K.hintSmallTextStyle
           : const TextStyle(color: Colors.transparent),
-      contentPadding: const EdgeInsets.only(left: 15.0, top: 16.0),
+      contentPadding:   EdgeInsetsDirectional .only(
+        start: 0.w,
+        bottom: 5.h,
+    ),
     );
   }
 

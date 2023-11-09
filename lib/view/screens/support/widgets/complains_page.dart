@@ -52,7 +52,7 @@ class ComplainsPage extends GetView<SupportController> {
                           .color!
                           .withOpacity(0.5),
                     ),
-                    maxListHeight: 150.h,
+                    maxListHeight: 300.h,
                     items: controller.complains
                         .map((item) => CustomDropdownMenuItem<ComplainResModel>(
                               value: item,

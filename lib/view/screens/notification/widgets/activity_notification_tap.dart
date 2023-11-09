@@ -54,6 +54,7 @@ class NotificationWidget extends PaginationViewItem<NotificationModel> {
   @override
   Widget build(BuildContext context) {
     return Container(
+
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor.withOpacity(0.07),
           borderRadius:

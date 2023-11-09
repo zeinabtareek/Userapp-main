@@ -29,7 +29,9 @@ class ImagePick extends StatelessWidget {
   bool get isPickedImg => selectedFile.value != null;
 
   void pickImg() {
-    CustomPickHelper.pickImage(ImageSource.camera).then((value) {
+    // CustomPickHelper.pickImage(ImageSource.camera)
+    CustomPickHelper.showPickImageBottomSheet(Get.context!)
+        .then((value) {
       if (value != null) {
         selectedFile.value = value;
         onSelectImg(value);

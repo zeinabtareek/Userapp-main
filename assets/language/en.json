@@ -456,20 +456,17 @@
   "add_withdraw_amount_first": "Add the withdrawal amount first",
   "add_charge_amount_first": "Add the recharge wallet amount first ً",
 
-
   "delete_acc": "Delete Account ",
   "do_you_want_to_delete_this_account": "Do you want to  delete this account",
-  "no_data_found": "No Data Found"
+  "no_data_found": "No Data Found",
+  "no_address": "No address",
+  "mall": "Mall",  "min": "Minutes",
+  "digital": "Digital",
+  "km": "Km",
 
-
-
-
-
-
-
-
-
-
-
+  "hr": "Hr","select_a_Payment_method": "Select a payment method",
+  "delete_saved_address": "Delete saved address",
+  "wait": "Please Wait",
+  "your_selected_car_type": "your selected car type is "
 
 }

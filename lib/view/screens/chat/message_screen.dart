@@ -7,6 +7,7 @@ import '../../../util/dimensions.dart';
 import '../../../util/images.dart';
 import '../../../util/text_style.dart';
 import '../../widgets/custom_app_bar.dart';
+import '../../widgets/custom_no_data.dart';
 import '../../widgets/pick_img_widget.dart';
 import 'controller/chat_controller.dart';
 import 'models/req/get_chat_msgs_req_model.dart';
@@ -61,8 +62,9 @@ class MessageScreen extends GetView<ChatController> {
                                     ConversationBubble(data: entity),
                               );
                             })
-                        : const Center(
-                            child: Text("Empty Chat"),
+                        :   Center(
+                            child:   customNoDataWidget()
+                            // child: Text("Empty Chat"),
                           ),
                   )),
             ),

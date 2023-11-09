@@ -9,6 +9,7 @@ import '../../../util/dimensions.dart';
 import '../../../util/images.dart';
 import '../../../util/text_style.dart';
 import '../../../view/screens/html/html_viewer_screen.dart';
+import '../../../view/widgets/custom_app_bar.dart';
 import '../../../view/widgets/custom_button.dart';
 import '../../../view/widgets/custom_text_field.dart';
 import '../../enums/auth_enums.dart';
@@ -18,15 +19,19 @@ import '../login-with-pass/sign_in_screen.dart';
 import '../sign-up/sign_up_screen.dart';
 
 class OtpLoginScreen extends GetView<AuthController> {
+  final bool ?isFromlogin;
   const OtpLoginScreen({
     Key? key,
+    this.isFromlogin
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
-      body: Center(
+    return  Scaffold(
+      appBar:  isFromlogin!=false?CustomAppBar(title: Strings.termsAndCondition.tr,onBackPressed: (){
+        Get.back();
+      },):null,
+      body:  Center(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(Dimensions.paddingSizeLarge),
@@ -41,7 +46,7 @@ class OtpLoginScreen extends GetView<AuthController> {
                       Images.logo,
                       width: 150,
                     ),
-                    K.sizedBoxH0,
+                   // K.sizedBoxH0,
                     Image.asset(
                       Images.otpScreenLogo,
                       width: 150,
@@ -80,8 +85,8 @@ class OtpLoginScreen extends GetView<AuthController> {
                     )),
                 Row(
                   children: [
-                    const Expanded(
-                      child: Divider(),
+                        Expanded(
+                      child: Divider(color:  Theme.of(context).hintColor,thickness: .5,),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -92,8 +97,8 @@ class OtpLoginScreen extends GetView<AuthController> {
                             color: Theme.of(context).hintColor),
                       ),
                     ),
-                    const Expanded(
-                      child: Divider(),
+                      Expanded(
+                      child: Divider(color:  Theme.of(context).hintColor,thickness: .5,),
                     ),
                   ],
                 ),
