@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,47 +49,20 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDFN-73p8zKVZbA0i5DtO215XzAb-xuGSE',
-    appId: '1:1000163153346:web:4f702a4b5adbd5c906b25b',
-    messagingSenderId: '1000163153346',
-    projectId: 'ammart-8885e',
-    authDomain: 'ammart-8885e.firebaseapp.com',
-    databaseURL: 'https://ammart-8885e-default-rtdb.firebaseio.com',
-    storageBucket: 'ammart-8885e.appspot.com',
-    measurementId: 'G-L1GNL2YV61',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCic6Mw3RRPFcimXhwGidwhCN0tXY7HFFc',
-    appId: '1:1000163153346:android:9d8caf29b912e11606b25b',
-    messagingSenderId: '1000163153346',
-    projectId: 'ammart-8885e',
-    databaseURL: 'https://ammart-8885e-default-rtdb.firebaseio.com',
-    storageBucket: 'ammart-8885e.appspot.com',
+    apiKey: 'AIzaSyDwBRO9Ggj1xV2JLsp3d46l5W2_yfr42eA',
+    appId: '1:738167961601:android:006e8f6000f4ce3dfce800',
+    messagingSenderId: '738167961601',
+    projectId: 'hood-mobile-app',
+    storageBucket: 'hood-mobile-app.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDjxRDIuTc6ErANoftU-FtgLBSUxMlLCeA',
-    appId: '1:1000163153346:ios:012d27ec8b417b2706b25b',
-    messagingSenderId: '1000163153346',
-    projectId: 'ammart-8885e',
-    databaseURL: 'https://ammart-8885e-default-rtdb.firebaseio.com',
-    storageBucket: 'ammart-8885e.appspot.com',
-    androidClientId: '1000163153346-8h3825qftiorhelafakqhl559fubeteb.apps.googleusercontent.com',
-    iosClientId: '1000163153346-mu5bujn5d21bt3vkii5lel4ihml97qmj.apps.googleusercontent.com',
-    iosBundleId: 'com.sixamtech.ridesharinguser.rideSharingUserApp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDjxRDIuTc6ErANoftU-FtgLBSUxMlLCeA',
-    appId: '1:1000163153346:ios:012d27ec8b417b2706b25b',
-    messagingSenderId: '1000163153346',
-    projectId: 'ammart-8885e',
-    databaseURL: 'https://ammart-8885e-default-rtdb.firebaseio.com',
-    storageBucket: 'ammart-8885e.appspot.com',
-    androidClientId: '1000163153346-8h3825qftiorhelafakqhl559fubeteb.apps.googleusercontent.com',
-    iosClientId: '1000163153346-mu5bujn5d21bt3vkii5lel4ihml97qmj.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAs4pSvkkAhITknVbFHnc2cjw8KALPxdHs',
+    appId: '1:738167961601:ios:e2665e0ba4e471c8fce800',
+    messagingSenderId: '738167961601',
+    projectId: 'hood-mobile-app',
+    storageBucket: 'hood-mobile-app.appspot.com',
     iosBundleId: 'com.sixamtech.ridesharinguser.rideSharingUserApp',
   );
 }

@@ -10,24 +10,8 @@ import 'controller/support_controller.dart';
 import 'widgets/complains_page.dart';
 import 'widgets/help_and_support.dart';
 
-class HelpAndSupportScreen extends StatefulWidget {
+class HelpAndSupportScreen extends GetView<SupportController> {
   const HelpAndSupportScreen({Key? key}) : super(key: key);
-
-  @override
-  State<HelpAndSupportScreen> createState() => _HelpAndSupportScreenState();
-}
-
-class _HelpAndSupportScreenState extends State<HelpAndSupportScreen>
-    with SingleTickerProviderStateMixin {
-  late TabController tabController;
-  late int currentPage;
-
-  @override
-  void initState() {
-    tabController = TabController(length: 2, vsync: this);
-    Get.put(SupportController());
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,18 +29,21 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen>
           child: Column(
             children: [
               CustomTapBar(
-                tabController: tabController,
+                tabController: controller.tabController,
                 firstTap: Strings.helpSupport.tr,
                 secondTap: Strings.complains.tr,
-                onTabChanged: (v) {},
+                onTabChanged: controller.setHelpAndSupportIndex,
               ),
-              Expanded(
-                  child: TabBarView(
-                controller: tabController,
-                children: [
-                  ContactUsPage(),
-                  const ComplainsPage(),
-                ],
+              Expanded(child: GetBuilder<SupportController>(
+                builder: (_) {
+                  return TabBarView(
+                    controller: controller.tabController,
+                    children: [
+                      ContactUsPage(),
+                      const ComplainsPage(),
+                    ],
+                  );
+                },
               ))
             ],
           ),

@@ -42,16 +42,17 @@ class BannerRepo {
   //         statusCode: 404, statusText: 'on boarding data not found');
   //   }
   // }
-  getSlider()async{//  List<BannerData>? data;
+  Future<(BannerModel, num)> getSlider() async {
+    //  List<BannerData>? data;
 
     try {
       final response = await dio!.get(AppConstants.getSlider);
 
       debugPrint('####getSlider${response.data}');
       if (response.statusCode == 200) {
-        final  model =  BannerModel.fromJson(response.data);
-        print('model $model');
-        return model;
+        final model = BannerModel.fromJson(response.data);
+        final unReadCount = response.data['unread_count'] as num;
+        return (model,unReadCount);
       } else {
         throw UnimplementedError();
       }
@@ -60,7 +61,4 @@ class BannerRepo {
       throw UnimplementedError();
     }
   }
-
-
-
 }
