@@ -61,7 +61,7 @@ class NotificationScreen extends StatelessWidget {
                           : const SizedBox(),
                     ),
                     Obx(() => controller.isShowOffer.isTrue
-                        ? ActivityNotificationPage(
+                        ? const ActivityNotificationPage(
                             type: NotificationType.offer,
                           )
                         : const SizedBox()),

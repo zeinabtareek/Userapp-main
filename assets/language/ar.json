@@ -470,6 +470,7 @@
   "hr": "ساعة",
   "digital": "الدفع الرقمي",
   "wait": "انتظر من فضلك",
+  "update_settings": "تحديث الإعدادات",
   "no_data_found": "لم يتم العثور على بيانات",
   "delete_saved_address": "حذف العنوان المحفوظ",
   "select_a_payment_method": "اختار طريقة الدفع"

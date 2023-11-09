@@ -30,7 +30,7 @@ class HomeViewController extends BaseController {
   onInit() async {
     super.onInit();
 
-    _position = await MapHelper.getCurrentPosition();
+   // _position = await MapHelper.getCurrentPosition();
 
   }
 
