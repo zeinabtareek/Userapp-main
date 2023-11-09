@@ -67,6 +67,8 @@ dependencies:
   url_launcher: ^6.1.14
   moyasar: ^2.0.2
   flutter_screenutil:
+  sqflite: ^2.3.0
+
 
 dependency_overrides:
   #  modal_bottom_sheet:
