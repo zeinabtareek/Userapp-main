@@ -5,6 +5,7 @@ import 'package:moyasar/moyasar.dart';
  import 'package:ride_sharing_user_app/data/api_checker.dart';
 import 'package:ride_sharing_user_app/helper/cache_helper.dart';
 import 'package:ride_sharing_user_app/helper/display_helper.dart';
+import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/util/ui/overlay_helper.dart';
 import 'package:ride_sharing_user_app/view/screens/payment/repository/payment_repo.dart';
@@ -113,7 +114,7 @@ update();
 
   paymentConfigFunc(int amount){
     return PaymentConfig(
-      publishableApiKey: 'pk_test_gYHJb7Dzs3SUjghm2JFhLrFPdQRKzxb4V5W8FDib',
+      publishableApiKey: AppConstants.paymentApiKey,
       amount:amount,
       description: 'order #${Get.find<CreateATripController>().orderModel.data?.id}',
       metadata: {'size': '250g'},

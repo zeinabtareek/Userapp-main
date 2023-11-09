@@ -7,8 +7,8 @@ import 'package:socket_io_client/socket_io_client.dart' as io;
 mixin SocketIoMixin on GetxController {
   io.Socket? socket;
 
-  String serverUrl = "http://63.250.36.228:8090";
-  // String serverUrl = "https://arabchance.com:8090";
+  // String serverUrl = "http://63.250.36.228:8090";
+  String serverUrl = "https://arabchance.com:8090";
 
   final String _tag = "Socket.IO";
 

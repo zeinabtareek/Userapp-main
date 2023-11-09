@@ -56,7 +56,8 @@ class CompleteDataScreen extends GetView<AuthController> {
 
                 GestureDetector(
                   onTap: () async {
-                    CustomPickHelper.pickImage(ImageSource.camera)
+                    CustomPickHelper.showPickImageBottomSheet(context)
+                    // CustomPickHelper.pickImage(ImageSource.camera)
                         .then((value) => {
                               if (value != null)
                                 {

@@ -21,7 +21,7 @@ class UserAuthModel {
   dynamic theme;
   Country? country;
   String? token;
-  int? wallet;
+  String? wallet;
   DateTime? createdAt;
   String? ridesCount;
   UserAuthModel({
@@ -63,7 +63,7 @@ class UserAuthModel {
       identityNo: json["identity_no"],
       isActive: json["is_active"],
       isBanned: json["is_banned"],
-      wallet: json["wallet"],
+      wallet: json["wallet"].toString(),
       isDataCompleted: json["is_data_completed"],
       rating: json["rating"],
       lang: json["lang"],

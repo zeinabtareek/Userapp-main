@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../helper/date_converter.dart';
 import '../../../../helper/price_converter.dart';
 import '../../../../pagination/widgets/paginations_widgets.dart';
 import '../../../../util/app_strings.dart';
@@ -87,10 +88,17 @@ class ActivityItemView extends PaginationViewItem<HistoryData> {
                   const SizedBox(
                     height: Dimensions.paddingSizeExtraSmall,
                   ),
-                  Text(data.createdAt.toString() ?? '',
-                      // Text(DateConverter.localToIsoString(DateTime.parse(activityItemModel.date!)),
-                      style: K.hintSmallTextStyle),
-
+                  // Text(data.createdAt.toString() ?? '',
+                  //     // Text(DateConverter.localToIsoString(DateTime.parse(activityItemModel.date!)),
+                  //     style: K.hintSmallTextStyle),
+                  Text(
+                    DateConverter.isoStringToLocalString(//_onSelectionChanged
+                      data.createdAt?.toString() ?? "",
+                    ),
+                    style: textRegular.copyWith(
+                        color: Theme.of(context).hintColor.withOpacity(.85),
+                        fontSize: Dimensions.fontSizeSmall),
+                  ),
                   /// just removed 27.sep
                   if (data.status != 'cancel')
                     // if(activityItemModel.status !='cancel' &&activityItemModel.userFarePrice!=null)

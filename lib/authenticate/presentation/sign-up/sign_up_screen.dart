@@ -32,6 +32,7 @@ class SignUpScreen extends GetView<AuthController> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                K.sizedBoxH0,
                 Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

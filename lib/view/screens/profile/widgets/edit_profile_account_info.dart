@@ -23,8 +23,8 @@ class EditProfileAccountInfo extends StatelessWidget {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const TextFieldTitle(
-                        title: "frist Name",
+                        TextFieldTitle(
+                        title: Strings.firstName.tr,
                         textOpacity: 0.8,
                       ),
                       CustomTextField(
@@ -36,8 +36,8 @@ class EditProfileAccountInfo extends StatelessWidget {
                         inputAction: TextInputAction.next,
                         onChanged: (_) => controller.isCanUpdate(true),
                       ),
-                      const TextFieldTitle(
-                        title: "last name",
+                        TextFieldTitle(
+                        title: Strings.lastName.tr,
                         textOpacity: 0.8,
                       ),
                       CustomTextField(
@@ -50,7 +50,8 @@ class EditProfileAccountInfo extends StatelessWidget {
                         onChanged: (_) => controller.isCanUpdate(true),
                       ),
                       TextFieldTitle(
-                        title: Strings.phone.tr,
+                        title: Strings.
+                        phone.tr,
                       ),
                       CustomTextField(
                         isEnabled: false,

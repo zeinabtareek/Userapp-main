@@ -216,6 +216,7 @@ class RideController extends BaseController implements GetxService {
   }
 
   getOrderPrice() async {
+
     setState(ViewState.busy);
     priceData = await rideRepo.getPrice(
       packageId: selectedPackage.value!.id,

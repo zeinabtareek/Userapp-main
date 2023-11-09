@@ -30,7 +30,7 @@ class HistoryScreen extends StatelessWidget {
                 body: CustomBody(
                   appBar: CustomAppBar(
                     title: Strings.checkYourAllTrip.tr,
-                    showBackButton: false,
+                    showBackButton: fromPage==Strings.profile?true:false,
                   ),
                   body: Padding(
                     padding: K.fixedPadding0,
@@ -40,7 +40,7 @@ class HistoryScreen extends StatelessWidget {
                           isUseTapController: true,
                           tabController: controller.tabController,
                           firstTap: Strings.finished.tr,
-                          secondTap: Strings.cancel.tr,
+                          secondTap: Strings.canceled.tr,
                           onTabChanged: controller.onTabChanged,
                         ),
                         Row(
@@ -145,8 +145,8 @@ class HistoryScreen extends StatelessWidget {
                                                     child: Text(controller
                                                             .isDataFilterOn
                                                             .isFalse
-                                                        ? "select Date"
-                                                        : "Selected"),
+                                                        ? "select".tr
+                                                        : "selected".tr),
                                                   ),
                                                 ),
                                               ],

@@ -103,7 +103,7 @@
   "saved_address": "العنوان المحفوظ",
   "office": "مكتب",
   "enter_your_identification_number": "أدخل رقم التعريف الخاص بك",
-  "search": "يبحث",
+  "search": "ابدأ البحث",
   "riders_are_saying_to_you": "الدراجين يقولون لك",
   "see_driver_want_to_say": "انظر ، السائق يريد أن يقول شيئا",
   "no_conversation_found": "لا محادثة بعد",
@@ -115,7 +115,7 @@
   "yesterday": "أمس",
   "custom": "مخصص",
   "select_your_date": "حدد تاريخك",
-  "select": "يختار",
+  "select": "اختر",
   "apply": "يتقدم",
   "wallet_money": "محفظة المال",
   "wallet_point": "نقطة محفظة",
@@ -323,9 +323,9 @@
   "your_code_is_applied_for_next_trip": "يتم تطبيق الرمز الخاص بك في رحلتك القادمة",
   "finding_deliveryman": "تسليم الغرامات",
   "cancel": "يلغي",
-  "submit": "يُقدِّم",
+  "submit": "إرسال",
   "call": "يتصل",
-  "saved": "أنقذ",
+  "saved": "المحفوظة",
   "suggestions": "اقتراحات",
   "end_this_trip_at_your_destination": "إنهاء هذه الرحلة في وجهتك",
   "forget_password": "ننسى كلمة المرور",
@@ -343,6 +343,7 @@
   "good_morning": "صباح الخير",
   "journey": "رحلة",
   "shopping": "التسوق",
+  "mall": "مجمع تجاري",
 
 
 
@@ -463,8 +464,14 @@
   "add_withdraw_amount_first": "أضف مبلغ السحب أولاً",
   "add_charge_amount_first": "أضف مبلغ شحن المحفظة أولاً",
     "do_you_want_to_delete_this_account": "هل تريد حذف هذا الحساب",
-  "delete_acc": "حذف الحساب"
-
-
-
+  "delete_acc": "حذف الحساب",
+  "no_address": "لا يوجد عنوان",  "min": "دقيقة",
+  "km": "كم",
+  "hr": "ساعة",
+  "digital": "الدفع الرقمي",
+  "wait": "انتظر من فضلك",
+  "update_settings": "تحديث الإعدادات",
+  "no_data_found": "لم يتم العثور على بيانات",
+  "delete_saved_address": "حذف العنوان المحفوظ",
+  "select_a_payment_method": "اختار طريقة الدفع"
 }

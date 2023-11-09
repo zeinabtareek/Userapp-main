@@ -27,10 +27,11 @@ class HomeViewController extends BaseController {
       .take(kLocations.length);
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
 
+  @override
   onInit() async {
     super.onInit();
 
-    // _position = await MapHelper.getCurrentPosition();
+   // _position = await MapHelper.getCurrentPosition();
 
   }
 

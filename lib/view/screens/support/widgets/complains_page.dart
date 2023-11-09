@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/bases/base_controller.dart';
-import 'package:ride_sharing_user_app/enum/view_state.dart';
 
 import '../../../../authenticate/presentation/widgets/test_field_title.dart';
 import '../../../../util/app_strings.dart';
@@ -52,7 +52,7 @@ class ComplainsPage extends GetView<SupportController> {
                           .color!
                           .withOpacity(0.5),
                     ),
-                    maxListHeight: 200,
+                    maxListHeight: 300.h,
                     items: controller.complains
                         .map((item) => CustomDropdownMenuItem<ComplainResModel>(
                               value: item,
@@ -66,15 +66,14 @@ class ComplainsPage extends GetView<SupportController> {
                                             .bodyMedium!
                                             .color!
                                             .withOpacity(0.5)
-                                        : Theme.of(context).primaryColor),
+                                        : Theme.of(context).primaryColor,
+                                    fontSize: 12),
                               ),
                             ))
                         .toList(),
                     hintText: Strings.select.tr,
                     borderRadius: 5,
-                    onChanged: (selectedItem) {
-                      controller.initialSelectItem(selectedItem);
-                    },
+                    onChanged: controller.initialSelectItem,
                   ),
                 )),
           ),
@@ -89,7 +88,7 @@ class ComplainsPage extends GetView<SupportController> {
           () => CustomButton(
             buttonText: Strings.submit.tr,
             radius: 25,
-            isLoading: controller.state == ViewState.busy ? true : false,
+            isLoading: controller.isLoading.isTrue,
             onPressed: controller.submitComplain
             // Get.offAll(DashboardScreen());
             // Get.back();

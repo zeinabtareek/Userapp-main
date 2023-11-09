@@ -323,7 +323,7 @@ class SettingScreen extends StatelessWidget {
                     child: Obx(() => Visibility(
                           visible: controller.isUpdateMode.isTrue,
                           child: CustomButton(
-                            buttonText: "update Setting",
+                            buttonText: 'update_settings'.tr,
                             radius: 20,
                             isLoading: controller.isLoading.isTrue,
                             onPressed: controller.saveSettingToRemote,

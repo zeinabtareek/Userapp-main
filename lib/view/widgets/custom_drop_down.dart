@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
 
 class CustomDropDown<T> extends StatefulWidget {
@@ -12,21 +13,21 @@ class CustomDropDown<T> extends StatefulWidget {
   final bool enabled;
   final bool isRowHint;
   final Icon icon;
-  final Row ?rowWidget;
+  final Row? rowWidget;
 
   const CustomDropDown(
       {required this.items,
-        required this.onChanged,
-          this.rowWidget,
-        this.hintText = "",
-        this.borderRadius = 0,
-        this.borderWidth = 1,
-        this.maxListHeight = 100,
-        this.defaultSelectedIndex = -1,
-        Key? key,
-        this.enabled = true,
-        this.isRowHint = false,
-        required this.icon})
+      required this.onChanged,
+      this.rowWidget,
+      this.hintText = "",
+      this.borderRadius = 0,
+      this.borderWidth = 1,
+      this.maxListHeight = 100,
+      this.defaultSelectedIndex = -1,
+      Key? key,
+      this.enabled = true,
+      this.isRowHint = false,
+      required this.icon})
       : super(key: key);
 
   @override
@@ -110,63 +111,65 @@ class CustomDropDownState extends State<CustomDropDown>
             child: SizedBox(
               height: widget.maxListHeight,
               width: size.width,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: _isReverse
-                    ? MainAxisAlignment.end
-                    : MainAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Container(
-                      constraints: BoxConstraints(
-                          maxHeight: widget.maxListHeight,
-                          maxWidth: size.width),
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.circular(12),
-                        boxShadow: shadow,
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(widget.borderRadius),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: _isReverse
+                      ? MainAxisAlignment.end
+                      : MainAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Container(
+                        constraints: BoxConstraints(
+                            maxHeight: widget.maxListHeight,
+                            maxWidth: size.width),
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.circular(12),
+                          boxShadow: shadow,
                         ),
-                        child: Material(
-                          elevation: 0,
-                          color: Theme.of(context).primaryColor.withOpacity(0.03),
-                          shadowColor: Colors.grey,
-                          child: ListView(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            children: widget.items
-                                .map((item) => GestureDetector(
-                              child: Column(
-                                children: [
-                                  const SizedBox(height: 7,),
-                                  item.child,
-                                  const SizedBox(height: 7,),
-                                  Container(
-                                    height: 1,width: 100,color: Theme.of(context).primaryColor.withOpacity(0.2),)
-                                ],
-                              ),
-                              onTap: () {
-                                if (mounted) {
-                                  setState(() {
-                                    _isAnyItemSelected = true;
-                                    _itemSelected = item.child;
-                                    _removeOverlay();
-                                    widget.onChanged(item.value);
-                                  });
-                                }
-                              },
-                            ))
-                                .toList(),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(widget.borderRadius),
+                          ),
+                          child: Material(
+                            elevation: 0,
+                            color: Theme.of(context).primaryColor.withOpacity(0.03),
+                            shadowColor: Colors.grey,
+                            child: ListView(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              children: widget.items
+                                  .map((item) => GestureDetector(
+                                child: Column(
+                                  children: [
+                                    const SizedBox(height: 7,),
+                                    item.child,
+                                    const SizedBox(height: 7,),
+                                    Container(
+                                      height: 1,width: 100,color: Theme.of(context).primaryColor.withOpacity(0.2),)
+                                  ],
+                                ),
+                                onTap: () {
+                                  if (mounted) {
+                                    setState(() {
+                                      _isAnyItemSelected = true;
+                                      _itemSelected = item.child;
+                                      _removeOverlay();
+                                      widget.onChanged(item.value);
+                                    });
+                                  }
+                                },
+                              ))
+                                  .toList(),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -206,8 +209,8 @@ class CustomDropDownState extends State<CustomDropDown>
       child: GestureDetector(
         onTap: widget.enabled
             ? () {
-          _isOpen ? _removeOverlay() : _addOverlay();
-        }
+                _isOpen ? _removeOverlay() : _addOverlay();
+              }
             : null,
         child: Container(
           decoration: _getDecoration(),
@@ -216,23 +219,24 @@ class CustomDropDownState extends State<CustomDropDown>
             children: <Widget>[
               Flexible(
                 flex: 3,
-                child: _isAnyItemSelected ?
-                Padding(
-                  padding: const EdgeInsets.only(left: 4.0),
-                  child: _itemSelected!,
-                ) : Padding(
-                  padding:
-                  const EdgeInsets.only(left: 4.0), // change it here
-                  child:widget .isRowHint?
-                  widget.rowWidget:
-                  Text(
-                    widget.hintText,
-                    maxLines: 1,
-                    overflow: TextOverflow.clip,
-                  ),
-                ),
+                child: _isAnyItemSelected
+                    ? Padding(
+                        padding: const EdgeInsets.only(left: 4.0),
+                        child: _itemSelected!,
+                      )
+                    : Padding(
+                        padding:
+                            const EdgeInsets.only(left: 4.0), // change it here
+                        child: widget.isRowHint
+                            ? widget.rowWidget
+                            : Text(
+                                widget.hintText,
+                                maxLines: 1,
+                                overflow: TextOverflow.clip,
+                              ),
+                      ),
               ),
-               Flexible(
+              Flexible(
                 flex: 1,
                 child: widget.icon,
               ),
@@ -246,13 +250,11 @@ class CustomDropDownState extends State<CustomDropDown>
   Decoration? _getDecoration() {
     if (_isOpen && !_isReverse) {
       return BoxDecoration(
-
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(widget.borderRadius),
               topRight: Radius.circular(
                 widget.borderRadius,
               )));
-
     } else if (_isOpen && _isReverse) {
       return BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -272,7 +274,11 @@ class CustomDropdownMenuItem<T> extends StatelessWidget {
   final T value;
   final Widget child;
 
-  const CustomDropdownMenuItem({super.key, required this.value, required this.child,  });
+  const CustomDropdownMenuItem({
+    super.key,
+    required this.value,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {

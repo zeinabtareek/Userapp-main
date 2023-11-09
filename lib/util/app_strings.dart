@@ -243,6 +243,8 @@ class Strings {
   static const selectAPaymentMethod = 'select_a_payment_method';
   static const carArrived = 'car_arrived';
   static const transactionId = 'transaction_id';
+  static const wait = 'wait';
+
 
 
 

@@ -36,7 +36,7 @@ class SignInScreen extends GetView<AuthController> {
                       Images.logo,
                       width: 150,
                     ),
-                    K.sizedBoxH2,
+                    // K.sizedBoxH2,
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       Text(
                         '${Strings.welcomeTo.tr} ${AppConstants.appName}',
