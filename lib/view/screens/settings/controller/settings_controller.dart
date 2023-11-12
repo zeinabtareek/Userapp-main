@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:restart_app/restart_app.dart';
 
 import '../../../../authenticate/data/models/base_model.dart';
 import '../../../../bases/base_controller.dart';
@@ -114,10 +115,11 @@ class SettingsController extends BaseController {
               isActiveNotification: isActiveNonfiction,
             ),
           );
+          var oldSetting = settingModel.value;
           settingModel.value = res;
           isLoading(false);
           await saveSettingToLocal();
-          updateLang();
+          updateLang(oldSetting);
           updateTheme();
           isUpdateMode(false);
           update();
@@ -129,11 +131,14 @@ class SettingsController extends BaseController {
     );
   }
 
-  updateLang() {
+  updateLang(SettingModel setting) {
     if (lang.value == 'en') {
       Get.find<LocalizationController>().setLanguage(const Locale('en', 'US'));
     } else {
       Get.find<LocalizationController>().setLanguage(const Locale('ar', 'SA'));
+    }
+    if(lang.value!=setting.lang.value){
+      Restart.restartApp();
     }
   }
 

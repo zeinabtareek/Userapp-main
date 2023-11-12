@@ -225,6 +225,7 @@ class ChatController extends BaseController
         isLoading.value = true;
         SendMsgReqModel req = _getReqBody().getIdForChat(
           orderId: isOrderType ? orderId : null,
+          chatId: !isOrderType ? chatId.value : null,
         );
         await chatRepo.sendMsg(
           req,
