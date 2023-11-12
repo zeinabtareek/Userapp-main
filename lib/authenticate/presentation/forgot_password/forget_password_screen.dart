@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/util/validator.dart';
 
 import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
@@ -56,13 +57,8 @@ class ForgotPasswordScreen extends GetView<AuthController> {
                     height: Dimensions.paddingSizeLarge,
                   ),
                   CustomTextField(
-                    validator: (p0) {
-                      if (p0 != null && p0.isNotEmpty) {
-                        return null;
-                      } else {
-                        return "";
-                      }
-                    },
+                    isLtr: true,
+                    validator: (p0)=>TValidator.saudiNumber(value: p0, hint: Strings.phone.tr),
                     hintText: Strings.phone.tr,
                     inputType: TextInputType.number,
                     countryDialCode: defaultDailCode,
@@ -71,6 +67,7 @@ class ForgotPasswordScreen extends GetView<AuthController> {
                     focusNode: controller.forgetPasswordPhoneNode,
                     inputAction: TextInputAction.done,
                     onCountryChanged: controller.forgetSelectCountry,
+                    onFieldSubmitted: (text) => controller.forgetPassClick(),
                   ),
                   K.sizedBoxH0,
                   Obx(

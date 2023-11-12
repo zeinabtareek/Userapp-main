@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/util/validator.dart';
 
 import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
@@ -52,7 +53,10 @@ class ResetPasswordScreen extends GetView<AuthController> {
                   CustomTextField(
                     hintText: Strings.passwordHint.tr,
                     inputType: TextInputType.text,
+                    validator: (p0) => TValidator.passwordValidate(
+                        value: p0, hint: Strings.oldPassword.tr),
                     prefixIcon: Images.password,
+                    isLtr: true,
                     isPassword: true,
                     controller: controller.resetOldPasswordController,
                     focusNode: controller.resetOldPasswordFocus,
@@ -66,6 +70,8 @@ class ResetPasswordScreen extends GetView<AuthController> {
                   hintText: Strings.passwordHint.tr,
                   inputType: TextInputType.text,
                   prefixIcon: Images.password,
+                  validator: (p0) => TValidator.passwordValidate(
+                      value: p0, hint: Strings.newPassword.tr),
                   isPassword: true,
                   controller: controller.resetNewPasswordController,
                   focusNode: controller.resetNewPasswordFocusNode,
@@ -78,10 +84,16 @@ class ResetPasswordScreen extends GetView<AuthController> {
                 CustomTextField(
                   hintText: '•••••••••••',
                   inputType: TextInputType.text,
+                  validator: (p0) => TValidator.confirmPasswordValidate(
+                    value: p0,
+                    comparePassword: controller.resetNewPasswordController.text,
+                    hint: Strings.confirmNewPassword.tr,
+                  ),
                   prefixIcon: Images.password,
                   controller: controller.resetConfirmPasswordController,
                   focusNode: controller.resetConfirmPasswordFocusNode,
                   inputAction: TextInputAction.done,
+                  onFieldSubmitted: (text) =>  _onSubmit(),
                   isPassword: true,
                 ),
                 K.sizedBoxH0,
@@ -90,13 +102,7 @@ class ResetPasswordScreen extends GetView<AuthController> {
                           ? Strings.update.tr
                           : Strings.save.tr,
                       isLoading: controller.resetPassScreenIsLoading.isTrue,
-                      onPressed: () async {
-                        if (fromChangePassword) {
-                          await controller.changePass();
-                        } else {
-                          controller.resetPass(countryCode!, otpCode!, phone!);
-                        }
-                      },
+                      onPressed: _onSubmit,
                       radius: 50,
                     )),
               ],
@@ -106,4 +112,15 @@ class ResetPasswordScreen extends GetView<AuthController> {
       ),
     );
   }
+
+  _onSubmit() async {
+                      if (controller.resetKey.currentState!.validate()) {
+                          if (fromChangePassword) {
+                        await controller.changePass();
+                      } else {
+                        controller.resetPass(countryCode!, otpCode!, phone!);
+                      } 
+                      }
+                   
+                    }
 }

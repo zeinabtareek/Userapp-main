@@ -114,6 +114,7 @@ class AuthController extends GetxController {
   TextEditingController loginPassController = TextEditingController();
   Rx<CountryCode> loginSelectCountry =
       CountryCode.fromDialCode(defaultDailCode).obs;
+  GlobalKey<FormState> loginWithPassKey = GlobalKey<FormState>();
 
   void initLoginWithPassScreen() async {
     loginPhoneController = TextEditingController();
@@ -131,15 +132,8 @@ class AuthController extends GetxController {
   RxBool isLoginWithPassLoading = false.obs;
   RxBool isLoginRememberMe = false.obs;
   void loginWithPass() async {
-    if (loginPhoneController.text.length < 8) {
-      showCustomSnackBar(Strings.invalidPhone.tr);
-    } else if (loginPassController.text.isEmpty) {
-      showCustomSnackBar(Strings.passIsRequired.tr);
-    } else if (loginPassController.text.length < 8) {
-      showCustomSnackBar(Strings.minimumPassLength.tr);
-    } else {
+    if (loginWithPassKey.currentState!.validate()) {
       isLoginWithPassLoading(true);
-
       var req = LoginWithPassReqModel(
           password: loginPassController.text,
           phoneReqModel: BasePhoneReqModel(
@@ -222,6 +216,7 @@ class AuthController extends GetxController {
 
   Rx<CountryCode> regSelectCountry =
       CountryCode.fromDialCode(defaultDailCode).obs;
+  GlobalKey<FormState> signUpKey = GlobalKey<FormState>();
 
   initSignUp() {
     regFirstNameController = TextEditingController();
@@ -254,23 +249,7 @@ class AuthController extends GetxController {
 
   RxBool isLoadingSignUp = false.obs;
   validationSignUp() async {
-    if (regFirstNameController.text.isEmpty) {
-      showCustomSnackBar(Strings.firstNameIsRequired.tr);
-    } else if (regLastNameController.text.isEmpty) {
-      showCustomSnackBar(Strings.lastNameIsRequired.tr);
-    } else if (regPhoneController.text.isEmpty) {
-      showCustomSnackBar(Strings.phoneIsRequired.tr);
-    } else if (regPhoneController.text.length < 8) {
-      showCustomSnackBar(Strings.invalidPhone.tr);
-    } else if (regPassController.text.isEmpty) {
-      showCustomSnackBar(Strings.passIsRequired.tr);
-    } else if (regNewPassController.text.length < 8) {
-      showCustomSnackBar(Strings.minPassLength.tr);
-    } else if (regNewPassController.text.isEmpty) {
-      showCustomSnackBar(Strings.confirmPasswordIsRequired.tr);
-    } else if (regPassController.text != regNewPassController.text) {
-      showCustomSnackBar(Strings.passwordIsMismatch.tr);
-    } else {
+    if (signUpKey.currentState!.validate()) {
       isLoadingSignUp(true);
       HOODRegisterReqModel reqModel = HOODRegisterReqModel(
         phoneReqModel: BasePhoneReqModel(
@@ -311,6 +290,7 @@ class AuthController extends GetxController {
 
   TextEditingController addressCompleteController = TextEditingController();
   FocusNode completeAddressFocusNode = FocusNode();
+  GlobalKey<FormState> completeDataScreenKey = GlobalKey<FormState>();
 
   initCompleteDataScreen() {
     completeAddressFocusNode = FocusNode();
@@ -329,20 +309,12 @@ class AuthController extends GetxController {
   RxBool isLoadingCompleteData = false.obs;
 
   void completeData() async {
-    if (completeEmailController.text.isEmpty) {
-      showCustomSnackBar(Strings.enterYourEmail.tr);
-      return;
-    } else if (!completeEmailController.text.isEmail) {
-      showCustomSnackBar(Strings.invalidEmil.tr);
-      return;
-    } else if (addressCompleteController.text.isEmpty) {
-      showCustomSnackBar(Strings.enterYourAddress.tr);
-      return;
-    } else if (_pickedProfileFile.value == null) {
-      // TODO:
-      showCustomSnackBar(Strings.invalidEmil.tr);
-      return;
-    } else {
+    // if (_pickedProfileFile.value == null) {
+    //   // TODO:
+    //   showCustomSnackBar(Strings.invalidEmil.tr);
+    //   return;
+    // }
+    if (completeDataScreenKey.currentState!.validate()) {
       isLoadingCompleteData(true);
       final req = CompleteDataReqModel(
         email: completeEmailController.text,
@@ -355,9 +327,12 @@ class AuthController extends GetxController {
         res,
         onSuccess: (res) async {
           debugPrint(' completeData-- res $res data ${res?.data}');
+          String oldUserToken = (await authCases.getUserData())!.tkn;
+
           await authCases.setUserDate(null);
-// TODO:  make sure user have token
+
           UserAuthModel user = res!.data!.user!;
+          user.copyWith(token: oldUserToken);
           await authCases.setUserDate(user);
           _toHomeScreen();
         },
@@ -387,7 +362,7 @@ class AuthController extends GetxController {
 
   forgetPassClick() async {
     if (!forgetPasswordValidateKey.currentState!.validate()) {
-      showCustomSnackBar(Strings.phoneIsRequired.tr);
+      // showCustomSnackBar(Strings.phoneIsRequired.tr);
       return;
     } else {
       isForgetPassLoading(true);
@@ -423,6 +398,7 @@ class AuthController extends GetxController {
       CountryCode.fromDialCode(defaultDailCode).obs;
 
   RxBool otpLoginIsLoading = false.obs;
+  GlobalKey<FormState> otpScreenKey = GlobalKey<FormState>();
 
   initOtpScreen() {
     phoneControllerForOTPLogInScreen = TextEditingController();
@@ -438,30 +414,25 @@ class AuthController extends GetxController {
   }
 
   void sendOtp() async {
-    if (phoneControllerForOTPLogInScreen.text.length < 8) {
-      showCustomSnackBar(Strings.invalidPhone.tr);
-      return;
-    } else if (phoneControllerForOTPLogInScreen.text.isEmpty) {
-      showCustomSnackBar(Strings.phoneIsRequired.tr);
-      return;
-    }
-    otpLoginIsLoading = true.obs;
-    final req = BasePhoneReqModel(
-      phoneCode: otpSelectCountry.value.dialCode!,
-      phone: phoneControllerForOTPLogInScreen.text,
-    );
-    final res = await authCases.sendOtp(req);
-    otpLoginIsLoading = false.obs;
-    checkStatus(res, onSuccess: (res) {
-      Get.to(
-        () => VerificationScreen(
-          countryCode: otpSelectCountry.value.dialCode.toString(),
-          number: phoneControllerForOTPLogInScreen.text,
-          otpState: OtpState.loginWithOtp,
-        ),
-        binding: authBinding,
+    if (otpScreenKey.currentState!.validate()) {
+      otpLoginIsLoading = true.obs;
+      final req = BasePhoneReqModel(
+        phoneCode: otpSelectCountry.value.dialCode!,
+        phone: phoneControllerForOTPLogInScreen.text,
       );
-    });
+      final res = await authCases.sendOtp(req);
+      otpLoginIsLoading = false.obs;
+      checkStatus(res, onSuccess: (res) {
+        Get.to(
+          () => VerificationScreen(
+            countryCode: otpSelectCountry.value.dialCode.toString(),
+            number: phoneControllerForOTPLogInScreen.text,
+            otpState: OtpState.loginWithOtp,
+          ),
+          binding: authBinding,
+        );
+      });
+    }
   }
 
   /// [VerificationScreen]
@@ -727,10 +698,7 @@ class AuthController extends GetxController {
     );
   }
 
-
-
-  
- Future logOut() async {
+  Future logOut() async {
     final res = await authCases.logout();
     checkStatus(
       res,

@@ -44,6 +44,8 @@ class UserController extends BaseController implements GetxService {
   bool isEnabledForEdit = true;
 
   RxBool isCanUpdate = false.obs;
+  GlobalKey<FormState> editProfileScreenKey = GlobalKey<FormState>();
+
   collectData() async {
     await getUser;
 
@@ -56,6 +58,7 @@ class UserController extends BaseController implements GetxService {
       defaultDailCode = user!.phoneCode!;
       emailController.text = user!.email ?? "";
       addressController.text = user!.address ?? "";
+      _pickedProfileFile = XFile(File.fromUri(Uri.parse(user!.img!)).path);
       update();
     }
   }
@@ -109,12 +112,10 @@ class UserController extends BaseController implements GetxService {
         OverlayHelper.showSuccessToast(Get.overlayContext!, "Success");
         Get.back();
       }
-
-      
     }, checkConnection: true);
   }
 
   bool validate() {
-    return true;
+    return editProfileScreenKey.currentState!.validate();
   }
 }

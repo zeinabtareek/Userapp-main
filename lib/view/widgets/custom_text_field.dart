@@ -17,6 +17,7 @@ class CustomTextField extends StatefulWidget {
   final bool isPassword;
   final bool isAmount;
   final Function(String text)? onChanged;
+  final Function(String text)? onFieldSubmitted;
   final String? Function(String?)? validator;
   final bool isEnabled;
   final int maxLines;
@@ -34,6 +35,7 @@ class CustomTextField extends StatefulWidget {
   final Function(CountryCode countryCode)? onCountryChanged;
   final Function()? onTap;
   final bool readOnly;
+  final bool isLtr;
   const CustomTextField({
     super.key,
     this.hintText = 'Write something...',
@@ -45,7 +47,9 @@ class CustomTextField extends StatefulWidget {
     this.inputType = TextInputType.text,
     this.inputAction = TextInputAction.next,
     this.maxLines = 1,
+    this.isLtr = false,
     this.onChanged,
+    this.onFieldSubmitted,
     this.prefixIcon,
     this.capitalization = TextCapitalization.none,
     this.isPassword = false,
@@ -81,6 +85,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.isLtr) {
+      return Directionality(
+        textDirection: TextDirection.ltr,
+        child: child(context),
+      );
+    } else {
+      return child(context);
+    }
+  }
+
+  TextFormField child(BuildContext context) {
     return TextFormField(
       onTap: widget.onTap,
       readOnly: widget.readOnly,
@@ -135,12 +150,19 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderSide: BorderSide(
               width: widget.showBorder ? 0.5 : 0.5,
               color: Theme.of(context).primaryColor),
-        ),    disabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(widget.borderRadius),
-        borderSide: BorderSide(
-            width: widget.showBorder ? 0.5 : 0.5,
-            color: Theme.of(context).hintColor.withOpacity(0.5)),
-      ),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(widget.borderRadius),
+          borderSide: BorderSide(
+              width: widget.showBorder ? 0.5 : 0.5,
+              color: Theme.of(context).hintColor.withOpacity(0.5)),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(widget.borderRadius),
+          borderSide: BorderSide(
+              width: widget.showBorder ? 0.5 : 0.5,
+              color: Theme.of(context).colorScheme.error.withOpacity(0.5)),
+        ),
         hintText: widget.hintText,
         fillColor: widget.fillColor ?? Theme.of(context).cardColor,
         hintStyle: textRegular.copyWith(
@@ -244,9 +266,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   )
                 : null,
       ),
-      onFieldSubmitted: (text) => widget.nextFocus != null
-          ? FocusScope.of(context).requestFocus(widget.nextFocus)
-          : null,
+      onFieldSubmitted: (text) {
+        if (widget.nextFocus != null) {
+          FocusScope.of(context).requestFocus(widget.nextFocus);
+        }
+        widget.onFieldSubmitted?.call(text);
+      },
       onChanged: widget.onChanged,
     );
   }

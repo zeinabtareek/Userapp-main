@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:restart_app/restart_app.dart';
 
 import '../../authenticate/data/models/res-models/user_model.dart';
 import '../../authenticate/domain/use-cases/auth_cases.dart';
@@ -34,7 +35,7 @@ class AuthInterceptor extends InterceptorsWrapper {
     if (response.statusCode == 405) {
       if (await sl<AuthCases>().isAuthenticated()) {
         sl<AuthCases>().setUserDate(null);
-        // TODO: action in block case
+        Restart.restartApp();
       }
     }
 
