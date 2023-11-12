@@ -26,8 +26,8 @@ class _CustomCalenderState extends State<CustomCalender> {
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(() {
       if (args.value is PickerDateRange) {
-        _range = '${DateFormat('yyyy-MM-d').format(args.value.startDate)}/'
-            '${DateFormat('yyyy-MM-d').format(args.value.endDate ?? args.value.startDate)}';
+        _range = '${DateFormat('yyyy-MM-d','en').format(args.value.startDate)}/'
+            '${DateFormat('yyyy-MM-d','en').format(args.value.endDate ?? args.value.startDate)}';
       } else if (args.value is DateTime) {
       } else if (args.value is List<DateTime>) {
       } else {}

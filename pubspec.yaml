@@ -35,7 +35,7 @@ dependencies:
   flutter_html: ^3.0.0-alpha.5
   flutter_local_notifications: ^12.0.4
   flutter_polyline_points: ^2.0.0
-  flutter_screenutil: null
+ 
   flutter_secure_storage: any
   flutter_spinkit: null
   flutter_staggered_animations: null
@@ -67,6 +67,9 @@ dependencies:
   syncfusion_flutter_datepicker: ^22.2.12
   top_snackbar_flutter: null
   url_launcher: ^6.1.14
+  flutter_screenutil:
+  sqflite: ^2.3.0
+
 
 dependency_overrides:
   #  modal_bottom_sheet:
@@ -91,8 +94,6 @@ flutter:
     - assets/image/
     - assets/language/
     - assets/svg/
-    - assets/lottie/
-    - .env
 
   fonts:
     - family: SFProText

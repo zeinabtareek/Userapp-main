@@ -23,7 +23,7 @@
     </queries>
 
    <application
-        android:label="Hexa Ride"
+        android:label="Hood"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
