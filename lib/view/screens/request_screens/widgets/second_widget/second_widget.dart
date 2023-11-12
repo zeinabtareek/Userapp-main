@@ -159,6 +159,9 @@ class SecondWidget extends StatelessWidget {
                     
                     const SizedBox(
                       height: Dimensions.paddingSizeDefault,
+                    ),       SizedBox(
+                      height: Dimensions.paddingSizeDefault,
+                      child: Text(  Get.find<RideController>().initialSelectItem.toString().toUpperCase()),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

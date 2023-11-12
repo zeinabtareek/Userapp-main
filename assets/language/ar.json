@@ -473,5 +473,7 @@
   "update_settings": "تحديث الإعدادات",
   "no_data_found": "لم يتم العثور على بيانات",
   "delete_saved_address": "حذف العنوان المحفوظ",
-  "select_a_payment_method": "اختار طريقة الدفع"
+  "select_a_payment_method": "اختار طريقة الدفع",
+  "pay_with_apple_pay": "ادفع رحلتك باستخدام طريقة الدفع Apple pay ...",
+  "click_on_btn_to_finish_your_billing": "انقر فوق الزر لإنهاء الدفع الخاص بك"
 }

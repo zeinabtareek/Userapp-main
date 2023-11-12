@@ -34,6 +34,8 @@ class HistoryData {
   String? id;
   String? status;
   num? distance;
+  num? finalPrice;
+
   int? time;
   String? paymentType;
   From? from;
@@ -52,6 +54,7 @@ class HistoryData {
         this.from,
         this.to,
         this.isParcel,
+        this.finalPrice,
         this.package,
         this.driver,
         this.createdAt});
@@ -61,6 +64,7 @@ class HistoryData {
     status = json['status'];
     distance = json['distance'];
     time = json['time'];
+    finalPrice = json['final_price'];
     paymentType = json['payment_type'];
     from = json['from'] != null ? new From.fromJson(json['from']) : null;
     to = json['to'] != null ? new From.fromJson(json['to']) : null;
@@ -77,6 +81,7 @@ class HistoryData {
     data['id'] = this.id;
     data['status'] = this.status;
     data['distance'] = this.distance;
+    data['final_price'] = this.finalPrice;
     data['time'] = this.time;
     data['payment_type'] = this.paymentType;
     if (this.from != null) {

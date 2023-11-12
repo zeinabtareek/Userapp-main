@@ -77,8 +77,8 @@ class AppConstants {
 
 //map api key
 
-  static  String get mapKey =>dotenv.get("map_Key",fallback: "");
-    static String get paymentApiKey => dotenv.get("paymentApiKey", fallback: "");
+  static  String get mapKey =>dotenv.get("map_Key");
+    static String get paymentApiKey => dotenv.get("paymentApiKey");
 
 
   static List<LanguageModel> languages = [

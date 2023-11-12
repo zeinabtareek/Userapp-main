@@ -310,7 +310,7 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
                   update(RideState.completeRide);
                   //Get.back();
                   Get.find<MapController>().notifyMapController();
-                  Get.off(() => const PaymentScreen());
+                  Get.off(() =>   PaymentScreen());
                 },
               );
             });

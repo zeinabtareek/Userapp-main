@@ -26,6 +26,7 @@ class CreditCardScreen extends StatelessWidget {
     return Scaffold(
       body: CustomBody(
         appBar: CustomAppBar(title: 'here_is_your_payment'.tr,onBackPressed: (){
+          Get.find<PaymentController>().isApplePay.value=false;
           if(Navigator.canPop(context))
             Get.back();
         },showBackButton: true,),

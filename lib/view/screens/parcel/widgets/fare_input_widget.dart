@@ -109,7 +109,7 @@ class FindDriverCustomBtn2 extends StatelessWidget {
                   await Future.delayed(const Duration(seconds: 0))
                       .then((value) async {
                     print('####six');
-                    Get.off(() => const PaymentScreen());
+                    Get.off(() =>   PaymentScreen());
                   });
                 } else {
                   Get.find<ParcelController>()
@@ -165,7 +165,7 @@ class FindDriverCustomBtn2 extends StatelessWidget {
                     {
                       Get.off(() => const ReviewScreen());
                     } else if (whoWillPay == false) {
-                      Get.off(() => const PaymentScreen());
+                      Get.off(() =>   PaymentScreen());
                     }
                   });
                 }
@@ -270,7 +270,7 @@ class FindDriverCustomBtn extends StatelessWidget {
                   await Future.delayed(const Duration(seconds: 0))
                       .then((value) async {
                     print('####six');
-                    Get.off(() => const PaymentScreen());
+                    Get.off(() =>   PaymentScreen());
                   });
                 } else {
                   Get.find<ParcelController>()
@@ -326,7 +326,7 @@ class FindDriverCustomBtn extends StatelessWidget {
                     {
                       Get.off(() => const ReviewScreen());
                     } else if (whoWillPay == false) {
-                      Get.off(() => const PaymentScreen());
+                      Get.off(() =>   PaymentScreen());
                     }
                   });
                 }

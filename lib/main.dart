@@ -9,6 +9,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import 'package:moyasar/moyasar.dart';
 import 'package:ride_sharing_user_app/authenticate/domain/use-cases/auth_cases.dart';
 import 'package:ride_sharing_user_app/firebase_options.dart';
 import 'package:ride_sharing_user_app/helper/notification_helper.dart';
@@ -81,9 +82,11 @@ Future<void> main() async {
   await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
   FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
   await initializeDependencies();
-
-  await dotenv.load(fileName: ".env");
-
+  try {
+    await dotenv.load(fileName: ".env");
+  }catch(e){
+    print('the env file error id::: ${e.toString()}');
+  }
   ChuckerFlutter.showOnRelease = true;
   runApp(MyApp(languages: languages));
 }
@@ -158,6 +161,9 @@ class MyApp extends StatelessWidget {
                           getPages: RouteHelper.routes,
                           defaultTransition: Transition.topLevel,
                           transitionDuration: const Duration(milliseconds: 500),
+
+                         // home:CoffeeShop(),
+                         // home:PaymentScreen(),
                           // home:MapView(),
                           // ParcelHomeScreen(),
                           // AnimatedWidget(items:['2','3','4','5','6'] ,isVertical: false,widget:  itemTrackHistory(onTap: (){
@@ -197,4 +203,99 @@ class MyHttpOverrides extends HttpOverrides {
       ..badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
   }
+}
+
+class CoffeeShop extends StatefulWidget {
+  const CoffeeShop({super.key});
+
+  @override
+  State<CoffeeShop> createState() => _CoffeeShopState();
+}
+
+class _CoffeeShopState extends State<CoffeeShop> {
+  final paymentConfig = PaymentConfig(
+      publishableApiKey: 'pk_live_FCa4d7npfFhebunCGs7gyxS5uLsuxiBKT8SwKnP4',
+      // publishableApiKey: 'pk_test_r6eZg85QyduWZ7PNTHT56BFvZpxJgNJ2PqPMDoXA',
+      amount: 100, // SAR 1
+      description: 'order #1324',
+      metadata: {'size': '250g'},
+      creditCard: CreditCardConfig(saveCard: false, manual: false),
+      applePay: ApplePayConfig(
+          // merchantId: 'merchant.hooduser',
+          merchantId: 'merchant.mysr.fghurayri',
+          label: 'Hood User',
+          manual: true)
+  );
+
+  void onPaymentResult(result) {
+    if (result is PaymentResponse) {
+      showToast(context, result.status.name);
+      switch (result.status) {
+        case PaymentStatus.paid:
+        // handle success.
+          break;
+        case PaymentStatus.failed:
+        // handle failure.
+          break;
+        case PaymentStatus.authorized:
+        // handle authorized
+
+          break;
+        default:
+      }
+      return;
+    }
+
+    // handle other type of failures.
+    if (result is ApiError) {
+      print('result1 :::$result');
+    }
+    if (result is AuthError) {
+
+      print('result 2 :::$result');
+    }
+    if (result is ValidationError) {
+      print('result 3 :::${result.message}');
+    }
+    if (result is PaymentCanceledError) {
+      print('result 4 :::$result');
+    }
+  }
+
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      body: Center(
+        child: Column(
+          children: [
+            Container(
+              color: Colors.red,
+              height: 200,
+              width: 300,
+
+              child: ApplePay(
+                config: paymentConfig,
+                onPaymentResult: onPaymentResult,
+              ),
+            ),
+            const Text("or"),
+            // CreditCard(
+            //   config: paymentConfig,
+            //   onPaymentResult: onPaymentResult,
+            // )
+          ],
+        ),
+      ),
+
+    );
+  }
+}
+
+
+void showToast(context, status) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(
+      "Status: $status",
+      style: const TextStyle(fontSize: 20),
+    ),
+  ));
 }

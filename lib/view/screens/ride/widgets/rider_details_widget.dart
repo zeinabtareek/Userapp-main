@@ -234,7 +234,7 @@ class RiderDetailsWidget extends StatelessWidget {
                   });
                   await Future.delayed(const Duration(seconds: 0))
                       .then((value) async {
-                    Get.offAll(() => const PaymentScreen());
+                    Get.offAll(() =>   PaymentScreen());
                   });
                 } else {
                   Get.find<ParcelController>()
@@ -277,7 +277,7 @@ class RiderDetailsWidget extends StatelessWidget {
                   });
                   await Future.delayed(const Duration(seconds: 0))
                       .then((value) async {
-                    Get.offAll(() => const PaymentScreen());
+                    Get.offAll(() =>   PaymentScreen());
                   });
                 }
                 if (fromNotification) {

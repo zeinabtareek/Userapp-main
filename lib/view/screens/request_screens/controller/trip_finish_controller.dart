@@ -29,7 +29,7 @@ class TripFinishedController extends GetxController{
     // update(RideState.completeRide);
     //Get.back();
     Get.find<MapController>().notifyMapController();
-    Get.off(() => const PaymentScreen());
+    Get.off(() =>   PaymentScreen());
   });
   }
 

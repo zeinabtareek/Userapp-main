@@ -19,6 +19,7 @@ import '../widget/review_screen.dart';
 
 class PaymentController extends BaseController implements GetxService{
   final PaymentRepo paymentRepo;
+  final isApplePay=false.obs;
 
   PaymentController({required this.paymentRepo});
 
@@ -113,14 +114,33 @@ update();
 
 
   paymentConfigFunc(int amount){
+    print(AppConstants.paymentApiKey);
     return PaymentConfig(
       publishableApiKey: AppConstants.paymentApiKey,
-      amount:amount,
-      description: 'order #${Get.find<CreateATripController>().orderModel.data?.id}',
+      // amount:amount,
+      // description: 'order #${Get.find<CreateATripController>().orderModel.data?.id}',
+      amount:4099,
+      description: 'order #2223',
       metadata: {'size': '250g'},
-      applePay: ApplePayConfig(merchantId: 'YOUR_MERCHANT_ID', label: 'YOUR_STORE_NAME', manual: false),
+      applePay: ApplePayConfig(
+          // merchantId: 'merchant.hooduser',
+          merchantId: 'merchant.mysr.fghurayri',
+          label: 'Hood User',
+          manual: true)
     );
   }
+  // final paymentConfig = PaymentConfig(
+  //     publishableApiKey: 'pk_test_r6eZg85QyduWZ7PNTHT56BFvZpxJgNJ2PqPMDoXA',
+  //     amount: 100, // SAR 1
+  //     description: 'order #1324',
+  //     metadata: {'size': '250g'},
+  //     creditCard: CreditCardConfig(saveCard: false, manual: false),
+  //     applePay: ApplePayConfig(
+  //         merchantId: 'merchant.hooduser',
+  //         // merchantId: 'merchant.mysr.fghurayri',
+  //         label: 'Hood User',
+  //         manual: true)
+  // );
 
 
   Future<void> onPaymentResult(result) async {
@@ -146,18 +166,20 @@ update();
       }
       return;
     }
-
     // handle other type of failures.
     if (result is ApiError) {
-      print(result.message);
+      print('error 1::${result.message}');
       showCustomSnackBar(result.message.toString());
     }
     if (result is AuthError) {
-      print(result.message);
+      print('error 2::${result.message}');
       showCustomSnackBar(result.message.toString());
     }
     if (result is ValidationError) {
-      print(result.errors);
+
+      print('error 3::${result.message}');
+      print('error 3::${result.errors}');
+
        showCustomSnackBar(result.errors.toString());
 
     }
