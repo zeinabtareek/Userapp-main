@@ -18,13 +18,13 @@ enum ChatType { order, admin }
 
 class SendMsgReqModel {
   String? orderId;
-  // String? adminId;
+  String? chatId;
   MsgType? msgType;
   dynamic msg;
   ChatType? chatType;
   SendMsgReqModel({
     this.orderId,
-    // this.adminId,
+    this.chatId,
     this.chatType = ChatType.order,
     this.msgType,
     required this.msg,
@@ -39,7 +39,7 @@ class SendMsgReqModel {
   Future<Map<String, dynamic>> toMap() async {
     return <String, dynamic>{
       if (chatType == ChatType.order && orderId != null) 'order_id': orderId,
-      // if (adminId != null) 'admin_id': adminId,
+      if (chatId != null) 'chat_id': chatId,
       "chat_type": chatType!.name,
       ...{
         if (msg is File) ...{
@@ -55,12 +55,15 @@ class SendMsgReqModel {
 
   getIdForChat({
     String? orderId,
-    // String? adminId,
+    String? chatId,
   }) {
     if (orderId != null) {
       this.orderId = orderId;
+      this.chatId = null;
+      chatType = ChatType.order;
     } else {
       chatType = ChatType.admin;
+      this.chatId = chatId;
     }
     return this;
   }
