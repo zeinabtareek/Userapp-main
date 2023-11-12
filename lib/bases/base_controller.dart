@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/authenticate/data/models/res-models/user_model.dart';
@@ -41,14 +40,14 @@ class BaseController extends GetxController with MapHelper {
       user = await sl<AuthCases>().getUserData();
 
   String? myAddressString;
-  var currntLoction ;
   @override
   void onInit() async {
-    await getUser;
+    if (await sl<AuthCases>().isAuthenticated()) {
+      await getUser;
+    }
 
     update();
     refresh();
-
 
     super.onInit();
   }
@@ -94,9 +93,9 @@ class BaseStateWidget<T extends BaseController> extends StatelessWidget {
 //           return const Center(
 //             child: CupertinoActivityIndicator(),
 //           );
-        return customLoading();
+          return customLoading();
         } else if (ctx.state == ViewState.noDate) {
-          return   customNoDataWidget();
+          return customNoDataWidget();
           // return Center(child: Text(emptyWord));
         } else if (ctx.state == ViewState.idle) {
           return successWidget;
