@@ -145,7 +145,7 @@ class MyApp extends StatelessWidget {
                               const MaterialScrollBehavior().copyWith(
                             dragDevices: {
                               PointerDeviceKind.mouse,
-                              PointerDeviceKind.touch
+                              PointerDeviceKind.touch 
                             },
                           ),
                           // theme:  darkTheme ,
