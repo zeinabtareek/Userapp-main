@@ -30,6 +30,7 @@ import 'package:ride_sharing_user_app/view/screens/support/controller/support_co
 import 'package:ride_sharing_user_app/view/screens/wallet/repository/wallet_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../bases/base_controller.dart';
 import '../data/api_client.dart';
 import '../localization/language_model.dart';
 import '../localization/localization_controller.dart';
@@ -97,6 +98,7 @@ Future<Map<String, Map<String, String>>> init() async {
   // Get.lazyPut(() => ActivityController(activityRepo: ActivityRepo( )));
   // Get.lazyPut(() => ActivityController(activityRepo: ActivityRepo(apiClient: Get.find())));
   Get.lazyPut(() => UserController());
+  Get.lazyPut(() => BaseController(),fenix: true);
   Get.lazyPut(
       () => MessageController(messageRepo: MessageRepo(apiClient: Get.find())));
   // Get.lazyPut(() => WalletController(walletRepo: Get.find()));

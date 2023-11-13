@@ -59,8 +59,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             isHome
                 ? GestureDetector(
-                    onTap: () =>
-                        Get.to(() => MapScreen(fromScreen: Strings.location)),
+                    onTap:null,
+                        // Get.to(() => MapScreen(fromScreen: Strings.location)),
                     child: Row(
                       children: [
                         const Icon(

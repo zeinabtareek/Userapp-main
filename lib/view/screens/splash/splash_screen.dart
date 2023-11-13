@@ -164,6 +164,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:upgrader/upgrader.dart';
 
 import '../../../util/images.dart';
 import 'controller/splash_controller.dart';
@@ -178,7 +179,8 @@ class SplashScreen extends StatelessWidget {
               statusBarColor: Color(0xff288c7b),
               statusBarIconBrightness: Brightness.dark,
             ),
-            child: Scaffold(
+            child:         UpgradeAlert(
+    child:Scaffold(
                 backgroundColor: Color(0xff288c7b),
                 // backgroundColor: Theme.of(context).primaryColor,//
                 body:
@@ -189,6 +191,7 @@ class SplashScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                   ),
                 )
+            )
             )
 
 

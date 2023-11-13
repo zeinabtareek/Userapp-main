@@ -145,7 +145,7 @@ class MyApp extends StatelessWidget {
                               const MaterialScrollBehavior().copyWith(
                             dragDevices: {
                               PointerDeviceKind.mouse,
-                              PointerDeviceKind.touch
+                              PointerDeviceKind.touch 
                             },
                           ),
                           // theme:  darkTheme ,
@@ -162,7 +162,7 @@ class MyApp extends StatelessWidget {
                           defaultTransition: Transition.topLevel,
                           transitionDuration: const Duration(milliseconds: 500),
 
-                         // home:CoffeeShop(),
+                     //    home:CoffeeShop(),
                          // home:PaymentScreen(),
                           // home:MapView(),
                           // ParcelHomeScreen(),
