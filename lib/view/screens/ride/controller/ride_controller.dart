@@ -30,6 +30,7 @@ class RideController extends BaseController implements GetxService {
   final RideRepo rideRepo;
 
   RideController({required this.rideRepo});
+  var initialSelectItem;
 
   var currentRideState = RideState.initial;
   var selectedCategoryTypeEnum = RideType.car;
@@ -64,7 +65,6 @@ class RideController extends BaseController implements GetxService {
     'wallet',
   ];
   List<String> get paymentOptions => _paymentOptions;
-  var initialSelectItem;
   // var initialSelectItem= 'digital';
 
   @override
