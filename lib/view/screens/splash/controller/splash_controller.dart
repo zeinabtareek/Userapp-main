@@ -14,7 +14,7 @@ class SplashController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-
+    showDialogIfFoundUpdate();
     // Timer(const Duration(seconds: 5), () async {
     //   Future.delayed(const Duration(milliseconds: 2500), () async {
     Future.delayed(const Duration(milliseconds: 2000), () async {
