@@ -106,7 +106,7 @@ class BaseMapController extends BaseController with SocketIoMixin {
 
   changeState(int value) {
     // key.currentState!.expand();
-    key.currentState!.contract();
+    key.currentState?.contract();
     expansionStatus.value = key.currentState!.expansionStatus;
     widgetNumber.value = value;
     update();
@@ -125,16 +125,13 @@ class BaseMapController extends BaseController with SocketIoMixin {
                 String? status = (data["data"]["status"].toString());
                 if (status == "start_trip") {
                   changeState(request[RequestState.tripOngoing]!);
-                  
                 } else if (status == "finished") {
                   disconnectSocket();
                   changeState(request[RequestState.tripFinishedState]!);
-                  
                 } else if (status == "cancel") {
                   disconnectSocket();
                   // TODO:
                   changeState(request[RequestState.initialState]!);
-                  
                 }
 
                 //

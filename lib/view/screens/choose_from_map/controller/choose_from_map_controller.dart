@@ -89,6 +89,7 @@ class ChooseFromMapController extends BaseController
       List<RippleMarker> markers = [];
       for (var element in pickedPoints) {
         markers.add(RippleMarker(
+         
           markerId: MarkerId(pickedPoints.indexOf(element).toString()),
           position: element,
           ripple: false,

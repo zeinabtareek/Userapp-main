@@ -10,6 +10,7 @@ import '../../../../util/ui/overlay_helper.dart';
 import '../../choose_from_map/choose_from_map_screen.dart';
 import '../../request_screens/screens/base_map/base_map_screen.dart';
 import '../../ride/controller/ride_controller.dart';
+import '../../ride/repository/ride_repo.dart';
 import '../model/search_suggestion_model.dart';
 import '../model/suggested_route_model.dart';
 import '../repository/search_service.dart';
@@ -213,7 +214,13 @@ class WhereToGoController extends BaseController implements GetxService {
       //   MapScreen(
       //   fromScreen: 'ride',
       // ));
-      Get.to(() => BaseMapScreen(
+      Get.to(
+        
+        binding: BindingsBuilder(() {
+            Get.lazyPut(() => RideRepo(apiClient: Get.find()));
+
+        }),
+        () => BaseMapScreen(
             points: _getPoints!,
           ))?.then((value) {
         selectedPoints = [];

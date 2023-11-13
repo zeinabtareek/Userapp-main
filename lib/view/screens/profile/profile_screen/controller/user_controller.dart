@@ -58,7 +58,7 @@ class UserController extends BaseController implements GetxService {
       defaultDailCode = user!.phoneCode!;
       emailController.text = user!.email ?? "";
       addressController.text = user!.address ?? "";
-      _pickedProfileFile = XFile(File.fromUri(Uri.parse(user!.img!)).path);
+      // _pickedProfileFile = XFile(File.fromUri(Uri.parse(user!.img!)).path);
       update();
     }
   }

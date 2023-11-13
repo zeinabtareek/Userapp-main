@@ -93,7 +93,8 @@ flutter:
     - assets/image/
     - assets/language/
     - assets/svg/
-
+    - assets/lottie/
+    - .env
   fonts:
     - family: SFProText
       fonts:

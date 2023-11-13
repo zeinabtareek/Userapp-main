@@ -62,7 +62,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => dio);
   Get.lazyPut(() => CacheHelper.init());
   Get.lazyPut(() => ApiClient(
-      appBaseUrl: AppConstants.baseUrl, sharedPreferences: Get.find()));
+      appBaseUrl: AppConstants.baseUrl, sharedPreferences: Get.find()),fenix: true);
 
   // Repository
   Get.lazyPut(
