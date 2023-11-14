@@ -28,8 +28,12 @@ class BaseMapController extends BaseController with SocketIoMixin {
   late Position _position;
   Position get position => _position;
 
-  final double _persistentContentHeight = 500;
+    double _persistentContentHeight = 500;
+  // final double _persistentContentHeight = 500;
   double percent = 0;
+  set persistentContentHeightt(double num){
+    _persistentContentHeight=num;
+  }
 
   double get persistentContentHeight => _persistentContentHeight;
   bool showRiderRequest = false;
@@ -55,7 +59,7 @@ class BaseMapController extends BaseController with SocketIoMixin {
   @override
   onInit() async {
     super.onInit();
-    await _getCurrantLocation();
+    // await _getCurrantLocation();
     // setOrderId(null);
     // await checkRideStateToFindingDriver();
 
@@ -79,6 +83,9 @@ class BaseMapController extends BaseController with SocketIoMixin {
     }
     update();
   }
+
+
+
 
   onBackPressed() {
     Get.find<RideController>().resetControllerValue();

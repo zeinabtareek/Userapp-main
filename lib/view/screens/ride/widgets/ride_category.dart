@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../util/app_style.dart';
@@ -199,7 +200,7 @@ class RideCategoryWidget extends StatelessWidget {
       return     Column(
           children: [
             SizedBox(
-              height: 110,
+              height: 110.h,
               width: Get.width,
               child: ListView.builder(
                   itemCount: categoryController.categoryList.length,
@@ -312,8 +313,9 @@ class RideCategoryWidget extends StatelessWidget {
             AnimatedContainer(
               duration: const Duration(milliseconds: 500),
               curve: Curves.easeInOut,
-              width: 200,
+              // width: 200,
               height: rideController.heightOfTypes,
+              padding: EdgeInsetsDirectional.only(start: 60.w),
               // color: Colors.blue,
               child: rideController.isExpanded
                   ? Obx(() => animatedWidget(

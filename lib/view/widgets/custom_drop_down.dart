@@ -14,10 +14,15 @@ class CustomDropDown<T> extends StatefulWidget {
   final bool isRowHint;
   final Icon icon;
   final Row? rowWidget;
+  final String initialSelectedValue;
 
   const CustomDropDown(
       {required this.items,
-      required this.onChanged,
+
+        ///new
+        required this.initialSelectedValue,
+
+        required this.onChanged,
       this.rowWidget,
       this.hintText = "",
       this.borderRadius = 0,
@@ -45,6 +50,7 @@ class CustomDropDownState extends State<CustomDropDown>
 
   @override
   void initState() {
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         setState(() {
@@ -62,11 +68,21 @@ class CustomDropDownState extends State<CustomDropDown>
           }
         }
       }
-    });
+      ///new
+      final selectedItem = findItem(widget.initialSelectedValue!);
+      if (selectedItem != null) {
+        _isAnyItemSelected = true;
+        _itemSelected = selectedItem;
+      }
+        });
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
-
+  ///new
+  Widget? findItem(String value) {
+    return widget.items
+        .firstWhere((item) => item.value == value, ).child;
+  }
   void _addOverlay() {
     if (mounted) {
       setState(() {
@@ -204,6 +220,7 @@ class CustomDropDownState extends State<CustomDropDown>
 
   @override
   Widget build(BuildContext context) {
+    Widget?  itemSelected2=_itemSelected;
     return CompositedTransformTarget(
       link: _layerLink,
       child: GestureDetector(
@@ -222,7 +239,7 @@ class CustomDropDownState extends State<CustomDropDown>
                 child: _isAnyItemSelected
                     ? Padding(
                         padding: const EdgeInsets.only(left: 4.0),
-                        child: _itemSelected!,
+                        child: itemSelected2!,
                       )
                     : Padding(
                         padding:

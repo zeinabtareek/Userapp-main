@@ -73,7 +73,7 @@ class ComplainsPage extends GetView<SupportController> {
                         .toList(),
                     hintText: Strings.select.tr,
                     borderRadius: 5,
-                    onChanged: controller.initialSelectItem,
+                    onChanged: controller.initialSelectItem, initialSelectedValue: '',
                   ),
                 )),
           ),

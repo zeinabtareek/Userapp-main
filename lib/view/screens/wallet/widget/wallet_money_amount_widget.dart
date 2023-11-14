@@ -38,7 +38,8 @@ class WalletMoneyAmountWidget extends StatelessWidget {
                       BorderRadius.circular(Dimensions.paddingSizeDefault),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.errorContainer,
+                 color: Theme.of(context).cardColor,
+                    //  color: Theme.of(context).colorScheme.errorContainer,
                       borderRadius:
                           BorderRadius.circular(Dimensions.paddingSizeDefault),
                     ),

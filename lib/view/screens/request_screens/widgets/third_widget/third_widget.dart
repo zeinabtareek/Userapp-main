@@ -74,13 +74,15 @@ class ThirdWidget extends StatelessWidget { //
                   Get.find<MapController>().notifyMapController();
 
 
-                  // Get.find<BaseMapController>().widgetNumber.value =   request[RequestState.initialState]!;
-                  Get.find<BaseMapController>().checkRideStateToFindingDriver();
+               // Get.find<BaseMapController>().checkRideStateToFindingDriver();
+                  Get.find<CreateATripController>().cancelATrip(
+                      orderId: Get.find<CreateATripController>().createOrderModel.data?.id
+                          .toString());
                   // ...
 
 
                   Get.find<BaseMapController>().update();
-                  Get.back();
+                  // Get.back();
 
                   // Get.offUntil(SetDestinationScreen, (route) => false);
                 },

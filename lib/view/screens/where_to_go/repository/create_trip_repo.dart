@@ -3,6 +3,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:ride_sharing_user_app/util/ui/overlay_helper.dart';
+import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/where_to_go/where_to_go_screen.dart';
 
 import '../../../../enum/request_states.dart';
@@ -53,7 +54,8 @@ Future<CreateOrderModel> createATrip({required CreateOrderBody createOrderBody})
         print('cancel response ${res.data ?? ''}');
         OverlayHelper.showGeneralToast(
             Get.context!, Strings.orderStatus, Strings.orderCanceled);
-        Get.offAll(SetDestinationScreen(fromCat: false));
+        Get.offAll(DashboardScreen(                                                 ));
+        // Get.offAll(SetDestinationScreen(fromCat: false));
         return res.data;
       }
     } else if (res.statusCode == 422) {

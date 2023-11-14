@@ -77,7 +77,7 @@ class WeightAndPackageWidget extends StatelessWidget {
                   initial = selectedItem ?? Strings.all;
                   if (initial == Strings.custom) {}
                   // controller.update();
-                },
+                }, initialSelectedValue: '',
               ),
             ),
           ],

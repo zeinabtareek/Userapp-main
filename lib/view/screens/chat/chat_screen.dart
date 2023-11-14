@@ -25,7 +25,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+  backgroundColor: Theme.of(context).cardColor,
       body: GetBuilder<ChatController>(
         init: ChatController(chatRepo: ChatRepo()),
         builder: (chatController) {
