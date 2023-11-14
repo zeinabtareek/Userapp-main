@@ -67,6 +67,7 @@ class ResetPasswordScreen extends GetView<AuthController> {
                   title: Strings.newPassword.tr,
                 ),
                 CustomTextField(
+                  isLtr: true,
                   hintText: Strings.passwordHint.tr,
                   inputType: TextInputType.text,
                   prefixIcon: Images.password,
@@ -83,6 +84,7 @@ class ResetPasswordScreen extends GetView<AuthController> {
                 ),
                 CustomTextField(
                   hintText: '•••••••••••',
+                  isLtr: true,
                   inputType: TextInputType.text,
                   validator: (p0) => TValidator.confirmPasswordValidate(
                     value: p0,
