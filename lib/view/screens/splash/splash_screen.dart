@@ -181,7 +181,13 @@ class SplashScreen extends StatelessWidget {
               statusBarIconBrightness: Brightness.dark,
             ),
             child:         UpgradeAlert(
-    child:Scaffold(
+                upgrader: Upgrader(
+                    dialogStyle: UpgradeDialogStyle.cupertino,
+
+                    shouldPopScope: () => true
+                ),
+
+                child:Scaffold(
                 // backgroundColor: Color(0xff288c7b),
                 backgroundColor: Theme.of(context).primaryColor,//
                 body:
