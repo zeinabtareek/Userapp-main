@@ -18,7 +18,9 @@ class CompleteDataReqModel {
     Map<String, dynamic> data = <String, dynamic>{};
     data["email"] = email;
     data['address'] = address;
-    data['img'] = await MultipartFile.fromFile(img!.path);
+    if (img != null) {
+      data['img'] = await MultipartFile.fromFile(img!.path);
+    }
     return data;
   }
 
