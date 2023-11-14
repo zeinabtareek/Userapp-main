@@ -19,6 +19,7 @@ class UserAuthModel {
   int? rating;
   dynamic lang;
   dynamic theme;
+  dynamic profileCompletedRatio;//profile_completed_ratio
   Country? country;
   String? token;
   String? wallet;
@@ -34,6 +35,7 @@ class UserAuthModel {
     this.lastName,
     this.username,
     this.address,
+    this.profileCompletedRatio,//profile_completed_ratio
     this.identityNo,
     this.isActive,
     this.isBanned,
@@ -60,6 +62,7 @@ class UserAuthModel {
       lastName: json["last_name"],
       username: json["username"],
       address: json["address"],
+      profileCompletedRatio: json["profile_completed_ratio"],
       identityNo: json["identity_no"],
       isActive: json["is_active"],
       isBanned: json["is_banned"],
@@ -85,6 +88,7 @@ class UserAuthModel {
         "email": email,
         "img": img,
         "first_name": firstName,
+        "profile_completed_ratio": profileCompletedRatio,
         "last_name": lastName,
         "username": username,
         "address": address,
@@ -137,6 +141,7 @@ class UserAuthModel {
         other.wallet == wallet &&
         other.country == country &&
         other.token == token &&
+        other.profileCompletedRatio == profileCompletedRatio &&
         other.createdAt == createdAt;
   }
 
@@ -153,6 +158,7 @@ class UserAuthModel {
         address.hashCode ^
         identityNo.hashCode ^
         isActive.hashCode ^
+        profileCompletedRatio.hashCode ^
         isBanned.hashCode ^
         isDataCompleted.hashCode ^
         rating.hashCode ^
@@ -166,7 +172,7 @@ class UserAuthModel {
 
   @override
   String toString() {
-    return 'User(id: $id, phoneCode: $phoneCode, phone: $phone, email: $email, img: $img, firstName: $firstName, lastName: $lastName, username: $username, address: $address, identityNo: $identityNo, isActive: $isActive, isBanned: $isBanned, isDataCompleted: $isDataCompleted, rating: $rating, lang: $lang, theme: $theme,wallet: $wallet, country: $country, token: $token, createdAt: $createdAt)';
+    return 'User(id: $id, phoneCode: $phoneCode,profileCompletedRatio: $profileCompletedRatio, phone: $phone, email: $email, img: $img, firstName: $firstName, lastName: $lastName, username: $username, address: $address, identityNo: $identityNo, isActive: $isActive, isBanned: $isBanned, isDataCompleted: $isDataCompleted, rating: $rating, lang: $lang, theme: $theme,wallet: $wallet, country: $country, token: $token, createdAt: $createdAt)';
   }
 
   UserAuthModel copyWith({
@@ -190,6 +196,8 @@ class UserAuthModel {
     String? token,
     DateTime? createdAt,
     String? ridesCount,
+    num? profileCompletedRatio,
+
   }) {
     return UserAuthModel(
       id: id ?? this.id,
@@ -207,6 +215,7 @@ class UserAuthModel {
       isDataCompleted: isDataCompleted ?? this.isDataCompleted,
       rating: rating ?? this.rating,
       lang: lang ?? this.lang,
+      profileCompletedRatio: profileCompletedRatio ?? this.profileCompletedRatio,
       theme: theme ?? this.theme,
       country: country ?? this.country,
       token: token ?? this.token,

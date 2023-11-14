@@ -16,6 +16,12 @@ import '../model/suggested_route_model.dart';
 import '../repository/search_service.dart';
 import 'create_trip_controller.dart';
 
+enum PointType {
+  from,
+  to,
+  extra,
+}
+
 class WhereToGoController extends BaseController implements GetxService {
   // final SetMapRepo setMapRepo;
 
@@ -23,13 +29,10 @@ class WhereToGoController extends BaseController implements GetxService {
   // WhereToGoController({required this.setMapRepo});
 
   List<SuggestedRouteModel> suggestedRouteList = [];
-  int currentExtraRoute = 0;
   bool addEntrance = false;
   final fromRouteController = TextEditingController();
   final toRouteController = TextEditingController();
-  final extraRouteController = TextEditingController();
-  final extraRouteController2 = TextEditingController();
-  final extraRouteController3 = TextEditingController();
+
   final entranceController = TextEditingController();
   final entranceNode = FocusNode();
   final fromNode = FocusNode();
@@ -60,28 +63,44 @@ class WhereToGoController extends BaseController implements GetxService {
       fromNode,
       toRoutNode,
       toRouteController,
-      extraRouteController,
-      extraRouteController2,
-      extraRouteController3,
       extraNode,
       extraNode2,
       extraNode3,
+      ...extraTextEditingControllers,
+      ...extraFocusNodes,
     ]) {
       element.dispose();
     }
   }
 
-  List<String> extraRoutes = [];
+  // List<String> extraRoutes = [];
+
   List<LatLng> extraPoints = [];
+
+  LatLng get defLangLng => const LatLng(0, 0);
 
   List<LatLng> selectedPoints = [];
 
-  void setExtraRoute() {
-    if (currentExtraRoute < 1) {
-      // if (currentExtraRoute < 2) {
-      // if (currentExtraRoute < 2) {
-      currentExtraRoute = currentExtraRoute + 1;
-      extraRoutes.add('currentExtraRoute$currentExtraRoute');
+  List<TextEditingController> extraTextEditingControllers = [];
+
+  List<FocusNode> extraFocusNodes = [];
+  int get currentExtraRouteLength => extraTextEditingControllers.length;
+
+  bool get isExtraPointsIsLengthIsOne => extraFocusNodes.length == 1;
+
+  void addExtraRoute() {
+    extraTextEditingControllers.add(TextEditingController());
+    extraFocusNodes.add(FocusNode());
+    update();
+  }
+
+  void removeExtraRoute({int? index}) {
+    if (index != null) {
+      extraTextEditingControllers.removeAt(index);
+      extraFocusNodes.removeAt(index);
+    } else {
+      extraTextEditingControllers.removeLast();
+      extraFocusNodes.removeLast();
     }
     update();
   }
@@ -120,37 +139,42 @@ class WhereToGoController extends BaseController implements GetxService {
     // update();
   }
 
-  checkPermissionBeforeNavigation(context) async {
+  checkPermissionBeforeNavigation(PointType pointType, context,
+      {int? index}) async {
     await checkPermissionBeforeNavigate(context, () async {
-      await goToScreenAndRecodeSelect();
+      await goToScreenAndRecodeSelect(pointType, index: index);
     });
   }
 
-  bool get isExtraPointIsEmpty => extraRoutes.isEmpty;
-  bool get isHaveSourcePoint => selectedPoints.length == 1;
+  bool get isExtraPointIsEmpty => extraFocusNodes.isEmpty;
 
-  bool get isHaveDPoint => selectedPoints.length >= 2;
-  Future<void> goToScreenAndRecodeSelect() async {
+  Future<void> goToScreenAndRecodeSelect(PointType pointType,
+      {int? index}) async {
+    selectedPoints.removeWhere((element) => element == defLangLng);
+
     Get.to(() => ChooseFromMapScreen(_getPoints))!.then((point) async {
       if (point != null) {
-        if (!(selectedPoints.length >= 2)) {
-          selectedPoints.add(point);
-        } else {
-          extraPoints.add(point);
-        }
-
-        if (isHaveSourcePoint) {
-          fromRouteController.text = await getPlaceNameFromLatLng(point);
-        } else if (isHaveDPoint) {
-          if (isExtraPointIsEmpty) {
-            toRouteController.text = await getPlaceNameFromLatLng(point);
-          } else {
-            // for (var i = 0; i < currentExtraRoute; i++) {
-            extraRouteController.text = await getPlaceNameFromLatLng(point);
-            // }
-          }
-        } else {
+        if (pointType == PointType.to) {
           toRouteController.text = await getPlaceNameFromLatLng(point);
+          if (selectedPoints.isNotEmpty) {
+            selectedPoints.add(point);
+          } else {
+            selectedPoints.insert(0, defLangLng);
+            selectedPoints.add(point);
+          }
+        } else if (pointType == PointType.from) {
+          fromRouteController.text = await getPlaceNameFromLatLng(point);
+          if (selectedPoints.isNotEmpty) {
+            selectedPoints.insert(0, point);
+          } else {
+            selectedPoints.insert(0, point);
+            selectedPoints.add(defLangLng);
+          }
+        } else if (pointType == PointType.extra) {
+          extraTextEditingControllers[index!].text =
+              await getPlaceNameFromLatLng(point);
+          extraPoints.insert(index, point);
+
         }
         update();
       }
@@ -160,7 +184,7 @@ class WhereToGoController extends BaseController implements GetxService {
   List<LatLng>? get _getPoints {
     if (selectedPoints.isEmpty) {
       return null;
-    } else if (selectedPoints.length >= 2) {
+    } else if (selectedPoints.length == 2) {
       return selectedPoints;
     } else {
       return [selectedPoints.first, ...extraPoints, selectedPoints.last];
@@ -176,8 +200,9 @@ class WhereToGoController extends BaseController implements GetxService {
   searchPlacesFrom(String searchTerm) async {
     setState(ViewState.busy);
     searchResultsFrom.value = await searchServices.getAutoCompleteFrom(
-        search: searchTerm.toString(),  );
-        // search: searchTerm.toString(), country: 'eg');
+      search: searchTerm.toString(),
+    );
+    // search: searchTerm.toString(), country: 'eg');
     print(
         'data ${searchResultsFrom.value} length is ${searchResultsFrom.length}');
     setState(ViewState.idle);
@@ -204,32 +229,31 @@ class WhereToGoController extends BaseController implements GetxService {
   }
 
   validateData() async {
-    print(" _getPoints $_getPoints ");
+    // print(" _getPoints $_getPoints ");
     if (_getPoints == null) {
-      print('no');
+      // print('no');
       OverlayHelper.showErrorToast(Get.overlayContext!, 'select_a_trip'.tr);
     } else {
-      print('yes');
+      // print('yes');
       // Get.to(() =>
       //   MapScreen(
       //   fromScreen: 'ride',
       // ));
-      Get.to(
-        
-        binding: BindingsBuilder(() {
-            Get.lazyPut(() => RideRepo(apiClient: Get.find()));
-
-        }),
-        () => BaseMapScreen(
-            points: _getPoints!,
-          ))?.then((value) {
+      Get.to(binding: BindingsBuilder(() {
+        Get.lazyPut(() => RideRepo(apiClient: Get.find()));
+      }),
+          () => BaseMapScreen(
+                points: _getPoints!,
+              ))?.then((value) {
         selectedPoints = [];
         fromRouteController.text = '';
         toRouteController.text = '';
         extraPoints = [];
-        extraRouteController.text = '';
-        extraRouteController2.text = '';
-        extraRouteController3.text = '';
+
+        for (var element in extraTextEditingControllers) {
+          element.text = "";
+        }
+
         update();
       });
       //not needed

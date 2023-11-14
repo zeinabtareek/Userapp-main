@@ -22,14 +22,15 @@ class OtpLoginScreen extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: isFromlogin != false
-          ? CustomAppBar(
-              title: Strings.termsAndCondition.tr,
-              onBackPressed: () {
-                Get.back();
-              },
-            )
-          : null,
+      backgroundColor: Theme.of(context).cardColor,
+      // appBar: isFromlogin != false
+      //     ? CustomAppBar(
+      //         title: Strings.termsAndCondition.tr,
+      //         onBackPressed: () {
+      //           Get.back();
+      //         },
+      //       )
+      //     : null,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(

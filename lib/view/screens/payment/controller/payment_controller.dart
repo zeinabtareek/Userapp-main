@@ -113,22 +113,27 @@ update();
   // );
 
 
-  paymentConfigFunc(int amount){
+  PaymentConfig paymentConfigFunc(int amount) {
+    // Convert amount to a string and append "00"
+    String formattedAmount = (amount * 100).toString();
+
     print(AppConstants.paymentApiKey);
     return PaymentConfig(
       publishableApiKey: AppConstants.paymentApiKey,
-      // amount:amount,
-      // description: 'order #${Get.find<CreateATripController>().orderModel.data?.id}',
-      amount:4099,
-      description: 'order #2223',
-      metadata: {'size': '250g'},
+      amount: int.parse(formattedAmount),
+      description: 'wallet withdraw',
+      metadata: {'size': '250g'}, //855362
       applePay: ApplePayConfig(
-          // merchantId: 'merchant.hooduser',
+        // merchantId: 'merchant.hooduser',
           merchantId: 'merchant.mysr.fghurayri',
           label: 'Hood User',
-          manual: true)
+          manual: true),
     );
   }
+
+
+
+
   // final paymentConfig = PaymentConfig(
   //     publishableApiKey: 'pk_test_r6eZg85QyduWZ7PNTHT56BFvZpxJgNJ2PqPMDoXA',
   //     amount: 100, // SAR 1

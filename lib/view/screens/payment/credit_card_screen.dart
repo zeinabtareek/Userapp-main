@@ -13,7 +13,7 @@ import 'controller/payment_controller.dart';
 class CreditCardScreen extends StatelessWidget {
   PaymentConfig paymentConfig;
    Function onPaymentResult;
-  int amount;
+  num amount;
     CreditCardScreen({Key? key,
     required this.paymentConfig,
     required this.amount,

@@ -470,6 +470,7 @@
   "wait": "Please Wait",
   "your_selected_car_type": "your selected car type is ",
   "pay_with_apple_pay": "Pay your ride using Apple pay payment method ...",
-  "click_on_btn_to_finish_your_billing": "Click the button to finalize your payment"
+  "click_on_btn_to_finish_your_billing": "Click the button to finalize your payment",
+  "from": "From"
 
 }

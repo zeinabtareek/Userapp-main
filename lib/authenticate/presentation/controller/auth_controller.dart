@@ -166,7 +166,7 @@ class AuthController extends GetxController {
           await authCases.setUserDate(user);
           // Get.find<BaseController>().getUser;
           // TODO:  isNotVerifiedPhone
-
+print('user complete ration is:::${user.profileCompletedRatio}');
           // TODO:  welcome toast
           _toHomeScreen();
         },
@@ -332,7 +332,7 @@ class AuthController extends GetxController {
           await authCases.setUserDate(null);
 
           UserAuthModel user = res!.data!.user!;
-          user.copyWith(token: oldUserToken);
+        user=  user.copyWith(token: oldUserToken);
           await authCases.setUserDate(user);
           _toHomeScreen();
         },
@@ -629,17 +629,17 @@ class AuthController extends GetxController {
     String otpCode,
     String phone,
   ) async {
-    if (resetNewPasswordController.text.trim().isEmpty) {
-      showCustomSnackBar(Strings.passIsRequired.tr);
-      return;
-    } else if (resetNewPasswordController.text.trim().length < 8) {
-      showCustomSnackBar(Strings.minPassLength.tr);
-      return;
-    } else if (resetNewPasswordController.text.trim() !=
-        resetConfirmPasswordController.text.trim()) {
-      showCustomSnackBar(Strings.passwordIsMismatch.tr);
-      return;
-    }
+    // if (resetNewPasswordController.text.trim().isEmpty) {
+    //   showCustomSnackBar(Strings.passIsRequired.tr);
+    //   return;
+    // } else if (resetNewPasswordController.text.trim().length < 8) {
+    //   showCustomSnackBar(Strings.minPassLength.tr);
+    //   return;
+    // } else if (resetNewPasswordController.text.trim() !=
+    //     resetConfirmPasswordController.text.trim()) {
+    //   showCustomSnackBar(Strings.passwordIsMismatch.tr);
+    //   return;
+    // }
 
     resetPassScreenIsLoading(true);
     final req = UpdatePasswordReqModel(
@@ -660,19 +660,19 @@ class AuthController extends GetxController {
   }
 
   changePass() async {
-    if (resetNewPasswordController.text.trim().isEmpty ||
-        resetOldPasswordController.text.trim().isEmpty) {
-      showCustomSnackBar(Strings.passIsRequired.tr);
-      return;
-    } else if (resetNewPasswordController.text.trim().length < 8 ||
-        resetOldPasswordController.text.trim().length < 8) {
-      showCustomSnackBar(Strings.minPassLength.tr);
-      return;
-    } else if (resetNewPasswordController.text.trim() !=
-        resetConfirmPasswordController.text.trim()) {
-      showCustomSnackBar(Strings.passwordIsMismatch.tr);
-      return;
-    }
+    // if (resetNewPasswordController.text.trim().isEmpty ||
+    //     resetOldPasswordController.text.trim().isEmpty) {
+    //   showCustomSnackBar(Strings.passIsRequired.tr);
+    //   return;
+    // } else if (resetNewPasswordController.text.trim().length < 8 ||
+    //     resetOldPasswordController.text.trim().length < 8) {
+    //   showCustomSnackBar(Strings.minPassLength.tr);
+    //   return;
+    // } else if (resetNewPasswordController.text.trim() !=
+    //     resetConfirmPasswordController.text.trim()) {
+    //   showCustomSnackBar(Strings.passwordIsMismatch.tr);
+    //   return;
+    // }
     resetPassScreenIsLoading(true);
     final req = ChangePasswordReqModel(
       oldPass: resetOldPasswordController.text,
@@ -692,9 +692,10 @@ class AuthController extends GetxController {
           );
         }
         Get.back();
-        // TODO: suses toast
+   
       },
       showSuccessToast: true,
+
     );
   }
 
