@@ -1,6 +1,6 @@
 name: ride_sharing_user_app
 description: A ride sharing Flutter project.
-version: 1.0.0+1
+version: 1.0.0+2
 #version: 1.0.0+1
 publish_to: "none"
 
@@ -97,6 +97,7 @@ flutter:
     - assets/svg/
     - assets/lottie/
     - .env
+    - shorebird.yaml
   fonts:
     - family: SFProText
       fonts:
