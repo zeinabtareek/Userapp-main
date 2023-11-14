@@ -31,10 +31,14 @@ class InitialRequestWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isKeyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
     return GetBuilder<RideController>(
         init: RideController(rideRepo: Get.find()),
-        builder: (controller) => Column(
+        builder: (controller) {
+
+          bool isKeyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
+
+        return  Column
+        (
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -91,37 +95,38 @@ class InitialRequestWidget extends StatelessWidget {
                         ),
                         maxListHeight: 200,
                         items: controller.paymentOptions
-                            .where((item) => !((item == 'wallet') &&
+                            .where((item) => !((item['name'] == 'wallet') &&
                                 (controller.user?.wallet == 0)))
                             .map(
                               (item) => CustomDropdownMenuItem<String>(
-                                value: item,
+                                value: item['name'],
                                 child: SizedBox(
                                   width: 200,
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Image.asset(
-                                        Images.profileMyWallet,
+                                        item['icon'],
+                                        // Images.profileMyWallet,
                                         height: 15,
                                         width: 15,
-                                        color: (item == 'wallet' &&
+                                        color: (item['name']== 'wallet' &&
                                                 controller.user?.wallet == 0)
                                             ? Theme.of(context).disabledColor
                                             : Theme.of(context).primaryColor,
                                       ),
                                       K.sizedBoxW0,
                                       Text(
-                                        item.tr,
+                                        item['name'].toString().tr,
                                         style: textRegular.copyWith(
-                                          color: item !=
+                                          color: item['name'] !=
                                                   controller.initialSelectItem
                                               ? Theme.of(context)
                                                   .textTheme
                                                   .bodyMedium!
                                                   .color!
                                                   .withOpacity(0.5)
-                                              : (item == 'wallet' &&
+                                              : (item['name'] == 'wallet' &&
                                                       controller.user?.wallet ==
                                                           0)
                                                   ? Theme.of(context)
@@ -161,7 +166,7 @@ class InitialRequestWidget extends StatelessWidget {
                                 'Wallet balance is zero. Cannot select "wallet" option.');
                           } else {
                             // Execute only if the selected item is not 'wallet' with zero balance
-                            controller.initialSelectItem = selectedItem!;
+                            controller.initialSelectItem = selectedItem ;
                             if (controller.initialSelectItem ==
                                 Strings.custom) {
                               showDialog(
@@ -173,12 +178,14 @@ class InitialRequestWidget extends StatelessWidget {
                                 ),
                               );
                             }
-                            controller.update();
+                            // controller.update();
                           }
 
                           print(' initialSelectItem ${controller.initialSelectItem}' );
 
                         },
+                          initialSelectedValue:
+                          controller.initialSelectItem??Strings.selectAPaymentMethod
                       ),
                     ),
                   ),
@@ -248,6 +255,7 @@ class InitialRequestWidget extends StatelessWidget {
 
                 ///TODO :this code zeinab removed it to apply the getPrice screen
               ],
-            ));
+            );}
+    );
   }
 }

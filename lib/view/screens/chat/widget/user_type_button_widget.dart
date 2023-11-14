@@ -33,7 +33,8 @@ class UserTypeButtonWidget extends StatelessWidget {
                     : Theme.of(context).primaryColor),
             color: isSelected
                 ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).cardColor,
+                : Colors.white,
+                // : Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
           ),
           child: Column(
@@ -47,8 +48,10 @@ class UserTypeButtonWidget extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: textSemiBold.copyWith(
                         color: isSelected
-                            ? Colors.white
-                            : Theme.of(context).hintColor.withOpacity(.65),
+                            ?Colors.white
+                            // : Theme.of(context).colorScheme.onSecondary,
+                            : Theme.of(context).shadowColor.withOpacity(.5),
+                            // : Theme.of(context).hintColor.withOpacity(.65),
                         fontSize: Dimensions.fontSizeLarge)),
               ),
             ],

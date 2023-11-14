@@ -1,3 +1,4 @@
+import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -6,6 +7,7 @@ import 'package:ride_sharing_user_app/enum/view_state.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/repository/ride_repo.dart';
 
 import '../../../../util/app_strings.dart';
+import '../../../../util/images.dart';
 import '../../../../util/ui/overlay_helper.dart';
 import '../../home/model/categoty_model.dart';
 import '../../where_to_go/controller/create_trip_controller.dart';
@@ -31,7 +33,6 @@ class RideController extends BaseController implements GetxService {
 
   RideController({required this.rideRepo});
   var initialSelectItem;
-
   var currentRideState = RideState.initial;
   var selectedCategoryTypeEnum = RideType.car;
 
@@ -59,13 +60,24 @@ class RideController extends BaseController implements GetxService {
   dynamic distance = 0.0;
   var duration;
 
-  final List<String> _paymentOptions = [
-    'cash',
-    'digital',
-    'wallet',
+  final List<Map> _paymentOptions = [
+    {'name':'cash','icon': Images.cash,},
+    {'name':'digital','icon': Images.masterCardIcon,},
+    {'name':'wallet','icon': Images.profileMyWallet,},
+
   ];
-  List<String> get paymentOptions => _paymentOptions;
-  // var initialSelectItem= 'digital';
+  List<Map> get paymentOptions => _paymentOptions;
+
+
+
+  //  final List<String> _paymentOptions = [
+  //   'cash',
+  //   'digital',
+  //   'wallet',
+  // ];
+  // List<String> get paymentOptions => _paymentOptions;
+  //
+
 
   @override
   onInit() async {

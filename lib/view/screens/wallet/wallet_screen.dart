@@ -31,7 +31,7 @@ class _WalletScreenState extends State<WalletScreen>
     // Get.find<WalletController>().getVoucherList();
     // Get.find<WalletController>().getPromoCodeList();
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).cardColor,
       body: CustomBody(
         appBar: CustomAppBar(title: Strings.wallet.tr),
         body: Column(

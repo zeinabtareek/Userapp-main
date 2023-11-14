@@ -175,14 +175,15 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  AnnotatedRegion(
-            value: const SystemUiOverlayStyle(
-              statusBarColor: Color(0xff288c7b),
+            value:   SystemUiOverlayStyle(
+              // statusBarColor: Color(0xff288c7b),
+              statusBarColor: Theme.of(context).primaryColor,
               statusBarIconBrightness: Brightness.dark,
             ),
             child:         UpgradeAlert(
     child:Scaffold(
-                backgroundColor: Color(0xff288c7b),
-                // backgroundColor: Theme.of(context).primaryColor,//
+                // backgroundColor: Color(0xff288c7b),
+                backgroundColor: Theme.of(context).primaryColor,//
                 body:
                 Center(
                   child: Image.asset(

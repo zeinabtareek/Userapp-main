@@ -96,7 +96,7 @@ getDriversList(){
   Widget build(BuildContext context) {
 
     return GetBuilder<HomeViewController>(
-        init: HomeViewController()..getPermission(),
+      //  init: HomeViewController()..getPermission(),
         initState: (_) {},
         builder: (con ) {
           return Padding(

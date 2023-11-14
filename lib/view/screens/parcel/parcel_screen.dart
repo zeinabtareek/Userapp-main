@@ -167,7 +167,7 @@ class ParcelScreen extends StatelessWidget {
                                     if (controller.kilosList.first ==
                                         Strings.custom) {}
                                     controller.update();
-                                  },
+                                  }, initialSelectedValue: '',
                                 ),
                               ),
                             ],
