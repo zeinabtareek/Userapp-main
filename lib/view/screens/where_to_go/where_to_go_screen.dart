@@ -39,6 +39,7 @@ class SetDestinationScreen extends StatelessWidget {
       ),
       body: GetBuilder<WhereToGoController>(
           init: WhereToGoController(),
+          id: "WhereToGoController",
           builder: (whereToGoController) {
             return SingleChildScrollView(
               controller: whereToGoController.scrollController,
@@ -185,8 +186,7 @@ class SetDestinationScreen extends StatelessWidget {
                             ///suggestions
 
                             GetBuilder<AddressController>(
-                              init: AddressController()
-                                ..getSuggestedAddressList(),
+                              autoRemove: false,
                               builder: (addressController) => Padding(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: Dimensions.paddingSizeDefault,
@@ -230,7 +230,8 @@ class SetDestinationScreen extends StatelessWidget {
                                         ),
                                       ),
                                       onTap: () {
-                                        _showSelectPointByPressBottomSheet(context, (type) {
+                                        _showSelectPointByPressBottomSheet(
+                                            context, (type) {
                                           whereToGoController
                                               .selectPointByPress(type, item);
                                         });
@@ -257,37 +258,35 @@ _showSelectPointByPressBottomSheet(
   context,
   Function(PointType pointType) onTap,
 ) {
+  // TODO: tr
   return showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
-      return Container(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ListTile(
-              title: const Text('Set as Source'),
-              onTap: () {
-                Navigator.pop(context);
-                onTap(PointType.from);
-              },
-            ),
-            ListTile(
-              title: const Text('Set as Destination'),
-              onTap: () {
-                Navigator.pop(context);
-                onTap(PointType.to);
-              },
-            ),
-            ListTile(
-              title: const Text('Set as Extra Route'),
-              onTap: () {
-                // _selectAddress('Extra Route');
-                Navigator.pop(context);
-                onTap(PointType.extra);
-              },
-            ),
-          ],
-        ),
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          ListTile(
+            title: const Text('Set as Source'),
+            onTap: () {
+              Navigator.pop(context);
+              onTap(PointType.from);
+            },
+          ),
+          ListTile(
+            title: const Text('Set as Destination'),
+            onTap: () {
+              Navigator.pop(context);
+              onTap(PointType.to);
+            },
+          ),
+          ListTile(
+            title: const Text('Set as Extra Route'),
+            onTap: () {
+              Navigator.pop(context);
+              onTap(PointType.extra);
+            },
+          ),
+        ],
       );
     },
   );
@@ -534,8 +533,8 @@ class SavedPlaces extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AddressController>(
-      init: AddressController()..getAddressList(),
-      initState: (state) => Get.find<AddressController>()..getAddressList(),
+autoRemove: false,
+      // initState: (state) => Get.find<AddressController>()..getAddressList(),
       builder: (controller) {
         if (controller.addressModel.data != null &&
             controller.addressModel.data!.isNotEmpty) {

@@ -339,29 +339,29 @@ mixin MapHelper on GetxController {
     return Geolocator.distanceBetween(lat1, lon1, lat2, lon2);
   }
 
-  static Stream<Position>? _positionStream;
-  static _initStream({LocationSettings? locationSettings}) {
-    _positionStream ??=
-        Geolocator.getPositionStream(locationSettings: locationSettings);
-  }
+  // static Stream<Position>? _positionStream;
+  // static _initStream({LocationSettings? locationSettings}) {
+  //   _positionStream ??=
+  //       Geolocator.getPositionStream(locationSettings: locationSettings);
+  // }
 
-  static StreamSubscription<Position> getPositionWhenMove({
-    accuracy = LocationAccuracy.best,
-    int distanceFilter = 10,
-    Duration? timeLimit,
-    Function(Position position)? onChangeLocation,
-  }) {
-    var locationOptions = LocationSettings(
-      accuracy: accuracy,
-      distanceFilter: distanceFilter,
-      timeLimit: timeLimit,
-    );
-    _initStream(locationSettings: locationOptions);
+  // static StreamSubscription<Position> getPositionWhenMove({
+  //   accuracy = LocationAccuracy.best,
+  //   int distanceFilter = 10,
+  //   Duration? timeLimit,
+  //   Function(Position position)? onChangeLocation,
+  // }) {
+  //   var locationOptions = LocationSettings(
+  //     accuracy: accuracy,
+  //     distanceFilter: distanceFilter,
+  //     timeLimit: timeLimit,
+  //   );
+  //   _initStream(locationSettings: locationOptions);
 
-    return _positionStream!.listen(
-      onChangeLocation,
-    );
-  }
+  //   return _positionStream!.listen(
+  //     onChangeLocation,
+  //   );
+  // }
 }
 
 class FlutterPolylinePointsHelper {

@@ -37,7 +37,12 @@ class AddressController extends BaseController implements GetxService {
     await getSuggestedAddressList();
   }
 
-  static List<String> staticAddressNames = ["home", "office", "journey", "mall"];
+  static List<String> staticAddressNames = [
+    "home",
+    "office",
+    "journey",
+    "mall"
+  ];
 
   static List<String> staticAddressIcons = [
     Images.homeHome,
@@ -173,46 +178,51 @@ class AddressController extends BaseController implements GetxService {
   }
 
   Future<void> getAddressList() async {
-    setState(ViewState.busy);
-
-    try {
-      addressModel = await addressRepo1.getAddressList();
-      for (var item in staticAddressNames) {
-        int? index =
-            addressModel.data?.indexWhere((element) => element.name == item);
-        if (index != null) {
-          if (index == -1) {
-            addressModel.data?.add(AddressData.createEmpty(item));
-          }
+    if (addressModel.data==null) {
+  setState(ViewState.busy);
+  
+  try {
+    addressModel = await addressRepo1.getAddressList();
+    for (var item in staticAddressNames) {
+      int? index =
+          addressModel.data?.indexWhere((element) => element.name == item);
+      if (index != null) {
+        if (index == -1) {
+          addressModel.data?.add(AddressData.createEmpty(item));
         }
       }
-
-      if (kDebugMode) {
-        print('addressList ${addressModel.data?.length}');
-      }
-      // }
-    } on MsgModel {
-      // TODO
     }
-    setState(ViewState.idle);
-
-    update();
+  
+    if (kDebugMode) {
+      print('addressList ${addressModel.data?.length}');
+    }
+    // }
+  } on MsgModel {
+    // TODO
+  }
+  setState(ViewState.idle);
+  
+  update();
+}
   }
 
   Future<void> getSuggestedAddressList() async {
-    setState(ViewState.busy);
+    if (suggestionAddressModel.data == null) {
+      setState(ViewState.busy);
 
-    try {
-      suggestionAddressModel = await addressRepo1.getSuggestedAddressList();
+      try {
+        suggestionAddressModel = await addressRepo1.getSuggestedAddressList();
 
-      print('suggestionAddressModel ${suggestionAddressModel.data?.length}');
-      // }
-    } on MsgModel {
-      // TODO
+        print('suggestionAddressModel ${suggestionAddressModel.data?.length}');
+        // }
+      } on MsgModel {
+        // TODO
+      }
+      setState(ViewState.idle);
+      update();
     }
-    setState(ViewState.idle);
 
-    update();
+    
   }
 
   void setCurrentIndex(int index, bool notify) {

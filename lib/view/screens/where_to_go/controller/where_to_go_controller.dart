@@ -75,6 +75,8 @@ class WhereToGoController extends BaseController implements GetxService {
     }
   }
 
+  bool loadedSaved = false;
+  bool loadedSuggest = false;
   // List<String> extraRoutes = [];
 
   List<LatLng> extraPoints = [];
@@ -94,7 +96,7 @@ class WhereToGoController extends BaseController implements GetxService {
     extraTextEditingControllers.add(TextEditingController());
     extraFocusNodes.add(FocusNode());
     extraPoints.add(defLangLng);
-    update();
+    update(["WhereToGoController"]);
   }
 
   void removeExtraRoute({int? index}) {
@@ -105,12 +107,12 @@ class WhereToGoController extends BaseController implements GetxService {
       extraTextEditingControllers.removeLast();
       extraFocusNodes.removeLast();
     }
-    update();
+    update(["WhereToGoController"]);
   }
 
   void setAddEntrance() {
     addEntrance = !addEntrance;
-    update();
+    update(["WhereToGoController"]);
   }
 
   Future<double?> calculateDistance() async {
@@ -143,7 +145,7 @@ class WhereToGoController extends BaseController implements GetxService {
     // } else {
     //   ApiChecker.checkApi(response);
     // }
-    // update();
+    // update(["WhereToGoController"]);
   }
 
   checkPermissionBeforeNavigation(PointType pointType, context,
@@ -163,26 +165,16 @@ class WhereToGoController extends BaseController implements GetxService {
       if (point != null) {
         if (pointType == PointType.to) {
           toRouteController.text = await getPlaceNameFromLatLng(point);
-          if (selectedPoints.isNotEmpty) {
-            selectedPoints.add(point);
-          } else {
-            selectedPoints.insert(0, defLangLng);
-            selectedPoints.add(point);
-          }
+          _addToPoint(point);
         } else if (pointType == PointType.from) {
           fromRouteController.text = await getPlaceNameFromLatLng(point);
-          if (selectedPoints.isNotEmpty) {
-            selectedPoints.first = point;
-          } else {
-            selectedPoints.insert(0, point);
-            selectedPoints.add(defLangLng);
-          }
+          _addFromPoint(point);
         } else if (pointType == PointType.extra) {
           extraTextEditingControllers[index!].text =
               await getPlaceNameFromLatLng(point);
-          extraPoints.insert(index, point);
+          _addFirstExtraPoint(point);
         }
-        update();
+        update(["WhereToGoController"]);
       }
     });
   }
@@ -215,7 +207,7 @@ class WhereToGoController extends BaseController implements GetxService {
     //     'data ${searchResultsFrom.value} length is ${searchResultsFrom.length}');
 
     setState(ViewState.idle);
-    update();
+    update(["WhereToGoController"]);
     return searchResultsFrom;
   }
 
@@ -245,6 +237,7 @@ class WhereToGoController extends BaseController implements GetxService {
     } else {
       Get.find<RideController>().updateRideCurrentState(RideState.initial);
       // var dis = await distance;
+      print("responseData  _getPoints! $_getPoints  ");
       Get.to(binding: BindingsBuilder(() {
         Get.lazyPut(() => RideRepo(apiClient: Get.find()));
         // ignore: avoid_single_cascade_in_expression_statements
@@ -263,7 +256,7 @@ class WhereToGoController extends BaseController implements GetxService {
           element.text = "";
         }
 
-        update();
+        update(["WhereToGoController"]);
       });
       //not needed
     }
@@ -275,26 +268,56 @@ class WhereToGoController extends BaseController implements GetxService {
       case PointType.from:
         fromRouteController.text = data.location!;
 
-        if (selectedPoints.isNotEmpty) {
-          selectedPoints[0] = point;
-        } else {
-          selectedPoints.insert(0, point);
-        }
+        _addFromPoint(point);
       case PointType.to:
         toRouteController.text = data.location!;
-        if (selectedPoints.isEmpty) {
-          selectedPoints.add(defLangLng);
-          selectedPoints.add(defLangLng);
-        }
-        selectedPoints.last = point;
-
+        _addToPoint(point);
       case PointType.extra:
         if (!isExtraPointsIsLengthIsOne) {
           addExtraRoute();
         }
         extraTextEditingControllers.first.text = data.location!;
-        extraPoints.assign(point);
+        _addFirstExtraPoint(point);
     }
-    update();
+
+    update(["WhereToGoController"]);
+  }
+
+  void _addFirstExtraPoint(LatLng point) {
+    if (isExtraPointsIsLengthIsOne) {
+      extraPoints.first = point;
+    } else {
+      extraPoints.add(point);
+    }
+  }
+
+  _addFromPoint(LatLng point) {
+    if (selectedPoints.isNotEmpty) {
+      if (selectedPoints.first == point) {
+        return;
+      } else {
+        selectedPoints.insert(0, point);
+      }
+    } else {
+      selectedPoints.insert(0, point);
+      selectedPoints.add(defLangLng);
+    }
+  }
+
+  _addToPoint(LatLng point) {
+    if (selectedPoints.isNotEmpty) {
+      if (selectedPoints.length == 2) {
+        if (selectedPoints.last == point) {
+          return;
+        } else {
+          selectedPoints.add(point);
+        }
+      } else {
+        selectedPoints.add(point);
+      }
+    } else {
+      selectedPoints.insert(0, defLangLng);
+      selectedPoints.add(point);
+    }
   }
 }
