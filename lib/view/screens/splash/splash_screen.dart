@@ -67,8 +67,8 @@
 //     Get.find<ConfigController>().initSharedData();
 //     _route();
 //
-   
-  // }
+
+// }
 //
 //   @override
 //   void dispose() {
@@ -159,7 +159,6 @@
 //   }
 // }
 
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -171,7 +170,7 @@ import 'controller/splash_controller.dart';
 
 class SplashScreen extends StatelessWidget {
   SplashScreen({super.key});
-  final controller=Get.put(SplashController());
+  final controller = Get.put(SplashController());
   @override
   Widget build(BuildContext context) {
     return  AnnotatedRegion(
@@ -189,19 +188,13 @@ class SplashScreen extends StatelessWidget {
 
                 child:Scaffold(
                 // backgroundColor: Color(0xff288c7b),
-                backgroundColor: Theme.of(context).primaryColor,//
-                body:
-                Center(
+                backgroundColor: Theme.of(context).primaryColor, //
+                body: Center(
                   child: Image.asset(
                     Images.splash,
                     // height: 100,
                     width: MediaQuery.of(context).size.width,
                   ),
-                )
-            )
-            )
-
-
-    );
+                ))));
   }
 }

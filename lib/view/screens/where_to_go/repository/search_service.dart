@@ -15,18 +15,19 @@ import '../../../../util/app_style.dart';
 import '../model/search_suggestion_model.dart';
 
 class SearchServices {
-  Completer<GoogleMapController> _controller = Completer();
-  String _country='sa';
+  final Completer<GoogleMapController> _controller = Completer();
+  final String _country = 'sa';
 
 // https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&components=country:eg&types=(cities)&key=${K.googleKeyAPi}
   Future<List<Predictions>> getAutoCompleteFrom(
-  // Future<List<Suggestion>> getAutoCompleteFrom(
-      {required String search,  }) async {
-
+      // Future<List<Suggestion>> getAutoCompleteFrom(
+      {
+    required String search,
+  }) async {
     print('map api key is::${AppConstants.mapKey}');
     var url =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&components=country:$_country&key=${AppConstants.mapKey}';
-        // 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&components=country:$country&key=AIzaSyCzuhU5w3Ah8t2x2pIKXzsGoATsdzVNK9I';
+    // 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&components=country:$country&key=AIzaSyCzuhU5w3Ah8t2x2pIKXzsGoATsdzVNK9I';
     var response = await http.get(Uri.parse(url));
     var json = convert.jsonDecode(response.body);
     var jsnResults = json['predictions'] as List;
@@ -74,7 +75,7 @@ class SearchServices {
     return results; // return results;
   }
 
-  /*********not needed till now************/
+  /// *******not needed till now***********
   Future<PlaceDetail> getPlaceDetails(String placeId) async {
     String placeDetailsUrl =
         'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=${AppConstants.mapKey}';
@@ -90,16 +91,19 @@ class SearchServices {
         await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
     return "${placemark[0].name}, ${placemark[0].locality}, ${placemark[0].country}";
   }
+
   static Future<dynamic> getDistance(LatLng origin, LatLng destination) async {
-    String Url = 'https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${origin.latitude},${origin.longitude}&origins=${destination.latitude},${destination.longitude}&key=AIzaSyA6NSYZTZaYj_Kgit9CAlNuCTvwLOoRSes';
+    String Url =
+        'https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${origin.latitude},${origin.longitude}&origins=${destination.latitude},${destination.longitude}&key=${AppConstants.mapKey}';
     try {
       var response = await http.get(Uri.parse(Url));
       if (response.statusCode == 200) {
         var responseData = jsonDecode(response.body);
-        final distanceValue = responseData['rows'][0]['elements'][0]['distance']['value'];
+        print(" responseData $responseData ");
+        final distanceValue =
+            responseData['rows'][0]['elements'][0]['distance']['value'];
         var distanceInKm = distanceValue / 1000;
         return distanceInKm;
-
       } else {
         return null;
       }
@@ -127,16 +131,16 @@ class SearchServices {
   //   }
   // }
 
-
   // Future<Map<String, dynamic>>
   static getDistanceAndDuration(LatLng origin, LatLng destination) async {
-    final apiUrl = 'https://maps.googleapis.com/maps/api/distancematrix/json';
-    final url = '$apiUrl?origins=${origin.latitude},${origin.longitude}&destinations=${destination.latitude},${destination.longitude}&key=AIzaSyA6NSYZTZaYj_Kgit9CAlNuCTvwLOoRSes';
+    const apiUrl = 'https://maps.googleapis.com/maps/api/distancematrix/json';
+    final url =
+        '$apiUrl?origins=${origin.latitude},${origin.longitude}&destinations=${destination.latitude},${destination.longitude}&key=AIzaSyA6NSYZTZaYj_Kgit9CAlNuCTvwLOoRSes';
     final response = await http.get(Uri.parse(url));
     final data = json.decode(response.body);
     final distance = data['rows'][0]['elements'][0]['distance']['text'];
     final duration = data['rows'][0]['elements'][0]['duration']['text'];
-    return   duration;
+    return duration;
     // return {'distance': distance, 'duration': duration};
   }
 }

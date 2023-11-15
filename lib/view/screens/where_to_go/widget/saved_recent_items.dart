@@ -7,20 +7,18 @@ import '../../../../util/text_style.dart';
 import '../../ride/model/address_model.dart';
 
 class SavedAndRecentItem extends StatelessWidget {
-  final String title;
   final String icon;
   final String subTitle;
   final bool isSeeMore;
-  final Function()? onTap;
-  final AddressData? addressData;
+  final Function( AddressData data)? onTap;
+  final AddressData addressData;
 
   const SavedAndRecentItem(
       {Key? key,
-      required this.title,
       required this.icon,
       required this.subTitle,
       this.isSeeMore = false,
-      this.addressData,
+    required  this.addressData,
       this.onTap})
       : super(key: key);
 
@@ -29,17 +27,8 @@ class SavedAndRecentItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: K.fixedPadding0,
-          child: Text(
-            title.tr,
-            style: textMedium.copyWith(
-                color: Theme.of(context).primaryColor,
-                fontSize: Dimensions.fontSizeLarge),
-          ),
-        ),
         GestureDetector(
-          onTap: onTap,
+          onTap:()=> onTap?.call(addressData),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(
                 Dimensions.paddingSizeDefault,
