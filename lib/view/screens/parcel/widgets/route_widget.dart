@@ -15,13 +15,12 @@ class RouteWidget extends StatelessWidget {
   bool? showTotalDistance = true;
   bool? isParcel = false;
   Color? colorText;
- 
+
   RouteWidget({
     super.key,
     this.showTotalDistance,
     this.isParcel,
     this.colorText,
-
   });
 
   @override
@@ -80,6 +79,12 @@ class RouteWidget extends StatelessWidget {
                               color: colorText ?? Colors.black),
                         ),
                         const SizedBox(height: Dimensions.paddingSizeSmall),
+                        ...whereToGoController.extraTextEditingControllers
+                            .map((c) {
+                          return const SizedBox(
+                              height: Dimensions.paddingSizeSmall);
+                          
+                        }).toList(),
                         Text(
                           'to'.tr,
                           style: textRegular.copyWith(
