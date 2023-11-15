@@ -200,7 +200,7 @@ class RideCategoryWidget extends StatelessWidget {
       return     Column(
           children: [
             SizedBox(
-              height: 110.h,
+              height: 110,
               width: Get.width,
               child: ListView.builder(
                   itemCount: categoryController.categoryList.length,

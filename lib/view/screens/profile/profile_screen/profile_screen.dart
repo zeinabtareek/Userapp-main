@@ -135,15 +135,14 @@ class ProfileScreen extends StatelessWidget {
                                     ],
                                   ),
                                   CircularPercentIndicator(
-                                    radius: 18.0,
+                                    radius: 20.0,
                                     lineWidth: 2.5,
-                                    percent: progressValue,
+                                    percent:  (double.tryParse(controller.user?.profileCompletedRatio.toString() ?? '0.0') ?? 0.0) / 100,
                                     backgroundColor: Colors.white,
                                     center: Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: FittedBox(
-                                        child: Text(
-                                          "${progressValue * 100}%",
+                                        child: Text("${(controller.user?.profileCompletedRatio ?? 0.0).toStringAsFixed(0)}%",
                                           style: textMedium.copyWith(
                                               fontSize: 10,
                                               color: Theme.of(context)

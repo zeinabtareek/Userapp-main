@@ -173,18 +173,20 @@ class SplashScreen extends StatelessWidget {
   final controller = Get.put(SplashController());
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion(
-        value: SystemUiOverlayStyle(
-          // statusBarColor: Color(0xff288c7b),
-          statusBarColor: Theme.of(context).primaryColor,
-          statusBarIconBrightness: Brightness.dark,
-        ),
-        child: UpgradeAlert(
-          upgrader: Upgrader(
-          
-          ),
-     
-            child: Scaffold(
+    return  AnnotatedRegion(
+            value:   SystemUiOverlayStyle(
+              // statusBarColor: Color(0xff288c7b),
+              statusBarColor: Theme.of(context).primaryColor,
+              statusBarIconBrightness: Brightness.dark,
+            ),
+            child:         UpgradeAlert(
+                upgrader: Upgrader(
+                    dialogStyle: UpgradeDialogStyle.cupertino,
+
+                    shouldPopScope: () => true
+                ),
+
+                child:Scaffold(
                 // backgroundColor: Color(0xff288c7b),
                 backgroundColor: Theme.of(context).primaryColor, //
                 body: Center(
