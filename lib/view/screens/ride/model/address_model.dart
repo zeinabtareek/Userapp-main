@@ -96,4 +96,9 @@ class AddressData {
     return AddressData(
         name: name, icon: AddressController.getAddressIconByName(name));
   }
+
+  @override
+  String toString() {
+    return 'AddressData(id: $id, name: $name, location: $location, lat: $lat, lng: $lng, icon: $icon, isUpdate: $isUpdate)';
+  }
 }

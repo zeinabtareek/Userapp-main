@@ -47,14 +47,17 @@ class BaseMapScreen extends StatelessWidget {
   BaseMapScreen({
     Key? key,
     required this.points,
+  
   }) : super(key: key);
 
-  final controller = Get.put(BaseMapController());
+  
 
   final List<LatLng> points;
+  
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(BaseMapController());
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: CustomBody(
@@ -78,7 +81,6 @@ class BaseMapScreen extends StatelessWidget {
                         target: controller.initialPosition,
                         zoom: 16,
                       ),
-                      
                     ),
 
                     expandableContent: Container(
@@ -93,6 +95,7 @@ class BaseMapScreen extends StatelessWidget {
                               () => controller.widgetNumber.value ==
                                       request[RequestState.initialState]
                                   ? InitialRequestWidget(
+                                  
                                       image: Images.car,
                                       title: Get.find<RideController>()
                                               .selectedSubPackage

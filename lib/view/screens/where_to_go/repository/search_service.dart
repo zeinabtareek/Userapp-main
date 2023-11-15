@@ -91,11 +91,12 @@ class SearchServices {
     return "${placemark[0].name}, ${placemark[0].locality}, ${placemark[0].country}";
   }
   static Future<dynamic> getDistance(LatLng origin, LatLng destination) async {
-    String Url = 'https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${origin.latitude},${origin.longitude}&origins=${destination.latitude},${destination.longitude}&key=AIzaSyA6NSYZTZaYj_Kgit9CAlNuCTvwLOoRSes';
+    String Url = 'https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${origin.latitude},${origin.longitude}&origins=${destination.latitude},${destination.longitude}&key=${AppConstants.mapKey}';
     try {
       var response = await http.get(Uri.parse(Url));
       if (response.statusCode == 200) {
         var responseData = jsonDecode(response.body);
+      
         final distanceValue = responseData['rows'][0]['elements'][0]['distance']['value'];
         var distanceInKm = distanceValue / 1000;
         return distanceInKm;

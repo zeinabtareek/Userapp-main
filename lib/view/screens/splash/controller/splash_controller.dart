@@ -16,8 +16,7 @@ class SplashController extends BaseController {
     super.onInit();
     showDialogIfFoundUpdate();
     // Timer(const Duration(seconds: 5), () async {
-    //   Future.delayed(const Duration(milliseconds: 2500), () async {
-    Future.delayed(const Duration(seconds: 30), () async {
+      Future.delayed(const Duration(milliseconds: 2500), () async {
       if (await sl<AuthCases>().isAuthenticated()) {
         Get.offAll(DashboardScreen());
       } else {

@@ -16,7 +16,7 @@ import '../model/order_create.dart';
 import '../repository/create_trip_repo.dart';
 import '../repository/search_service.dart';
 
-class CreateATripController extends BaseMapController  {
+class CreateATripController extends BaseMapController {
   final services = CreateTripRepo();
 
   CreateOrderModel createOrderModel = CreateOrderModel();
@@ -26,7 +26,6 @@ class CreateATripController extends BaseMapController  {
     // await listonOnNotificationSocketAfterAccept();
     super.onInit();
   }
-
 
   String? get packageId => Get.find<RideController>().selectedPackage.value?.id;
 
@@ -135,7 +134,7 @@ class CreateATripController extends BaseMapController  {
   Future<CreateOrderModel> createATrip(List<LatLng> points) async {
     LatLng source = points.first; // Example source coordinate (San Francisco)
     LatLng destination = points.last;
-    dynamic distance = await calculateDistance(source, destination);
+    
     List<ExtraRoutes> extraRoute = await extraRoutes(points);
     String time = "12";
     //  await calculateDuration(source, destination);
@@ -163,7 +162,7 @@ class CreateATripController extends BaseMapController  {
             to: await _to(destination),
             extraRoutes: extraRoute,
             time: time,
-            distance: num.parse(distance.toString()),
+            distance: num.parse(distance.value.toString()),
             note: note,
             vehicleTypeId: vehicleTypeId,
             paymentType: paymentType,
@@ -207,35 +206,7 @@ class CreateATripController extends BaseMapController  {
     return SearchServices().getPlaceNameFromLatLng(latlng);
   }
 
-  ///calculate Distance
-  calculateDistance(LatLng source, LatLng dis) async {
-    double sourceLatitude = source.latitude ?? 0.0;
-    double sourceLongitude = source.longitude ?? 0.0;
-    double disLatitude = dis.latitude ?? 0.0;
-    double disLongitude = dis.longitude ?? 0.0;
-    final result = await SearchServices.getDistance(
-      LatLng(sourceLatitude, sourceLongitude),
-      LatLng(disLatitude, disLongitude),
-    );
-    print('result $result');
-    return result; // return distance;
-  }
-
-  ///calculate duration
-  calculateDuration(LatLng source, LatLng dis) async {
-    double sourceLatitude = source.latitude ?? 0.0;
-    double sourceLongitude = source.longitude ?? 0.0;
-    double disLatitude = dis.latitude ?? 0.0;
-    double disLongitude = dis.longitude ?? 0.0;
-    final result = await SearchServices.getDistanceAndDuration(
-      LatLng(sourceLatitude, sourceLongitude),
-      LatLng(disLatitude, disLongitude),
-    );
-    final duration = result['duration'].toString();
-    print('Duration: $duration');
-    return duration;
-  }
-
+  
 // calculate
   ///Cancel trip
   cancelATrip({orderId}) async {
@@ -266,7 +237,7 @@ class CreateATripController extends BaseMapController  {
   // showTrip({orderId}) async {
   //   try {
   //     var result = await actionCenter.execute(() async {
-      //  setState(ViewState.busy);
+  //  setState(ViewState.busy);
   showTrip({orderId}) async {
     try {
       var result = await actionCenter.execute(() async {
@@ -305,4 +276,3 @@ class CreateATripController extends BaseMapController  {
     query: 'subject=support Feedback&body=',
   );
 }
-
