@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/view/screens/ride/model/address_model.dart';
 
 import '../../../enum/view_state.dart';
 import '../../../util/app_strings.dart';
@@ -38,6 +39,7 @@ class SetDestinationScreen extends StatelessWidget {
       ),
       body: GetBuilder<WhereToGoController>(
           init: WhereToGoController(),
+          id: "WhereToGoController",
           builder: (whereToGoController) {
             return SingleChildScrollView(
               controller: whereToGoController.scrollController,
@@ -158,9 +160,90 @@ class SetDestinationScreen extends StatelessWidget {
                         ),
                       ),
                       K.sizedBoxH0,
-                      const SavedPlaces(),
+                      SavedPlaces(
+                        onItemTap: (item) {
+                          _showSelectPointByPressBottomSheet(context, (type) {
+                            whereToGoController.selectPointByPress(type, item);
+                          });
+                        },
+                      ),
                       K.sizedBoxH0,
-                      suggestionsPlaces(context, whereToGoController),
+                      Container(
+                        decoration: K.boxDecorationWithPrimaryBorder,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: K.fixedPadding0,
+                              child: Text(
+                                Strings.suggestions.tr,
+                                style: textMedium.copyWith(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: Dimensions.fontSizeLarge),
+                              ),
+                            ),
+
+                            ///suggestions
+
+                            GetBuilder<AddressController>(
+                              autoRemove: false,
+                              builder: (addressController) => Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: Dimensions.paddingSizeDefault,
+                                ),
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  padding: EdgeInsets.zero,
+                                  itemCount: addressController
+                                      .suggestionAddressModel.data?.length,
+                                  // itemCount:  setMapController.listOfSuggestedPlaces.length,
+                                  itemBuilder: (context, index) {
+                                    var item = addressController
+                                        .suggestionAddressModel.data?[index];
+                                    return InkWell(
+                                      child: Padding(
+                                        padding: K.fixedPadding1,
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                                // padding: K.fixedPadding0,
+                                                decoration: BoxDecoration(
+                                                    color: Theme.of(context)
+                                                        .hintColor
+                                                        .withOpacity(.08),
+                                                    borderRadius: BorderRadius
+                                                        .circular(Dimensions
+                                                            .paddingSizeExtraSmall)),
+                                                child: Icon(
+                                                  Icons.place_outlined,
+                                                  color: Theme.of(context)
+                                                      .primaryColor
+                                                      .withOpacity(.5),
+                                                )),
+                                            const SizedBox(
+                                              width:
+                                                  Dimensions.paddingSizeSmall,
+                                            ),
+                                            Text('${item!.location}'),
+                                          ],
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        _showSelectPointByPressBottomSheet(
+                                            context, (type) {
+                                          whereToGoController
+                                              .selectPointByPress(type, item);
+                                        });
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -169,124 +252,119 @@ class SetDestinationScreen extends StatelessWidget {
           }),
     );
   }
+}
 
-  Container suggestionsPlaces(
-      BuildContext context, WhereToGoController setMapController) {
-    return Container(
-      decoration: K.boxDecorationWithPrimaryBorder,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: K.fixedPadding0,
-            child: Text(
-              Strings.suggestions.tr,
-              style: textMedium.copyWith(
-                  color: Theme.of(context).primaryColor,
-                  fontSize: Dimensions.fontSizeLarge),
-            ),
+_showSelectPointByPressBottomSheet(
+  context,
+  Function(PointType pointType) onTap,
+) {
+  // TODO: tr
+  return showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          ListTile(
+            title: const Text('Set as Source'),
+            onTap: () {
+              Navigator.pop(context);
+              onTap(PointType.from);
+            },
           ),
-
-          ///suggestions
-
-          GetBuilder<AddressController>(
-            init: AddressController()..getSuggestedAddressList(),
-            builder: (addressController) => Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.paddingSizeDefault),
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  itemCount: addressController.addressModel.data?.length,
-                  // itemCount:  setMapController.listOfSuggestedPlaces.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      child: Padding(
-                        padding: K.fixedPadding1,
-                        child: Row(
-                          children: [
-                            Container(
-                                // padding: K.fixedPadding0,
-                                decoration: BoxDecoration(
-                                    color: Theme.of(context)
-                                        .hintColor
-                                        .withOpacity(.08),
-                                    borderRadius: BorderRadius.circular(
-                                        Dimensions.paddingSizeExtraSmall)),
-                                child: Icon(
-                                  Icons.place_outlined,
-                                  color: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(.5),
-                                )),
-                            const SizedBox(
-                              width: Dimensions.paddingSizeSmall,
-                            ),
-                            Text(
-                                '${addressController.addressModel.data?[index].location}'),
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        address = addressController
-                                .addressModel.data?[index].location ??
-                            '';
-                        addressController.update();
-                        setMapController.scrollController.animateTo(
-                          0,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                    );
-                  }),
-            ),
-            // Padding(
-            //   padding: const EdgeInsets.all(
-            //       Dimensions.paddingSizeDefault),
-            //   child: Text(
-            //     Strings.setFromMap.tr,
-            //     style: textMedium.copyWith(
-            //         color: Theme.of(context).primaryColor,
-            //         fontSize: Dimensions.fontSizeLarge),
-            //   ),
-            // ),
-            // GestureDetector(
-            //   onTap: () {
-            //     Get.back();
-            //   },
-            //   child: Padding(
-            //     padding: K.fixedPadding0,
-            //     child: Row(
-            //       children: [
-            //         Container(
-            //           decoration: BoxDecoration(
-            //               color: Theme.of(context)
-            //                   .hintColor
-            //                   .withOpacity(.08),
-            //               borderRadius: BorderRadius.circular(
-            //                   Dimensions.paddingSizeExtraSmall)),
-            //           child: SizedBox(
-            //               width: Dimensions.iconSizeMedium,
-            //               child: Image.asset(Images.setFromMap)),
-            //         ),
-            //         K.sizedBoxW0,
-            //         Text(
-            //           Strings.chooseFromMap.tr,
-            //           style: textRegular.copyWith(
-            //               color: Theme.of(context).primaryColor),
-            //         )
-            //       ],
-            //     ),
-            //   ),
-          )
+          ListTile(
+            title: const Text('Set as Destination'),
+            onTap: () {
+              Navigator.pop(context);
+              onTap(PointType.to);
+            },
+          ),
+          ListTile(
+            title: const Text('Set as Extra Route'),
+            onTap: () {
+              Navigator.pop(context);
+              onTap(PointType.extra);
+            },
+          ),
         ],
+      );
+    },
+  );
+}
+
+/*
+
+  void _showBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text('Set as Source'),
+                onTap: () {
+                  _selectAddress('Source');
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text('Set as Destination'),
+                onTap: () {
+                  _selectAddress('Destination');
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text('Set as Extra Route'),
+                onTap: () {
+                  _selectAddress('Extra Route');
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _selectAddress(String type) {
+    setState(() {
+      selectedAddress = '$type: $selectedAddress'; // Update the selected address
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Flutter Bottom Sheet Example'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            GestureDetector(
+              onTap: _showBottomSheet,
+              child: Container(
+                padding: EdgeInsets.all(16.0),
+                color: Colors.blue,
+                child: Text(
+                  'Select Address: $selectedAddress',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
+ */
 class FromToDividerVertical extends StatelessWidget {
   const FromToDividerVertical({
     super.key,
@@ -386,16 +464,11 @@ class DoneBtn extends StatelessWidget {
 
               ///Done
               GestureDetector(
-                onTap: () async {
-                  ///Zeinab uncomment this
+                onTap:
 
-                  controller.validateData();
+                    ///Zeinab uncomment this
 
-                  // await Get.find<CreateATripController>().createATrip();
-                  //  await Get.find<CreateATripController>().createATrip();
-                  // var x= await controller.createATrip();
-                  // print(';;;${x.data?.id}');
-                },
+                    controller.validateData,
                 child: Text(
                   Strings.done.tr,
                   style: textRegular.copyWith(
@@ -425,7 +498,6 @@ class AddOrMinIconBtn extends StatelessWidget {
       builder: (controller) {
         return GestureDetector(
           onTap: () {
-       
             if (controller.isExtraPointsIsLengthIsOne) {
               controller.removeExtraRoute();
             } else {
@@ -453,13 +525,16 @@ class AddOrMinIconBtn extends StatelessWidget {
 class SavedPlaces extends StatelessWidget {
   const SavedPlaces({
     super.key,
+    required this.onItemTap,
   });
+
+  final Function(AddressData data)? onItemTap;
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AddressController>(
-      init: AddressController()..getAddressList(),
-      initState: (state) => Get.find<AddressController>()..getAddressList(),
+autoRemove: false,
+      // initState: (state) => Get.find<AddressController>()..getAddressList(),
       builder: (controller) {
         if (controller.addressModel.data != null &&
             controller.addressModel.data!.isNotEmpty) {
@@ -482,22 +557,17 @@ class SavedPlaces extends StatelessWidget {
                   ...controller.addressModel.data!
                       .where((element) => element.isHaveData)
                       .toList()
-                      .map((e) => SavedAndRecentItem(
-                            title: "",
-                            icon: e.icon!,
-                            subTitle: e.name!,
-                            isSeeMore: true,
-                          ))
+                      .map(
+                        (e) => SavedAndRecentItem(
+                          icon: e.icon!,
+                          subTitle: e.name!,
+                          isSeeMore: true,
+                          addressData: e,
+                          onTap: onItemTap,
+                        ),
+                      )
                       .toList(),
                 },
-                GestureDetector(
-                    onTap: () {
-                      // Get.to(ChooseFromMapScreen());
-                    },
-                    child: SavedAndRecentItem(
-                        title: Strings.setFromMap.tr,
-                        icon: Images.setFromMap,
-                        subTitle: Strings.chooseFromMap.tr)),
               ],
             ),
           );

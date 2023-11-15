@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ride_sharing_user_app/view/screens/request_screens/controller/base_map_controller.dart';
 
 import '../../../../bases/base_controller.dart';
 import '../../../../enum/view_state.dart';
@@ -10,6 +11,7 @@ import '../../../../util/ui/overlay_helper.dart';
 import '../../choose_from_map/choose_from_map_screen.dart';
 import '../../request_screens/screens/base_map/base_map_screen.dart';
 import '../../ride/controller/ride_controller.dart';
+import '../../ride/model/address_model.dart';
 import '../../ride/repository/ride_repo.dart';
 import '../model/search_suggestion_model.dart';
 import '../model/suggested_route_model.dart';
@@ -38,7 +40,7 @@ class WhereToGoController extends BaseController implements GetxService {
   final fromNode = FocusNode();
   final extraNode = FocusNode();
   final extraNode2 = FocusNode();
-  var distance;
+  Future<double> get distance async => (await calculateDistance())!;
   var duration;
   final extraNode3 = FocusNode();
   final toRoutNode = FocusNode();
@@ -73,6 +75,8 @@ class WhereToGoController extends BaseController implements GetxService {
     }
   }
 
+  bool loadedSaved = false;
+  bool loadedSuggest = false;
   // List<String> extraRoutes = [];
 
   List<LatLng> extraPoints = [];
@@ -91,7 +95,8 @@ class WhereToGoController extends BaseController implements GetxService {
   void addExtraRoute() {
     extraTextEditingControllers.add(TextEditingController());
     extraFocusNodes.add(FocusNode());
-    update();
+    extraPoints.add(defLangLng);
+    update(["WhereToGoController"]);
   }
 
   void removeExtraRoute({int? index}) {
@@ -102,31 +107,35 @@ class WhereToGoController extends BaseController implements GetxService {
       extraTextEditingControllers.removeLast();
       extraFocusNodes.removeLast();
     }
-    update();
+    update(["WhereToGoController"]);
   }
 
   void setAddEntrance() {
     addEntrance = !addEntrance;
-    update();
+    update(["WhereToGoController"]);
   }
 
   Future<double?> calculateDistance() async {
-    distance = await Get.find<CreateATripController>().calculateDistance(
-      selectedPoints.first,
-// TODO:  recheck
-      selectedPoints.last, // Replace with your actual point 1 coordinates
-    );
-    return distance;
+    if (_getPoints == null) {
+      return null;
+    } else {
+      var distance = await Get.find<CreateATripController>().calculateDistance(
+        _getPoints!.first,
+        // TODO:  recheck
+        _getPoints!.last, // Replace with your actual point 1 coordinates
+      );
+      return distance;
+    }
   }
 
-  Future<double?> calculateDuration() async {
-    duration = await Get.find<CreateATripController>().calculateDuration(
-      selectedPoints.first,
-// TODO:  recheck
-      selectedPoints.last, // Replace with your actual point 1 coordinates
-    );
-    return duration;
-  }
+//   Future<double?> calculateDuration() async {
+//     duration = await Get.find<CreateATripController>().calculateDuration(
+//       selectedPoints.first,
+// // TODO:  recheck
+//       selectedPoints.last, // Replace with your actual point 1 coordinates
+//     );
+//     return duration;
+//   }
 
   void getSuggestedRouteList() async {
     // Response response = await setMapRepo.getSuggestedRouteList();
@@ -136,7 +145,7 @@ class WhereToGoController extends BaseController implements GetxService {
     // } else {
     //   ApiChecker.checkApi(response);
     // }
-    // update();
+    // update(["WhereToGoController"]);
   }
 
   checkPermissionBeforeNavigation(PointType pointType, context,
@@ -156,32 +165,23 @@ class WhereToGoController extends BaseController implements GetxService {
       if (point != null) {
         if (pointType == PointType.to) {
           toRouteController.text = await getPlaceNameFromLatLng(point);
-          if (selectedPoints.isNotEmpty) {
-            selectedPoints.add(point);
-          } else {
-            selectedPoints.insert(0, defLangLng);
-            selectedPoints.add(point);
-          }
+          _addToPoint(point);
         } else if (pointType == PointType.from) {
           fromRouteController.text = await getPlaceNameFromLatLng(point);
-          if (selectedPoints.isNotEmpty) {
-            selectedPoints.insert(0, point);
-          } else {
-            selectedPoints.insert(0, point);
-            selectedPoints.add(defLangLng);
-          }
+          _addFromPoint(point);
         } else if (pointType == PointType.extra) {
           extraTextEditingControllers[index!].text =
               await getPlaceNameFromLatLng(point);
-          extraPoints.insert(index, point);
-
+          _addFirstExtraPoint(point);
         }
-        update();
+        update(["WhereToGoController"]);
       }
     });
   }
 
   List<LatLng>? get _getPoints {
+    selectedPoints.removeWhere((element) => element == defLangLng);
+    extraPoints.removeWhere((element) => element == defLangLng);
     if (selectedPoints.isEmpty) {
       return null;
     } else if (selectedPoints.length == 2) {
@@ -202,11 +202,12 @@ class WhereToGoController extends BaseController implements GetxService {
     searchResultsFrom.value = await searchServices.getAutoCompleteFrom(
       search: searchTerm.toString(),
     );
-    // search: searchTerm.toString(), country: 'eg');
-    print(
-        'data ${searchResultsFrom.value} length is ${searchResultsFrom.length}');
+    // // search: searchTerm.toString(), country: 'eg');
+    // print(
+    //     'data ${searchResultsFrom.value} length is ${searchResultsFrom.length}');
+
     setState(ViewState.idle);
-    update();
+    update(["WhereToGoController"]);
     return searchResultsFrom;
   }
 
@@ -234,13 +235,14 @@ class WhereToGoController extends BaseController implements GetxService {
       // print('no');
       OverlayHelper.showErrorToast(Get.overlayContext!, 'select_a_trip'.tr);
     } else {
-      // print('yes');
-      // Get.to(() =>
-      //   MapScreen(
-      //   fromScreen: 'ride',
-      // ));
+      Get.find<RideController>().updateRideCurrentState(RideState.initial);
+      // var dis = await distance;
+      print("responseData  _getPoints! $_getPoints  ");
       Get.to(binding: BindingsBuilder(() {
         Get.lazyPut(() => RideRepo(apiClient: Get.find()));
+        // ignore: avoid_single_cascade_in_expression_statements
+        Get.put(BaseMapController())
+          ..calculateDistance(_getPoints!.first, _getPoints!.last);
       }),
           () => BaseMapScreen(
                 points: _getPoints!,
@@ -254,12 +256,68 @@ class WhereToGoController extends BaseController implements GetxService {
           element.text = "";
         }
 
-        update();
+        update(["WhereToGoController"]);
       });
       //not needed
-      Get.find<RideController>().updateRideCurrentState(RideState.initial);
-      distance = await calculateDistance();
-      update();
+    }
+  }
+
+  selectPointByPress(PointType type, AddressData data) {
+    var point = LatLng(double.parse(data.lat!), double.parse(data.lng!));
+    switch (type) {
+      case PointType.from:
+        fromRouteController.text = data.location!;
+
+        _addFromPoint(point);
+      case PointType.to:
+        toRouteController.text = data.location!;
+        _addToPoint(point);
+      case PointType.extra:
+        if (!isExtraPointsIsLengthIsOne) {
+          addExtraRoute();
+        }
+        extraTextEditingControllers.first.text = data.location!;
+        _addFirstExtraPoint(point);
+    }
+
+    update(["WhereToGoController"]);
+  }
+
+  void _addFirstExtraPoint(LatLng point) {
+    if (isExtraPointsIsLengthIsOne) {
+      extraPoints.first = point;
+    } else {
+      extraPoints.add(point);
+    }
+  }
+
+  _addFromPoint(LatLng point) {
+    if (selectedPoints.isNotEmpty) {
+      if (selectedPoints.first == point) {
+        return;
+      } else {
+        selectedPoints.insert(0, point);
+      }
+    } else {
+      selectedPoints.insert(0, point);
+      selectedPoints.add(defLangLng);
+    }
+  }
+
+  _addToPoint(LatLng point) {
+    if (selectedPoints.isNotEmpty) {
+      if (selectedPoints.length == 2) {
+        if (selectedPoints.last == point) {
+          return;
+        } else {
+          selectedPoints.add(point);
+        }
+      } else {
+        selectedPoints.add(point);
+      }
+    } else {
+      selectedPoints.insert(0, defLangLng);
+      selectedPoints.add(point);
     }
   }
 }

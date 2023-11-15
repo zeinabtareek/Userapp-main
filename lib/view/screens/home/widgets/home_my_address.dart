@@ -17,7 +17,8 @@ class HomeMyAddress extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<AddressController>(
         // init: AddressController()..getAddressList(),
-        initState: (_) => Get.find<AddressController>()..getAddressList() ,
+        autoRemove: false,
+        initState: (_) => Get.find<AddressController>()..getAddressList(),
         builder: (addressController) {
           return Column(
             children: [
@@ -30,7 +31,7 @@ class HomeMyAddress extends StatelessWidget {
               SizedBox(
                 height: 35,
                 child: addressController.state == ViewState.busy
-                    ? SizedBox()
+                    ? const SizedBox()
                     : ListView.builder(
                         itemCount: addressController.addressModel.data?.length,
                         padding: EdgeInsets.zero,
@@ -47,8 +48,9 @@ class HomeMyAddress extends StatelessWidget {
                         }),
               ),
 
-
-              SizedBox(height: 30.h,)
+              SizedBox(
+                height: 30.h,
+              )
             ],
           );
         });

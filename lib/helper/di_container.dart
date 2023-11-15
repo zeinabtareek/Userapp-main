@@ -59,11 +59,13 @@ Future<Map<String, Map<String, String>>> init() async {
   // Core
   final sharedPreferences = await SharedPreferences.getInstance();
   Get.lazyPut(() => sharedPreferences);
-  final dio = await DioUtilNew.getInstance();
+  final dio = DioUtilNew.getInstance();
   Get.lazyPut(() => dio);
   Get.lazyPut(() => CacheHelper.init());
-  Get.lazyPut(() => ApiClient(
-      appBaseUrl: AppConstants.baseUrl, sharedPreferences: Get.find()),fenix: true);
+  Get.lazyPut(
+      () => ApiClient(
+          appBaseUrl: AppConstants.baseUrl, sharedPreferences: Get.find()),
+      fenix: true);
 
   // Repository
   Get.lazyPut(
@@ -98,14 +100,14 @@ Future<Map<String, Map<String, String>>> init() async {
   // Get.lazyPut(() => ActivityController(activityRepo: ActivityRepo( )));
   // Get.lazyPut(() => ActivityController(activityRepo: ActivityRepo(apiClient: Get.find())));
   Get.lazyPut(() => UserController());
-  Get.lazyPut(() => BaseController(),fenix: true);
+  Get.lazyPut(() => BaseController(), fenix: true);
   Get.lazyPut(
       () => MessageController(messageRepo: MessageRepo(apiClient: Get.find())));
   // Get.lazyPut(() => WalletController(walletRepo: Get.find()));
   Get.lazyPut(() => TimerController());
   Get.lazyPut(() => OfferController(offerRepo: Get.find()));
   Get.lazyPut(() => BannerController(bannerRepo: Get.find()));
-  Get.lazyPut(() => AddressController());
+  Get.lazyPut(() => AddressController(), fenix: true);
 
   ///newly added
   Get.lazyPut(() => BaseMapController());
@@ -134,7 +136,6 @@ Future<Map<String, Map<String, String>>> init() async {
     Map<String, dynamic> mappedJson = json.decode(jsonStringValues);
     if (languageModel.languageCode == "en") {
       mappedJson.addAll(TValidator.enV);
-
     } else {
       mappedJson.addAll(TValidator.arV);
     }

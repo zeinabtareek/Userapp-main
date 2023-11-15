@@ -23,10 +23,12 @@ import '../../controller/base_map_controller.dart';
 class InitialRequestWidget extends StatelessWidget {
   String image;
   String title;
+
   InitialRequestWidget({
     super.key,
     required this.image,
     required this.title,
+  
   });
 
   @override
@@ -34,60 +36,56 @@ class InitialRequestWidget extends StatelessWidget {
     return GetBuilder<RideController>(
         init: RideController(rideRepo: Get.find()),
         builder: (controller) {
-
           bool isKeyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
 
-        return  Column
-        (
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  controller.selectedSubPackage.value == null
-                      ? 'please_choose_a_car_type'.tr
-                      : '${'your_selected_car_type'.tr} : ${controller.selectedSubPackage.value?.categoryTitle}',
-                  style: textRegular.copyWith(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.w600),
-                ),
-                K.sizedBoxH0,
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
                 controller.selectedSubPackage.value == null
-                    ? GetBuilder<CategoryController>(
-                        initState: (_) =>
-                            Get.find<CategoryController>().getCategoryList(),
-                        builder: (categoryController) {
-                          return const RideCategoryWidget();
-                        })
-                    : Center(
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: CustomCategoryCard(
-                            height: MediaQuery.of(context).size.height / 7,
-                            image: image,
-                            title: title,
-                            isClicked: false,
-                          ),
+                    ? 'please_choose_a_car_type'.tr
+                    : '${'your_selected_car_type'.tr} : ${controller.selectedSubPackage.value?.categoryTitle}',
+                style: textRegular.copyWith(
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.w600),
+              ),
+              K.sizedBoxH0,
+              controller.selectedSubPackage.value == null
+                  ? GetBuilder<CategoryController>(
+                      initState: (_) =>
+                          Get.find<CategoryController>().getCategoryList(),
+                      builder: (categoryController) {
+                        return const RideCategoryWidget();
+                      })
+                  : Center(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: CustomCategoryCard(
+                          height: MediaQuery.of(context).size.height / 7,
+                          image: image,
+                          title: title,
+                          isClicked: false,
                         ),
                       ),
-                K.sizedBoxH0,
-                if (!isKeyboardIsOpen) RouteWidget(),
-                if (!isKeyboardIsOpen)
-                  const SizedBox(
-                    height: Dimensions.paddingSizeDefault,
-                  ),
-                // const TripFareSummery(),
-                if (!isKeyboardIsOpen) K.sizedBoxH0,
-                if (!isKeyboardIsOpen)
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(Dimensions.radiusLarge),
-                      color: Theme.of(context).primaryColor.withOpacity(0.15),
                     ),
-                    padding:
-                        const EdgeInsets.all(Dimensions.paddingSizeDefault),
-                    child: Center(
-                      child: CustomDropDown(
+              K.sizedBoxH0,
+              if (!isKeyboardIsOpen) RouteWidget(),
+              if (!isKeyboardIsOpen)
+                const SizedBox(
+                  height: Dimensions.paddingSizeDefault,
+                ),
+              // const TripFareSummery(),
+              if (!isKeyboardIsOpen) K.sizedBoxH0,
+              if (!isKeyboardIsOpen)
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
+                    color: Theme.of(context).primaryColor.withOpacity(0.15),
+                  ),
+                  padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+                  child: Center(
+                    child: CustomDropDown(
                         icon: Icon(
                           Icons.expand_more,
                           color:
@@ -110,7 +108,7 @@ class InitialRequestWidget extends StatelessWidget {
                                         // Images.profileMyWallet,
                                         height: 15,
                                         width: 15,
-                                        color: (item['name']== 'wallet' &&
+                                        color: (item['name'] == 'wallet' &&
                                                 controller.user?.wallet == 0)
                                             ? Theme.of(context).disabledColor
                                             : Theme.of(context).primaryColor,
@@ -166,7 +164,7 @@ class InitialRequestWidget extends StatelessWidget {
                                 'Wallet balance is zero. Cannot select "wallet" option.');
                           } else {
                             // Execute only if the selected item is not 'wallet' with zero balance
-                            controller.initialSelectItem = selectedItem ;
+                            controller.initialSelectItem = selectedItem;
                             if (controller.initialSelectItem ==
                                 Strings.custom) {
                               showDialog(
@@ -181,81 +179,76 @@ class InitialRequestWidget extends StatelessWidget {
                             // controller.update();
                           }
 
-                          print(' initialSelectItem ${controller.initialSelectItem}' );
-
+                          print(
+                              ' initialSelectItem ${controller.initialSelectItem}');
                         },
-                          initialSelectedValue:
-                          controller.initialSelectItem??Strings.selectAPaymentMethod
-                      ),
-                    ),
-                  ),
-                if (!isKeyboardIsOpen)
-                  const SizedBox(
-                    height: Dimensions.paddingSizeDefault,
-                  ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0).copyWith(
-                      bottom: MediaQuery.of(context).viewInsets.bottom),
-                  child: Column(
-                    children: [
-                      CustomTextField(
-                        prefix: false,
-                        controller: controller.noteController,
-                        borderRadius: Dimensions.radiusLarge,
-                        hintText: Strings.addNote.tr,
-                      ),
-                      // if (!isKeyboardIsOpen)
-                      const SizedBox(
-                        height: Dimensions.paddingSizeDefault,
-                      ),
-                      GetBuilder<BaseMapController>(
-                          init: BaseMapController(),
-                          builder: (baseMapController) => CustomButton(
-                              buttonText: Strings.getPrice.tr,
-                              radius: 50,
-                              onPressed: () async {
-                                print(
-                                    'controller.initialSelectItem ${controller.initialSelectItem}');
-
-                                if (controller.selectedSubPackage.value !=
-                                        null &&
-                                    controller.initialSelectItem != null) {
-                                  baseMapController.key.currentState!
-                                      .contract();
-                                  baseMapController.changeState(
-                                      request[RequestState.getPriceState]!);
-                                  await controller.getOrderPrice();
-                                  controller.update();
-                                  print(baseMapController.widgetNumber.value);
-                                } else if (controller
-                                        .selectedSubPackage.value ==
-                                    null) {
-                                  OverlayHelper.showWarningToast(
-                                      context, Strings.selectACarType.tr);
-                                } else if (controller.initialSelectItem ==
-                                    null) {
-                                  OverlayHelper.showWarningToast(
-                                      context, Strings.selectAPaymentMethod.tr);
-                                  // print('select a type');
-                                }
-                                else if(Get.find<WhereToGoController>().distance==null){
-                                  OverlayHelper.showWarningToast(
-                                      context, Strings.wait.tr);
-
-                                }
-                              })),
-                      K.sizedBoxH0,
-                      K.sizedBoxH0,
-                    ],
+                        initialSelectedValue: controller.initialSelectItem ??
+                            Strings.selectAPaymentMethod),
                   ),
                 ),
+              if (!isKeyboardIsOpen)
+                const SizedBox(
+                  height: Dimensions.paddingSizeDefault,
+                ),
+              Padding(
+                padding: const EdgeInsets.all(8.0)
+                    .copyWith(bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      prefix: false,
+                      controller: controller.noteController,
+                      borderRadius: Dimensions.radiusLarge,
+                      hintText: Strings.addNote.tr,
+                    ),
+                    // if (!isKeyboardIsOpen)
+                    const SizedBox(
+                      height: Dimensions.paddingSizeDefault,
+                    ),
+                    GetBuilder<BaseMapController>(
+                        init: BaseMapController(),
+                        builder: (baseMapController) => CustomButton(
+                            buttonText: Strings.getPrice.tr,
+                            radius: 50,
+                            onPressed: () async {
+                              print(
+                                  'controller.initialSelectItem ${controller.initialSelectItem}');
 
-                // isBiddingOn
-                //     ?
+                              if (controller.selectedSubPackage.value != null &&
+                                  controller.initialSelectItem != null) {
+                                baseMapController.key.currentState!.contract();
+                                baseMapController.changeState(
+                                    request[RequestState.getPriceState]!);
+                                await controller.getOrderPrice();
+                                controller.update();
+                                print(baseMapController.widgetNumber.value);
+                              } else if (controller.selectedSubPackage.value ==
+                                  null) {
+                                OverlayHelper.showWarningToast(
+                                    context, Strings.selectACarType.tr);
+                              } else if (controller.initialSelectItem == null) {
+                                OverlayHelper.showWarningToast(
+                                    context, Strings.selectAPaymentMethod.tr);
+                                // print('select a type');
+                              } else if (Get.find<WhereToGoController>()
+                                      .distance ==
+                                  null) {
+                                OverlayHelper.showWarningToast(
+                                    context, Strings.wait.tr);
+                              }
+                            })),
+                    K.sizedBoxH0,
+                    K.sizedBoxH0,
+                  ],
+                ),
+              ),
 
-                ///TODO :this code zeinab removed it to apply the getPrice screen
-              ],
-            );}
-    );
+              // isBiddingOn
+              //     ?
+
+              ///TODO :this code zeinab removed it to apply the getPrice screen
+            ],
+          );
+        });
   }
 }

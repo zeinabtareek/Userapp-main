@@ -332,7 +332,7 @@ print('user complete ration is:::${user.profileCompletedRatio}');
           await authCases.setUserDate(null);
 
           UserAuthModel user = res!.data!.user!;
-        user=  user.copyWith(token: oldUserToken);
+          user = user.copyWith(token: oldUserToken);
           await authCases.setUserDate(user);
           _toHomeScreen();
         },
@@ -486,12 +486,6 @@ print('user complete ration is:::${user.profileCompletedRatio}');
   }
 
   reSendMsg(String countryCode, String phone) async {
-    if (updateVerificationCode.isEmpty ||
-        updateVerificationCode.value.length < 4) {
-      // TODO: msg
-      showCustomSnackBar(Strings.phoneIsRequired.tr);
-      return;
-    }
     isVerificationIsLoading(true);
     var req = BasePhoneReqModel(phoneCode: countryCode, phone: phone);
     final res = await authCases.sendOtp(req);
@@ -692,10 +686,8 @@ print('user complete ration is:::${user.profileCompletedRatio}');
           );
         }
         Get.back();
-   
       },
       showSuccessToast: true,
-
     );
   }
 

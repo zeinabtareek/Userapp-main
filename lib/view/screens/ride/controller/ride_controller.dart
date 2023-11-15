@@ -61,14 +61,20 @@ class RideController extends BaseController implements GetxService {
   var duration;
 
   final List<Map> _paymentOptions = [
-    {'name':'cash','icon': Images.cash,},
-    {'name':'digital','icon': Images.masterCardIcon,},
-    {'name':'wallet','icon': Images.profileMyWallet,},
-
+    {
+      'name': 'cash',
+      'icon': Images.cash,
+    },
+    {
+      'name': 'digital',
+      'icon': Images.masterCardIcon,
+    },
+    {
+      'name': 'wallet',
+      'icon': Images.profileMyWallet,
+    },
   ];
   List<Map> get paymentOptions => _paymentOptions;
-
-
 
   //  final List<String> _paymentOptions = [
   //   'cash',
@@ -77,7 +83,6 @@ class RideController extends BaseController implements GetxService {
   // ];
   // List<String> get paymentOptions => _paymentOptions;
   //
-
 
   @override
   onInit() async {
@@ -228,7 +233,6 @@ class RideController extends BaseController implements GetxService {
   }
 
   getOrderPrice() async {
-
     setState(ViewState.busy);
     priceData = await rideRepo.getPrice(
       packageId: selectedPackage.value!.id,

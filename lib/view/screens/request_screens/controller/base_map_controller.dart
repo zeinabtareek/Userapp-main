@@ -13,6 +13,7 @@ import '../../../../helper/cache_helper.dart';
 import '../../../../mxins/map/map_view_helper.dart';
 import '../../../../mxins/sokcit-io/socket_io_mixin.dart';
 import '../../ride/controller/ride_controller.dart';
+import '../../where_to_go/repository/search_service.dart';
 
 class BaseMapController extends BaseController with SocketIoMixin {
   GlobalKey<ExpandableBottomSheetState> key = GlobalKey();
@@ -28,11 +29,11 @@ class BaseMapController extends BaseController with SocketIoMixin {
   late Position _position;
   Position get position => _position;
 
-    double _persistentContentHeight = 500;
+  double _persistentContentHeight = 500;
   // final double _persistentContentHeight = 500;
   double percent = 0;
-  set persistentContentHeightt(double num){
-    _persistentContentHeight=num;
+  set persistentContentHeightt(double num) {
+    _persistentContentHeight = num;
   }
 
   double get persistentContentHeight => _persistentContentHeight;
@@ -83,9 +84,6 @@ class BaseMapController extends BaseController with SocketIoMixin {
     }
     update();
   }
-
-
-
 
   onBackPressed() {
     Get.find<RideController>().resetControllerValue();
@@ -174,5 +172,30 @@ class BaseMapController extends BaseController with SocketIoMixin {
       // }
       // }
     });
+  }
+
+  RxnDouble distance = RxnDouble();
+
+  ///calculate Distance
+  calculateDistance(LatLng source, LatLng dis) async {
+
+    final result = await SearchServices.getDistance(
+    source,
+     dis,
+    );
+
+    return distance.value= result; // return distance;
+  }
+
+  ///calculate duration
+  calculateDuration(LatLng source, LatLng dis) async {
+
+    final result = await SearchServices.getDistanceAndDuration(
+     source,
+      dis,
+    );
+    final duration = result['duration'].toString();
+    print('Duration: $duration');
+    return duration;
   }
 }
