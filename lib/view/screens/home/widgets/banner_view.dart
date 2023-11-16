@@ -17,8 +17,9 @@ class BannerView extends StatefulWidget {
 class _BannerViewState extends State<BannerView> {
   @override
   Widget build(BuildContext context) {
-    Get.find<BannerController>().getBannerList();
     return GetBuilder<BannerController>(
+      init:     Get.find<BannerController>()..getBannerList()
+,
       builder: (bannerController) {
         return SizedBox(
             width: MediaQuery.of(context).size.width,

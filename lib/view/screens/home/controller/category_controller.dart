@@ -13,15 +13,19 @@ class CategoryController extends GetxController implements GetxService {
   List<CategoryModel> categoryList = [];
   int heightOfTypes = 0;
   Future<void> getCategoryList() async {
-    try {
-      var lis = await GetPackagesDetailsUseCase().call();
+    if (categoryList.isNotEmpty) {
+      return;
+    } else {
+      try {
+        var lis = await GetPackagesDetailsUseCase().call();
 
-      for (var element in lis) {
-        categoryList.add(CategoryModel.fromVehicleType(element));
+        for (var element in lis) {
+          categoryList.add(CategoryModel.fromVehicleType(element));
+        }
+      } on MsgModel {
+        // TODO
       }
-    } on MsgModel catch (e) {
-      // TODO
+      update();
     }
-    update();
   }
 }

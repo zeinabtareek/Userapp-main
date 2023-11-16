@@ -166,7 +166,7 @@ class AuthController extends GetxController {
           await authCases.setUserDate(user);
           // Get.find<BaseController>().getUser;
           // TODO:  isNotVerifiedPhone
-print('user complete ration is:::${user.profileCompletedRatio}');
+          print('user complete ration is:::${user.profileCompletedRatio}');
           // TODO:  welcome toast
           _toHomeScreen();
         },

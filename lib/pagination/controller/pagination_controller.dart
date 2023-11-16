@@ -28,12 +28,16 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
 
   final ScrollController scrollController = ScrollController();
 
-  PaginationController(this.useCase, {this.refreshControllerr}) : super() {
+  PaginationController(this.useCase, {this.refreshControllerr});
+
+  @override
+  void onInit() {
     change(PaginationBlocInitial(), status: RxStatus.success());
     _handler = PullToRefreshHandler();
     _refreshController = refreshControllerr ?? _handler?.refreshController;
     _restData();
     onRefreshData();
+    super.onInit();
   }
 
   @override

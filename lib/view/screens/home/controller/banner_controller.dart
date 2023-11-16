@@ -18,6 +18,7 @@ class BannerController extends BaseController implements GetxService {
   int? get currentIndex => _currentIndex;
 
   final loading = false.obs;
+  @override
   onInit() async {
     super.onInit();
 
@@ -26,18 +27,22 @@ class BannerController extends BaseController implements GetxService {
 
   RxnNum unReedCount = RxnNum();
   Future<void> getBannerList() async {
-    try {
-      loading.value = true;
-      var res = await bannerRepo.getSlider();
-      BannerModel response = res.$1;
-      unReedCount.value = res.$2;
-      banners.value = [];
-      banners.value.addAll(response.data as Iterable<BannerData>);
-      loading.value = false;
-    } catch (e) {
-      print(e);
+    if (banners.isNotEmpty) {
+      return;
+    } else {
+      try {
+        loading.value = true;
+        var res = await bannerRepo.getSlider();
+        BannerModel response = res.$1;
+        unReedCount.value = res.$2;
+        banners.value = [];
+        banners.value.addAll(response.data as Iterable<BannerData>);
+        loading.value = false;
+      } catch (e) {
+        print(e);
+      }
+      update();
     }
-    update();
   }
 
   void setCurrentIndex(int index, bool notify) {
