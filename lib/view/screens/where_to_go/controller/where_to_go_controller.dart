@@ -284,10 +284,10 @@ class WhereToGoController extends BaseController implements GetxService {
   }
 
   void _addFirstExtraPoint(LatLng point) {
-    if (isExtraPointsIsLengthIsOne) {
+    if (extraPoints.isNotEmpty) {
       extraPoints.first = point;
     } else {
-      extraPoints.add(point);
+      extraPoints.insert(0, point);
     }
   }
 

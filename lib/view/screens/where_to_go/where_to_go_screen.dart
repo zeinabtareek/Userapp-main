@@ -110,8 +110,15 @@ class SetDestinationScreen extends StatelessWidget {
                                               onClear: () {
                                                 whereToGoController.extraPoints
                                                     .removeAt(index);
-                                                itemController.text = '';
-                                                whereToGoController.update();
+                                                whereToGoController
+                                                    .extraTextEditingControllers
+                                                    .removeAt(index);
+                                                // itemController.text = '';
+                                                whereToGoController
+                                                    .extraFocusNodes
+                                                    .removeAt(index);
+                                                whereToGoController.update(
+                                                    ['WhereToGoController']);
                                               },
                                             );
                                           },
@@ -132,7 +139,8 @@ class SetDestinationScreen extends StatelessWidget {
                                                   whereToGoController
                                                       .toRouteController
                                                       .clear();
-                                                  whereToGoController.update();
+                                                  whereToGoController.update(
+                                                      ['WhereToGoController']);
                                                 },
                                                 onTap: () async =>
                                                     await whereToGoController
@@ -414,6 +422,7 @@ class FromTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WhereToGoController>(
+      id: 'WhereToGoController',
       builder: (whereToGoController) => InputField(
         enabled: true,
         readOnly: true,
@@ -424,7 +433,7 @@ class FromTextField extends StatelessWidget {
           whereToGoController.selectedPoints.removeAt(0);
 
           whereToGoController.fromRouteController.clear();
-          whereToGoController.update();
+          whereToGoController.update(['WhereToGoController']);
         },
         onTap: () async {
           await whereToGoController.checkPermissionBeforeNavigation(
@@ -495,6 +504,7 @@ class AddOrMinIconBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WhereToGoController>(
+      id: 'WhereToGoController',
       builder: (controller) {
         return GestureDetector(
           onTap: () {
@@ -512,7 +522,7 @@ class AddOrMinIconBtn extends StatelessWidget {
               borderRadius:
                   BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
             ),
-            child: !controller.isExtraPointsIsLengthIsOne
+            child: controller.extraPoints.isEmpty
                 ? const Icon(Icons.add, color: Colors.white)
                 : const Icon(Icons.clear, color: Colors.white),
           ),
@@ -533,7 +543,7 @@ class SavedPlaces extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AddressController>(
-autoRemove: false,
+      autoRemove: false,
       // initState: (state) => Get.find<AddressController>()..getAddressList(),
       builder: (controller) {
         if (controller.addressModel.data != null &&
