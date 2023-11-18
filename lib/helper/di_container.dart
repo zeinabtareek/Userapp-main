@@ -79,7 +79,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => CategoryRepo(apiClient: Get.find()));
   Get.lazyPut(() => AddressRepo());
   // Get.lazyPut(() => AddressRepo(apiClient: Get.find()));
-  Get.lazyPut(() => ParcelRepo(apiClient: Get.find()));
+  Get.lazyPut(() => ParcelRepo());
   Get.lazyPut(() => CreateTripRepo());
   Get.lazyPut(() => RideRepo(apiClient: Get.find()));
   Get.lazyPut(() => SetMapRepo(apiClient: Get.find()));
@@ -110,7 +110,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => AddressController(), fenix: true);
 
   ///newly added
-  Get.lazyPut(() => BaseMapController());
+  Get.lazyPut(() => BaseMapController(),fenix: true);
   Get.lazyPut(() => FindingDriverController());
 
   Get.lazyPut(() => CreateATripController(), fenix: true);

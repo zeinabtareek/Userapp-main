@@ -12,16 +12,16 @@ import 'package:ride_sharing_user_app/view/screens/parcel/widgets/track_componan
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/track_componants/track_data_list_tile.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/track_componants/track_order_with_status.dart';
 
-import '../../../util/app_strings.dart';
-import '../../../util/app_style.dart';
-import '../../../util/dimensions.dart';
-import '../../../util/images.dart';
-import '../../../util/text_style.dart';
-import '../../widgets/custom_app_bar.dart';
-import '../../widgets/custom_body.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_divider.dart';
-import '../../widgets/stepper.dart';
+import '../../../../util/app_strings.dart';
+import '../../../../util/app_style.dart';
+import '../../../../util/dimensions.dart';
+import '../../../../util/images.dart';
+import '../../../../util/text_style.dart';
+import '../../../widgets/custom_app_bar.dart';
+import '../../../widgets/custom_body.dart';
+import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_divider.dart';
+import '../../../widgets/stepper.dart';
 import 'live_tracking_screen.dart';
 
 class DeliveryStatusScreen extends StatelessWidget {

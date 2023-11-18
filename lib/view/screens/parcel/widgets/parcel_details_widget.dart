@@ -47,7 +47,7 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
           children: [
             if (parcelController.currentParcelState ==
                 ParcelDeliveryState.initial)
-              Column(children: const [SenderReceiverInfoWidget()]),
+        Column(children: const [SenderReceiverInfoWidget()]),
             if (parcelController.currentParcelState ==
                 ParcelDeliveryState.parcelInfoDetails)
               Column(children: [

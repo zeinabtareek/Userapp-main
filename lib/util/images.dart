@@ -25,7 +25,8 @@ class Images {
   static const String homeHome = 'assets/image/home-home.png';
   static const String homeLock = 'assets/image/home-lock.png';
   static const String homeWork = 'assets/image/home-work.png';
-  static const String splash = "assets/image/splash.gif";
+  static const String splash = "assets/image/hood.gif";
+  // static const String splash = "assets/image/splash.gif";
     static const String noData = 'assets/lottie/no_data.json';
   static const String hand = 'assets/image/hand.png';
   static const String homeActive = 'assets/image/home_active.png';

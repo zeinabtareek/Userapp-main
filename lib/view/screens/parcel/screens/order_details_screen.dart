@@ -7,15 +7,16 @@ import 'package:ride_sharing_user_app/view/screens/parcel/widgets/track_componan
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/track_componants/track_data_column.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/track_componants/track_data_list_tile.dart';
 
-import '../../../util/app_strings.dart';
-import '../../../util/app_style.dart';
-import '../../../util/dimensions.dart';
-import '../../widgets/animated_widget.dart';
-import '../../widgets/custom_app_bar.dart';
-import '../../widgets/custom_body.dart';
-import '../../widgets/custom_button.dart';
-import 'delivery_staus_screen.dart';
-import 'live_tracking_screen.dart';
+import '../../../../util/app_strings.dart';
+import '../../../../util/app_style.dart';
+import '../../../../util/dimensions.dart';
+import '../../../widgets/custom_app_bar.dart';
+import '../../../widgets/animated_widget.dart';
+import '../../../widgets/custom_app_bar.dart';
+import '../../../widgets/custom_body.dart';
+import '../../../widgets/custom_button.dart';
+import '../screens/delivery_staus_screen.dart';
+import '../screens/live_tracking_screen.dart';
 
 class OrderDetails extends StatelessWidget {
   const OrderDetails({super.key});

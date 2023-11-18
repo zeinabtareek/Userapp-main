@@ -7,13 +7,13 @@ import 'package:ride_sharing_user_app/view/screens/parcel/widgets/custom_parcel_
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/item_track_history_card.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/track_componants/track_history_list.dart';
 
-import '../../../util/app_strings.dart';
-import '../../../util/app_style.dart';
-import '../../../util/images.dart';
-import '../../widgets/animated_widget.dart';
-import '../../widgets/custom_app_bar.dart';
-import '../../widgets/custom_body.dart';
-import '../../widgets/custom_text_field.dart';
+import '../../../../util/app_strings.dart';
+import '../../../../util/app_style.dart';
+import '../../../../util/images.dart';
+import '../../../widgets/animated_widget.dart';
+import '../../../widgets/custom_app_bar.dart';
+import '../../../widgets/custom_body.dart';
+import '../../../widgets/custom_text_field.dart';
 import 'order_details_screen.dart';
 
 class ParcelTrackingScreen extends StatelessWidget {
