@@ -32,11 +32,12 @@ class InitialRequestWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isKeyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
+
     return GetBuilder<RideController>(
+      autoRemove: false,
         init: RideController(rideRepo: Get.find()),
         builder: (controller) {
-          bool isKeyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
-
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,6 +53,7 @@ class InitialRequestWidget extends StatelessWidget {
               K.sizedBoxH0,
               controller.selectedSubPackage.value == null
                   ? GetBuilder<CategoryController>(
+                    autoRemove: false,
                       initState: (_) =>
                           Get.find<CategoryController>().getCategoryList(),
                       builder: (categoryController) {
@@ -69,7 +71,9 @@ class InitialRequestWidget extends StatelessWidget {
                       ),
                     ),
               K.sizedBoxH0,
-              if (!isKeyboardIsOpen) RouteWidget(),
+              if (!isKeyboardIsOpen) ...{
+                RouteWidget(),
+              },
               if (!isKeyboardIsOpen)
                 const SizedBox(
                   height: Dimensions.paddingSizeDefault,
@@ -85,104 +89,104 @@ class InitialRequestWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
                   child: Center(
                     child: CustomDropDown(
-                        icon: Icon(
-                          Icons.expand_more,
-                          color:
-                              Theme.of(context).primaryColor.withOpacity(0.5),
-                        ),
-                        maxListHeight: 200,
-                        items: controller.paymentOptions
-                            .where((item) => !((item['name'] == 'wallet') &&
-                                (controller.user?.wallet == 0)))
-                            .map(
-                              (item) => CustomDropdownMenuItem<String>(
-                                value: item['name'],
-                                child: SizedBox(
-                                  width: 200,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Image.asset(
-                                        item['icon'],
-                                        // Images.profileMyWallet,
-                                        height: 15,
-                                        width: 15,
-                                        color: (item['name'] == 'wallet' &&
-                                                controller.user?.wallet == 0)
-                                            ? Theme.of(context).disabledColor
-                                            : Theme.of(context).primaryColor,
+                      icon: Icon(
+                        Icons.expand_more,
+                        color: Theme.of(context).primaryColor.withOpacity(0.5),
+                      ),
+                      maxListHeight: 200,
+                      items: controller.paymentOptions
+                          .where((item) => !((item['name'] == 'wallet') &&
+                              (controller.user?.wallet == "0")))
+                          .map(
+                            (item) => CustomDropdownMenuItem<String>(
+                              value: item['name'],
+                              child: SizedBox(
+                                width: 200,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      item['icon'],
+                                      // Images.profileMyWallet,
+                                      height: 15,
+                                      width: 15,
+                                      color: (item['name'] == 'wallet' &&
+                                              controller.user?.wallet == "0")
+                                          ? Theme.of(context).disabledColor
+                                          : Theme.of(context).primaryColor,
+                                    ),
+                                    K.sizedBoxW0,
+                                    Text(
+                                      item['name'].toString().tr,
+                                      style: textRegular.copyWith(
+                                        color: item['name'] !=
+                                                controller.initialSelectItem
+                                            ? Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .color!
+                                                .withOpacity(0.5)
+                                            : (item['name'] == 'wallet' &&
+                                                    controller.user?.wallet ==
+                                                        "0")
+                                                ? Theme.of(context)
+                                                    .disabledColor
+                                                : Theme.of(context)
+                                                    .primaryColor,
                                       ),
-                                      K.sizedBoxW0,
-                                      Text(
-                                        item['name'].toString().tr,
-                                        style: textRegular.copyWith(
-                                          color: item['name'] !=
-                                                  controller.initialSelectItem
-                                              ? Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .color!
-                                                  .withOpacity(0.5)
-                                              : (item['name'] == 'wallet' &&
-                                                      controller.user?.wallet ==
-                                                          0)
-                                                  ? Theme.of(context)
-                                                      .disabledColor
-                                                  : Theme.of(context)
-                                                      .primaryColor,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            )
-                            .toList(),
-                        isRowHint: true,
-                        rowWidget: Row(
-                          children: [
-                            Image.asset(
-                              Images.profileMyWallet,
-                              height: 15,
-                              width: 15,
                             ),
-                            K.sizedBoxW0,
-                            Text(
-                              Strings.selectAPaymentMethod.tr,
-                              maxLines: 1,
-                              overflow: TextOverflow.clip,
-                            ),
-                          ],
-                        ),
-                        borderRadius: 5,
-                        onChanged: (selectedItem) {
-                          if (selectedItem == 'wallet' &&
-                              (controller.user?.wallet == 0)) {
-                            // Do nothing or show a message indicating that the wallet balance is zero
-                            print(
-                                'Wallet balance is zero. Cannot select "wallet" option.');
-                          } else {
-                            // Execute only if the selected item is not 'wallet' with zero balance
-                            controller.initialSelectItem = selectedItem;
-                            if (controller.initialSelectItem ==
-                                Strings.custom) {
-                              showDialog(
-                                context: context,
-                                builder: (_) => CustomCalender(
-                                  onChanged: (value) {
-                                    Get.back();
-                                  },
-                                ),
-                              );
-                            }
-                            // controller.update();
-                          }
-
+                          )
+                          .toList(),
+                      isRowHint: true,
+                      rowWidget: Row(
+                        children: [
+                          Image.asset(
+                            Images.profileMyWallet,
+                            height: 15,
+                            width: 15,
+                          ),
+                          K.sizedBoxW0,
+                          Text(
+                            Strings.selectAPaymentMethod.tr,
+                            maxLines: 1,
+                            overflow: TextOverflow.clip,
+                          ),
+                        ],
+                      ),
+                      borderRadius: 5,
+                      onChanged: (selectedItem) {
+                        if (selectedItem == 'wallet' &&
+                            (controller.user?.wallet == 0)) {
+                          // Do nothing or show a message indicating that the wallet balance is zero
                           print(
-                              ' initialSelectItem ${controller.initialSelectItem}');
-                        },
-                        initialSelectedValue: controller.initialSelectItem ??
-                            Strings.selectAPaymentMethod),
+                              'Wallet balance is zero. Cannot select "wallet" option.');
+                        } else {
+                          // Execute only if the selected item is not 'wallet' with zero balance
+                          controller.initialSelectItem.value = selectedItem;
+                          if (controller.initialSelectItem.value == Strings.custom) {
+                            showDialog(
+                              context: context,
+                              builder: (_) => CustomCalender(
+                                onChanged: (value) {
+                                  Get.back();
+                                },
+                              ),
+                            );
+                          }
+                          // controller.update();
+                        }
+
+                        print(
+                            ' initialSelectItem ${controller.initialSelectItem.value}');
+                      },
+                      initialSelectedValue:
+                          controller.initialSelectItem.value ??
+                              Strings.selectAPaymentMethod,
+                    ),
                   ),
                 ),
               if (!isKeyboardIsOpen)

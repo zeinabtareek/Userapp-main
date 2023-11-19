@@ -18,39 +18,29 @@ abstract class BaseResModel<T> {
 }
 
 class MsgModel extends BaseResModel<MsgModel> {
-  @override
-  String? massage;
 
-  @override
-  int? status;
 
   Map<String,dynamic>? stateData;
   MsgModel({
-    this.massage,
-    this.status,
+
     this.stateData,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'msg': massage,
-      'status': status,
-    };
-  }
+ 
 
   MsgModel.fromKMap(Map<String, dynamic> map) {
-    massage = map['message'];
+    msg = map['message'];
     status = map['status']?.toInt();
     stateData = map['data'];
   }
 
-  String toJson() => json.encode(toMap());
+  // String toJson() => json.encode(toMap());
 
   factory MsgModel.fromJson(Map<String, dynamic> map) => MsgModel.fromKMap(map);
 
   bool get isSuccess => status == 200;
   @override
-  MsgModel? get data => null;
+  MsgModel? get data => this;
 
   @override
   int get statusNumber => status!;
@@ -58,18 +48,18 @@ class MsgModel extends BaseResModel<MsgModel> {
   @override
   String toString() {
     
-    return "MSG( msg $massage  status $status)";
+    return "MSG( msg $msg  status $status)";
   }
 
-  MsgModel copyWith({
-    String? massage,
-    int? status,
-    Map<String,dynamic>? stateData,
-  }) {
-    return MsgModel(
-      massage: massage ?? this.massage,
-      status: status ?? this.status,
-      stateData: stateData ?? this.stateData,
-    );
-  }
+  // MsgModel copyWith({
+  //   String? massage,
+  //   int? status,
+  //   Map<String,dynamic>? stateData,
+  // }) {
+  //   return MsgModel(
+  //     massage: massage ?? this.massage,
+  //     status: status ?? this.status,
+  //     stateData: stateData ?? this.stateData,
+  //   );
+  // }
 }

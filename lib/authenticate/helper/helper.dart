@@ -1,5 +1,3 @@
-import 'package:get/get.dart';
-
 import '../../helper/display_helper.dart';
 import '../data/models/base_model.dart';
 import '../data_state.dart';
@@ -28,7 +26,7 @@ void _handelSuccess<T extends BaseResModel>(
   Function(T? res)? onSuccess,
 ) {
   if (showSuccessToast) {
-      showCustomSnackBar(state.data?.massage ??state.data?.msg ?? "", isError: false);
+    showCustomSnackBar(state.data?.msg ?? "", isError: false);
   }
   onSuccess?.call(state.data);
 }
@@ -39,7 +37,7 @@ void _handelError<T extends BaseResModel>(
   Function(T? error)? onError,
 ) {
   if (showErrorToast) {
-    showCustomSnackBar(state.errorMsg ?? "");
+    showCustomSnackBar(state.errorMsg ?? state.data?.msg ?? "");
   }
   onError?.call(state.data);
 }

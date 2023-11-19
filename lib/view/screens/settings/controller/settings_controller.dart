@@ -95,7 +95,7 @@ class SettingsController extends BaseController {
           await saveSettingToLocal();
           update();
         } on MsgModel catch (e) {
-          OverlayHelper.showErrorToast(Get.overlayContext!, e.massage ?? "");
+          OverlayHelper.showErrorToast(Get.overlayContext!, e.msg ?? "");
         }
       },
       checkConnection: true,
@@ -124,7 +124,7 @@ class SettingsController extends BaseController {
           isUpdateMode(false);
           update();
         } on MsgModel catch (e) {
-          OverlayHelper.showErrorToast(Get.overlayContext!, e.massage ?? "");
+          OverlayHelper.showErrorToast(Get.overlayContext!, e.msg ?? "");
         }
       },
       checkConnection: true,

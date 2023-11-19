@@ -9,10 +9,6 @@ import '../../../../util/app_constants.dart';
 import '../model/edit_profile_req_model.dart';
 
 class UserRepo {
-  
-
-  
-
   Future<UserAuthModel> updateProfile(
     EditProfileReqModel updateProfileReqModel,
   ) async {
@@ -31,8 +27,7 @@ class UserRepo {
         throw MsgModel.fromJson(res.data);
       }
     } on Exception catch (e) {
-      throw MsgModel(massage: e.toString());
+      throw MsgModel()..msg = e.toString();
     }
   }
-
 }

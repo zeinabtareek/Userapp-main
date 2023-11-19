@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../authenticate/config/config.dart';
 import '../../../../authenticate/domain/use-cases/auth_cases.dart';
 import '../../../../authenticate/presentation/controller/auth_controller.dart';
 import '../../../../authenticate/presentation/reset-password-screen/reset_password_screen.dart';

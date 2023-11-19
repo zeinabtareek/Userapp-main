@@ -40,7 +40,7 @@ class ChatRepo {
         throw MsgModel.fromJson(res.data);
       }
     } on Exception {
-      throw MsgModel().copyWith(massage: "Exception");
+      throw MsgModel().msg= "Exception";
     }
   }
 }

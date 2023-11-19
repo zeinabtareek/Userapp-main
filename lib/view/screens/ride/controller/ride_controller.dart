@@ -33,7 +33,7 @@ class RideController extends BaseController implements GetxService {
   final RideRepo rideRepo;
 
   RideController({required this.rideRepo});
-  var initialSelectItem;
+  RxnString initialSelectItem=RxnString();
   var currentRideState = RideState.initial;
   var selectedCategoryTypeEnum = RideType.car;
 

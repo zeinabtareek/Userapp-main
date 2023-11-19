@@ -1,7 +1,7 @@
 class BasePhoneReqModel {
   BasePhoneReqModel({
     required this.phone,
-    required this.phoneCode,
+     this.phoneCode='+966',
   }) {
     phone = phone.replaceFirst(phoneCode, "");
   }

@@ -77,9 +77,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   void initState() {
-    if (widget.countryDialCode != null) {
-      widget.controller?.text = widget.countryDialCode!;
-    }
+    // if (widget.countryDialCode != null) {
+    //   // widget.controller?.text = widget.countryDialCode!;
+    // }
     super.initState();
   }
 
@@ -211,6 +211,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     child: Center(
                       child: CodePickerWidget(
                         flagWidth: 25,
+                       enabled: false, 
                         onChanged: (code) {
                           widget.controller?.text = code.dialCode.toString();
                           widget.onCountryChanged?.call(code);

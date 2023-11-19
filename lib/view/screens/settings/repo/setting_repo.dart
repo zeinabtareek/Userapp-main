@@ -34,7 +34,7 @@ class SettingRepoImp implements SettingRepo {
         throw MsgModel.fromJson(res.data);
       }
     } on Exception catch (e) {
-      throw MsgModel(massage: e.toString());
+      throw MsgModel()..msg= e.toString();
     }
   }
 
@@ -52,7 +52,7 @@ class SettingRepoImp implements SettingRepo {
         throw MsgModel.fromJson(res.data);
       }
     } on Exception catch (e) {
-      throw MsgModel(massage: e.toString());
+      throw MsgModel()..msg = e.toString();
     }
   }
 

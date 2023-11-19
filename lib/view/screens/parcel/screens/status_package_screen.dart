@@ -47,49 +47,55 @@ class StatusPackageScreen extends StatelessWidget {
             ),
             horizontalTaps(),
             K.sizedBoxH2,
-            GestureDetector(
-              child: Container(
-                padding: K.fixedPadding0,
-                margin: K.fixedPadding0,
-                decoration: K.shadowBoxDecoration,
-                child: Column(
-                  children: [
-                    itemTrackHistory(
-                      title:
-                      'New York, NY, 10016, USA',
-                        subTitle:
-                        'Order ID: JB390299191242',
-                        icon: const Icon(
-                          Icons.more_horiz,
-                          color: Colors.black,
-                        ),
-                        elevated: 0, onTap: () {  }),
-                    orderStatusWidget((){},isReturned: false,text: Strings.delivered.tr,),
+            // GestureDetector(
+            //   child: Container(
+            //     padding: K.fixedPadding0,
+            //     margin: K.fixedPadding0,
+            //     decoration: K.shadowBoxDecoration,
+            //     child: Column(
+            //       children: [
+            //         itemTrackHistory(
+            //           title:
+            //           'New York, NY, 10016, USA',
+            //             subTitle:
+            //             'Order ID: JB390299191242',
+            //             icon: const Icon(
+            //               Icons.more_horiz,
+            //               color: Colors.black,
+            //             ),
+            //             elevated: 0, onTap: () {  }),
+            //         orderStatusWidget((){},isReturned: false,text: Strings.delivered.tr,),
 
-                    K.sizedBoxH2,
-                      Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: Dimensions.paddingSizeDefault),
-                      child: RouteWidget(),
-                    ),
+            //         K.sizedBoxH2,
+            //           Padding(
+            //           padding: EdgeInsets.symmetric(
+            //               horizontal: Dimensions.paddingSizeDefault),
+            //           child: RouteWidget(),
+            //         ),
 
-
-
-
-                  ],
-                ),
-              ),
-              onTap: (){
-                Get.to(DeliveryStatusScreen());
-              },
-            ), Padding(
+            //       ],
+            //     ),
+            //   ),
+            //   onTap: (){
+            //     Get.to(DeliveryStatusScreen());
+            //   },
+            // ),
+            Padding(
               padding: K.fixedPadding0,
               child: Column(
                 children: [
-                trackOrderWithStatus(isReturned: false, text: Strings.returned.tr,onpressed: (){}),
-                trackOrderWithStatus(isReturned: true, text: Strings.delivered.tr,onpressed: (){})
+                  // trackOrderWithStatus(
+                  //     isReturned: false,
+                  //     text: Strings.returned.tr,
+                  //     onPressed: () {}),
+                  // trackOrderWithStatus(
+                  //     isReturned: true,
+                  //     text: Strings.delivered.tr,
+                  //     onPressed: () {})
 
-
+                  // TrackOrderWithStatus(
+                  //   stateText: ,
+                  // ),
                 ],
               ),
             ),
