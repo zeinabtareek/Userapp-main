@@ -177,21 +177,23 @@ class BaseMapController extends BaseController with SocketIoMixin {
   RxnDouble distance = RxnDouble();
 
   ///calculate Distance
-  calculateDistance(LatLng source, LatLng dis) async {
+  calculateDistance(List<LatLng> points) async {
+    var result = 0.0;
 
-    final result = await SearchServices.getDistance(
-    source,
-     dis,
-    );
+    for (var i = 0; i < points.length - 1; i++) {
+      result += await SearchServices.getDistance(
+        points[i],
+        points[i + 1],
+      );
+   }
 
-    return distance.value= result; // return distance;
+    return distance.value = result;
   }
 
   ///calculate duration
   calculateDuration(LatLng source, LatLng dis) async {
-
     final result = await SearchServices.getDistanceAndDuration(
-     source,
+      source,
       dis,
     );
     final duration = result['duration'].toString();

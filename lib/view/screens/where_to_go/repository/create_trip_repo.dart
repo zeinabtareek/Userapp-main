@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart' as dm show FormData ;
+import 'package:dio/dio.dart' as dm show FormData;
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -18,12 +18,13 @@ import '../model/order_create.dart';
 
 class CreateTripRepo {
   final dio = DioUtilNew.dio;
-Future<CreateOrderModel> createATrip({required CreateOrderBody createOrderBody}) async {
+  Future<CreateOrderModel> createATrip(
+      {required CreateOrderBody createOrderBody}) async {
     final data = createOrderBody.toJson();
 
     final res = await dio!.post(
       AppConstants.order,
-      data:dm.FormData.fromMap(data),
+      data: dm.FormData.fromMap(data),
     );
     print('res ::${res.statusCode}');
     print('res ::${res.data}');
@@ -53,8 +54,9 @@ Future<CreateOrderModel> createATrip({required CreateOrderBody createOrderBody})
       if (res.data != null) {
         print('cancel response ${res.data ?? ''}');
         OverlayHelper.showGeneralToast(
-            Get.context!, Strings.orderStatus, Strings.orderCanceled);
-        Get.offAll(DashboardScreen(                                                 ));
+            Get.overlayContext!, Strings.orderStatus, Strings.orderCanceled);
+            
+        Get.offAll(DashboardScreen());
         // Get.offAll(SetDestinationScreen(fromCat: false));
         return res.data;
       }
@@ -78,7 +80,6 @@ Future<CreateOrderModel> createATrip({required CreateOrderBody createOrderBody})
         final model = OrderModel.fromJson(res.data);
         print('model ${model.data?.id ?? ''}');
 
-
 // TODO:  when driver accept
         Get.find<BaseMapController>().key.currentState!.expand();
         Get.find<BaseMapController>()
@@ -96,9 +97,7 @@ Future<CreateOrderModel> createATrip({required CreateOrderBody createOrderBody})
     throw Exception("Unexpected error occurred");
   }
 
-
-
-  changePaymentType({id ,paymentType ,vehicleTypeId,transactionId})async{
+  changePaymentType({id, paymentType, vehicleTypeId, transactionId}) async {
     // try {
     //   final response = await dio!.post(AppConstants.getOrderPrice,
     //       data: {
@@ -125,5 +124,4 @@ Future<CreateOrderModel> createATrip({required CreateOrderBody createOrderBody})
     //   throw e; // Optionally re-throw the exception
     // }
   }
-
 }

@@ -127,11 +127,25 @@ class AddressController extends BaseController implements GetxService {
           );
 
           isLoading(true);
-          await addressRepo1.postAddress(req);
+          AddressData addressData = await addressRepo1.postAddress(req);
           isLoading(false);
           OverlayHelper.showSuccessToast(Get.overlayContext!, "Sucses");
-          await getAddressList();
+
+          // int? index = addressModel.data
+          //     ?.indexWhere((element) => element.name == addressData.name);
+          // if (index != null) {
+          //   if (index == -1) {
+          //     addressModel.data?.insert(0, addressData);
+          //   } else {
+          //     addressModel.data?[index] = addressData;
+          //   }
+          // }
+
+          // setState(ViewState.idle);
+          // update();
           Get.back();
+          addressModel.data = null;
+          await getAddressList();
         } on Exception {
           isLoading(false);
           OverlayHelper.showErrorToast(Get.overlayContext!, "Error");
@@ -148,10 +162,15 @@ class AddressController extends BaseController implements GetxService {
           isLoading(true);
 
           isLoading(true);
-          await addressRepo1.deleteAddress(address);
+          bool state = await addressRepo1.deleteAddress(address);
           isLoading(false);
           OverlayHelper.showSuccessToast(Get.overlayContext!, "Sucses");
-          await getAddressList();
+          int index = addressModel.data!.indexOf(address);
+          addressModel.data!.removeAt(index);
+          addressModel.data!
+              .insert(index, AddressData.createEmpty(address.name!));
+          setState(ViewState.idle);
+          update();
           Get.back();
         } on Exception {
           isLoading(false);
@@ -178,32 +197,32 @@ class AddressController extends BaseController implements GetxService {
   }
 
   Future<void> getAddressList() async {
-    if (addressModel.data==null) {
-  setState(ViewState.busy);
-  
-  try {
-    addressModel = await addressRepo1.getAddressList();
-    for (var item in staticAddressNames) {
-      int? index =
-          addressModel.data?.indexWhere((element) => element.name == item);
-      if (index != null) {
-        if (index == -1) {
-          addressModel.data?.add(AddressData.createEmpty(item));
+    if (addressModel.data == null) {
+      setState(ViewState.busy);
+
+      try {
+        addressModel = await addressRepo1.getAddressList();
+        for (var item in staticAddressNames) {
+          int? index =
+              addressModel.data?.indexWhere((element) => element.name == item);
+          if (index != null) {
+            if (index == -1) {
+              addressModel.data?.add(AddressData.createEmpty(item));
+            }
+          }
         }
+
+        if (kDebugMode) {
+          print('addressList ${addressModel.data?.length}');
+        }
+        // }
+      } on MsgModel {
+        // TODO
       }
+      setState(ViewState.idle);
+
+      update();
     }
-  
-    if (kDebugMode) {
-      print('addressList ${addressModel.data?.length}');
-    }
-    // }
-  } on MsgModel {
-    // TODO
-  }
-  setState(ViewState.idle);
-  
-  update();
-}
   }
 
   Future<void> getSuggestedAddressList() async {
@@ -221,8 +240,6 @@ class AddressController extends BaseController implements GetxService {
       setState(ViewState.idle);
       update();
     }
-
-    
   }
 
   void setCurrentIndex(int index, bool notify) {

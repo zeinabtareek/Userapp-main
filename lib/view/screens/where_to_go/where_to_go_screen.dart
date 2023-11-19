@@ -137,6 +137,8 @@ class SetDestinationScreen extends StatelessWidget {
                                                     .toRoutNode,
                                                 onClear: () {
                                                   whereToGoController
+                                                      .destination = null;
+                                                  whereToGoController
                                                       .toRouteController
                                                       .clear();
                                                   whereToGoController.update(
@@ -430,7 +432,7 @@ class FromTextField extends StatelessWidget {
         node: whereToGoController.fromNode,
         hint: Strings.enterCurrentLocationRoute.tr,
         onClear: () {
-          whereToGoController.selectedPoints.removeAt(0);
+          whereToGoController.source = null;
 
           whereToGoController.fromRouteController.clear();
           whereToGoController.update(['WhereToGoController']);

@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../../home/controller/address_controller.dart';
 
 class AddressModel {
@@ -100,5 +102,30 @@ class AddressData {
   @override
   String toString() {
     return 'AddressData(id: $id, name: $name, location: $location, lat: $lat, lng: $lng, icon: $icon, isUpdate: $isUpdate)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+  
+    return other is AddressData &&
+      other.id == id &&
+      other.name == name &&
+      other.location == location &&
+      other.lat == lat &&
+      other.lng == lng &&
+      other.icon == icon &&
+      other.isUpdate == isUpdate;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+      name.hashCode ^
+      location.hashCode ^
+      lat.hashCode ^
+      lng.hashCode ^
+      icon.hashCode ^
+      isUpdate.hashCode;
   }
 }

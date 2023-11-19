@@ -77,7 +77,7 @@ class SearchBottom extends StatelessWidget {
                       onFieldSubmitted: (value) {
                         Focus.of(context).unfocus();
                       },
-                      onChanged: (value) => controller.searchPlacesFrom(value),
+                      onChanged: (value) => controller.onSearchChanged(value),
                       decoration: getInputDecoration(
                         controller.isContainerVisible.value
                             ? Strings.selectDestination.tr

@@ -134,7 +134,7 @@ class CreateATripController extends BaseMapController {
   Future<CreateOrderModel> createATrip(List<LatLng> points) async {
     LatLng source = points.first; // Example source coordinate (San Francisco)
     LatLng destination = points.last;
-    
+
     List<ExtraRoutes> extraRoute = await extraRoutes(points);
     String time = "12";
     //  await calculateDuration(source, destination);
@@ -162,7 +162,8 @@ class CreateATripController extends BaseMapController {
             to: await _to(destination),
             extraRoutes: extraRoute,
             time: time,
-            distance: num.parse(distance.value.toString()),
+            distance: num.parse(
+                Get.find<BaseMapController>().distance.value.toString()),
             note: note,
             vehicleTypeId: vehicleTypeId,
             paymentType: paymentType,
@@ -170,12 +171,12 @@ class CreateATripController extends BaseMapController {
           ),
         );
         orderId = createOrderModel.data!.id!;
-        print('order ::::  id $orderId');
+        // print('order ::::  id $orderId');
 
         setOrderId(orderId!);
         Get.find<RideController>()
             .updateRideCurrentState(RideState.findingRider);
-        print('new trip data   ${createOrderModel.data?.id}');
+        // print('new trip data   ${createOrderModel.data?.id}');
 
         Get.find<BaseMapController>().key.currentState!.contract();
         Get.find<BaseMapController>()
@@ -198,7 +199,7 @@ class CreateATripController extends BaseMapController {
 
     throw Exception(
         "Unexpected error occurred"); // Throw an exception if none of the catch blocks are executed
-    update();
+    // update();
   }
 
   @override
@@ -206,16 +207,15 @@ class CreateATripController extends BaseMapController {
     return SearchServices().getPlaceNameFromLatLng(latlng);
   }
 
-  
 // calculate
   ///Cancel trip
   cancelATrip({orderId}) async {
     try {
       var result = await actionCenter.execute(() async {
         setState(ViewState.busy);
-        var result = await services.cancelATrip(orderId: orderId);
+        var result = await services.cancelATrip(orderId: getOrderId());
         print(result);
-
+        setOrderId(null);
         setState(ViewState.idle);
       }, checkConnection: true);
 

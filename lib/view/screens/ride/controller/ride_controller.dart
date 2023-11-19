@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/bases/base_controller.dart';
 import 'package:ride_sharing_user_app/enum/view_state.dart';
+import 'package:ride_sharing_user_app/view/screens/request_screens/controller/base_map_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/repository/ride_repo.dart';
 
 import '../../../../util/app_strings.dart';
@@ -107,15 +108,15 @@ class RideController extends BaseController implements GetxService {
     isExpanded = false;
   }
 
-  // var distance ;
-  Future<double?> calculateDistance() async {
-    distance = await Get.find<CreateATripController>().calculateDistance(
-      const LatLng(33.7749, -122.4194), // San Francisco
-      const LatLng(
-          37.7753, -122.4199), // Replace with your actual point 1 coordinates
-    );
-    return distance;
-  }
+  // // var distance ;
+  // Future<double?> calculate3Distance() async {
+  //   distance = await Get.find<CreateATripController>().calculate3Distance(
+  //     const LatLng(33.7749, -122.4194), // San Francisco
+  //     // const LatLng(
+  //     //     37.7753, -122.4199), // Replace with your actual point 1 coordinates
+  //   );
+  //   return distance;
+  // }
 
   Future<double?> calculateDuration() async {
     duration = await Get.find<CreateATripController>().calculateDuration(
@@ -205,12 +206,12 @@ class RideController extends BaseController implements GetxService {
           OverlayHelper.showErrorToast(
               Get.overlayContext!, Strings.noEnteredPromoCode.tr);
         } else {
-          double? distance = await calculateDistance();
+          // double? distance = await calculate3Distance();
           priceData = await rideRepo.getPrice(
               packageId: selectedPackage.value!.id,
               vehicleTypeId: selectedSubPackage.value!.id,
               promoCode: promoCodeController.text,
-              distance: Get.find<WhereToGoController>().distance
+              distance: Get.find<BaseMapController>().distance.value
               // distance: distance,
               );
           OverlayHelper.showSuccessToast(Get.overlayContext!, Strings.done.tr);
@@ -238,7 +239,7 @@ class RideController extends BaseController implements GetxService {
       packageId: selectedPackage.value!.id,
       vehicleTypeId: selectedSubPackage.value!.id,
       promoCode: promoCodeController.text,
-      distance: Get.find<WhereToGoController>().distance,
+      distance: Get.find<BaseMapController>().distance.value,
       // distance: distance
     );
     setState(ViewState.idle);

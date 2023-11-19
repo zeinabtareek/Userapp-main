@@ -78,7 +78,7 @@ class AddressRepo {
     }
   }
 
-  postAddress(AddressData address) async {
+ Future<AddressData> postAddress(AddressData address) async {
     try {
       final response = await dio!.post(
         address.id == null

@@ -27,7 +27,7 @@ class RouteWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<ParcelController>(builder: (parcelController) {
       return GetBuilder<WhereToGoController>(
-          init: WhereToGoController()..distance,
+          init: WhereToGoController(),
           builder: (whereToGoController) {
             return Column(
               children: [
@@ -83,7 +83,6 @@ class RouteWidget extends StatelessWidget {
                             .map((c) {
                           return const SizedBox(
                               height: Dimensions.paddingSizeSmall);
-                          
                         }).toList(),
                         Text(
                           'to'.tr,
@@ -129,7 +128,7 @@ class RouteWidget extends StatelessWidget {
                             const SizedBox(width: Dimensions.paddingSizeSmall),
 
                             Obx(() => Text(
-                                '${Get.find<BaseMapController>().distance.value} ${'km'.tr}')),
+                                '${Get.find<BaseMapController>().distance.value == null ? "Waiting" : "${Get.find<BaseMapController>().distance.value} " 'km'.tr} ')),
                             // Text('${whereToGoController.duration} duration'),
                           ],
                         ),

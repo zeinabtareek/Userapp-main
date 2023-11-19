@@ -44,16 +44,12 @@ import '../../widgets/second_widget/second_widget.dart';
 import '../../widgets/third_widget/third_widget.dart';
 
 class BaseMapScreen extends StatelessWidget {
-  BaseMapScreen({
+  const BaseMapScreen({
     Key? key,
     required this.points,
-  
   }) : super(key: key);
 
-  
-
   final List<LatLng> points;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +61,8 @@ class BaseMapScreen extends StatelessWidget {
                 title: Strings.theDeliverymanNeedYou.tr,
                 onBackPressed: controller.onBackPressed),
             body: GetBuilder<BaseMapController>(
-                init: BaseMapController(),
+                init: BaseMapController()
+                  ,
                 builder: (controller) {
                   return ExpandableBottomSheet(
                     key: controller.key,
@@ -95,7 +92,6 @@ class BaseMapScreen extends StatelessWidget {
                               () => controller.widgetNumber.value ==
                                       request[RequestState.initialState]
                                   ? InitialRequestWidget(
-                                  
                                       image: Images.car,
                                       title: Get.find<RideController>()
                                               .selectedSubPackage

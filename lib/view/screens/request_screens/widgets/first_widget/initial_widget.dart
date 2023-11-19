@@ -28,7 +28,6 @@ class InitialRequestWidget extends StatelessWidget {
     super.key,
     required this.image,
     required this.title,
-  
   });
 
   @override
@@ -230,8 +229,9 @@ class InitialRequestWidget extends StatelessWidget {
                                 OverlayHelper.showWarningToast(
                                     context, Strings.selectAPaymentMethod.tr);
                                 // print('select a type');
-                              } else if (Get.find<WhereToGoController>()
-                                      .distance ==
+                              } else if (Get.find<BaseMapController>()
+                                      .distance
+                                      .value ==
                                   null) {
                                 OverlayHelper.showWarningToast(
                                     context, Strings.wait.tr);

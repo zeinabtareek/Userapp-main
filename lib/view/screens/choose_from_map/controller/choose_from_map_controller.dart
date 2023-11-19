@@ -16,6 +16,7 @@ import '../../../../util/images.dart';
 import '../../where_to_go/model/search_suggestion_model.dart';
 import '../../where_to_go/repository/search_service.dart';
 import '../../where_to_go/where_to_go_screen.dart';
+
 class ChooseFromMapController extends BaseController
     with MapViewHelper, MapHelper {
   List<LatLng> pickedPoints = [
@@ -23,6 +24,9 @@ class ChooseFromMapController extends BaseController
     // const LatLng(37.41511878640148, -122.0886980742216),
     // const LatLng(37.416753550576935, -122.07783814519644)
   ];
+
+  Timer? _debounce;
+
   @override
   void onInit() async {
     await _getCurrantLocation();
@@ -32,6 +36,12 @@ class ChooseFromMapController extends BaseController
     await _drawPolylineIfHavePickedPoints();
 
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
   }
 
   final searchController = TextEditingController();
@@ -89,7 +99,6 @@ class ChooseFromMapController extends BaseController
       List<RippleMarker> markers = [];
       for (var element in pickedPoints) {
         markers.add(RippleMarker(
-         
           markerId: MarkerId(pickedPoints.indexOf(element).toString()),
           position: element,
           ripple: false,
@@ -193,7 +202,9 @@ class ChooseFromMapController extends BaseController
           'Location permissions are permanently denied, we cannot request permissions **.',
           style: TextStyle(fontSize: 16),
         ));
-        Get.off( SetDestinationScreen(fromCat: false,));
+        Get.off(SetDestinationScreen(
+          fromCat: false,
+        ));
         // Get.off(AddItemScreen(address: '', apartmentNumber: '', landMark: '', lat: '', lng: '', areaNumber: ''));
         return;
       }
@@ -211,7 +222,9 @@ class ChooseFromMapController extends BaseController
           // await   showPinsOnMap(LatLng(currLocation.latitude, currLocation.longitude));
           print(currLocation.longitude);
 
-          Get.to( SetDestinationScreen(fromCat: false,));
+          Get.to(SetDestinationScreen(
+            fromCat: false,
+          ));
         });
       }
     } on TimeoutException {
@@ -263,11 +276,19 @@ class ChooseFromMapController extends BaseController
 
   final searchResultsFrom = <Predictions>[].obs;
 
+  onSearchChanged(String query) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      searchPlacesFrom(query);
+    });
+  }
+
   searchPlacesFrom(String searchTerm) async {
     setState(ViewState.busy);
     searchResultsFrom.value = await searchServices.getAutoCompleteFrom(
-        search: searchTerm.toString(), );
-        // search: searchTerm.toString(), country: 'eg');
+      search: searchTerm.toString(),
+    );
+    // search: searchTerm.toString(), country: 'eg');
     print(
         'data ${searchResultsFrom.value} length is ${searchResultsFrom.length}');
     setState(ViewState.idle);

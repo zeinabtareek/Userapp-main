@@ -38,12 +38,8 @@ class WhereToGoController extends BaseController implements GetxService {
   final entranceController = TextEditingController();
   final entranceNode = FocusNode();
   final fromNode = FocusNode();
-  final extraNode = FocusNode();
-  final extraNode2 = FocusNode();
-  Future<double> get distance async => (await calculateDistance())!;
-  var duration;
-  final extraNode3 = FocusNode();
   final toRoutNode = FocusNode();
+
   final searchController = TextEditingController().obs;
   final selectedSuggestedAddress = ''.obs;
   List listOfSuggestedPlaces = [
@@ -56,18 +52,14 @@ class WhereToGoController extends BaseController implements GetxService {
   ScrollController scrollController = ScrollController();
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     scrollController.dispose();
-    fromRouteController.clear();
+
     for (var element in [
       fromRouteController,
       fromNode,
-      toRoutNode,
       toRouteController,
-      extraNode,
-      extraNode2,
-      extraNode3,
+      toRoutNode,
       ...extraTextEditingControllers,
       ...extraFocusNodes,
     ]) {
@@ -83,7 +75,9 @@ class WhereToGoController extends BaseController implements GetxService {
 
   LatLng get defLangLng => const LatLng(0, 0);
 
-  List<LatLng> selectedPoints = [];
+  // List<LatLng> selectedPoints = [];
+  LatLng? source;
+  LatLng? destination;
 
   List<TextEditingController> extraTextEditingControllers = [];
 
@@ -120,9 +114,9 @@ class WhereToGoController extends BaseController implements GetxService {
       return null;
     } else {
       var distance = await Get.find<CreateATripController>().calculateDistance(
-        _getPoints!.first,
+        _getPoints!,
         // TODO:  recheck
-        _getPoints!.last, // Replace with your actual point 1 coordinates
+        // Replace with your actual point 1 coordinates
       );
       return distance;
     }
@@ -159,7 +153,7 @@ class WhereToGoController extends BaseController implements GetxService {
 
   Future<void> goToScreenAndRecodeSelect(PointType pointType,
       {int? index}) async {
-    selectedPoints.removeWhere((element) => element == defLangLng);
+    // selectedPoints.removeWhere((element) => element == defLangLng);
 
     Get.to(() => ChooseFromMapScreen(_getPoints))!.then((point) async {
       if (point != null) {
@@ -180,14 +174,12 @@ class WhereToGoController extends BaseController implements GetxService {
   }
 
   List<LatLng>? get _getPoints {
-    selectedPoints.removeWhere((element) => element == defLangLng);
+    // selectedPoints.removeWhere((element) => element == defLangLng);
     extraPoints.removeWhere((element) => element == defLangLng);
-    if (selectedPoints.isEmpty) {
+    if (source == null || destination == null) {
       return null;
-    } else if (selectedPoints.length == 2) {
-      return selectedPoints;
     } else {
-      return [selectedPoints.first, ...extraPoints, selectedPoints.last];
+      return [source!, ...extraPoints, destination!];
     }
   }
 
@@ -216,7 +208,7 @@ class WhereToGoController extends BaseController implements GetxService {
         await searchServices.getPlaceDetails(predictions.placeId!);
     LatLng point = LatLng(
         result.geometry!.location!.lat!, result.geometry!.location!.lng!);
-    selectedPoints.add(point);
+    // selectedPoints.add(point);
   }
 
   void handlePlaceSelection(
@@ -242,24 +234,32 @@ class WhereToGoController extends BaseController implements GetxService {
         Get.lazyPut(() => RideRepo(apiClient: Get.find()));
         // ignore: avoid_single_cascade_in_expression_statements
         Get.put(BaseMapController())
-          ..calculateDistance(_getPoints!.first, _getPoints!.last);
+          ..calculateDistance(
+            _getPoints!,
+          );
       }),
           () => BaseMapScreen(
                 points: _getPoints!,
               ))?.then((value) {
-        selectedPoints = [];
-        fromRouteController.text = '';
-        toRouteController.text = '';
-        extraPoints = [];
-
-        for (var element in extraTextEditingControllers) {
-          element.text = "";
-        }
-
-        update(["WhereToGoController"]);
+        _clearData();
       });
       //not needed
     }
+  }
+
+  void get clearData => _clearData();
+  void _clearData() {
+    source = null;
+    destination = null;
+    fromRouteController.text = '';
+    toRouteController.text = '';
+    extraPoints = [];
+
+    for (var element in extraTextEditingControllers) {
+      element.text = "";
+    }
+
+    update(["WhereToGoController"]);
   }
 
   selectPointByPress(PointType type, AddressData data) {
@@ -292,32 +292,10 @@ class WhereToGoController extends BaseController implements GetxService {
   }
 
   _addFromPoint(LatLng point) {
-    if (selectedPoints.isNotEmpty) {
-      if (selectedPoints.first == point) {
-        return;
-      } else {
-        selectedPoints.insert(0, point);
-      }
-    } else {
-      selectedPoints.insert(0, point);
-      selectedPoints.add(defLangLng);
-    }
+    source = point;
   }
 
   _addToPoint(LatLng point) {
-    if (selectedPoints.isNotEmpty) {
-      if (selectedPoints.length == 2) {
-        if (selectedPoints.last == point) {
-          return;
-        } else {
-          selectedPoints.add(point);
-        }
-      } else {
-        selectedPoints.add(point);
-      }
-    } else {
-      selectedPoints.insert(0, defLangLng);
-      selectedPoints.add(point);
-    }
+    destination = point;
   }
 }
