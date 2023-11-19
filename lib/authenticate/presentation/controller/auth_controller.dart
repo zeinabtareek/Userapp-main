@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/authenticate/data/models/base_model.dart';
 
 import '../../../bases/base_controller.dart';
 import '../../../helper/display_helper.dart';
@@ -14,6 +13,7 @@ import '../../../view/screens/dashboard/bottom_menu_controller.dart';
 import '../../../view/screens/dashboard/dashboard_screen.dart';
 import '../../../view/screens/html/html_viewer_screen.dart';
 import '../../config/config.dart';
+import '../../data/models/base_model.dart';
 import '../../data/models/base_phone_req_model.dart';
 import '../../data/models/req-model/change_password_req_model.dart';
 import '../../data/models/req-model/complete_data_req_model.dart';
@@ -694,7 +694,7 @@ class AuthController extends GetxController {
         if (await authCases.isContainsAuthUserData()) {
           final authData = await authCases.getAuthUserData();
           authCases.saveAuthUserData(
-            authData!.copyWith(password: resetConfirmPasswordController.text),
+            authData?.copyWith(password: resetConfirmPasswordController.text),
           );
         }
         Get.back();
