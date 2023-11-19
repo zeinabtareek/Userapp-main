@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/parcel_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/screens/parcel_screen.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_button.dart';
 
-import '../../../util/app_strings.dart';
-import '../../../util/app_style.dart';
-import '../../../util/images.dart';
-import '../../widgets/custom_app_bar.dart';
-import '../../widgets/custom_body.dart';
-import '../../widgets/custom_text_field.dart';
+import '../../../../util/app_strings.dart';
+import '../../../../util/app_style.dart';
+import '../../../../util/images.dart';
+import '../../../widgets/custom_app_bar.dart';
+import '../../../widgets/custom_body.dart';
+import '../../../widgets/custom_text_field.dart';
 
 class AddShipmenScreen extends StatelessWidget {
   const AddShipmenScreen({Key? key}) : super(key: key);

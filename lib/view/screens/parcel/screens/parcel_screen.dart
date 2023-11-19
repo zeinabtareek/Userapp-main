@@ -9,16 +9,16 @@ import 'package:ride_sharing_user_app/view/screens/parcel/widgets/custom_shipmen
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/delivery_parcel_option.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/route_widget.dart';
 
-import '../../../util/app_strings.dart';
-import '../../../util/app_style.dart';
-import '../../../util/dimensions.dart';
-import '../../../util/images.dart';
-import '../../../util/text_style.dart';
-import '../../widgets/custom_app_bar.dart';
-import '../../widgets/custom_body.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_drop_down.dart';
-import '../../widgets/custom_text_field.dart';
+import '../../../../util/app_strings.dart';
+import '../../../../util/app_style.dart';
+import '../../../../util/dimensions.dart';
+import '../../../../util/images.dart';
+import '../../../../util/text_style.dart';
+import '../../../widgets/custom_app_bar.dart';
+import '../../../widgets/custom_body.dart';
+import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_drop_down.dart';
+import '../../../widgets/custom_text_field.dart';
 
 class ParcelScreen extends StatelessWidget {
   const ParcelScreen({Key? key}) : super(key: key);

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/view/screens/map/map_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/status_package_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/screens/status_package_screen.dart';
 
 import 'custom_category_card.dart';
 

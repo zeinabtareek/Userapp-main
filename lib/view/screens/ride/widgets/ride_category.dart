@@ -9,7 +9,7 @@ import '../../../../util/text_style.dart';
 import '../../../widgets/animated_widget.dart';
 import '../../home/controller/category_controller.dart';
 import '../../home/model/categoty_model.dart';
-import '../../parcel/parcel_home_screen.dart';
+import '../../parcel/screens/parcel_home_screen.dart';
 import '../../request_screens/controller/base_map_controller.dart';
 import '../../where_to_go/where_to_go_screen.dart';
 import '../controller/ride_controller.dart';
@@ -214,19 +214,27 @@ class RideCategoryWidget extends StatelessWidget {
                       child: InkWell(
                         onTap: () {
                           rideController.selectedPackage(item);
-                          if (index != 2 && index != 3) {
+                          ///TODO Parcel Rank
+                            // if (index != 2 && index != 3) {
+                          if (  index != 3){
                             if (index == 0) {
                               rideController
                                   .updateSelectedRideType(RideType.car);
                               rideController.vehicleToggle();
                             } else if (index == 1) {
+                              ///TODO Parcel Rank
+                              // rideController
+                              //     .updateSelectedRideType(RideType.parcel);
                               rideController
-                                  .updateSelectedRideType(RideType.parcel);
+                                  .updateSelectedRideType(RideType.bike);
                               rideController.vehicleToggle();
                               null;
                             } else if (index == 2) {
+                              ///TODO Parcel Rank
+                              // rideController
+                              //     .updateSelectedRideType(RideType.bike);
                               rideController
-                                  .updateSelectedRideType(RideType.bike);
+                                  .updateSelectedRideType(RideType.parcel);
                               rideController.vehicleToggle();
                             } else if (index == 3) {
                               // rideController
@@ -268,7 +276,9 @@ class RideCategoryWidget extends StatelessWidget {
                                   Image.network(
                                     item.categoryImage!,
                                   ),
-                                  if (index == 2 || index == 3)
+                                  ///TODO Parcel Rank
+                                  if (  index == 3)
+                                  // if (index == 2 || index == 3)
                                     Positioned.fill(
                                       child: Container(
                                         decoration: BoxDecoration(

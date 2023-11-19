@@ -20,10 +20,11 @@ import '../where_to_go/controller/create_trip_controller.dart';
 class MapScreen extends StatelessWidget {
   final String fromScreen;
 
-    MapScreen({Key? key, required this.fromScreen}) : super(key: key);
+  MapScreen({Key? key, required this.fromScreen}) : super(key: key);
 
-  final controller= Get.put(CreateATripController());
-///zeinab you need to  fetch the created order here
+  final controller = Get.put(CreateATripController());
+
+  ///zeinab you need to  fetch the created order here
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,14 +33,13 @@ class MapScreen extends StatelessWidget {
         alignment: Alignment.topCenter,
         children: [
           CustomBody(
-            appBar: CustomAppBar(title: Strings.theDeliverymanNeedYou.tr,onBackPressed: (){
-
-              Get.find<RideController>()
-                  .resetControllerValue();
-              Get.back();
-
-
-              },),
+            appBar: CustomAppBar(
+              title: Strings.theDeliverymanNeedYou.tr,
+              onBackPressed: () {
+                Get.find<RideController>().resetControllerValue();
+                Get.back();
+              },
+            ),
             body: GetBuilder<MapController>(builder: (userMapController) {
               Completer<GoogleMapController> mapCompleter =
                   Completer<GoogleMapController>();
@@ -47,7 +47,6 @@ class MapScreen extends StatelessWidget {
                 mapCompleter.complete(userMapController.mapController);
               }
               return ExpandableBottomSheet(
-
                 background: Stack(
                   children: [
                     Animarker(
@@ -55,10 +54,8 @@ class MapScreen extends StatelessWidget {
                       rippleRadius: 0.2,
                       useRotation: true,
                       duration: const Duration(milliseconds: 2300),
-                      mapId:
-                          mapCompleter.future.then<int>((value) => value.mapId),
-                      //markers: {},
-                      shouldAnimateCamera: false,
+                      mapId:   mapCompleter.future.then<int>((value) => value.mapId),
+                       shouldAnimateCamera: false,
                       child: ClipRRect(
                         borderRadius:
                             BorderRadius.circular(Dimensions.radiusOverLarge),
@@ -95,9 +92,7 @@ class MapScreen extends StatelessWidget {
                 ),
                 persistentContentHeight:
                     userMapController.persistentContentHeight,
-                expandableContent:
-
-                fromScreen == Strings.parcel
+                expandableContent: fromScreen == Strings.parcel
                     ? Column(children: [
                         const ParcelExpendableBottomSheet(),
                         SizedBox(
@@ -106,16 +101,18 @@ class MapScreen extends StatelessWidget {
                       ])
                     : fromScreen == Strings.ride
                         ? Column(
-                               mainAxisAlignment: MainAxisAlignment.end,
-                      mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const RideExpendableBottomSheet(isGetPrice: false,),
-                            SizedBox(
-                              height: MediaQuery.of(context).viewInsets.bottom,
-                            ),
-                          ])
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                                const RideExpendableBottomSheet(
+                                  isGetPrice: false,
+                                ),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).viewInsets.bottom,
+                                ),
+                              ])
                         : const SizedBox(),
-
               );
             }),
           ),
