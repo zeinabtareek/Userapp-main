@@ -1,7 +1,7 @@
 name: ride_sharing_user_app
 description: A ride sharing Flutter project.
 #version: 2.0.0+1
-version: 1.0.0+4
+version: 1.0.0+5
 publish_to: "none"
 
 environment:
@@ -69,6 +69,7 @@ dependencies:
   top_snackbar_flutter: null
   url_launcher: ^6.1.14
   flutter_screenutil:
+  fwfh_text_style:
   sqflite: ^2.3.0
   upgrader: ^5.0.0
   gif_view:
