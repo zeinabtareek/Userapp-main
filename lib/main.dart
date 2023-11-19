@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -21,6 +22,7 @@ import 'package:ride_sharing_user_app/view/screens/invoice/screens/invoice_scree
 import 'package:ride_sharing_user_app/view/screens/message/message_list.dart';
 import 'package:ride_sharing_user_app/view/screens/message/message_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/n/test_polyline_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/request_screens/controller/base_map_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/request_screens/screens/base_map/base_map_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
 import 'package:ride_sharing_user_app/helper/responsive_helper.dart';
@@ -39,9 +41,11 @@ import 'package:ride_sharing_user_app/view/screens/wallet/wallet_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/wallet_withdraw_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/widget/payment_method_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/wallet/widget/use_voucher_code.dart';
+import 'package:ride_sharing_user_app/view/screens/where_to_go/model/distance_model.dart';
 import 'package:ride_sharing_user_app/view/screens/where_to_go/test_where_to_go.dart';
 import 'package:ride_sharing_user_app/view/widgets/animated_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -139,7 +143,6 @@ class MyApp extends StatelessWidget {
                               PointerDeviceKind.touch 
                             },
                           ),
-                          // theme:  darkTheme ,
                           theme: themeController.isDarkTheme
                               ? darkTheme
                               : lightTheme,
@@ -148,12 +151,22 @@ class MyApp extends StatelessWidget {
                           fallbackLocale: Locale(
                               AppConstants.languages[0].languageCode,
                               AppConstants.languages[0].countryCode),
-                          initialRoute: RouteHelper.getSplashRoute(),
-                          getPages: RouteHelper.routes,
+                         //initialRoute: RouteHelper.getSplashRoute(),
+                        //    getPages: RouteHelper.routes,
                           defaultTransition: Transition.topLevel,
                           transitionDuration: const Duration(milliseconds: 500),
 
-                     //    home:CoffeeShop(),
+                        home:DistanceWidget(
+                          source: LatLng(37.7749, -122.4194), // San Francisco
+                          destination: LatLng(34.0522, -118.2437), // Los Angeles
+                        ),
+
+
+
+
+
+
+
                          // home:PaymentScreen(),
                           // home:MapView(),
                           // ParcelHomeScreen(),
@@ -196,91 +209,6 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-class CoffeeShop extends StatefulWidget {
-  const CoffeeShop({super.key});
-
-  @override
-  State<CoffeeShop> createState() => _CoffeeShopState();
-}
-
-class _CoffeeShopState extends State<CoffeeShop> {
-  final paymentConfig = PaymentConfig(
-      publishableApiKey: 'pk_live_FCa4d7npfFhebunCGs7gyxS5uLsuxiBKT8SwKnP4',
-      // publishableApiKey: 'pk_test_r6eZg85QyduWZ7PNTHT56BFvZpxJgNJ2PqPMDoXA',
-      amount: 100, // SAR 1
-      description: 'order #1324',
-      metadata: {'size': '250g'},
-      creditCard: CreditCardConfig(saveCard: false, manual: false),
-      applePay: ApplePayConfig(
-          // merchantId: 'merchant.hooduser',
-          merchantId: 'merchant.mysr.fghurayri',
-          label: 'Hood User',
-          manual: true)
-  );
-
-  void onPaymentResult(result) {
-    if (result is PaymentResponse) {
-      showToast(context, result.status.name);
-      switch (result.status) {
-        case PaymentStatus.paid:
-        // handle success.
-          break;
-        case PaymentStatus.failed:
-        // handle failure.
-          break;
-        case PaymentStatus.authorized:
-        // handle authorized
-
-          break;
-        default:
-      }
-      return;
-    }
-
-    // handle other type of failures.
-    if (result is ApiError) {
-      print('result1 :::$result');
-    }
-    if (result is AuthError) {
-
-      print('result 2 :::$result');
-    }
-    if (result is ValidationError) {
-      print('result 3 :::${result.message}');
-    }
-    if (result is PaymentCanceledError) {
-      print('result 4 :::$result');
-    }
-  }
-
-  Widget build(BuildContext context) {
-    return  Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              color: Colors.red,
-              height: 200,
-              width: 300,
-
-              child: ApplePay(
-                config: paymentConfig,
-                onPaymentResult: onPaymentResult,
-              ),
-            ),
-            const Text("or"),
-            // CreditCard(
-            //   config: paymentConfig,
-            //   onPaymentResult: onPaymentResult,
-            // )
-          ],
-        ),
-      ),
-
-    );
-  }
-}
-
 
 void showToast(context, status) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -289,4 +217,79 @@ void showToast(context, status) {
       style: const TextStyle(fontSize: 20),
     ),
   ));
+}
+
+
+
+
+class DistanceWidget extends StatefulWidget {
+  final LatLng source;
+  final LatLng destination;
+
+  DistanceWidget({required this.source, required this.destination});
+
+  @override
+  _DistanceWidgetState createState() => _DistanceWidgetState();
+}
+
+class _DistanceWidgetState extends State<DistanceWidget> {
+  String distance = '';
+  String duration = '';
+final con=Get.put(BaseMapController());
+  @override
+  void initState() {
+    super.initState();
+    calculateDistance();
+  }
+
+  void calculateDistance() async {
+    DistanceModel model = await calculate(widget.source, widget.destination);
+    setState(() {
+      distance = model.rows?[0].elements?[0].distance?.text ?? '';
+      duration = model.rows?[0].elements?[0].duration?.text ?? '';
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text('Distance: $distance'),
+        Text('Duration: $duration'),
+        Text('distance.value: ${con.distance.value}'),
+        TextButton(onPressed: () async {
+          con.calculateDistance([LatLng(37.7749, -122.4194), // San Francisco
+             LatLng(34.0522, -118.2437),]);
+
+         var x= await con.calculateDuration([LatLng(37.7749, -122.4194), // San Francisco
+            LatLng(34.0522, -118.2437),]);
+
+         print('duartion $x');
+        }, child: Text('ddd')),
+      ],
+    );
+  }
+}
+
+calculate(LatLng source, LatLng destination) async {
+  DistanceModel model;
+  String url =
+      "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${source.latitude},${source.longitude}&destinations=${destination.latitude},${destination.longitude}&key=AIzaSyBGOAVKbeA0MiN6NfGm8Z0y5LtE7cgdCo4";
+  http.Response res = await http.get(
+    Uri.parse(url),
+  );
+  print(jsonDecode(res.body));
+  //   log("token is : ${SharedPref.getTokenValue()}");
+  if (res.statusCode == 200) {
+    // print(jsonDecode(res.body));
+    model = DistanceModel.fromJson(jsonDecode(res.body));
+    return model;
+  } else if (res.statusCode == 401) {
+    print(res.statusCode);
+  } else if (res.statusCode == 500 ||
+      res.statusCode == 501 ||
+      res.statusCode == 504 ||
+      res.statusCode == 502) {
+    print(res.statusCode);
+  }
 }

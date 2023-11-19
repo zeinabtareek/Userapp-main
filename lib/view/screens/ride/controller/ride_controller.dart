@@ -118,14 +118,14 @@ class RideController extends BaseController implements GetxService {
   //   return distance;
   // }
 
-  Future<double?> calculateDuration() async {
-    duration = await Get.find<CreateATripController>().calculateDuration(
-      const LatLng(37.7749, -122.4194), // San Francisco
-      const LatLng(
-          37.7753, -122.4199), // Replace with your actual point 1 coordinates
-    );
-    return duration;
-  }
+  // Future<double?> calculateDuration() async {
+  //   duration = await Get.find<CreateATripController>().calculateDuration(
+  //     const LatLng(37.7749, -122.4194), // San Francisco
+  //     const LatLng(
+  //         37.7753, -122.4199), // Replace with your actual point 1 coordinates
+  //   );
+  //   return duration;
+  // }
 
   void vehicleToggle() {
     isExpanded = !isExpanded;

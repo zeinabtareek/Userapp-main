@@ -12,6 +12,7 @@ import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'dart:convert' as convert;
 
 import '../../../../util/app_style.dart';
+import '../model/distance_model.dart';
 import '../model/search_suggestion_model.dart';
 
 class SearchServices {
@@ -92,55 +93,45 @@ class SearchServices {
     return "${placemark[0].name}, ${placemark[0].locality}, ${placemark[0].country}";
   }
 
-  static Future<dynamic> getDistance(LatLng origin, LatLng destination) async {
+  static Future<DistanceModel> getDistance(LatLng origin, LatLng destination) async {
+    DistanceModel model;
+
     String Url =
-        'https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${origin.latitude},${origin.longitude}&origins=${destination.latitude},${destination.longitude}&key=${AppConstants.mapKey}';
+        'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&destinations=${origin.latitude},${origin.longitude}&origins=${destination.latitude},${destination.longitude}&key=${AppConstants.mapKey}';
     try {
+      ///thisWorks JustFine
       var response = await http.get(Uri.parse(Url));
+      // if (response.statusCode == 200) {
+      //   var responseData = jsonDecode(response.body);
+      //   print(" responseData $responseData ");
+      //   final distanceValue =
+      //       responseData['rows'][0]['elements'][0]['distance']['value'];
+      //   var distanceInKm = distanceValue / 1000;
+      //   return distanceInKm;
+      // } else {
+      //   return null;
+      // }
       if (response.statusCode == 200) {
-        var responseData = jsonDecode(response.body);
-        print(" responseData $responseData ");
-        final distanceValue =
-            responseData['rows'][0]['elements'][0]['distance']['value'];
-        var distanceInKm = distanceValue / 1000;
-        return distanceInKm;
-      } else {
-        return null;
+        print(jsonDecode(response.body));
+        model = DistanceModel.fromJson(jsonDecode(response.body));
+        return model;
+      } else if (response.statusCode == 401) {
+        print(response.statusCode);
+        throw Error();
+      } else if (response.statusCode == 500 ||
+          response.statusCode == 501 ||
+          response.statusCode == 504 ||
+          response.statusCode == 502) {
+        print(response.statusCode);
+        throw Error();
+      }
+      else{
+        throw Error();
       }
     } catch (e) {
       print(e);
-      return null;
+      throw Exception();
+      // return null;
     }
   }
-  // static Future<dynamic> getDuration(LatLng origin, LatLng destination) async {
-  //   String Url = 'https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${origin.latitude},${origin.longitude}&origins=${destination.latitude},${destination.longitude}&key=AIzaSyA6NSYZTZaYj_Kgit9CAlNuCTvwLOoRSes';
-  //   try {
-  //     var response = await http.get(Uri.parse(Url));
-  //     if (response.statusCode == 200) {
-  //       var responseData = jsonDecode(response.body);
-  //       final duration = responseData['rows'][0]['elements'][0]['duration']['text'];
-  //
-  //       return duration;
-  //
-  //     } else {
-  //       return null;
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //     return null;
-  //   }
-  // }
-
-  // Future<Map<String, dynamic>>
-  static getDistanceAndDuration(LatLng origin, LatLng destination) async {
-    const apiUrl = 'https://maps.googleapis.com/maps/api/distancematrix/json';
-    final url =
-        '$apiUrl?origins=${origin.latitude},${origin.longitude}&destinations=${destination.latitude},${destination.longitude}&key=AIzaSyA6NSYZTZaYj_Kgit9CAlNuCTvwLOoRSes';
-    final response = await http.get(Uri.parse(url));
-    final data = json.decode(response.body);
-    final distance = data['rows'][0]['elements'][0]['distance']['text'];
-    final duration = data['rows'][0]['elements'][0]['duration']['text'];
-    return duration;
-    // return {'distance': distance, 'duration': duration};
-  }
-}
+ }
