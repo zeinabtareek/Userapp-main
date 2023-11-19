@@ -18,7 +18,7 @@ class SplashController extends BaseController {
     super.onInit();
     showDialogIfFoundUpdate();
     //   Future.delayed(const Duration(milliseconds: 2500), () async {
-  // await  route();
+    // await  route();
     // });
   }
   final gifController = GifController(
