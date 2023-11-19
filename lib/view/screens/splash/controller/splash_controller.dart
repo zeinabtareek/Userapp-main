@@ -29,8 +29,8 @@ class SplashController extends BaseController {
   );
  static _route()async{
     if (await sl<AuthCases>().isAuthenticated()) {
-      Get.to(() => const ParcelHomeScreen());
-      // Get.offAll(DashboardScreen());
+      // Get.to(() => const ParcelHomeScreen());
+      Get.offAll(DashboardScreen());
     } else {
       Get.offAllNamed(AuthScreenPath.loginScreenWithPassRouteName);
     }

@@ -202,7 +202,8 @@ class TValidator {
   }
 
   static saudiNumber({required String? value, required String? hint}) {
-    if (value == null || value.isEmpty) {
+    value = "+966$value";
+    if (value.isEmpty) {
       return "${mustWrite.tr} ${hint!}";
     } else if ((value.length != 13)) {
       return tTheSaudiNumberMustBeAtLeast9CharactersLong.tr;

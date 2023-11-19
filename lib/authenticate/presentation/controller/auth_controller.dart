@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/authenticate/data/models/base_model.dart';
 
 import '../../../bases/base_controller.dart';
 import '../../../helper/display_helper.dart';
@@ -67,7 +68,7 @@ class AuthController extends GetxController {
   }
 
   toCompleteDataScreen() {
-    Get.to(() => const CompleteDataScreen(), binding: authBinding);
+    Get.off(() => const CompleteDataScreen(), binding: authBinding);
   }
 
   void toSignInScreen() {
@@ -420,18 +421,29 @@ class AuthController extends GetxController {
         phoneCode: otpSelectCountry.value.dialCode!,
         phone: phoneControllerForOTPLogInScreen.text,
       );
-      final res = await authCases.sendOtp(req);
-      otpLoginIsLoading = false.obs;
-      checkStatus(res, onSuccess: (res) {
-        Get.to(
-          () => VerificationScreen(
-            countryCode: otpSelectCountry.value.dialCode.toString(),
-            number: phoneControllerForOTPLogInScreen.text,
-            otpState: OtpState.loginWithOtp,
-          ),
-          binding: authBinding,
-        );
-      });
+      final res = await authCases
+          .sendOtp(req)
+          .whenComplete(() => otpLoginIsLoading.value = false);
+
+      checkStatus<MsgModel>(
+        showErrorToast: true,
+        res,
+        onError: (error) {
+          // otpLoginIsLoading.value = false;
+
+          // showCustomSnackBar(error?.msg ?? "");
+        },
+        onSuccess: (res) {
+          Get.to(
+            () => VerificationScreen(
+              countryCode: otpSelectCountry.value.dialCode.toString(),
+              number: phoneControllerForOTPLogInScreen.text,
+              otpState: OtpState.loginWithOtp,
+            ),
+            binding: authBinding,
+          );
+        },
+      );
     }
   }
 
@@ -459,7 +471,7 @@ class AuthController extends GetxController {
 
   void initVerificationScreen() {
     otpCodeController = TextEditingController();
-    countdownTimer = countdownTimer.reactive.value;
+    countdownTimer?.cancel();
     waitingDuration = const Duration(seconds: 59);
     startTimer();
 

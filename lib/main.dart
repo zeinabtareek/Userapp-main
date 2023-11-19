@@ -46,6 +46,7 @@ import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:ride_sharing_user_app/view/widgets/custom_category_card.dart';
 import 'app_navigator_observer.dart';
 import 'authenticate/presentation/sign-up/sign_up_screen.dart';
 import 'helper/cache_helper.dart';
@@ -63,11 +64,11 @@ Future<void> main() async {
   }
   WidgetsFlutterBinding.ensureInitialized();
 
-  if(!Platform.isIOS) {
+  if (!Platform.isIOS) {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
   }
-    // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Map<String, Map<String, String>> languages = await di.init();
 
   await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
@@ -75,10 +76,11 @@ Future<void> main() async {
   await initializeDependencies();
   try {
     await dotenv.load(fileName: ".env");
-  }catch(e){
+  } catch (e) {
     print('the env file error id::: ${e.toString()}');
   }
   ChuckerFlutter.showOnRelease = true;
+
   runApp(MyApp(languages: languages));
 }
 
@@ -136,7 +138,7 @@ class MyApp extends StatelessWidget {
                               const MaterialScrollBehavior().copyWith(
                             dragDevices: {
                               PointerDeviceKind.mouse,
-                              PointerDeviceKind.touch 
+                              PointerDeviceKind.touch
                             },
                           ),
                           // theme:  darkTheme ,
@@ -153,8 +155,18 @@ class MyApp extends StatelessWidget {
                           defaultTransition: Transition.topLevel,
                           transitionDuration: const Duration(milliseconds: 500),
 
-                     //    home:CoffeeShop(),
-                         // home:PaymentScreen(),
+                            //  home:Scaffold(body: Center(child: CustomCategoryCard(
+                            //     width:
+                            //         MediaQuery.of(context).size.width / 3,
+                            //     height: 140,
+                            //     color: Colors.white,
+                            //     //  image:list[i]['image'],
+                            //     image:
+                            //         "https://arabchance.com/Hood-Backend-Dashboard/public/default/place_holder.jpg",
+                            //     title: 'title',
+                            //     isClicked: false,
+                            //   ),),),
+                          // home:PaymentScreen(),
                           // home:MapView(),
                           // ParcelHomeScreen(),
                           // AnimatedWidget(items:['2','3','4','5','6'] ,isVertical: false,widget:  itemTrackHistory(onTap: (){
@@ -215,21 +227,20 @@ class _CoffeeShopState extends State<CoffeeShop> {
           // merchantId: 'merchant.hooduser',
           merchantId: 'merchant.mysr.fghurayri',
           label: 'Hood User',
-          manual: true)
-  );
+          manual: true));
 
   void onPaymentResult(result) {
     if (result is PaymentResponse) {
       showToast(context, result.status.name);
       switch (result.status) {
         case PaymentStatus.paid:
-        // handle success.
+          // handle success.
           break;
         case PaymentStatus.failed:
-        // handle failure.
+          // handle failure.
           break;
         case PaymentStatus.authorized:
-        // handle authorized
+          // handle authorized
 
           break;
         default:
@@ -242,7 +253,6 @@ class _CoffeeShopState extends State<CoffeeShop> {
       print('result1 :::$result');
     }
     if (result is AuthError) {
-
       print('result 2 :::$result');
     }
     if (result is ValidationError) {
@@ -254,7 +264,7 @@ class _CoffeeShopState extends State<CoffeeShop> {
   }
 
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       body: Center(
         child: Column(
           children: [
@@ -262,7 +272,6 @@ class _CoffeeShopState extends State<CoffeeShop> {
               color: Colors.red,
               height: 200,
               width: 300,
-
               child: ApplePay(
                 config: paymentConfig,
                 onPaymentResult: onPaymentResult,
@@ -276,11 +285,9 @@ class _CoffeeShopState extends State<CoffeeShop> {
           ],
         ),
       ),
-
     );
   }
 }
-
 
 void showToast(context, status) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
