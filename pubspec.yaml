@@ -71,6 +71,12 @@ dependencies:
   flutter_screenutil:
   sqflite: ^2.3.0
   upgrader: ^5.0.0
+  gif_view:
+dev:
+  fluttercommunity:
+    plus:
+      packageinfo:
+
 
 dependency_overrides:
   #  modal_bottom_sheet:

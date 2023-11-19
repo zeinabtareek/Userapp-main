@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/controller/parcel_controller.dart';
@@ -44,7 +45,7 @@ class _ParcelExpendableBottomSheetState
                   child: Column(children: [
                     Container(
                       height: 7,
-                      width: 70,
+                      width: 70.w,
                       decoration: BoxDecoration(
                         color: Theme.of(context).highlightColor,
                         borderRadius: BorderRadius.circular(

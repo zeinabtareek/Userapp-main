@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/view/screens/home/model/categoty_model.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/repository/parcel_repo.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/status_package_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/screens/status_package_screen.dart';
 
+import '../../../../helper/display_helper.dart';
 import '../../../../util/app_strings.dart';
 import '../../map/map_screen.dart';
 import '../rate/check_rates_screen.dart';
@@ -22,22 +23,26 @@ enum ParcelDeliveryState {
   parcelComplete
 }
 
-class ParcelController extends GetxController
+class ParcelController
+    extends GetxController
+
     with GetSingleTickerProviderStateMixin
-    implements GetxService {
+    // implements GetxService
+{
   final ParcelRepo parcelRepo;
-  final isBtnTapped=false.obs;
-  final isSelected=1.obs;
+  final isBtnTapped = false.obs;
+  final isSelected = 1.obs;
+
   ParcelController({required this.parcelRepo});
 
   var currentParcelState = ParcelDeliveryState.initial;
   late TabController tabController;
-  int counter=1;
+  int counter = 1;
+
   @override
   void onInit() async {
     super.onInit();
-    currentParcelState ==
-        ParcelDeliveryState.initial;
+    currentParcelState == ParcelDeliveryState.initial;
     tabController = TabController(length: 2, vsync: this);
     parcelTypeController.text =
         parcelCategoryList[selectedParcelCategory].categoryTitle.toString().tr;
@@ -48,16 +53,26 @@ class ParcelController extends GetxController
   }
 
   List optionsList = [
- {'image': Images.statusIcon,  'title': Strings.pickUp.tr,'onTap':    MapScreen(fromScreen: Strings.parcel,)},
- {'image': Images.deliveryTruck, 'title': Strings.statusOrder.tr,'onTap':  const StatusPackageScreen() }
+    {
+      'image': Images.statusIcon,
+      'title': Strings.pickUp.tr,
+      'onTap': MapScreen(
+        fromScreen: Strings.parcel,
+      )
+    },
+    {
+      'image': Images.deliveryTruck,
+      'title': Strings.statusOrder.tr,
+      'onTap': const StatusPackageScreen()
+    }
   ];
 
+  List<Widget> navigationOptions = [
+    const CheckRatesScreen(),
+    MapScreen(fromScreen: 'ride'),
+  ];
 
-  List<Widget> navigationOptions=[
- const CheckRatesScreen(),
-   MapScreen(fromScreen: 'ride'),
-  ]
-;  List<CategoryModel> parcelCategoryList = [
+  List<CategoryModel> parcelCategoryList = [
     CategoryModel(
       categoryImage: Images.parcelGift,
       categoryTitle: "gift",
@@ -139,18 +154,45 @@ class ParcelController extends GetxController
     update();
   }
 
-  List kilosList=['1kg','1kg','1kg','1kg','1kg','1kg',];
-  add(){
+  List kilosList = [
+    '1kg',
+    '1kg',
+    '1kg',
+    '1kg',
+    '1kg',
+    '1kg',
+  ];
+
+  add() {
     counter++;
     update();
-  }  minimize(){
-    counter>1?
-    counter--:counter=1;
+  }
+
+  minimize() {
+    counter > 1 ? counter-- : counter = 1;
     update();
   }
 
   void isTapped(int index) {
     isSelected.value = index;
     update();
+  }
+
+  checkDataEmpty() {
+    if (senderContactController.text.isEmpty) {
+      showCustomSnackBar('enter_sender_contact_number'.tr);
+    } else if (senderNameController.text.isEmpty) {
+      showCustomSnackBar('enter_sender_name'.tr);
+    } else if (senderNameController.text.isEmpty) {
+      showCustomSnackBar('enter_sender_address'.tr);
+    } else if (receiverContactController.text.isEmpty) {
+      showCustomSnackBar('enter_receiver_contact_number'.tr);
+    } else if (receiverNameController.text.isEmpty) {
+      showCustomSnackBar('enter_receiver_name'.tr);
+    } else if (receiverNameController.text.isEmpty) {
+      showCustomSnackBar('enter_receiver_address'.tr);
+    } else {
+      updateParcelState(ParcelDeliveryState.parcelInfoDetails);
+    }
   }
 }

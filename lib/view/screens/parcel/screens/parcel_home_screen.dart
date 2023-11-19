@@ -4,22 +4,23 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/view/screens/map/map_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/parcel_notification_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/parcel_tracking.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/status_package_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/screens/parcel_notification_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/screens/parcel_tracking.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/screens/status_package_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/custom_oval.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/custom_parcel_body.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/track_componants/track_history_list.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_text_field.dart';
-import '../../../util/app_strings.dart';
-import '../../../util/app_style.dart';
-import '../../../util/images.dart';
-import '../../widgets/animated_widget.dart';
-import '../../widgets/custom_category_card.dart';
-import '../../widgets/custom_float_action_btn.dart';
-import '../profile/profile_screen/profile_screen.dart';
-import 'rate/check_rates_screen.dart';
-import 'controller/parcel_controller.dart';
+import '../../../../util/app_strings.dart';
+import '../../../../util/app_style.dart';
+import '../../../../util/images.dart';
+import '../../../widgets/animated_widget.dart';
+import '../../../widgets/custom_category_card.dart';
+import '../../../widgets/custom_float_action_btn.dart';
+import '../../profile/profile_screen/profile_screen.dart';
+import '../../request_screens/controller/base_map_controller.dart';
+import '../rate/check_rates_screen.dart';
+import '../controller/parcel_controller.dart';
 
 // class ParcelScreen extends StatelessWidget {
 //   const ParcelScreen({Key? key}) : super(key: key);
@@ -273,7 +274,10 @@ class ParcelHomeScreen extends StatelessWidget {
         floatingActionButton: customFloatActionButton(
             image: Images.doc,
             onPressed: () {
-              Get.to(StatusPackageScreen());
+
+              Get.to(StatusPackageScreen(),binding: BindingsBuilder(() {
+              //  Get.lazyPut(()=>BaseMapController());
+              }));
             }));
   }
 }

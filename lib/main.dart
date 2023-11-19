@@ -21,15 +21,6 @@ import 'package:ride_sharing_user_app/view/screens/invoice/screens/invoice_scree
 import 'package:ride_sharing_user_app/view/screens/message/message_list.dart';
 import 'package:ride_sharing_user_app/view/screens/message/message_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/n/test_polyline_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/onboard/onboarding_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/onboarding/onboarding.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/add_shipment.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/order_details_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/parcel_home_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/parcel_notification_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/parcel_screen.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/widgets/item_track_history_card.dart';
-import 'package:ride_sharing_user_app/view/screens/payment/payment_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/request_screens/screens/base_map/base_map_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
 import 'package:ride_sharing_user_app/helper/responsive_helper.dart';

@@ -6,15 +6,15 @@ import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/custom_oval.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/route_widget.dart';
 
-import '../../../util/app_strings.dart';
-import '../../../util/app_style.dart';
-import '../../../util/images.dart';
-import '../../widgets/custom_app_bar.dart';
-import '../../widgets/custom_body.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_image.dart';
-import '../home/widgets/home_map_view.dart';
-import '../ride/widgets/rider_details_widget.dart';
+import '../../../../util/app_strings.dart';
+import '../../../../util/app_style.dart';
+import '../../../../util/images.dart';
+import '../../../widgets/custom_app_bar.dart';
+import '../../../widgets/custom_body.dart';
+import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_image.dart';
+import '../../home/widgets/home_map_view.dart';
+import '../../ride/widgets/rider_details_widget.dart';
 
 class LiveTrackingScreenForParcel extends StatelessWidget {
   const LiveTrackingScreenForParcel({super.key});

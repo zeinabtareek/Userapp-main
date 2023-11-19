@@ -55,9 +55,12 @@ class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget>
                   SizedBox(height: 30, child: Tab(text: 'sender_info'.tr)),
                   SizedBox(height: 30, child: Tab(text: 'receiver_info'.tr)),
                 ],
-                onTap: (index) {
-                  parcelController.updateTabControllerIndex(index);
-                },
+                onTap:
+
+                    (index) {
+                  print(index);
+                   parcelController.updateTabControllerIndex(index);
+                 }
               ),
             ),
             parcelController.tabController.index == 0
@@ -79,7 +82,7 @@ class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget>
                   } else {
                     parcelController.updateTabControllerIndex(1);
                   }
-                } else {
+                } else if (parcelController.tabController.index == 1) {
                   if (parcelController.receiverContactController.text.isEmpty) {
                     showCustomSnackBar('enter_receiver_contact_number'.tr);
                   } else if (parcelController
@@ -88,11 +91,17 @@ class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget>
                   } else if (parcelController
                       .receiverNameController.text.isEmpty) {
                     showCustomSnackBar('enter_receiver_address'.tr);
-                  } else {
-                    parcelController.updateParcelState(
-                        ParcelDeliveryState.parcelInfoDetails);
+                  }
+                  else {
+                    parcelController. checkDataEmpty();
+                    // parcelController.updateParcelState(
+                    //     ParcelDeliveryState.parcelInfoDetails);
                   }
                 }
+                // else{
+                //   parcelController. checkDataEmpty();
+                //
+                // }
                 Get.find<MapController>().notifyMapController();
               },
             ),

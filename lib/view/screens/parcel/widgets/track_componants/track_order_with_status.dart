@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../parcel_screen.dart';
+import '../../screens/parcel_screen.dart';
 import '../item_track_history_card.dart';
 import 'order_status_widget.dart';
 
