@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
 
 class CustomDropDown<T> extends StatefulWidget {
@@ -19,10 +20,9 @@ class CustomDropDown<T> extends StatefulWidget {
   const CustomDropDown(
       {required this.items,
 
-        ///new
-        required this.initialSelectedValue,
-
-        required this.onChanged,
+      ///new
+      required this.initialSelectedValue,
+      required this.onChanged,
       this.rowWidget,
       this.hintText = "",
       this.borderRadius = 0,
@@ -50,7 +50,6 @@ class CustomDropDownState extends State<CustomDropDown>
 
   @override
   void initState() {
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         setState(() {
@@ -68,21 +67,31 @@ class CustomDropDownState extends State<CustomDropDown>
           }
         }
       }
+
       ///new
       final selectedItem = findItem(widget.initialSelectedValue!);
       if (selectedItem != null) {
         _isAnyItemSelected = true;
         _itemSelected = selectedItem;
       }
-        });
+    });
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
+
   ///new
   Widget? findItem(String value) {
-    return widget.items
-        .firstWhere((item) => item.value == value, ).child;
+    if (mounted) {
+      return widget.items
+          .firstWhereOrNull(
+            (item) => item.value == value,
+          )
+          ?.child;
+    } else {
+      return null;
+    }
   }
+
   void _addOverlay() {
     if (mounted) {
       setState(() {
@@ -119,77 +128,88 @@ class CustomDropDownState extends State<CustomDropDown>
     return OverlayEntry(
         maintainState: false,
         builder: (context) => Align(
-          alignment: Alignment.center,
-          child: CompositedTransformFollower(
-            link: _layerLink,
-            showWhenUnlinked: false,
-            offset: dropDownOffset,
-            child: SizedBox(
-              height: widget.maxListHeight,
-              width: size.width,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: _isReverse
-                      ? MainAxisAlignment.end
-                      : MainAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: Container(
-                        constraints: BoxConstraints(
-                            maxHeight: widget.maxListHeight,
-                            maxWidth: size.width),
-                        decoration: BoxDecoration(
-                            color: Theme.of(context).cardColor,
-                            borderRadius: BorderRadius.circular(12),
-                          boxShadow: shadow,
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(widget.borderRadius),
-                          ),
-                          child: Material(
-                            elevation: 0,
-                            color: Theme.of(context).primaryColor.withOpacity(0.03),
-                            shadowColor: Colors.grey,
-                            child: ListView(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              children: widget.items
-                                  .map((item) => GestureDetector(
-                                child: Column(
-                                  children: [
-                                    const SizedBox(height: 7,),
-                                    item.child,
-                                    const SizedBox(height: 7,),
-                                    Container(
-                                      height: 1,width: 100,color: Theme.of(context).primaryColor.withOpacity(0.2),)
-                                  ],
+              alignment: Alignment.center,
+              child: CompositedTransformFollower(
+                link: _layerLink,
+                showWhenUnlinked: false,
+                offset: dropDownOffset,
+                child: SizedBox(
+                  height: widget.maxListHeight,
+                  width: size.width,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: _isReverse
+                          ? MainAxisAlignment.end
+                          : MainAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Container(
+                            constraints: BoxConstraints(
+                                maxHeight: widget.maxListHeight,
+                                maxWidth: size.width),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).cardColor,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: shadow,
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(widget.borderRadius),
+                              ),
+                              child: Material(
+                                elevation: 0,
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.03),
+                                shadowColor: Colors.grey,
+                                child: ListView(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  children: widget.items
+                                      .map((item) => GestureDetector(
+                                            child: Column(
+                                              children: [
+                                                const SizedBox(
+                                                  height: 7,
+                                                ),
+                                                item.child,
+                                                const SizedBox(
+                                                  height: 7,
+                                                ),
+                                                Container(
+                                                  height: 1,
+                                                  width: 100,
+                                                  color: Theme.of(context)
+                                                      .primaryColor
+                                                      .withOpacity(0.2),
+                                                )
+                                              ],
+                                            ),
+                                            onTap: () {
+                                              if (mounted) {
+                                                setState(() {
+                                                  _isAnyItemSelected = true;
+                                                  _itemSelected = item.child;
+                                                  _removeOverlay();
+                                                  widget.onChanged(item.value);
+                                                });
+                                              }
+                                            },
+                                          ))
+                                      .toList(),
                                 ),
-                                onTap: () {
-                                  if (mounted) {
-                                    setState(() {
-                                      _isAnyItemSelected = true;
-                                      _itemSelected = item.child;
-                                      _removeOverlay();
-                                      widget.onChanged(item.value);
-                                    });
-                                  }
-                                },
-                              ))
-                                  .toList(),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-        ));
+            ));
   }
 
   Offset getOffset() {
@@ -220,7 +240,7 @@ class CustomDropDownState extends State<CustomDropDown>
 
   @override
   Widget build(BuildContext context) {
-    Widget?  itemSelected2=_itemSelected;
+    Widget? itemSelected2 = _itemSelected;
     return CompositedTransformTarget(
       link: _layerLink,
       child: GestureDetector(

@@ -95,7 +95,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
     if (GetPlatform.isWeb) {
@@ -155,17 +155,17 @@ class MyApp extends StatelessWidget {
                           defaultTransition: Transition.topLevel,
                           transitionDuration: const Duration(milliseconds: 500),
 
-                            //  home:Scaffold(body: Center(child: CustomCategoryCard(
-                            //     width:
-                            //         MediaQuery.of(context).size.width / 3,
-                            //     height: 140,
-                            //     color: Colors.white,
-                            //     //  image:list[i]['image'],
-                            //     image:
-                            //         "https://arabchance.com/Hood-Backend-Dashboard/public/default/place_holder.jpg",
-                            //     title: 'title',
-                            //     isClicked: false,
-                            //   ),),),
+                          //  home:Scaffold(body: Center(child: CustomCategoryCard(
+                          //     width:
+                          //         MediaQuery.of(context).size.width / 3,
+                          //     height: 140,
+                          //     color: Colors.white,
+                          //     //  image:list[i]['image'],
+                          //     image:
+                          //         "https://arabchance.com/Hood-Backend-Dashboard/public/default/place_holder.jpg",
+                          //     title: 'title',
+                          //     isClicked: false,
+                          //   ),),),
                           // home:PaymentScreen(),
                           // home:MapView(),
                           // ParcelHomeScreen(),
@@ -263,6 +263,7 @@ class _CoffeeShopState extends State<CoffeeShop> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(

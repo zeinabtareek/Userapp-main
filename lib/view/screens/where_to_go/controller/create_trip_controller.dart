@@ -33,7 +33,7 @@ class CreateATripController extends BaseMapController {
   String? get vehicleTypeId =>
       Get.find<RideController>().selectedSubPackage.value?.id;
 
-  String? get paymentType => Get.find<RideController>().initialSelectItem;
+  String? get paymentType => Get.find<RideController>().initialSelectItem.value;
 
   Future<List<ExtraRoutes>> extraRoutes(List<LatLng> allTripPoint) async {
     var to = allTripPoint.removeLast();

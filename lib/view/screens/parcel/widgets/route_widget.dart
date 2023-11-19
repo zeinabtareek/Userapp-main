@@ -25,118 +25,147 @@ class RouteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ParcelController>(builder: (parcelController) {
-      return GetBuilder<WhereToGoController>(
-          init: WhereToGoController(),
-          builder: (whereToGoController) {
-            return Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: Dimensions.paddingSizeExtraSmall),
+    if (isParcel == true) {
+      return GetBuilder<ParcelController>(builder: (parcelController) {
+        return  _Child(
+          colorText: colorText,
+          isParcel: true,
+          showTotalDistance: showTotalDistance,
+        );
+      });
+    } else {
+      return  _Child(
+                  colorText: colorText,
+        isParcel: true,
+        showTotalDistance: showTotalDistance,
+      );
+    }
+  }
+}
+
+class _Child extends StatelessWidget {
+    bool? showTotalDistance = true;
+  bool? isParcel = false;
+  Color? colorText;
+   _Child({
+        super.key,
+    this.showTotalDistance,
+    this.isParcel,
+    this.colorText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<WhereToGoController>(
+        init: WhereToGoController(),
+        builder: (whereToGoController) {
+          return Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: Dimensions.paddingSizeExtraSmall),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                            width: Dimensions.iconSizeMedium,
+                            child: Image.asset(isParcel == true
+                                ? Images.package2
+                                : Images.currentLocation)),
+                        SizedBox(
+                            height: 45,
+                            width: 10,
+                            child: colorText == null
+                                ? CustomDivider(
+                                    height: 2,
+                                    dashWidth: 1,
+                                    axis: Axis.vertical,
+                                    color: Theme.of(context).primaryColor,
+                                  )
+                                : CustomDivider(
+                                    height: 2,
+                                    dashWidth: 1,
+                                    axis: Axis.vertical,
+                                    color: colorText ?? Colors.black,
+                                  )),
+                        SizedBox(
+                            width: Dimensions.iconSizeMedium,
+                            child: Image.asset(Images.activityDirection,
+                                color: colorText ??
+                                    Theme.of(context).primaryColor)),
+                      ],
+                    ),
+                  ),
+                  Expanded(
                       child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        whereToGoController.fromRouteController.text,
+                        // parcelController.senderAddressController.text,
+                        style: textRegular.copyWith(
+                            color: colorText ?? Colors.black),
+                      ),
+                      const SizedBox(height: Dimensions.paddingSizeSmall),
+                      ...whereToGoController.extraTextEditingControllers
+                          .map((c) {
+                        return const SizedBox(
+                            height: Dimensions.paddingSizeSmall);
+                      }).toList(),
+                      Text(
+                        'to'.tr,
+                        style: textRegular.copyWith(
+                            color: colorText?.withOpacity(.5) ??
+                                Theme.of(context).primaryColor),
+                      ),
+                      const SizedBox(height: Dimensions.paddingSizeSmall),
+                      Text(
+                        whereToGoController.toRouteController.text,
+                        // parcelController.receiverAddressController.text,
+                        style: textRegular.copyWith(
+                            color: colorText ?? Colors.black),
+                      ),
+                    ],
+                  )),
+                ],
+              ),
+              const SizedBox(
+                height: Dimensions.paddingSizeDefault,
+              ),
+              showTotalDistance != false
+                  ? Padding(
+                      padding: const EdgeInsets.all(
+                          Dimensions.paddingSizeExtraSmall),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(
-                              width: Dimensions.iconSizeMedium,
-                              child: Image.asset(isParcel == true
-                                  ? Images.package2
-                                  : Images.currentLocation)),
-                          SizedBox(
-                              height: 45,
-                              width: 10,
-                              child: colorText == null
-                                  ? CustomDivider(
-                                      height: 2,
-                                      dashWidth: 1,
-                                      axis: Axis.vertical,
-                                      color: Theme.of(context).primaryColor,
-                                    )
-                                  : CustomDivider(
-                                      height: 2,
-                                      dashWidth: 1,
-                                      axis: Axis.vertical,
-                                      color: colorText ?? Colors.black,
-                                    )),
-                          SizedBox(
-                              width: Dimensions.iconSizeMedium,
-                              child: Image.asset(Images.activityDirection,
-                                  color: colorText ??
-                                      Theme.of(context).primaryColor)),
+                          Row(
+                            children: [
+                              SizedBox(
+                                  width: Dimensions.iconSizeMedium,
+                                  child:
+                                      Image.asset(Images.distanceCalculated)),
+                              const SizedBox(
+                                  width: Dimensions.paddingSizeSmall),
+                              Text(
+                                "total_distance".tr,
+                                style: textRegular.copyWith(),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(width: Dimensions.paddingSizeSmall),
+
+                          Obx(() => Text(
+                              '${Get.find<BaseMapController>().distance.value == null ? "Waiting" : "${Get.find<BaseMapController>().distance.value} " 'km'.tr} ')),
+                          // Text('${whereToGoController.duration} duration'),
                         ],
                       ),
-                    ),
-                    Expanded(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          whereToGoController.fromRouteController.text,
-                          // parcelController.senderAddressController.text,
-                          style: textRegular.copyWith(
-                              color: colorText ?? Colors.black),
-                        ),
-                        const SizedBox(height: Dimensions.paddingSizeSmall),
-                        ...whereToGoController.extraTextEditingControllers
-                            .map((c) {
-                          return const SizedBox(
-                              height: Dimensions.paddingSizeSmall);
-                        }).toList(),
-                        Text(
-                          'to'.tr,
-                          style: textRegular.copyWith(
-                              color: colorText?.withOpacity(.5) ??
-                                  Theme.of(context).primaryColor),
-                        ),
-                        const SizedBox(height: Dimensions.paddingSizeSmall),
-                        Text(
-                          whereToGoController.toRouteController.text,
-                          // parcelController.receiverAddressController.text,
-                          style: textRegular.copyWith(
-                              color: colorText ?? Colors.black),
-                        ),
-                      ],
-                    )),
-                  ],
-                ),
-                const SizedBox(
-                  height: Dimensions.paddingSizeDefault,
-                ),
-                showTotalDistance != false
-                    ? Padding(
-                        padding: const EdgeInsets.all(
-                            Dimensions.paddingSizeExtraSmall),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                    width: Dimensions.iconSizeMedium,
-                                    child:
-                                        Image.asset(Images.distanceCalculated)),
-                                const SizedBox(
-                                    width: Dimensions.paddingSizeSmall),
-                                Text(
-                                  "total_distance".tr,
-                                  style: textRegular.copyWith(),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(width: Dimensions.paddingSizeSmall),
-
-                            Obx(() => Text(
-                                '${Get.find<BaseMapController>().distance.value == null ? "Waiting" : "${Get.find<BaseMapController>().distance.value} " 'km'.tr} ')),
-                            // Text('${whereToGoController.duration} duration'),
-                          ],
-                        ),
-                      )
-                    : const SizedBox()
-              ],
-            );
-          });
-    });
+                    )
+                  : const SizedBox()
+            ],
+          );
+        });
   }
 }
