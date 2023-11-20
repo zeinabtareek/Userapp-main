@@ -26,11 +26,11 @@ class _CustomCalenderState extends State<CustomCalender> {
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(() {
       if (args.value is PickerDateRange) {
-        _range = '${DateFormat('yyyy-MM-d','en').format(args.value.startDate)}/'
-            '${DateFormat('yyyy-MM-d','en').format(args.value.endDate ?? args.value.startDate)}';
+        _range =
+            '${DateFormat('yyyy-MM-d', 'en').format(args.value.startDate)}/'
+            '${DateFormat('yyyy-MM-d', 'en').format(args.value.endDate ?? args.value.startDate)}';
       } else if (args.value is DateTime) {
-      } else if (args.value is List<DateTime>) {
-      } else {}
+      } else if (args.value is List<DateTime>) {}
     });
   }
 
@@ -73,6 +73,8 @@ class _CustomCalenderState extends State<CustomCalender> {
                     onSubmit: widget.onChanged,
                     todayHighlightColor: Theme.of(context).primaryColor,
                     selectionMode: DateRangePickerSelectionMode.range,
+                    maxDate: DateTime.now(),
+                    minDate: DateTime(2020),
                     rangeSelectionColor:
                         Theme.of(context).primaryColor.withOpacity(.25),
                     view: DateRangePickerView.month,
@@ -82,9 +84,6 @@ class _CustomCalenderState extends State<CustomCalender> {
                     startRangeSelectionColor: Theme.of(context).primaryColor,
                     endRangeSelectionColor:
                         Theme.of(context).colorScheme.onTertiaryContainer,
-                    // initialSelectedRange: PickerDateRange(
-                    //     DateTime.now().subtract(const Duration(days: 2)),
-                    //     DateTime.now().add(const Duration(days: 2))),
                     onSelectionChanged: _onSelectionChanged,
                   ),
                 ),

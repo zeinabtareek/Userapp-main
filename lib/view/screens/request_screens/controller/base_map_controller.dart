@@ -195,7 +195,7 @@ else{
           points[i],
           points[i + 1],
         );
-
+      duration = distanceModel.rows?[0].elements?[0].duration?.text ?? '';
         double distance = distanceModel.rows?[0].elements?[0].distance?.value?.toDouble() ?? 0.0;
          result += distance;
       }

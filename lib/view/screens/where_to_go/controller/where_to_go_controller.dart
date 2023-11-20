@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:ride_sharing_user_app/view/screens/request_screens/controller/base_map_controller.dart';
 
 import '../../../../bases/base_controller.dart';
 import '../../../../enum/view_state.dart';
 import '../../../../helper/location_permission.dart';
 import '../../../../util/ui/overlay_helper.dart';
 import '../../choose_from_map/choose_from_map_screen.dart';
+import '../../request_screens/controller/base_map_controller.dart';
 import '../../request_screens/screens/base_map/base_map_screen.dart';
 import '../../ride/controller/ride_controller.dart';
 import '../../ride/model/address_model.dart';
@@ -16,7 +16,6 @@ import '../../ride/repository/ride_repo.dart';
 import '../model/search_suggestion_model.dart';
 import '../model/suggested_route_model.dart';
 import '../repository/search_service.dart';
-import 'create_trip_controller.dart';
 
 enum PointType {
   from,
@@ -107,19 +106,6 @@ class WhereToGoController extends BaseController implements GetxService {
   void setAddEntrance() {
     addEntrance = !addEntrance;
     update(["WhereToGoController"]);
-  }
-
-  Future<double?> calculateDistance() async {
-    if (_getPoints == null) {
-      return null;
-    } else {
-      var distance = await Get.find<CreateATripController>().calculateDistance(
-        _getPoints!,
-        // TODO:  recheck
-        // Replace with your actual point 1 coordinates
-      );
-      return distance;
-    }
   }
 
 //   Future<double?> calculateDuration() async {
