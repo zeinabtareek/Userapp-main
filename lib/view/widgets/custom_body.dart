@@ -21,7 +21,7 @@ class CustomBody extends StatelessWidget {
                   topRight: Radius.circular(25),
                   topLeft: Radius.circular(25),
                 ),
-                color: Theme.of(context).cardColor
+               color: Theme.of(context).cardColor
             ),
             child: body,
           ),

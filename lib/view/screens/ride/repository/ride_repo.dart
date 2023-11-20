@@ -19,7 +19,7 @@ class RideRepo {
 
   final dio = DioUtilNew.dio;
   ///Apis getPrice
-  getPrice({promoCode ,distance ,vehicleTypeId,packageId})async{
+  Future <OrderPriceData>getPrice({promoCode ,distance ,vehicleTypeId,packageId})async{
        try {
         final response = await dio!.post(AppConstants.getOrderPrice,
         data: {

@@ -471,6 +471,8 @@
   "your_selected_car_type": "your selected car type is ",
   "pay_with_apple_pay": "Pay your ride using Apple pay payment method ...",
   "click_on_btn_to_finish_your_billing": "Click the button to finalize your payment",
-  "from": "From"
+  "from": "From",
+  "your_balance_wallet_not_enough": "Sorry, your wallet balance is not enough to pay for the ride."
+
 
 }

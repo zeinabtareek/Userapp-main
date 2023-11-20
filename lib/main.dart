@@ -147,24 +147,22 @@ class MyApp extends StatelessWidget {
                               ? darkTheme
                               : lightTheme,
                           locale: localizeController.locale,
+                          darkTheme: darkTheme,
+                          themeMode: ThemeMode.light,
+
                           translations: Messages(languages: languages),
                           fallbackLocale: Locale(
                               AppConstants.languages[0].languageCode,
                               AppConstants.languages[0].countryCode),
-                         //initialRoute: RouteHelper.getSplashRoute(),
-                        //    getPages: RouteHelper.routes,
+                         initialRoute: RouteHelper.getSplashRoute(),
+                          getPages: RouteHelper.routes,
                           defaultTransition: Transition.topLevel,
                           transitionDuration: const Duration(milliseconds: 500),
 
-                        home:DistanceWidget(
-                          source: LatLng(37.7749, -122.4194), // San Francisco
-                          destination: LatLng(34.0522, -118.2437), // Los Angeles
-                        ),
-
-
-
-
-
+                        // home:DistanceWidget(
+                        //   source: LatLng(37.7749, -122.4194), // San Francisco
+                        //   destination: LatLng(34.0522, -118.2437), // Los Angeles
+                        // ),
 
 
                          // home:PaymentScreen(),

@@ -111,11 +111,18 @@ class BaseMapController extends BaseController with SocketIoMixin {
   }
 
   changeState(int value) {
-    // key.currentState!.expand();
+
+if(key.currentState!=null){
     key.currentState?.contract();
     expansionStatus.value = key.currentState!.expansionStatus;
     widgetNumber.value = value;
-    update();
+
+  }
+else{
+  key = GlobalKey<ExpandableBottomSheetState>();
+
+}
+  update();
   }
 
   void listonOnNotificationSocketAfterAccept() async {
