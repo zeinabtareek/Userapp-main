@@ -2,6 +2,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -31,7 +32,7 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
   PaginationController(this.useCase, {this.refreshControllerr});
 
   @override
-  void onInit() {
+    onInit() async{
     change(PaginationBlocInitial(), status: RxStatus.success());
     _handler = PullToRefreshHandler();
     _refreshController = refreshControllerr ?? _handler?.refreshController;
@@ -65,17 +66,20 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
       duration: const Duration(milliseconds: 80),
       curve: Curves.bounceIn,
     );
+    // SchedulerBinding.instance.addPostFrameCallback((_) {
+    //   scrollController.jumpTo(scrollController.position.maxScrollExtent);
+    // });
+
   }
 
-  onRefreshData({Function()? onLoadSucses}) async {
-    // if (
-    //   !canRefresh
 
-    // ) {
-    //   _handler?.refreshCompleted();
-    // } else {
+
+  onRefreshData({Function()? onLoadSucses}) async {
+
     change(PaginationLoading(), status: RxStatus.success());
-    // emit(PaginationLoading());
+
+
+
     _restData();
     await _handelRes(
       onSusses: () {
@@ -83,6 +87,8 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
         // onLoadSucses?.call();
         change(PaginationLoaded<Entity>(items), status: RxStatus.success());
         // emit(PaginationLoaded<Entity>(items));
+
+      //  moveScrollToMaxScrollExtent();
       },
       onError: (error) {
         _handler?.refreshFailed();
@@ -112,6 +118,8 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
         );
       },
     );
+
+
     update();
   }
   // }

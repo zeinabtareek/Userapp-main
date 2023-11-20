@@ -20,16 +20,18 @@ class SearchBottom extends StatelessWidget {
         margin: K.fixedPadding0,
         padding: K.fixedPadding0,
         decoration: BoxDecoration(
-            color: Colors.white,
+            color:    Theme.of(context).scaffoldBackgroundColor,
+            // color: Colors.white,
             borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
+            boxShadow:   [
               BoxShadow(
-                color: Colors.grey,
+                color:Theme.of(context).hintColor,
                 blurRadius: 12,
               )
             ]),
         child: Material(
-          color: Colors.white,
+         // color: Colors.white,
+          color:  Theme.of(context).scaffoldBackgroundColor,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -131,7 +133,7 @@ class SearchBottom extends StatelessWidget {
   getBoxShadow() {
     return BoxDecoration(
         borderRadius: BorderRadius.circular(50.0),
-        color: Colors.white,
+        color:Theme.of(Get.context!).scaffoldBackgroundColor,
         boxShadow: [
           BoxShadow(
               color: Colors.grey.withOpacity(.4),

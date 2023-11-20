@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
@@ -36,11 +37,23 @@ class ActivityScreenTripDetails extends StatelessWidget {
 
           Row(children: [
 
+            tripDetails.extraRoutes!=null&&tripDetails.extraRoutes!.isNotEmpty ?
+
             Column(children: [
               Image.asset(Images.currentLocation,height: 15,),
-              const SizedBox(height:20 ,width: 10,child: CustomDivider(height: 2,dashWidth: 1,axis: Axis.vertical,)),
+                SizedBox(height:60.h ,width: 10,
+                  child: CustomDivider(height: 5.h,dashWidth: 1,axis: Axis.vertical,)),
               Image.asset(Images.activityDirection,height: 15,),
-            ]),
+            ])
+                :
+
+            Column(children: [
+              Image.asset(Images.currentLocation,height: 15,),
+              const SizedBox(height:30 ,width: 10,
+                  child: CustomDivider(height: 2,dashWidth: 1,axis: Axis.vertical,)),
+              Image.asset(Images.activityDirection,height: 15,),
+            ])
+            ,
 
             const SizedBox(width: Dimensions.paddingSizeSmall,),
             Flexible(
@@ -58,7 +71,20 @@ class ActivityScreenTripDetails extends StatelessWidget {
 
                   },
                 ),
-                const SizedBox(height:10),
+                  SizedBox(height:20.h),
+                  tripDetails .extraRoutes!=null&&tripDetails .extraRoutes!.isNotEmpty ?
+                Padding(
+                  padding:
+                  const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
+                  child: Text(  tripDetails .extraRoutes?.first.location?? ''     ,
+
+                      style: textMedium.copyWith(
+                          color: Theme.of(Get.context!).primaryColor,
+                          fontSize: Dimensions.fontSizeDefault)),
+                )
+                    :const SizedBox(),
+                tripDetails .extraRoutes!=null&&tripDetails .extraRoutes!.isNotEmpty ?
+                SizedBox(height:20.h) :const SizedBox(),
                 GestureDetector(
                   child: Text(tripDetails.to?.location??'',
                     style: textRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),

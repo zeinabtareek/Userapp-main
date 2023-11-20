@@ -5,7 +5,8 @@ ThemeData lightTheme = ThemeData(
   primaryColor: const Color(0xFF008C7B),
   primaryColorDark: const Color(0xFF025C53),
   disabledColor: const Color(0xFFBABFC4),
-  scaffoldBackgroundColor: const Color(0xFF008C7B),
+  scaffoldBackgroundColor: Colors.white,
+  // scaffoldBackgroundColor: const Color(0xFF008C7B),
   textTheme:  const TextTheme(
     bodyMedium: TextStyle(color: Colors.black),
     bodySmall: TextStyle(color: Color(0xff6B7675)),

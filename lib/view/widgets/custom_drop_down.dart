@@ -150,7 +150,7 @@ class CustomDropDownState extends State<CustomDropDown>
                                 maxHeight: widget.maxListHeight,
                                 maxWidth: size.width),
                             decoration: BoxDecoration(
-                              color: Theme.of(context).cardColor,
+                              color: Theme.of(context).scaffoldBackgroundColor,
                               borderRadius: BorderRadius.circular(12),
                               boxShadow: shadow,
                             ),

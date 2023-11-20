@@ -23,7 +23,7 @@ class PickImageWidget extends StatelessWidget {
       curve: Curves.easeIn,
       height: 200.h,
       decoration: BoxDecoration(
-        color: Colors.white,
+       color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20.0.r),
           topRight: Radius.circular(20.0.r),
