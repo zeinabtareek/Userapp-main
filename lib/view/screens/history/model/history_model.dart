@@ -1,5 +1,7 @@
+
+
 import '../../../../bases/base_id_value_model.dart';
-import '../../chat/models/res/msg_chat_res_model_item.dart';
+import '../../where_to_go/model/order_create.dart';
 
 class HistoryModel {
   int? status;
@@ -44,7 +46,7 @@ class HistoryData {
   Package? package;
   Driver? driver;
   String? createdAt;
-
+  List<ExtraRoutes>? extraRoutes;
   HistoryData(
       {this.id,
         this.status,
@@ -56,7 +58,7 @@ class HistoryData {
         this.isParcel,
         this.finalPrice,
         this.package,
-        this.driver,
+        this.driver,    this.extraRoutes,
         this.createdAt});
 
   HistoryData.fromJson(Map<String, dynamic> json) {
@@ -72,8 +74,14 @@ class HistoryData {
     package =
     json['package'] != null ? new Package.fromJson(json['package']) : null;
     driver =
-    json['driver'] != null ? new Driver.fromMap(json['driver']) : null;
+    json['driver'] != null ? new Driver.fromJson(json['driver']) : null;
     createdAt = json['created_at'];
+    if (json['extra_routes'] != null) {
+      extraRoutes = <ExtraRoutes>[];
+      json['extra_routes'].forEach((v) {
+        extraRoutes!.add(ExtraRoutes.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {

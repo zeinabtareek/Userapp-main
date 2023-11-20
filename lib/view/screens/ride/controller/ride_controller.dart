@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:ffi';
+
 import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +10,7 @@ import 'package:ride_sharing_user_app/enum/view_state.dart';
 import 'package:ride_sharing_user_app/view/screens/request_screens/controller/base_map_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/repository/ride_repo.dart';
 
+import '../../../../enum/request_states.dart';
 import '../../../../util/app_strings.dart';
 import '../../../../util/images.dart';
 import '../../../../util/ui/overlay_helper.dart';
@@ -33,6 +37,7 @@ class RideController extends BaseController implements GetxService {
   final RideRepo rideRepo;
 
   RideController({required this.rideRepo});
+
   RxnString initialSelectItem = RxnString();
   var currentRideState = RideState.initial;
   var selectedCategoryTypeEnum = RideType.car;
@@ -86,6 +91,7 @@ class RideController extends BaseController implements GetxService {
       'icon': Images.profileMyWallet,
     },
   ];
+
   List<Map> get paymentOptions => _paymentOptions;
 
   //  final List<String> _paymentOptions = [
@@ -119,24 +125,6 @@ class RideController extends BaseController implements GetxService {
     isExpanded = false;
   }
 
-  // // var distance ;
-  // Future<double?> calculate3Distance() async {
-  //   distance = await Get.find<CreateATripController>().calculate3Distance(
-  //     const LatLng(33.7749, -122.4194), // San Francisco
-  //     // const LatLng(
-  //     //     37.7753, -122.4199), // Replace with your actual point 1 coordinates
-  //   );
-  //   return distance;
-  // }
-
-  // Future<double?> calculateDuration() async {
-  //   duration = await Get.find<CreateATripController>().calculateDuration(
-  //     const LatLng(37.7749, -122.4194), // San Francisco
-  //     const LatLng(
-  //         37.7753, -122.4199), // Replace with your actual point 1 coordinates
-  //   );
-  //   return duration;
-  // }
 
   void vehicleToggle() {
     isExpanded = !isExpanded;
@@ -225,6 +213,7 @@ class RideController extends BaseController implements GetxService {
   TextEditingController promoCodeController = TextEditingController();
   OrderPriceData priceData = OrderPriceData();
   final loading = false.obs;
+
   getPromoCodeDiscount() async {
     loading.value = true;
     try {
@@ -260,15 +249,43 @@ class RideController extends BaseController implements GetxService {
     }
   }
 
-  getOrderPrice() async {
-    setState(ViewState.busy);
-    priceData = await rideRepo.getPrice(
-      packageId: selectedPackage.value!.id,
-      vehicleTypeId: selectedSubPackage.value!.id,
-      promoCode: promoCodeController.text,
-      distance: Get.find<BaseMapController>().distance.value,
-      // distance: distance
-    );
-    setState(ViewState.idle);
+    RxBool priceIsLoading=false.obs;
+  Future<OrderPriceData> getOrderPrice() async {
+    priceIsLoading.value=true;
+    priceIsLoading.value=false;
+    try {
+      setState(ViewState.busy);
+      priceData = await rideRepo.getPrice(
+        packageId: selectedPackage.value!.id,
+        vehicleTypeId: selectedSubPackage.value!.id,
+        promoCode: promoCodeController.text,
+        distance: Get.find<BaseMapController>().distance.value,
+      );
+      if (initialSelectItem.value == 'wallet') {
+        if (double.parse(user!.wallet.toString()) >=
+            num.parse(priceData.priceBeforeDiscount.toString())) {
+          log('Wallet can pay the ride:::OK ${'wallet =${user!.wallet.toString()} ,price = ${priceData.priceBeforeDiscount.toString()}'}');
+
+          Get.find<BaseMapController>()
+              .changeState(request[RequestState.getPriceState]!);
+        } else {
+          log('Wallet can\'t pay the ride:::ERROR ${'wallet =${user!.wallet.toString()} ,price = ${priceData.priceBeforeDiscount.toString()}'}');
+
+          OverlayHelper.showErrorToast(
+              Get.overlayContext!, 'your_balance_wallet_not_enough'.tr);
+        }
+      } else {
+        Get.find<BaseMapController>()
+            .changeState(request[RequestState.getPriceState]!);
+        update();
+      }
+
+      setState(ViewState.idle);
+      return priceData; // Return the result of getPrice function
+    } catch (error) {
+      // Handle errors here
+      setState(ViewState.error);
+      rethrow; // Rethrow the error after handling (if needed)
+    }
   }
 }

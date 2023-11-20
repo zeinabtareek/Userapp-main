@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
@@ -47,6 +48,7 @@ class _Child extends StatelessWidget {
     bool? showTotalDistance = true;
   bool? isParcel = false;
   Color? colorText;
+
    _Child({
         super.key,
     this.showTotalDistance,
@@ -71,12 +73,14 @@ class _Child extends StatelessWidget {
                       children: [
                         SizedBox(
                             width: Dimensions.iconSizeMedium,
-                            child: Image.asset(isParcel == true
+                            child: Image.asset(isParcel == false
                                 ? Images.package2
                                 : Images.currentLocation)),
                         SizedBox(
-                            height: 45,
-                            width: 10,
+                            height: whereToGoController.extraTextEditingControllers.isNotEmpty?
+                            (whereToGoController.extraTextEditingControllers.length+2)*25.h
+                            :45.h,
+                            width: 20 ,
                             child: colorText == null
                                 ? CustomDivider(
                                     height: 2,
@@ -105,27 +109,35 @@ class _Child extends StatelessWidget {
                       Text(
                         whereToGoController.fromRouteController.text,
                         // parcelController.senderAddressController.text,
-                        style: textRegular.copyWith(
-                            color: colorText ?? Colors.black),
+                        style: textRegular.copyWith( ),
                       ),
-                      const SizedBox(height: Dimensions.paddingSizeSmall),
-                      ...whereToGoController.extraTextEditingControllers
-                          .map((c) {
-                        return const SizedBox(
-                            height: Dimensions.paddingSizeSmall);
-                      }).toList(),
-                      Text(
+                      const SizedBox(height: Dimensions.paddingSizeSmall), Text(
                         'to'.tr,
                         style: textRegular.copyWith(
                             color: colorText?.withOpacity(.5) ??
                                 Theme.of(context).primaryColor),
                       ),
+                      ///extra routes
+                      ...whereToGoController.extraTextEditingControllers
+                          .map((c) {
+                        return   Padding(
+                          padding: EdgeInsets.all(Dimensions.paddingSizeSmall),
+                            // height: Dimensions.paddingSizeSmall,
+                          child:  Text(whereToGoController.extraTextEditingControllers.first.text,style:
+                          TextStyle(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).primaryColor),),
+                          // TextStyle(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).primaryColorLight),),
+                        );
+                      }).toList(),
+
+
+
                       const SizedBox(height: Dimensions.paddingSizeSmall),
                       Text(
                         whereToGoController.toRouteController.text,
                         // parcelController.receiverAddressController.text,
-                        style: textRegular.copyWith(
-                            color: colorText ?? Colors.black),
+                        style:   textRegular.copyWith(   ),
+                        // style: textRegular.copyWith(
+                        //     color: colorText ?? Theme.of(context).shadowColor),
                       ),
                     ],
                   )),
@@ -151,7 +163,9 @@ class _Child extends StatelessWidget {
                                   width: Dimensions.paddingSizeSmall),
                               Text(
                                 "total_distance".tr,
-                                style: textRegular.copyWith(),
+                                style: textRegular.copyWith(
+                                  // color: Theme.of(context).cardColor
+                                ),
                               ),
                             ],
                           ),

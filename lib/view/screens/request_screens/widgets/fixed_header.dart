@@ -10,12 +10,12 @@ import '../../../../util/app_style.dart';
 Widget fixedHeader(){
   return  Container(
     padding: K.fixedPadding1,
-    decoration: const BoxDecoration(
+    decoration:   BoxDecoration(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(100),
         topRight: Radius.circular(100),
       ),
-      color: Colors.white,
+      color:Theme.of(Get.context!).scaffoldBackgroundColor
     ),
     width: Get.width,
     child: Center(

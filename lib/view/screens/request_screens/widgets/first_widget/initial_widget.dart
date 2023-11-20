@@ -34,8 +34,8 @@ class InitialRequestWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isKeyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
 
-    return GetBuilder<RideController>(
-        autoRemove: false,
+    return   GetBuilder<RideController>(
+      autoRemove: false,
         init: RideController(rideRepo: Get.find()),
         builder: (controller) {
           return Column(
@@ -166,11 +166,11 @@ class InitialRequestWidget extends StatelessWidget {
                       ),
                       borderRadius: 5,
                       onChanged: (selectedItem) {
+                        print('your wallet is ${controller.user?.wallet ??0} and your cost is:::');
                         if (selectedItem == 'wallet' &&
                             (controller.user?.wallet == 0)) {
                           // Do nothing or show a message indicating that the wallet balance is zero
-                          print(
-                              'Wallet balance is zero. Cannot select "wallet" option.');
+                          print(  'Wallet balance is zero. Cannot select "wallet" option.');
                         } else {
                           // Execute only if the selected item is not 'wallet' with zero balance
                           controller.initialSelectItem.value = selectedItem;
@@ -218,25 +218,33 @@ class InitialRequestWidget extends StatelessWidget {
                     ),
                     GetBuilder<BaseMapController>(
                         init: BaseMapController(),
-                        builder: (baseMapController) => CustomButton(
+                        builder: (baseMapController) =>Obx(()=>CustomButton(
                             buttonText: Strings.getPrice.tr,
                             radius: 50,
+                            isLoading: controller.priceIsLoading.value,
                             onPressed: () async {
                               print(
                                   'controller.initialSelectItem ${controller.initialSelectItem}');
 
-                              if (controller.selectedSubPackage.value != null) {
+                              if (controller.selectedSubPackage.value != null &&
+                                  controller.initialSelectItem.value != null) {
                                 baseMapController.key.currentState!.contract();
-                                baseMapController.changeState(
-                                    request[RequestState.getPriceState]!);
-                                await controller.getOrderPrice();
-                                controller.update();
-                                print(baseMapController.widgetNumber.value);
-                              } else if (controller.selectedSubPackage.value ==
+                                ///>>>>>>
+                                // baseMapController.changeState(
+                                //     request[RequestState.getPriceState]!);
+                                // await controller.getOrderPrice();
+                                // controller.update();
+
+                                ///>>>>>>
+                                controller.getOrderPrice();
+
+                                 print(baseMapController.widgetNumber.value);
+                              }
+                              else if (controller.selectedSubPackage.value ==
                                   null) {
                                 OverlayHelper.showWarningToast(
                                     context, Strings.selectACarType.tr);
-                              } else if (controller.initialSelectItem == null) {
+                              } else if (controller.initialSelectItem.value == null) {
                                 OverlayHelper.showWarningToast(
                                     context, Strings.selectAPaymentMethod.tr);
                                 // print('select a type');
@@ -247,7 +255,7 @@ class InitialRequestWidget extends StatelessWidget {
                                 OverlayHelper.showWarningToast(
                                     context, Strings.wait.tr);
                               }
-                            })),
+                            }))),
                     K.sizedBoxH0,
                     K.sizedBoxH0,
                   ],
@@ -260,6 +268,6 @@ class InitialRequestWidget extends StatelessWidget {
               ///TODO :this code zeinab removed it to apply the getPrice screen
             ],
           );
-        });
+        }) ;
   }
 }

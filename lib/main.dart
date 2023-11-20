@@ -1,35 +1,61 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:moyasar/moyasar.dart';
+import 'package:ride_sharing_user_app/authenticate/domain/use-cases/auth_cases.dart';
+import 'package:ride_sharing_user_app/firebase_options.dart';
+import 'package:ride_sharing_user_app/helper/notification_helper.dart';
+import 'package:ride_sharing_user_app/theme/dark_theme.dart';
+import 'package:ride_sharing_user_app/util/app_strings.dart';
+import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/history/history_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/invoice/screens/invoice_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/message/message_list.dart';
+import 'package:ride_sharing_user_app/view/screens/message/message_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/n/test_polyline_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/request_screens/controller/base_map_controller.dart';
+import 'package:ride_sharing_user_app/view/screens/request_screens/screens/base_map/base_map_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/splash/controller/config_controller.dart';
+import 'package:ride_sharing_user_app/helper/responsive_helper.dart';
+import 'package:ride_sharing_user_app/helper/di_container.dart' as di;
+import 'package:ride_sharing_user_app/localization/localization_controller.dart';
+import 'package:ride_sharing_user_app/localization/messages.dart';
+import 'package:ride_sharing_user_app/theme/dark_theme.dart';
+import 'package:ride_sharing_user_app/theme/light_theme.dart';
+import 'package:ride_sharing_user_app/theme/theme_controller.dart';
+import 'package:ride_sharing_user_app/util/app_constants.dart';
+import 'package:ride_sharing_user_app/view/screens/splash/splash_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/support/support.dart';
+import 'package:ride_sharing_user_app/view/screens/test.dart';
+import 'package:ride_sharing_user_app/view/screens/test_payment.dart';
+import 'package:ride_sharing_user_app/view/screens/wallet/wallet_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/wallet/wallet_withdraw_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/wallet/widget/payment_method_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/wallet/widget/use_voucher_code.dart';
+import 'package:ride_sharing_user_app/view/screens/where_to_go/model/distance_model.dart';
+import 'package:ride_sharing_user_app/view/screens/where_to_go/test_where_to_go.dart';
+import 'package:ride_sharing_user_app/view/widgets/animated_widget.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:get/get.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'app_navigator_observer.dart';
-import 'firebase_options.dart';
-import 'helper/di_container.dart' as di;
-import 'helper/notification_helper.dart';
-import 'helper/responsive_helper.dart';
+import 'authenticate/presentation/sign-up/sign_up_screen.dart';
+import 'helper/cache_helper.dart';
 import 'helper/route_helper.dart';
 import 'initialize_dependencies.dart';
-import 'localization/localization_controller.dart';
-import 'localization/messages.dart';
 import 'theme/dark_theme.dart';
-import 'theme/light_theme.dart';
-import 'theme/theme_controller.dart';
-import 'util/app_constants.dart';
-import 'view/screens/request_screens/controller/base_map_controller.dart';
-import 'view/screens/splash/controller/config_controller.dart';
-import 'view/screens/where_to_go/model/distance_model.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -41,12 +67,11 @@ Future<void> main() async {
   }
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (!Platform.isIOS) {
+  if(!Platform.isIOS) {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
   }
-  FirebaseMessaging.instance.requestPermission();
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Map<String, Map<String, String>> languages = await di.init();
 
   await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
@@ -54,7 +79,7 @@ Future<void> main() async {
   await initializeDependencies();
   try {
     await dotenv.load(fileName: ".env");
-  } catch (e) {
+  }catch(e){
     print('the env file error id::: ${e.toString()}');
   }
   ChuckerFlutter.showOnRelease = true;
@@ -115,7 +140,7 @@ class MyApp extends StatelessWidget {
                               const MaterialScrollBehavior().copyWith(
                             dragDevices: {
                               PointerDeviceKind.mouse,
-                              PointerDeviceKind.touch
+                              PointerDeviceKind.touch 
                             },
                           ),
                           theme: themeController.isDarkTheme
@@ -126,18 +151,23 @@ class MyApp extends StatelessWidget {
                           fallbackLocale: Locale(
                               AppConstants.languages[0].languageCode,
                               AppConstants.languages[0].countryCode),
-                          initialRoute: RouteHelper.getSplashRoute(),
-                             getPages: RouteHelper.routes,
+                         //initialRoute: RouteHelper.getSplashRoute(),
+                        //    getPages: RouteHelper.routes,
                           defaultTransition: Transition.topLevel,
                           transitionDuration: const Duration(milliseconds: 500),
 
-                          // home: DistanceWidget(
-                          //   source: LatLng(37.7749, -122.4194), // San Francisco
-                          //   destination:
-                          //       LatLng(34.0522, -118.2437), // Los Angeles
-                          // ),
+                        home:DistanceWidget(
+                          source: LatLng(37.7749, -122.4194), // San Francisco
+                          destination: LatLng(34.0522, -118.2437), // Los Angeles
+                        ),
 
-                          // home:PaymentScreen(),
+
+
+
+
+
+
+                         // home:PaymentScreen(),
                           // home:MapView(),
                           // ParcelHomeScreen(),
                           // AnimatedWidget(items:['2','3','4','5','6'] ,isVertical: false,widget:  itemTrackHistory(onTap: (){
@@ -179,6 +209,7 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
+
 void showToast(context, status) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(
@@ -187,6 +218,9 @@ void showToast(context, status) {
     ),
   ));
 }
+
+
+
 
 class DistanceWidget extends StatefulWidget {
   final LatLng source;
@@ -201,7 +235,7 @@ class DistanceWidget extends StatefulWidget {
 class _DistanceWidgetState extends State<DistanceWidget> {
   String distance = '';
   String duration = '';
-  final con = Get.put(BaseMapController());
+final con=Get.put(BaseMapController());
   @override
   void initState() {
     super.initState();
@@ -223,21 +257,15 @@ class _DistanceWidgetState extends State<DistanceWidget> {
         Text('Distance: $distance'),
         Text('Duration: $duration'),
         Text('distance.value: ${con.distance.value}'),
-        TextButton(
-            onPressed: () async {
-              con.calculateDistance([
-                LatLng(37.7749, -122.4194), // San Francisco
-                LatLng(34.0522, -118.2437),
-              ]);
+        TextButton(onPressed: () async {
+          con.calculateDistance([LatLng(37.7749, -122.4194), // San Francisco
+             LatLng(34.0522, -118.2437),]);
 
-              var x = await con.calculateDuration([
-                LatLng(37.7749, -122.4194), // San Francisco
-                LatLng(34.0522, -118.2437),
-              ]);
+         var x= await con.calculateDuration([LatLng(37.7749, -122.4194), // San Francisco
+            LatLng(34.0522, -118.2437),]);
 
-              print('duartion $x');
-            },
-            child: Text('ddd')),
+         print('duartion $x');
+        }, child: Text('ddd')),
       ],
     );
   }

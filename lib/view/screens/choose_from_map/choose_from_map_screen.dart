@@ -35,7 +35,7 @@ class ChooseFromMapScreen extends StatelessWidget {
       },
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        backgroundColor: Colors.white,
+      //  backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         body: GetBuilder<ChooseFromMapController>(
           init: ChooseFromMapController(),
