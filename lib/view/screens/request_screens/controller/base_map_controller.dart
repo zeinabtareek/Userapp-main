@@ -177,47 +177,48 @@ class BaseMapController extends BaseController with SocketIoMixin {
 
   RxnDouble distance = RxnDouble();
   String duration = '';
+
   ///calculate Distance
 
   calculateDistance(List<LatLng> points) async {
+    double result = 0.0;
 
-      double result = 0.0;
-
-      for (var i = 0; i < points.length - 1; i++) {
-        DistanceModel distanceModel = await SearchServices.getDistance(
-          points[i],
-          points[i + 1],
-        );
+    for (var i = 0; i < points.length - 1; i++) {
+      DistanceModel distanceModel = await SearchServices.getDistance(
+        points[i],
+        points[i + 1],
+      );
       duration = distanceModel.rows?[0].elements?[0].duration?.text ?? '';
-        double distance = distanceModel.rows?[0].elements?[0].distance?.value?.toDouble() ?? 0.0;
-         result += distance;
-      }
-      print('total $result');
-
-      return distance.value =result;
-
+      double distanceInKm =
+          (distanceModel.rows?[0].elements?[0].distance?.value?.toDouble() ??
+                  0.0) /
+              1000;
+      result += distanceInKm;
+    }
+    return distance.value = result;
   }
 
-    calculateDuration(List<LatLng> points) async {
-      for (var i = 0; i < points.length - 1; i++) {
-    DistanceModel model = await SearchServices. getDistance( points[i],
-      points[i + 1],
-        );
+  calculateDuration(List<LatLng> points) async {
+    for (var i = 0; i < points.length - 1; i++) {
+      DistanceModel model = await SearchServices.getDistance(
+        points[i],
+        points[i + 1],
+      );
       duration = model.rows?[0].elements?[0].duration?.text ?? '';
-  }
-      return   duration;
+    }
+    return duration;
   }
 
   // calculateDistance(List<LatLng> points) async {
-   // var result = 0.0;
+  // var result = 0.0;
 
-    // for (var i = 0; i < points.length - 1; i++) {
-    //      result += await SearchServices.getDistance(
-    //        points[i],
-    //        points[i + 1],
-    //      );
-    //   }
-    // return distance.value = result;
+  // for (var i = 0; i < points.length - 1; i++) {
+  //      result += await SearchServices.getDistance(
+  //        points[i],
+  //        points[i + 1],
+  //      );
+  //   }
+  // return distance.value = result;
 
   // }
 

@@ -4,6 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/view/screens/map/map_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/parcel/repository/parcel_repo.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/screens/parcel_notification_screen.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/screens/parcel_tracking.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/screens/status_package_screen.dart';
@@ -162,7 +163,10 @@ class ParcelHomeScreen extends StatelessWidget {
                 //CheckRatesScreen
               ],
             ),
-            body: GetBuilder<ParcelController>(builder: (controller) {
+            body: GetBuilder<ParcelController>(
+              init: ParcelController(parcelRepo: ParcelRepo() ),
+              autoRemove: false,
+              builder: (controller) {
               return Container(
                 color: Colors.white,
                 padding: K.fixedPadding0,

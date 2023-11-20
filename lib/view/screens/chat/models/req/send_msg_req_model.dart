@@ -59,11 +59,12 @@ class SendMsgReqModel {
   }) {
     if (orderId != null) {
       this.orderId = orderId;
-      this.chatId = null;
+      // this.chatId = null;
       chatType = ChatType.order;
     } else {
       chatType = ChatType.admin;
       this.chatId = chatId;
+      print(" this.chatId = chatId ${this.chatId = chatId} ");
     }
     return this;
   }
@@ -74,6 +75,7 @@ class SendMsgReqModel {
       chatType: chatType!.name,
       msg: msg,
       msgType: msgType,
+      user: Driver.fromUser(user),
       createdAt: DateTime.now(),
       readAt: DateTime.now(),
       senderType: ChatConstant.who,

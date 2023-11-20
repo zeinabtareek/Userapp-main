@@ -41,17 +41,7 @@ class ChatController extends BaseController
 
   setChatId(String id) {
     chatId(id);
-
-    update();
-    refresh();
-    Get.put(PaginateChatMsgsController(
-      GetChatMsgsUseCase(
-        GetChatMsgsReqModel(
-          1,
-          chatId: id,
-        ),
-      ),
-    )).onRefreshData();
+    print(" chatId ");
   }
 
   // FilePickerResult? _otherFile;
@@ -248,6 +238,7 @@ class ChatController extends BaseController
         pickedImageFile.value = null;
         canChat(true);
         conversationController.clear();
+   
       },
       checkConnection: true,
     );

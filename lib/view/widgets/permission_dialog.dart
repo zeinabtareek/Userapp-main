@@ -40,7 +40,7 @@ class PermissionDialog extends StatelessWidget {
                   onPressed: () async {
                     // await Geolocator.openAppSettings();
 
-                    Get.back(result:  true);
+                    Get.back(result: false);
                   },
                 ),
               ),
@@ -51,7 +51,7 @@ class PermissionDialog extends StatelessWidget {
                       onPressed: () async {
                         // await Geolocator.openAppSettings();
 
-                        Get.back(result:  false);
+                        Get.back(result: true);
                       })),
             ]),
           ]),
@@ -96,7 +96,7 @@ class ServiceDialog extends StatelessWidget {
                   onPressed: () async {
                     // await Geolocator.openAppSettings();
 
-                    Get.back(result: true);
+                    Get.back(result: false);
                   },
                 ),
               ),
@@ -107,7 +107,7 @@ class ServiceDialog extends StatelessWidget {
                       onPressed: () async {
                         // await Geolocator.openAppSettings();
 
-                        Get.back(result: false);
+                        Get.back(result: true);
                       })),
             ]),
           ]),

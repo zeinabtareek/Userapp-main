@@ -18,12 +18,12 @@ class MessageItem extends PaginationViewItem<MsgChatResModelItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Get.to(
-          () => MessageScreen(
-                chatId: data.id!,
-              ), binding: BindingsBuilder(() {
+      onTap: () =>
+          Get.to(() => const MessageScreen(), binding: BindingsBuilder(() {
         // ignore: avoid_single_cascade_in_expression_statements
-        Get.find<ChatController>()..initChat();
+        Get.find<ChatController>()
+          ..initChat()
+          ..setChatId(data.id!);
       })),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(Dimensions.paddingSizeDefault, 0,

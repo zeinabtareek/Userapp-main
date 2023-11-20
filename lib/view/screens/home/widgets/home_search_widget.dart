@@ -16,71 +16,56 @@ class HomeSearchWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<RideController>(
         // initState: (_) => con.getCategoryList(),
-    builder: (rideController)
-    {
+        builder: (rideController) {
       return SizedBox(
         // height: Dimensions.identityImageHeight,
         child: TextField(
+          readOnly: true,
           onTap: () {
-            rideController.isFromCat.value=false;
-            Get.to(() =>
-                SetDestinationScreen(
-                    fromCat: rideController.isFromCat.value)); //false
+            rideController.isFromCat.value = false;
+            rideController.removeSelectedValues();
+            Get.to(() => SetDestinationScreen(
+                fromCat: rideController.isFromCat.value)); //false
           },
           style: textRegular.copyWith(
-              color: Theme
-                  .of(context)
+              color: Theme.of(context)
                   .textTheme
                   .bodyMedium!
                   .color!
                   .withOpacity(0.8)),
-          cursorColor: Theme
-              .of(context)
-              .hintColor,
+          cursorColor: Theme.of(context).hintColor,
           autofocus: false,
           textAlignVertical: TextAlignVertical.center,
           textInputAction: TextInputAction.search,
           decoration: InputDecoration(
-            contentPadding:
-            const EdgeInsets.symmetric(
+            contentPadding: const EdgeInsets.symmetric(
                 vertical: Dimensions.iconSizeSmall, horizontal: 5),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(Dimensions.menuIconSize),
               borderSide: BorderSide(
                   width: 0.5,
-                  color: Theme
-                      .of(context)
-                      .hintColor
-                      .withOpacity(0.5)),
+                  color: Theme.of(context).hintColor.withOpacity(0.5)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(25),
               borderSide:
-              BorderSide(width: 0.5, color: Theme
-                  .of(context)
-                  .primaryColor),
+                  BorderSide(width: 0.5, color: Theme.of(context).primaryColor),
             ),
-            fillColor: Theme
-                .of(context)
-                .primaryColor
-                .withOpacity(0.07),
+            fillColor: Theme.of(context).primaryColor.withOpacity(0.07),
             isDense: true,
             hintText: Strings.whereToGo.tr,
             hintStyle: textRegular.copyWith(
-                color: Theme
-                    .of(context)
+                color: Theme.of(context)
                     .textTheme
                     .bodyMedium!
                     .color!
                     .withOpacity(0.3)),
             filled: true,
             prefixIconConstraints:
-            const BoxConstraints(minWidth: 23, maxHeight: 20),
+                const BoxConstraints(minWidth: 23, maxHeight: 20),
             prefixIcon: IconButton(
               padding: EdgeInsets.zero,
-              color: Theme
-                  .of(context)
-                  .hintColor,
+              color: Theme.of(context).hintColor,
               onPressed: () {
                 // if(searchController.searchController.text.trim().isNotEmpty) {
                 //   //searchController.clearSearchController();
@@ -102,6 +87,6 @@ class HomeSearchWidget extends StatelessWidget {
           // },
         ),
       );
-    }
-    );}
+    });
+  }
 }

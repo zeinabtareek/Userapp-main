@@ -283,7 +283,11 @@ mixin MapHelper on GetxController {
         //   }
         //   return null;
         // });
-        toAppSetting();
+        toAppSetting().then((value) async{
+          if (value) {
+       return  await   getCurrentPosition();
+          }
+        });
       }
     }
 
@@ -300,7 +304,11 @@ mixin MapHelper on GetxController {
       if (!state) {
         return null;
       } else {
-        toSystemSetting();
+        toSystemSetting().then((value) async{
+          if (value) {
+        return  await  getCurrentPosition();
+          }
+        });
 
         //     .then((value) async {
         //   if (value == false) {

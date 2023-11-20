@@ -15,10 +15,9 @@ import 'pagienate-use-cases/get_chat_msgs_use_case.dart';
 import 'widget/message_bubble.dart';
 
 class MessageScreen extends GetView<ChatController> {
-  final String? chatId;
-  MessageScreen({super.key, required this.chatId}) {
-    controller.chatId.value = chatId;
-  }
+  const MessageScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,27 +44,35 @@ class MessageScreen extends GetView<ChatController> {
                     height: (Get.height / 5) * 3.5 -
                         MediaQuery.of(context).viewInsets.bottom,
                     child: controller.chatId.value != null
-                        ? GetBuilder<PaginateChatMsgsController>(
-                            init: PaginateChatMsgsController(
-                              GetChatMsgsUseCase(
-                                GetChatMsgsReqModel(
-                                  1,
-                                  chatId: controller.chatId.value!,
-                                ),
-                              ),
-                            ),
-                            builder: (con) {
-                              return PaginateChatMsgsView(
-                                listPadding:
-                                    const EdgeInsets.only(right: 30, left: 30),
-                                child: (entity) =>
-                                    ConversationBubble(data: entity),
-                              );
-                            })
-                        :   Center(
-                            child:   customNoDataWidget()
+                        ? FutureBuilder(
+                            future: Future.delayed(
+                                const Duration(milliseconds: 250), () => true),
+                            builder: (context, snap) {
+                              if (!snap.hasData) {
+                                return const SizedBox();
+                              }
+                              return GetBuilder<PaginateChatMsgsController>(
+                                  init: PaginateChatMsgsController(
+                                    GetChatMsgsUseCase(
+                                      GetChatMsgsReqModel(
+                                        1,
+                                        chatId: controller.chatId.value!,
+                                      ),
+                                    ),
+                                  ),
+                                  builder: (con) {
+                                    return PaginateChatMsgsView(
+                                      listPadding: const EdgeInsets.only(
+                                          right: 30, left: 30),
+                                      child: (entity) =>
+                                          ConversationBubble(data: entity),
+                                    );
+                                  });
+                            },
+                          )
+                        : Center(child: customNoDataWidget()
                             // child: Text("Empty Chat"),
-                          ),
+                            ),
                   )),
             ),
             Obx(() => Visibility(
@@ -103,6 +110,9 @@ class MessageScreen extends GetView<ChatController> {
                                     width: Dimensions.paddingSizeDefault),
                                 Obx(() => Expanded(
                                       child: TextFormField(
+                                        readOnly:
+                                            controller.pickedImageFile.value !=
+                                                null,
                                         controller:
                                             controller.conversationController,
                                         textCapitalization:
@@ -124,7 +134,11 @@ class MessageScreen extends GetView<ChatController> {
                                             controller.sendMsg(),
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: Strings.typeHere.tr,
+                                          hintText: controller
+                                                      .pickedImageFile.value !=
+                                                  null
+                                              ? ""
+                                              : Strings.typeHere.tr,
                                           hintStyle: textRegular.copyWith(
                                             color: Theme.of(context)
                                                 .textTheme
@@ -144,16 +158,21 @@ class MessageScreen extends GetView<ChatController> {
                                     )),
                                 Row(
                                   children: [
-                                    ImagePick(
-                                      width: Dimensions.identityImageWidth / 2,
-                                      hight: Dimensions.identityImageHeight / 2,
-                                      deleteImg: () {
-                                        controller.pickedImageFile.value = null;
-                                      },
-                                      onSelectImg: (img) {
-                                        controller.pickedImageFile.value = img;
-                                      },
-                                    ),
+                                    Obx(() => ImagePick(
+                                          selectedFile:
+                                              controller.pickedImageFile.value,
+                                          width:
+                                              Dimensions.identityImageWidth / 2,
+                                          hight:
+                                              Dimensions.identityImageHeight /
+                                                  2,
+                                          deleteImg: () {
+                                            controller.pickedImageFile.value =
+                                                null;
+                                          },
+                                          onSelectImg:
+                                              controller.pickedImageFile,
+                                        )),
 
                                     // Obx(
                                     //   () {

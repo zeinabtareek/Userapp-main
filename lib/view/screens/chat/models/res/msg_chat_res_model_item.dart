@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:ride_sharing_user_app/authenticate/data/models/res-models/user_model.dart';
 import 'package:ride_sharing_user_app/view/screens/chat/models/req/send_msg_req_model.dart';
 import 'package:ride_sharing_user_app/view/screens/where_to_go/model/order_create.dart';
 
@@ -299,6 +300,20 @@ class Driver {
 
   factory Driver.fromJson(String source) =>
       Driver.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  factory Driver. fromUser(UserAuthModel user) {
+    return Driver(
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        id: user.id,
+        img: user.img,
+        phone: user.phone,
+        phoneCode: user.phoneCode,
+        rate: user.rating,
+        username: user.username,
+        vehicle: null);
+  }
 }
 
 class Order {

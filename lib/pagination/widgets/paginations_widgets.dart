@@ -150,7 +150,7 @@ class PaginationListViewInTabBar<UseCase extends MainPaginateListUseCase,
       if (state is PaginationLoaded && state.items.isEmpty ||
           state is PaginationNoDataFoundState) {
         // TODO:  NoDataFoundWidget
-        return   customNoDataWidget();
+        return customNoDataWidget();
         // return const Center(child: Text("NoDataFound"));
       }
       if (state is PaginationBlocInitial) {
@@ -227,10 +227,10 @@ class PaginationChatListView<UseCase extends MainPaginateListUseCase, Entity,
           alignment: Alignment.center,
           // TODO:  loadingWidget
           child:
-          // const Center(
-          //   child: CircularProgressIndicator.adaptive(),
-          // ),
-          Center(
+              // const Center(
+              //   child: CircularProgressIndicator.adaptive(),
+              // ),
+              Center(
             child: customLoading(width: 150.w),
 
             //child: CupertinoActivityIndicator( ),
@@ -244,13 +244,15 @@ class PaginationChatListView<UseCase extends MainPaginateListUseCase, Entity,
         var items = state.items.reversed.toList();
         return Builder(builder: (context) {
           WidgetsBinding.instance.addPostFrameCallback(
-            (timeStamp) {
+            (timeStamp) async {
+              // await Future.delayed(const Duration(milliseconds: 800));
               controller.moveScrollToMaxScrollExtent();
             },
           );
           return ListView.separated(
             controller: controller.scrollController,
             shrinkWrap: true,
+            // reverse: true,
             padding: kMaterialListPadding,
             physics: const BouncingScrollPhysics(),
             separatorBuilder: (context, index) => const SizedBox(height: 10),

@@ -54,28 +54,27 @@ class RideSubCategoryWidget extends StatelessWidget {
                               'sub package ${listOfSubCategory[index].categoryTitle}');
 
                           ///zeinab this is the sub package
-                          if( rideController.isFromCat.value==true) {
+                          if (rideController.isFromCat.value == true) {
                             rideController
                                 .selectedSubPackage(listOfSubCategory[index]);
                             Get.to(
-                                  () =>
-                                  SetDestinationScreen(
-                                      fromCat: rideController.isFromCat.value,
-                                      // fromCat: true,
-                                      categoryModel: listOfSubCategory[index]),
+                              () => SetDestinationScreen(
+                                  fromCat: rideController.isFromCat.value,
+                                  // fromCat: true,
+                                  categoryModel: listOfSubCategory[index]),
                             );
-                          }
-                          else{
+                          } else {
                             rideController
                                 .selectedSubPackage(listOfSubCategory[index]);
 
-
-                            Get.find<BaseMapController>().key.currentState!.contract();
+                            Get.find<BaseMapController>()
+                                .key
+                                .currentState!
+                                .contract();
                             Get.find<BaseMapController>().update();
-                            print('you are choosing the car type from where to go${rideController.selectedSubPackage.value?.id} ');
-
+                            print(
+                                'you are choosing the car type from where to go${rideController.selectedSubPackage.value?.id} ');
                           }
-
                         } else {
                           rideController
                               .updateSelectedSubRideType(RideType.parcel);
@@ -196,160 +195,170 @@ class RideCategoryWidget extends StatelessWidget {
         });
       },
       builder: (rideController) {
-     if (categoryController.categoryList.isNotEmpty) {
-      return     Column(
-          children: [
-            SizedBox(
-              height: 110,
-              width: Get.width,
-              child: ListView.builder(
-                  itemCount: categoryController.categoryList.length,
-                  padding: EdgeInsets.zero,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    var item = categoryController.categoryList[index];
-                    return SizedBox(
-                      height: Dimensions.iconSizeOnline - 10,
-                      width: Dimensions.iconSizeOnline,
-                      child: InkWell(
-                        onTap: () {
-                          rideController.selectedPackage(item);
-                          ///TODO Parcel Rank
-                            // if (index != 2 && index != 3) {
-                          if (  index != 3){
-                            if (index == 0) {
-                              rideController
-                                  .updateSelectedRideType(RideType.car);
-                              rideController.vehicleToggle();
-                            } else if (index == 1) {
-                              ///TODO Parcel Rank
-                              // rideController
-                              //     .updateSelectedRideType(RideType.parcel);
-                              rideController
-                                  .updateSelectedRideType(RideType.bike);
-                              rideController.vehicleToggle();
-                              null;
-                            } else if (index == 2) {
-                              ///TODO Parcel Rank
-                              // rideController
-                              //     .updateSelectedRideType(RideType.bike);
-                              rideController
-                                  .updateSelectedRideType(RideType.parcel);
-                              rideController.vehicleToggle();
-                            } else if (index == 3) {
-                              // rideController
-                              //     .updateSelectedRideType(RideType.luxury);
+        if (categoryController.categoryList.isNotEmpty) {
+          return Column(
+            children: [
+              SizedBox(
+                height: 110,
+                width: Get.width,
+                child: ListView.builder(
+                    itemCount: categoryController.categoryList.length,
+                    padding: EdgeInsets.zero,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      var item = categoryController.categoryList[index];
+                      return SizedBox(
+                        height: Dimensions.iconSizeOnline - 10,
+                        width: Dimensions.iconSizeOnline,
+                        child: InkWell(
+                          onTap: () {
+                            if (item.hasChild == false) {
+                              rideController.selectedPackage(null);
+                              rideController.vehicleCloseSup();
+                            } else {
+                              rideController.selectedPackage(item);
+                              rideController.vehicleOpenSup();
                             }
                             rideController.setRideCategoryIndex(index);
-                          } else {
-                            rideController.resetControllerValue();
-                          }
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 80,
-                              width: 90,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                    Dimensions.radiusDefault),
-                                color: rideController.rideCategoryIndex == index
-                                    ? Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(0.8)
-                                    : Theme.of(context)
-                                        .hintColor
-                                        .withOpacity(0.1),
-                              ),
-                              padding: index == 2 || index == 3
-                                  ? null
-                                  : const EdgeInsets.all(
-                                      Dimensions.paddingSizeDefault),
-                              //   child:   Image.asset(Get.find<CategoryController>()
-                              //       .categoryList[index]
-                              //       .categoryImage!),
-                              // ),
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Image.network(
-                                    item.categoryImage!,
-                                  ),
-                                  ///TODO Parcel Rank
-                                  if (  index == 3)
-                                  // if (index == 2 || index == 3)
-                                    Positioned.fill(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: Colors.black.withOpacity(.8),
-                                            borderRadius: BorderRadius.circular(
-                                                Dimensions.radiusDefault)),
-                                        child: const Center(
-                                          child: Text(
-                                            'Coming Soon',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold,
+
+                            ///TODO Parcel Rank
+                            // if (index != 2 && index != 3) {
+                            if (index != 3) {
+                              if (index == 0) {
+                                rideController
+                                    .updateSelectedRideType(RideType.car);
+                              } else if (index == 1) {
+                                ///TODO Parcel Rank
+                                // // rideController
+                                // //     .updateSelectedRideType(RideType.parcel);
+                                rideController
+                                    .updateSelectedRideType(RideType.bike);
+
+                                null;
+                              } else if (index == 2) {
+                                ///TODO Parcel Rank
+                                // rideController
+                                // //     .updateSelectedRideType(RideType.bike);
+                                rideController
+                                    .updateSelectedRideType(RideType.parcel);
+                              } else if (index == 3) {
+                                // rideController
+                                //     .updateSelectedRideType(RideType.luxury);
+                              }
+                            } else {
+                              rideController.resetControllerValue();
+                            }
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 80,
+                                width: 90,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.radiusDefault),
+                                  color:
+                                      rideController.rideCategoryIndex == index
+                                          ? Theme.of(context)
+                                              .primaryColor
+                                              .withOpacity(0.8)
+                                          : Theme.of(context)
+                                              .hintColor
+                                              .withOpacity(0.1),
+                                ),
+                                padding: index == 2 || index == 3
+                                    ? null
+                                    : const EdgeInsets.all(
+                                        Dimensions.paddingSizeDefault),
+                                //   child:   Image.asset(Get.find<CategoryController>()
+                                //       .categoryList[index]
+                                //       .categoryImage!),
+                                // ),
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Image.network(
+                                      item.categoryImage!,
+                                    ),
+
+                                    ///TODO Parcel Rank
+                                    if (item.isActive == false)
+                                      // if (index == 2 || index == 3)
+                                      Positioned.fill(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color:
+                                                  Colors.black.withOpacity(.8),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      Dimensions
+                                                          .radiusDefault)),
+                                          child: const Center(
+                                            child: Text(
+                                              // TODO: tr
+                                              'Coming Soon',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: Dimensions.paddingSizeExtraSmall,
-                            ),
-                            Text(
-                              item.categoryTitle!.tr,
-                              style: textSemiBold.copyWith(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .color!
-                                      .withOpacity(0.8),
-                                  fontSize: Dimensions.fontSizeSmall),
-                            )
-                          ],
+                              const SizedBox(
+                                height: Dimensions.paddingSizeExtraSmall,
+                              ),
+                              Text(
+                                item.categoryTitle!.tr,
+                                style: textSemiBold.copyWith(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .color!
+                                        .withOpacity(0.8),
+                                    fontSize: Dimensions.fontSizeSmall),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }),
-            ),
-            // rideController.heightOfTypes
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeInOut,
-              // width: 200,
-              height: rideController.heightOfTypes,
-              padding: EdgeInsetsDirectional.only(start: 60.w),
-              // color: Colors.blue,
-              child: rideController.isExpanded
-                  ? Obx(() => animatedWidget(
-                      onTap: () {},
-                      widget: RideSubCategoryWidget(
-                        listOfSubCategory: rideController
-                                .selectedPackage.value?.sub
-                                ?.toList() ??
-                            [],
-                        categoryName: rideController.selectedCategoryTypeEnum,
-                        selectedCategoryModel:
-                            rideController.selectedPackage.value!,
-                      ),
-                      limit: 1))
-                  : const SizedBox(),
-            ),
-          ],
-        );
-       
-     }else{
-     return Center(child: CupertinoActivityIndicator(),);
-     }
-
-        
+                      );
+                    }),
+              ),
+              // rideController.heightOfTypes
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeInOut,
+                // width: 200,
+                height: rideController.heightOfTypes,
+                padding: EdgeInsetsDirectional.only(start: 60.w),
+                // color: Colors.blue,
+                child: rideController.isExpanded
+                    ? Obx(() => animatedWidget(
+                        onTap: () {},
+                        widget: RideSubCategoryWidget(
+                          listOfSubCategory: rideController
+                                  .selectedPackage.value?.sub
+                                  ?.toList() ??
+                              [],
+                          categoryName: rideController.selectedCategoryTypeEnum,
+                          selectedCategoryModel:
+                              rideController.selectedPackage.value!,
+                        ),
+                        limit: 1))
+                    : const SizedBox(),
+              ),
+            ],
+          );
+        } else {
+          return const Center(
+            child: CupertinoActivityIndicator(),
+          );
+        }
       },
     );
   }

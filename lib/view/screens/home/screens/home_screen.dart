@@ -52,8 +52,8 @@ class HomeScreen extends GetView<BaseController> {
                 K.sizedBoxH0,
 
                 GetBuilder<CategoryController>(
-                    initState: (_) =>
-                        Get.find<CategoryController>().getCategoryList(),
+                    // initState: (_) =>
+                    //     Get.find<CategoryController>().getCategoryList(),
                     builder: (categoryController) {
                       return const RideCategoryWidget();
                     }),

@@ -35,7 +35,7 @@ class InitialRequestWidget extends StatelessWidget {
     bool isKeyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
 
     return GetBuilder<RideController>(
-      autoRemove: false,
+        autoRemove: false,
         init: RideController(rideRepo: Get.find()),
         builder: (controller) {
           return Column(
@@ -53,9 +53,16 @@ class InitialRequestWidget extends StatelessWidget {
               K.sizedBoxH0,
               controller.selectedSubPackage.value == null
                   ? GetBuilder<CategoryController>(
-                    autoRemove: false,
-                      initState: (_) =>
-                          Get.find<CategoryController>().getCategoryList(),
+                      autoRemove: false,
+                      initState: (_) {
+                        WidgetsBinding.instance.addPostFrameCallback(
+                          (timeStamp) {
+                            // future method
+                            Get.find<RideController>().removeSelectedValues();
+                          },
+                        );
+                        // Get.find<CategoryController>().getCategoryList();
+                      },
                       builder: (categoryController) {
                         return const RideCategoryWidget();
                       })
@@ -167,7 +174,8 @@ class InitialRequestWidget extends StatelessWidget {
                         } else {
                           // Execute only if the selected item is not 'wallet' with zero balance
                           controller.initialSelectItem.value = selectedItem;
-                          if (controller.initialSelectItem.value == Strings.custom) {
+                          if (controller.initialSelectItem.value ==
+                              Strings.custom) {
                             showDialog(
                               context: context,
                               builder: (_) => CustomCalender(
@@ -217,8 +225,7 @@ class InitialRequestWidget extends StatelessWidget {
                               print(
                                   'controller.initialSelectItem ${controller.initialSelectItem}');
 
-                              if (controller.selectedSubPackage.value != null &&
-                                  controller.initialSelectItem != null) {
+                              if (controller.selectedSubPackage.value != null) {
                                 baseMapController.key.currentState!.contract();
                                 baseMapController.changeState(
                                     request[RequestState.getPriceState]!);

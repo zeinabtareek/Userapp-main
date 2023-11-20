@@ -15,27 +15,26 @@ class ImagePick extends StatelessWidget {
   final double? hight;
   final double? width;
   final Widget? pickWidget;
-  ImagePick({
+  final File? selectedFile;
+  const ImagePick({
     super.key,
     required this.onSelectImg,
     required this.deleteImg,
     this.hight,
     this.pickWidget,
     this.width,
+    this.selectedFile,
   });
 
-  final Rxn<File> selectedFile = Rxn(null);
 
-  bool get isPickedImg => selectedFile.value != null;
 
   void pickImg() {
     // CustomPickHelper.pickImage(ImageSource.camera)
-    CustomPickHelper.showPickImageBottomSheet(Get.context!)
-        .then((value) {
+    CustomPickHelper.showPickImageBottomSheet(Get.context!).then((value) {
       if (value != null) {
-        selectedFile.value = value;
         onSelectImg(value);
-        // setState(() {});
+
+   
       }
     });
   }
@@ -47,48 +46,46 @@ class ImagePick extends StatelessWidget {
           const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
       child: Align(
         alignment: Alignment.center,
-        child: Obx(
-          () => DottedBorder(
-            color: Theme.of(context).hintColor,
-            dashPattern: const [3, 4],
-            borderType: BorderType.RRect,
-            radius: const Radius.circular(Dimensions.paddingSizeSmall),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
-              child: isPickedImg
-                  ? Stack(
-                      alignment: FractionalOffset.bottomLeft,
-                      children: [
-                        // StatefulBuilder(builder: ())
-                        Image.file(
-                          File(selectedFile.value!.path),
-                          width: width ?? Dimensions.identityImageWidth,
-                          height: hight ?? Dimensions.identityImageHeight,
-                          fit: BoxFit.cover,
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            selectedFile.value = null;
-
-                            deleteImg.call();
-                          },
-                          icon: const Icon(
-                            Icons.close,
-                            size: 25,
-                            color: Colors.teal,
-                          ),
-                        ),
-                      ],
-                    )
-                  : InkWell(
-                      onTap: pickImg,
-                      child:pickWidget?? SizedBox(
-                        height: hight ?? Dimensions.identityImageHeight,
+        child: DottedBorder(
+          color: Theme.of(context).hintColor,
+          dashPattern: const [3, 4],
+          borderType: BorderType.RRect,
+          radius: const Radius.circular(Dimensions.paddingSizeSmall),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
+            child: selectedFile != null
+                ? Stack(
+                    alignment: FractionalOffset.bottomLeft,
+                    children: [
+                      // StatefulBuilder(builder: ())
+                      Image.file(
+                        File(selectedFile!.path),
                         width: width ?? Dimensions.identityImageWidth,
-                        child: Image.asset(Images.cameraPlaceholder, width: 50),
+                        height: hight ?? Dimensions.identityImageHeight,
+                        fit: BoxFit.cover,
                       ),
-                    ),
-            ),
+                      IconButton(
+                        onPressed: () {
+                          deleteImg.call();
+                        },
+                        icon: const Icon(
+                          Icons.close,
+                          size: 25,
+                          color: Colors.teal,
+                        ),
+                      ),
+                    ],
+                  )
+                : InkWell(
+                    onTap: pickImg,
+                    child: pickWidget ??
+                        SizedBox(
+                          height: hight ?? Dimensions.identityImageHeight,
+                          width: width ?? Dimensions.identityImageWidth,
+                          child:
+                              Image.asset(Images.cameraPlaceholder, width: 50),
+                        ),
+                  ),
           ),
         ),
       ),

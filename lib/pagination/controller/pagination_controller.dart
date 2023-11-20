@@ -61,8 +61,8 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
 
   moveScrollToMaxScrollExtent() {
     scrollController.animateTo(
-      scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 800),
+      scrollController.position.maxScrollExtent + 300,
+      duration: const Duration(milliseconds: 80),
       curve: Curves.bounceIn,
     );
   }

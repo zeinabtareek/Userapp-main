@@ -33,12 +33,15 @@ class RideController extends BaseController implements GetxService {
   final RideRepo rideRepo;
 
   RideController({required this.rideRepo});
-  RxnString initialSelectItem=RxnString();
+  RxnString initialSelectItem = RxnString();
   var currentRideState = RideState.initial;
   var selectedCategoryTypeEnum = RideType.car;
 
   Rxn<CategoryModel> selectedPackage = Rxn();
   Rxn<CategoryModel> selectedSubPackage = Rxn();
+
+  bool get isSelectPackageAndIsSelectedSubPackage =>
+      selectedPackage.value != null && selectedSubPackage.value != null;
 
   var selectedSubCategory = RideType.car;
 
@@ -49,6 +52,14 @@ class RideController extends BaseController implements GetxService {
 
   int rideCategoryIndex = 0;
   int rideSubCategoryIndex = 0;
+
+  void removeSelectedValues() {
+    rideCategoryIndex = 0;
+    rideSubCategoryIndex = 0;
+    selectedPackage.value = null;
+    selectedSubPackage.value = null;
+    vehicleCloseSup();
+  }
 
   TextEditingController inputFarePriceController = TextEditingController();
   TextEditingController noteController = TextEditingController();
@@ -130,6 +141,22 @@ class RideController extends BaseController implements GetxService {
   void vehicleToggle() {
     isExpanded = !isExpanded;
     heightOfTypes = isExpanded ? 110.0 : 0.0;
+    rideSubCategoryIndex = 0;
+
+    update();
+  }
+
+  void vehicleOpenSup() {
+    isExpanded = true;
+    heightOfTypes = 110.0;
+    rideSubCategoryIndex = 0;
+
+    update();
+  }
+
+  void vehicleCloseSup() {
+    isExpanded = false;
+    heightOfTypes = 0;
     rideSubCategoryIndex = 0;
 
     update();

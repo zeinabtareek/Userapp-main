@@ -40,10 +40,9 @@ class ChooseFromMapScreen extends StatelessWidget {
         body: GetBuilder<ChooseFromMapController>(
           init: ChooseFromMapController(),
           builder: (controller) {
-            if (points!=null) {
-  controller.pickedPoints = points!;
-
-}
+            if (points != null) {
+              controller.pickedPoints = points!;
+            }
 
             return WillPopScope(
               onWillPop: () {
@@ -80,28 +79,40 @@ class ChooseFromMapScreen extends StatelessWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(
                                   Dimensions.radiusOverLarge),
-                              child: GoogleMap(
-                                zoomControlsEnabled: false,
-                                myLocationButtonEnabled: true,
-                                myLocationEnabled: true,
-                                compassEnabled: true,
-                                markers: userMapController.markers,
-                                mapType: MapType.normal,
-                                initialCameraPosition: CameraPosition(
-                                  target: userMapController.initialPosition,
-                                  zoom: 16,
-                                ),
-                                onMapCreated: controller.onMapCreated,
-                                // (gController) {
-                                // userMapController.setMapController(gController);
-                                // mapController = gController;
-                                // },
-                                polylines: controller.polylines,
-                              onCameraMoveStarted: () {
-                            
-                              },
-                                onCameraMove: controller.onCameraMove,
-                                onCameraIdle: userMapController.onCameraIdle,
+                              child: FutureBuilder(
+                                future: Future.delayed(
+                                    const Duration(milliseconds: 250),
+                                    () => true),
+                                builder: (context, snap) {
+                                  if (!snap.hasData) {
+                                    return const Center(
+                                      child:
+                                          CircularProgressIndicator.adaptive(),
+                                    );
+                                  }
+                                  return GoogleMap(
+                                    zoomControlsEnabled: false,
+                                    myLocationButtonEnabled: true,
+                                    myLocationEnabled: true,
+                                    compassEnabled: true,
+                                    markers: userMapController.markers,
+                                    mapType: MapType.normal,
+                                    initialCameraPosition: CameraPosition(
+                                      target: userMapController.initialPosition,
+                                      zoom: 16,
+                                    ),
+                                    onMapCreated: controller.onMapCreated,
+                                    // (gController) {
+                                    // userMapController.setMapController(gController);
+                                    // mapController = gController;
+                                    // },
+                                    polylines: controller.polylines,
+                                    onCameraMoveStarted: () {},
+                                    onCameraMove: controller.onCameraMove,
+                                    onCameraIdle:
+                                        userMapController.onCameraIdle,
+                                  );
+                                },
                               ),
                             ),
                           ),

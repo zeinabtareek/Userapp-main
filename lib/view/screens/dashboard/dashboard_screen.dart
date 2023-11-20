@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/view/screens/chat/chat_screen.dart';
 
 import '../../../util/app_strings.dart';
 import '../../../util/dimensions.dart';
@@ -133,13 +134,10 @@ class DashboardScreen extends StatelessWidget {
                   child: customFloatActionButton(
                     image: Images.chat,
                     onPressed: () {
-                      // if (isLabelVisible) {
-
-                      if (false) {
+                      if (isLabelVisible) {
+                        // if (false) {
                         Get.to(
-                          () => MessageScreen(
-                            chatId: null,
-                          ),
+                          () => const ChatScreen(),
                           binding: BindingsBuilder(
                             () {
                               // ignore: avoid_single_cascade_in_expression_statements
