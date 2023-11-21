@@ -40,6 +40,7 @@ class AppConstants {
   static const String getSlider = "/api/user/sliders";
   static String updateProfile = "/api/user/update_profile";
      static const  String getAppVersion = '/api/user/app_version';
+     static const  String checkRegin = '/api/user/check_region';
 
 
   static const String changePaymentType = "/api/user/change_payment_type";

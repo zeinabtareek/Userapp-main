@@ -13,9 +13,11 @@ import '../../../../enum/view_state.dart';
 import '../../../../mxins/map/map_view_helper.dart';
 import '../../../../util/app_constants.dart';
 import '../../../../util/images.dart';
+import '../../../../util/ui/overlay_helper.dart';
 import '../../where_to_go/model/search_suggestion_model.dart';
 import '../../where_to_go/repository/search_service.dart';
 import '../../where_to_go/where_to_go_screen.dart';
+import '../use-case/check_region_use_case.dart';
 
 class ChooseFromMapController extends BaseController
     with MapViewHelper, MapHelper {
@@ -26,6 +28,8 @@ class ChooseFromMapController extends BaseController
   ];
 
   Timer? _debounce;
+
+  final CheckRegionUseCase checkRegionUseCase = CheckRegionUseCase();
 
   @override
   void onInit() async {
@@ -75,6 +79,7 @@ class ChooseFromMapController extends BaseController
     try {
       _position = (await MapHelper.getCurrentPosition())!;
       _initialPosition = LatLng(_position.latitude, _position.longitude);
+      _checkRegin(_initialPosition);
     } on Exception {
       // TODO
     }
@@ -270,16 +275,28 @@ class ChooseFromMapController extends BaseController
     // _moveCameraToMyLocation(point: position.target);
 
     selectedPoint = position.target;
+    debounceFunction(
+      () async {
+        if (!await _checkRegin(selectedPoint!)) {
+          selectedPoint = null;
+          isSetDestBtnViable.value = false;
+          refresh();
+          update();
+        } else {
+          isSetDestBtnViable.value = true;
+        }
+      },
+    );
   }
 
   final searchServices = SearchServices();
 
   final searchResultsFrom = <Predictions>[].obs;
 
-  onSearchChanged(String query) {
+  debounceFunction(Function() action) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
-      searchPlacesFrom(query);
+      action();
     });
   }
 
@@ -289,16 +306,19 @@ class ChooseFromMapController extends BaseController
       search: searchTerm.toString(),
     );
     // search: searchTerm.toString(), country: 'eg');
-    print(
-        'data ${searchResultsFrom.value} length is ${searchResultsFrom.length}');
+
     setState(ViewState.idle);
     update();
     return searchResultsFrom;
   }
 
   LatLng? selectedPoint;
+
+  RxnBool isSetDestBtnViable = RxnBool(true);
   getLocationOfSelectedSearchItem(Predictions predictions) async {
     searchController.text = predictions.description.toString();
+    searchResultsFrom.value = [];
+    refresh();
     address("");
     PlaceDetail result =
         await searchServices.getPlaceDetails(predictions.placeId!);
@@ -306,8 +326,48 @@ class ChooseFromMapController extends BaseController
     selectedPoint = LatLng(
         result.geometry!.location!.lat!, result.geometry!.location!.lng!);
     _moveCameraToMyLocation(point: selectedPoint);
-    print("  selected Point $selectedPoint ");
+    debounceFunction(
+      () async {
+        if (!await _checkRegin(selectedPoint!)) {
+          selectedPoint = null;
+          searchResultsFrom.clear();
+          isSetDestBtnViable.value = false;
+          searchResultsFrom.value = [];
+          refresh();
+          update();
+        } else {
+          isSetDestBtnViable.value = true;
+        }
+      },
+    );
+  }
 
-    searchResultsFrom.clear();
+  Future<bool> _checkRegin(LatLng point) async {
+    bool resState = true;
+    bool state = await actionCenter.execute(() async {
+      try {
+        var res =
+            await checkRegionUseCase.call(point.latitude, point.longitude);
+
+        if (res.status != 200) {
+          OverlayHelper.showErrorToast(
+            Get.overlayContext!,
+            res.msg ?? "",
+          );
+          resState = false;
+        } else {
+          resState = true;
+        }
+      } catch (e) {
+        OverlayHelper.showErrorToast(
+            Get.overlayContext!, "region not available");
+        resState = false;
+      }
+    }, checkConnection: true);
+    if (state) {
+      return resState;
+    } else {
+      return state;
+    }
   }
 }
