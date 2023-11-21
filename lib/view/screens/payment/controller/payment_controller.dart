@@ -151,7 +151,7 @@ update();
   Future<void> onPaymentResult(result) async {
     print('result of payment ${result.toString()}');
     if (result is PaymentResponse) {
-       showCustomSnackBar(Strings.success.tr);
+       showCustomSnackBar(Strings.success.tr,isError: false);
       await CacheHelper.setValue(kay: Strings.transactionId, value: result.id);
        // showCustomSnackBar(result.id);
        Get.off(()=> const ReviewScreen());

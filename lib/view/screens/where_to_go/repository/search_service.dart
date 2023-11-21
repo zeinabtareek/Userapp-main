@@ -1,17 +1,14 @@
 //
 import 'dart:async';
 import 'dart:convert';
+import 'dart:convert' as convert;
 
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:ride_sharing_user_app/authenticate/data/models/res-models/country_model.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
-import 'dart:convert' as convert;
 
-import '../../../../util/app_style.dart';
 import '../model/distance_model.dart';
 import '../model/search_suggestion_model.dart';
 

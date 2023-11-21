@@ -64,7 +64,6 @@ class SendMsgReqModel {
     } else {
       chatType = ChatType.admin;
       this.chatId = chatId;
-      print(" this.chatId = chatId ${this.chatId = chatId} ");
     }
     return this;
   }
