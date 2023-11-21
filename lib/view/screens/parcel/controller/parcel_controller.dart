@@ -9,7 +9,9 @@ import 'package:ride_sharing_user_app/view/screens/parcel/screens/status_package
 
 import '../../../../helper/display_helper.dart';
 import '../../../../helper/location_permission.dart';
+import '../../../../mxins/map/map_view_helper.dart';
 import '../../../../util/action_center/exceptions.dart';
+import '../../../../util/app_constants.dart';
 import '../../../../util/app_strings.dart';
 import '../../../../util/ui/overlay_helper.dart';
 import '../../choose_from_map/choose_from_map_screen.dart';
@@ -213,13 +215,12 @@ class ParcelController
     } else if (receiverNameController.text.isEmpty) {
       showCustomSnackBar('enter_receiver_address'.tr);
     } else {
-      // updateParcelState(ParcelDeliveryState.parcelInfoDetails);
+       updateParcelState(ParcelDeliveryState.parcelInfoDetails);
 print("source$source");
 print("destination $destination");
-
-      await  createParcel([source!,destination!] );
-      // await Get.find<CreateParcelController>().createParcel([source!,destination!]);
-    }
+///Zeinab uncomment this
+      // await  createParcel([source!,destination!] );
+     }
   }
 ///CREATE A PARCEL
 
@@ -262,12 +263,11 @@ print("destination $destination");
   }
 
 
-
-
   CreateParcelModel createParcelModel=CreateParcelModel();
 
   String? get packageId => Get.find<RideController>().selectedPackage.value?.id;
-
+  String? get parcelCategoryId=>
+      Get.find<RideController>().selectedSubPackage.value?.id;
   Future<From> _form(LatLng source) async {
     return From(
         lat: source.latitude.toString(),
@@ -282,12 +282,49 @@ print("destination $destination");
       location: await getPlaceNameFromLatLng(destination),
     );
   }
+
+  Future<List<ExtraRoutes>> googleRoutes(
+      LatLng source,
+      LatLng destination,
+      ) async {
+    List<ExtraRoutes> list = [];
+
+    // if (extraPoint.isEmpty) {
+      var resList =
+      await FlutterPolylinePointsHelper.getRouteBetweenCoordinates(
+          AppConstants.mapKey,
+          source.latitude,
+          source.longitude,
+          destination.latitude,
+          destination.longitude);
+
+      for (var element in resList.points) {
+        list.add(
+          ExtraRoutes(
+              lat: element.latitude.toString(),
+              lng: element.longitude.toString(),
+              location: ""
+            //  await getPlaceNameFromLatLng(element.toLatLng),
+          ),
+        );
+      }
+
+
+      return list;
+    // }
+  }
   createParcel( List<LatLng> points )async{
+    print('parcelCategoryId${parcelCategoryId}');
     // await  parcelRepo.createAParcel(createParcelBody: null);
-    LatLng source = points.first; // Example source coordinate (San Francisco)
+    LatLng source = points.first;
     LatLng destination = points.last;
     ///change this
     String time = "12";
+    List<ExtraRoutes> gogleR = await googleRoutes(
+      source,
+      destination,
+    );
+
     try {
       // var result = await actionCenter.execute(() async {
       //   setState(ViewState.busy);
@@ -296,21 +333,28 @@ print("destination $destination");
       createParcelModel = await parcelRepo.createAParcel(
         createParcelBody: CreateParcelBody(
           orderType: 'parcel',
-          packageId: packageId,
+          packageId: '9571cdde-45fc-4501-9538-82ac88c5b397',
+          // packageId: packageId,
           // from: await _form(source),
           from: await _form(source),
           to: await _to(destination),
-
-
+          senderNumber: senderContactController.text,
+          senderName: senderNameController.text,
+          receiverName: receiverContactController.text,
+          receiverNumber:receiverNameController.text ,
+          parcelDimension: '12*12*9',
+          parcelWeight: '33',
+          whoPay: payReceiver?'receiver':"sender",
+          parcelCategoryId: 'c4e3684c-b8a5-46bf-9a0e-6df25d457da4' ,
+          // parcelCategoryId: parcelCategoryId ,
           time: time,
           distance: 33,
           note: '',
-
           paymentType: 'cash',
-          googleRoutes: [],
+          googleRoutes: gogleR,
         ),
       );
-      print('new trip data   ${createParcelModel.data?.id}');
+      print('new trip data ${createParcelModel.data?.id}');
 
 
      // setState(ViewState.idle);
