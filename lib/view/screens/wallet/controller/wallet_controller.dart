@@ -154,7 +154,8 @@ back(){
   onPaymentResult(result) async {
     print('result of payment ${result.toString()}');
       if (result is PaymentResponse) {
-        showCustomSnackBar(Strings.success.tr);
+        showCustomSnackBar(Strings.success.tr,isError: false);
+
        await withdrawWallet(transactionId: result.id);//
        switch (result.status) {
         case PaymentStatus.paid:
@@ -195,7 +196,7 @@ back(){
   onPaymentResultCharge(result) async {
     print('result of payment ${result.toString()}');
     if (result is PaymentResponse) {
-      showCustomSnackBar(Strings.success.tr);
+      showCustomSnackBar(Strings.success.tr,isError: false);
       await chargeWallet(transactionId: result.id);//
       switch (result.status) {
         case PaymentStatus.paid:
