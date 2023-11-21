@@ -136,7 +136,7 @@ class CreateATripController extends BaseMapController {
     LatLng destination = points.last;
 
     List<ExtraRoutes> extraRoute = await extraRoutes(points);
-    String time = "12";
+    // String time = "12";
     //  await calculateDuration(source, destination);
 
     List<ExtraRoutes> gogleR = await googleRoutes(
@@ -161,7 +161,7 @@ class CreateATripController extends BaseMapController {
             from: await _form(source),
             to: await _to(destination),
             extraRoutes: extraRoute,
-            time: time,
+            time: '12',
             distance: num.parse(
                 Get.find<BaseMapController>().distance.value.toString()),
             note: note,
