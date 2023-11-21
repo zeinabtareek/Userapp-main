@@ -477,6 +477,8 @@
   "pay_with_apple_pay": "ادفع رحلتك باستخدام طريقة الدفع Apple pay ...",
   "click_on_btn_to_finish_your_billing": "انقر فوق الزر لإنهاء الدفع الخاص بك",
   "from": "من",
+  "from_camera": "من الكاميرا","from_gallery": "من المعرض",
+  "duration": "المدة",
   "your_balance_wallet_not_enough": "عذرًا، رصيد محفظتك لا يكفي لدفع ثمن الرحلة."
 
 

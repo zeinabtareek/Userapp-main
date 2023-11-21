@@ -113,6 +113,23 @@ class SecondWidget extends StatelessWidget {
                           height: Dimensions.paddingSizeDefault,
                         ),
 
+
+
+                        GetBuilder<BaseMapController>(
+                            init: BaseMapController(),
+                            builder: (controller)    =>        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('duration'.tr),
+                            Text('${controller.duration}'),
+                            // Text('${baseMapController.duration}'),
+                          ],
+                        ),
+                        ),
+                        const SizedBox(
+                          height: Dimensions.paddingSizeDefault,
+                        ),
+
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0, left: 8),
                           child: Text(

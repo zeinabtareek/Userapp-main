@@ -463,6 +463,7 @@
   "mall": "Mall",  "min": "Minutes",
   "digital": "Digital",
   "km": "Km",
+  "duration": "Duration",
 
   "update_settings": "update Setting",
   "hr": "Hr","select_a_Payment_method": "Select a payment method",
@@ -471,7 +472,8 @@
   "your_selected_car_type": "your selected car type is ",
   "pay_with_apple_pay": "Pay your ride using Apple pay payment method ...",
   "click_on_btn_to_finish_your_billing": "Click the button to finalize your payment",
-  "from": "From",
+  "from": "From","from_gallery": "from gallery",
+  "from_camera": "From camera",
   "your_balance_wallet_not_enough": "Sorry, your wallet balance is not enough to pay for the ride."
 
 
