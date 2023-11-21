@@ -234,7 +234,6 @@ class InitialRequestWidget extends StatelessWidget {
                                 //     request[RequestState.getPriceState]!);
                                 // await controller.getOrderPrice();
                                 // controller.update();
-
                                 ///>>>>>>
                                 controller.getOrderPrice();
 

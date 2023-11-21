@@ -17,7 +17,7 @@ class SearchBottom extends StatelessWidget {
     return GetBuilder<ChooseFromMapController>(
       init: ChooseFromMapController(),
       builder: (controller) => Container(
-        margin: K.fixedPadding0,
+       // margin: K.fixedPadding0,
         padding: K.fixedPadding0,
         decoration: BoxDecoration(
             color:    Theme.of(context).scaffoldBackgroundColor,
@@ -33,6 +33,7 @@ class SearchBottom extends StatelessWidget {
          // color: Colors.white,
           color:  Theme.of(context).scaffoldBackgroundColor,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
