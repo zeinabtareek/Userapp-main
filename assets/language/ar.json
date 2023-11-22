@@ -480,6 +480,17 @@
   "from_camera": "من الكاميرا","from_gallery": "من المعرض",
   "duration": "المدة",
   "your_balance_wallet_not_enough": "عذرًا، رصيد محفظتك لا يكفي لدفع ثمن الرحلة.",
-"your_wallet_now_is": "رصيد محفظتك الآن"
+"your_wallet_now_is": "رصيد محفظتك الآن",
+  "Sorry_for_waiting_first_alert": "نحن نعمل جاهدين للعثور على السائق الخاص بك. شكرًا على انتظارك!",
+
+  "Sorry_for_waiting_sec_alert": "أبحث حاليًا عن سائق لك. نقدر سعة صدرك.",
+
+  "Sorry_for_waiting_third_alert":"نعتذر عن الانتظار. البحث عن برنامج التشغيل قيد التقدم.",
+
+  "Sorry_for_waiting_fourth_alert": "مازلت أبحث عن سائق. شكرًا لك على سعة صدرك.",
+
+  "Sorry_for_waiting_fifth_alert":"العثور على سائق لك. شكرًا على انتظارك!",
+
+  "Sorry_for_waiting_sixth_alert": "نعتذر عن التأخير. البحث عن السائق مستمر."
 
 }

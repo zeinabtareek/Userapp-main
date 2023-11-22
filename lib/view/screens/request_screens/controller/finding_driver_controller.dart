@@ -3,8 +3,10 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/util/ui/overlay_helper.dart';
 
 import '../../../../enum/request_states.dart';
+import '../../../../util/images.dart';
 import '../../where_to_go/controller/create_trip_controller.dart';
 import 'base_map_controller.dart';
 
@@ -12,13 +14,27 @@ class FindingDriverController extends CreateATripController {
   ///handle future state only for testing
   ///
   String? oId;
+  Timer? _timer; // Declare the Timer as an instance variable
+
+  @override
+  void dispose() {
+    // Cancel the timer when the screen is disposed
+    _timer?.cancel();
+    super.dispose();
+  }
   @override
   onInit() async {
     super.onInit();
     oId = getOrderId();
+
     handelSocket();
 
     await handelState();
+
+    initHandleWaitingStatus();
+  }
+
+  Future<void> initHandleWaitingStatus() async {
     await handleWaitingStatus(true);
   }
 
@@ -60,7 +76,6 @@ class FindingDriverController extends CreateATripController {
   handelState() async {
     if (Get.find<BaseMapController>().widgetNumber.value ==
         request[RequestState.findDriverState]) {
-      // Get.find<BaseMapController>(). key.currentState?.contract();
       Future.delayed(const Duration(seconds: 5), () async {
         Get.find<BaseMapController>().key.currentState!.expand();
         Get.find<BaseMapController>()
@@ -73,50 +88,41 @@ class FindingDriverController extends CreateATripController {
     }
   }
 
-
   ///handle waiting statue
 
-handleWaitingStatus(bool stillWaiting )async{
-  // Set the initial timeout to 2 minutes
-  const Duration initialTimeout = Duration(minutes: 2);
 
-  // Set the interval timeout to 50 seconds
-  const Duration intervalTimeout = Duration(seconds: 50);
-  // A list of 5 static strings
   final List<String> randomTexts = [
-    'Text::: 1',
-    'Text 2',
-    'Text 3',
-    'Text 4',
-    'Text 5',
+    'Sorry_for_waiting_first_alert',
+    'Sorry_for_waiting_sec_alert',
+    'Sorry_for_waiting_third_alert',
+    'Sorry_for_waiting_fourth_alert',
+    'Sorry_for_waiting_fifth_alert',
+    'Sorry_for_waiting_sixth_alert',
   ];
 
-  // Function to print a random text from the list
-  void printRandom() {
+  printRandom() {
     final random = Random();
     final randomIndex = random.nextInt(randomTexts.length);
-    print(randomTexts[randomIndex]);
+    print('randomTexts ::${randomTexts[randomIndex]}');
+    OverlayHelper.showDurationAlert(Get.overlayContext!, randomTexts[randomIndex],Images.reloadIcon,'We Still searching for you',);
   }
 
-  // Start the initial timer
-  Timer(initialTimeout, () {
-    // Check if the parameter is still false after 2 minutes
-    if (!stillWaiting) {
-      // If still false, print a random text
-      printRandom();
+  handleWaitingStatus(bool stillWaiting) async {
+    if (stillWaiting) {
+      const Duration intervalTimeout = Duration(minutes: 2);
+      Duration initialTimeout = Duration(seconds: 10);
 
-      // Set up a repeating timer with a 50-second interval
-      Timer.periodic(intervalTimeout, (Timer timer) {
-        // Check if the parameter is still false
+      Future.delayed(initialTimeout, () {
+        print('object1');
+      });
+
+      _timer = Timer.periodic(intervalTimeout , (Timer timer) async {
         if (!stillWaiting) {
-          // If still false, print another random text
-          printRandom();
-        } else {
-          // If the parameter becomes true, cancel the timer
           timer.cancel();
+        } else {
+          await printRandom();
         }
       });
     }
-  });
 }
 }

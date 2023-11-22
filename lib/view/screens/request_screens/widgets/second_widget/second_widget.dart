@@ -96,7 +96,7 @@ class SecondWidget extends StatelessWidget {
                                 rideController.priceData.priceBeforeDiscount == null
                                     ? const Text('0.0')
                                     : Text(
-                                        '${rideController.priceData.priceBeforeDiscount} ',
+                                        '${rideController.priceData.priceBeforeDiscount?.ceil().toInt()} ',
                                         style: textSemiBold.copyWith(
                                             color: Theme.of(context)
                                                 .textTheme
