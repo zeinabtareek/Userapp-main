@@ -23,7 +23,7 @@ class SignInScreen extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
+   //   backgroundColor: Theme.of(context).canvasColor,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(

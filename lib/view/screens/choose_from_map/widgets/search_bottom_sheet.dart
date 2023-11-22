@@ -35,7 +35,7 @@ class SearchBottom extends StatelessWidget {
             color: Theme.of(context).scaffoldBackgroundColor,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   Strings.selectDestination.tr,

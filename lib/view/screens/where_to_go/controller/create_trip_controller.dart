@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../enum/payment_enum.dart';
 import '../../../../enum/request_states.dart';
 import '../../../../enum/view_state.dart';
 import '../../../../mxins/map/map_view_helper.dart';
@@ -136,7 +137,7 @@ class CreateATripController extends BaseMapController {
     LatLng destination = points.last;
 
     List<ExtraRoutes> extraRoute = await extraRoutes(points);
-    String time = "12";
+      String time = "12";
     //  await calculateDuration(source, destination);
 
     List<ExtraRoutes> gogleR = await googleRoutes(
@@ -148,7 +149,7 @@ class CreateATripController extends BaseMapController {
           : [],
       destination,
     );
-
+print('payment ${paymentType}');
     try {
       var result = await actionCenter.execute(() async {
         setState(ViewState.busy);
@@ -161,7 +162,8 @@ class CreateATripController extends BaseMapController {
             from: await _form(source),
             to: await _to(destination),
             extraRoutes: extraRoute,
-            time: time,
+            // time: '22',
+            time: Get.find<BaseMapController>().durationValue.toString(),
             distance: num.parse(
                 Get.find<BaseMapController>().distance.value.toString()),
             note: note,
@@ -183,6 +185,7 @@ class CreateATripController extends BaseMapController {
             .changeState(request[RequestState.findDriverState]!);
         Get.find<BaseMapController>().update();
         setState(ViewState.idle);
+        await _checkThePaymentMethod(createOrderModel.data?.finalPrice);
         isLoadingCreateATrip(false);
       }, checkConnection: true);
 
@@ -196,12 +199,26 @@ class CreateATripController extends BaseMapController {
     } on CustomException catch (e) {
       OverlayHelper.showErrorToast(Get.overlayContext!, e.message);
     }
-
+    //
     throw Exception(
-        "Unexpected error occurred"); // Throw an exception if none of the catch blocks are executed
-    // update();
-  }
+        "Unexpected error occurred");
 
+  }
+  //
+  _checkThePaymentMethod(totalPrice) async {
+    PaymentTypeState selectedPaymentType =
+    enumFromString(paymentType ?? '');
+
+    if (selectedPaymentType == PaymentTypeState.wallet) {
+      ///Zeinab this is ::: Condition when the payment method is wallet
+
+      print('this is wallet');
+      var minWallet=double.parse(user?.wallet.toString()??'0.0')-totalPrice;
+      OverlayHelper.showSuccessToast(Get.overlayContext!, '${'your_wallet_now_is'.tr} ${minWallet}');
+    } else {
+      print('this isn\'t wallet');
+    }
+  }
   @override
   Future<String> getPlaceNameFromLatLng(LatLng latlng) async {
     return SearchServices().getPlaceNameFromLatLng(latlng);
@@ -264,11 +281,6 @@ class CreateATripController extends BaseMapController {
     }
   }
 
-  Future<void> launchUrlFun(String url, bool isMail) async {
-    if (!await launchUrl(Uri.parse(isMail ? params.toString() : url))) {
-      throw 'Could not launch $url';
-    }
-  }
 
   final Uri params = Uri(
     scheme: 'mailto',

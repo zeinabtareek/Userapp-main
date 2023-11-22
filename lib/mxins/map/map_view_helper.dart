@@ -54,7 +54,7 @@ mixin MapViewHelper on GetxController {
     double? disLong,
   }) async {
     bool isHaveDist = disLat != null && disLong != null;
-    GoogleMapController controller = _mapViewHelperMapController!;
+    GoogleMapController ?controller = _mapViewHelperMapController;
 
     double zoomCamara = 0.0;
     if (isHaveDist) {
@@ -70,11 +70,11 @@ mixin MapViewHelper on GetxController {
     );
 
     if (!isAnimate) {
-      await controller.moveCamera(
+      await controller!.moveCamera(
         cameraPosition,
       );
     } else {
-      await controller.animateCamera(cameraPosition);
+      await controller!.animateCamera(cameraPosition);
     }
     update();
   }

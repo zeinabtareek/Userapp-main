@@ -96,10 +96,11 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
         // emit(PaginationError(
         //     error ?? AppGlobalConstants.notFoundDataDefaultMsg));
         change(
-          const PaginationError(
+           PaginationError(
             // todo
             // error ?? AppGlobalConstants.notFoundDataDefaultMsg,
-            "notFoundData",
+            "${error}",
+            // "notFoundData",
           ),
           status: RxStatus.success(),
         );

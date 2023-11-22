@@ -5,8 +5,7 @@ class CreateParcelBody {
   String? packageId;
   From? from;
   To? to;
-  List<ExtraRoutes>? extraRoutes;
-  List<ExtraRoutes>? googleRoutes;
+   List<ExtraRoutes>? googleRoutes;
   String? time;
   num? distance;
   String? note;
@@ -25,8 +24,7 @@ class CreateParcelBody {
     this.packageId,
     this.from,
     this.to,
-    this.extraRoutes,
-    this.googleRoutes,
+     this.googleRoutes,
     this.time,
     this.distance,
     this.note,
@@ -47,10 +45,7 @@ class CreateParcelBody {
       packageId: json['package_id'],
       from: json['from'] != null ? From.fromJson(json['from']) : null,
       to: json['to'] != null ? To.fromJson(json['to']) : null,
-      extraRoutes: json['extra_routes'] != null
-          ? List<ExtraRoutes>.from(
-          json['extra_routes'].map((x) => ExtraRoutes.fromJson(x)))
-          : null,
+
       googleRoutes: json['google_route'] != null
           ? List<ExtraRoutes>.from(
           json['google_route'].map((x) => ExtraRoutes.fromJson(x)))
@@ -66,17 +61,14 @@ class CreateParcelBody {
     final Map<String, dynamic> data = {};
     data['order_type'] = orderType;
     data['package_id'] = packageId;
-    data['from'] = from?.toJson();
-    data['to'] = to?.toJson();
-
-    if (extraRoutes != null && extraRoutes!.isNotEmpty) {
-      data['extra_routes'] =
-          extraRoutes!.map((element) => element.toJson()).toList();
-    }
-
-    if (googleRoutes != null && googleRoutes!.isNotEmpty) {
-      data['google_route'] =
-          googleRoutes!.map((element) => element.toJson()).toList();
+    // data['from'] = from?.toJson();
+    // data['to'] = to?.toJson();
+    data.addAll(from?.toJson() ?? {});
+    data.addAll(to?.toJson() ?? {});
+    if (googleRoutes != null && (googleRoutes?.isNotEmpty ?? false)) {
+      for (var element in googleRoutes!) {
+        data.addAll(element.toGoogleRouteJson(googleRoutes!.indexOf(element)));
+      }
     }
 
     data['time'] = time;

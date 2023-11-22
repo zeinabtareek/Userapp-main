@@ -34,9 +34,9 @@ abstract class NetWorkPaginateListUseCase<E,
           (PaginationApiModel(), []),
         );
       }
-    } else {
-      return DataFailedErrorMsg(
-          "No internet connection", (PaginationApiModel(), []));
+    } else {print("e ::  ");
+      return DataFailedErrorMsg("No internet connection", (PaginationApiModel(), []));
+          // "No internet connection", (PaginationApiModel(), []));
     }
   }
 }

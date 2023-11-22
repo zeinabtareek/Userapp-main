@@ -123,8 +123,7 @@ class SecondWidget extends StatelessWidget {
                             Text('duration'.tr),
                             Text('${controller.duration}'),
                             // Text('${baseMapController.duration}'),
-                          ],
-                        ),
+                          ],   ),
                         ),
                         const SizedBox(
                           height: Dimensions.paddingSizeDefault,

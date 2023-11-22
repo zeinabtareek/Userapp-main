@@ -236,7 +236,7 @@ class SetDestinationScreen extends StatelessWidget {
                                               width:
                                                   Dimensions.paddingSizeSmall,
                                             ),
-                                            Text('${item!.location}',style: textMedium,),
+                                            Text('${item?.location}',style: textMedium,),
                                           ],
                                         ),
                                       ),
@@ -244,7 +244,7 @@ class SetDestinationScreen extends StatelessWidget {
                                         _showSelectPointByPressBottomSheet(
                                             context, (type) {
                                           whereToGoController
-                                              .selectPointByPress(type, item);
+                                              .selectPointByPress(type, item!);
                                         });
                                       },
                                     );
