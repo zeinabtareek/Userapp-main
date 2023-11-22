@@ -109,8 +109,8 @@ class FindingDriverController extends CreateATripController {
 
   handleWaitingStatus(bool stillWaiting) async {
     if (stillWaiting) {
-      const Duration intervalTimeout = Duration(minutes: 2);
-      Duration initialTimeout = Duration(seconds: 10);
+      const Duration intervalTimeout = Duration(minutes: 3);
+      Duration initialTimeout = Duration(minutes: 2);
 
       Future.delayed(initialTimeout, () {
         print('object1');
