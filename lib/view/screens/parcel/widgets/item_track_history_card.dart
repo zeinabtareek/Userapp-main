@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../util/dimensions.dart';
@@ -8,7 +7,7 @@ import 'custom_oval.dart';
 Widget itemTrackHistory(
     {Icon? icon,
     double? elevated,
-      required void Function()? onTap,
+    required void Function()? onTap,
     required String title,
     required String subTitle}) {
   return GestureDetector(
@@ -46,7 +45,7 @@ Widget itemTrackHistory(
             ),
           ],
         ),
-        leading: CustomOvel(Image.asset(Images.package2),
+        leading: customOval(Image.asset(Images.package2),
             color: Colors.grey.withOpacity(.3)),
       ),
     ),

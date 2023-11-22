@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../util/app_style.dart';
 
-Widget CustomOvel(Widget image,
+Widget customOval(Widget image,
     {Color? color, Color? borderColor, void Function()? onTap, height, width}) {
   return Container(
     decoration: BoxDecoration(

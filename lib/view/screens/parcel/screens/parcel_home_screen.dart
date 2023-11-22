@@ -84,7 +84,7 @@ class ParcelHomeScreen extends StatelessWidget {
                   children: [
                     K.sizedBoxW0,
                     GestureDetector(
-                      child: CustomOvel(
+                      child: customOval(
                         Image.asset(Images.profileOutline),
                       ),
                       onTap: () => Get.to(() => const ProfileScreen()),
@@ -105,7 +105,7 @@ class ParcelHomeScreen extends StatelessWidget {
                       ],
                     ),
                     GestureDetector(
-                      child: CustomOvel(
+                      child: customOval(
                         Image.asset(Images.notificationOutline),
                       ),
                       onTap: () =>
@@ -164,123 +164,122 @@ class ParcelHomeScreen extends StatelessWidget {
               ],
             ),
             body: GetBuilder<ParcelController>(
-              init: ParcelController(parcelRepo: ParcelRepo() ),
-              autoRemove: false,
-              builder: (controller) {
-              return Container(
-                color: Colors.white,
-                padding: K.fixedPadding0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // AnimatedWidget(  items:controller.optionsList ,isVertical: false,widget:
-                    // Card(
-                    //   shape:   RoundedRectangleBorder(
-                    //     borderRadius: BorderRadius.circular(15.0),  ),
-                    //   elevation: 4,
-                    //   child: CustomCategoryCard(
-                    //     width: MediaQuery.of(Get.context!).size.width/3,
-                    //     height: 140,
-                    //     color: Colors.white,
-                    //     image:controller.optionsList[0]['image']??'',
-                    //     title:controller.optionsList[0]['title'],
-                    //     isClicked: false,
-                    //   ),
-                    // ),
-                    // itemTrackHistory(onTap: (){
-                    //       Get.to(()=>OrderDetails());},
-                    //         title: 'Nintendo Swich Oled',
-                    //         subTitle: 'Order ID: JB39029910020'),
-
-
-                    AnimationLimiter(
-                      child: GridView.builder(physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisSpacing: 10,
-                          childAspectRatio: 1.2,
-                          crossAxisCount: 2,
-                        ),
-                        itemCount: controller.optionsList.length,
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, int index) {
-                          return AnimationConfiguration.staggeredGrid(
-                              position: index,
-                              duration: const Duration(milliseconds: 500),
-                              columnCount: 2,
-                              // Set the same value as crossAxisCount
-                              child: SlideAnimation(
-                                  horizontalOffset:
-                                      MediaQuery.of(context).size.width / 2,
-                                  // verticalOffset:   50.0 ,
-                                  child: GestureDetector(
-                                    onTap: ()=> Get.to(controller.optionsList[index]
-                                    ['onTap']??{} ),
-                                    child: Card(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15.0),
-                                        ),
-                                        elevation: 4,
-                                        child: CustomCategoryCard(
-                                          height: 140,
-                                          color: Colors.white,
-                                          image: controller.optionsList[index]
-                                                  ['image'] ??
-                                              '',
-                                          title: controller.optionsList[index]
-                                              ['title'],
-                                          isClicked: false,
-                                        )),
-                                  )));
-                        },
-                      ),
-                    ),
-
-
-                    K.sizedBoxH0,
-
-
-                    Text(
-                      Strings.specialOffers.tr,
-                      style: K.semiBoldBlackTextStyle,
-                    ),
-                    K.sizedBoxH0,
-                    Image.asset(
-                      Images.banner,
-                      height: 200,
-                      width: Get.width,
-                    ),
-                    K.sizedBoxH0,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                init: ParcelController(parcelRepo: ParcelRepo()),
+                autoRemove: false,
+                builder: (controller) {
+                  return Container(
+                    color: Colors.white,
+                    padding: K.fixedPadding0,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // AnimatedWidget(  items:controller.optionsList ,isVertical: false,widget:
+                        // Card(
+                        //   shape:   RoundedRectangleBorder(
+                        //     borderRadius: BorderRadius.circular(15.0),  ),
+                        //   elevation: 4,
+                        //   child: CustomCategoryCard(
+                        //     width: MediaQuery.of(Get.context!).size.width/3,
+                        //     height: 140,
+                        //     color: Colors.white,
+                        //     image:controller.optionsList[0]['image']??'',
+                        //     title:controller.optionsList[0]['title'],
+                        //     isClicked: false,
+                        //   ),
+                        // ),
+                        // itemTrackHistory(onTap: (){
+                        //       Get.to(()=>OrderDetails());},
+                        //         title: 'Nintendo Swich Oled',
+                        //         subTitle: 'Order ID: JB39029910020'),
+
+                        AnimationLimiter(
+                          child: GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisSpacing: 10,
+                              childAspectRatio: 1.2,
+                              crossAxisCount: 2,
+                            ),
+                            itemCount: controller.optionsList.length,
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              return AnimationConfiguration.staggeredGrid(
+                                  position: index,
+                                  duration: const Duration(milliseconds: 500),
+                                  columnCount: 2,
+                                  // Set the same value as crossAxisCount
+                                  child: SlideAnimation(
+                                      horizontalOffset:
+                                          MediaQuery.of(context).size.width / 2,
+                                      // verticalOffset:   50.0 ,
+                                      child: GestureDetector(
+                                        onTap: () => Get.to(controller
+                                                .optionsList[index]['onTap'] ??
+                                            {}),
+                                        child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(15.0),
+                                            ),
+                                            elevation: 4,
+                                            child: CustomCategoryCard(
+                                              height: 140,
+                                              color: Colors.white,
+                                              image:
+                                                  controller.optionsList[index]
+                                                          ['image'] ??
+                                                      '',
+                                              title: controller
+                                                  .optionsList[index]['title'],
+                                              isClicked: false,
+                                            )),
+                                      )));
+                            },
+                          ),
+                        ),
+
+                        K.sizedBoxH0,
+
                         Text(
                           Strings.specialOffers.tr,
                           style: K.semiBoldBlackTextStyle,
                         ),
-                        Text(
-                          Strings.viewAll.tr,
-                          style: K.semiBoldBlackTextStyle,
+                        K.sizedBoxH0,
+                        Image.asset(
+                          Images.banner,
+                          height: 200,
+                          width: Get.width,
                         ),
+                        K.sizedBoxH0,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              Strings.specialOffers.tr,
+                              style: K.semiBoldBlackTextStyle,
+                            ),
+                            Text(
+                              Strings.viewAll.tr,
+                              style: K.semiBoldBlackTextStyle,
+                            ),
+                          ],
+                        ),
+                        K.sizedBoxH0,
+                        trackHistoryList([2, 2, 2, 3]),
                       ],
                     ),
-                    K.sizedBoxH0,
-                    trackHistoryList([2, 2, 2, 3]),
-                  ],
-                ),
-              );
-            }),
+                  );
+                }),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: customFloatActionButton(
             image: Images.doc,
             onPressed: () {
-
-              Get.to(StatusPackageScreen(),binding: BindingsBuilder(() {
-              //  Get.lazyPut(()=>BaseMapController());
+              Get.to(StatusPackageScreen(), binding: BindingsBuilder(() {
+                //  Get.lazyPut(()=>BaseMapController());
               }));
             }));
   }

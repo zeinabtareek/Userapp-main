@@ -22,7 +22,7 @@ class SearchServices {
       {
     required String search,
   }) async {
-    print('map api key is::${AppConstants.mapKey}');
+    // print('map api key is::${AppConstants.mapKey}');
     var url =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&components=country:$_country&key=${AppConstants.mapKey}';
     // 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&components=country:$country&key=AIzaSyCzuhU5w3Ah8t2x2pIKXzsGoATsdzVNK9I';
