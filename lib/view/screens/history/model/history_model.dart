@@ -1,5 +1,3 @@
-
-
 import '../../../../bases/base_id_value_model.dart';
 import '../../where_to_go/model/order_create.dart';
 
@@ -37,7 +35,7 @@ class HistoryData {
   String? status;
   num? distance;
   num? finalPrice;
-
+  String? orderNum;
   int? time;
   String? paymentType;
   From? from;
@@ -49,19 +47,22 @@ class HistoryData {
   List<ExtraRoutes>? extraRoutes;
   HistoryData(
       {this.id,
-        this.status,
-        this.distance,
-        this.time,
-        this.paymentType,
-        this.from,
-        this.to,
-        this.isParcel,
-        this.finalPrice,
-        this.package,
-        this.driver,    this.extraRoutes,
-        this.createdAt});
+      this.status,
+      this.distance,
+      this.time,
+      this.paymentType,
+      this.from,
+      this.to,
+      this.isParcel,
+      this.finalPrice,
+      this.package,
+      this.driver,
+      this.extraRoutes,
+      this.orderNum,
+      this.createdAt});
 
   HistoryData.fromJson(Map<String, dynamic> json) {
+    orderNum = json['order_num'];
     id = json['id'];
     status = json['status'];
     distance = json['distance'];
@@ -72,9 +73,9 @@ class HistoryData {
     to = json['to'] != null ? new From.fromJson(json['to']) : null;
     isParcel = json['is_parcel'];
     package =
-    json['package'] != null ? new Package.fromJson(json['package']) : null;
+        json['package'] != null ? new Package.fromJson(json['package']) : null;
     driver =
-    json['driver'] != null ? new Driver.fromJson(json['driver']) : null;
+        json['driver'] != null ? new Driver.fromJson(json['driver']) : null;
     createdAt = json['created_at'];
     if (json['extra_routes'] != null) {
       extraRoutes = <ExtraRoutes>[];
@@ -131,6 +132,7 @@ class From {
     return data;
   }
 }
+
 class To {
   String? lat;
   String? lng;
@@ -163,11 +165,11 @@ class Package {
 
   Package(
       {this.id,
-        this.name,
-        this.img,
-        this.kmPrice,
-        this.isParcel,
-        this.hasChild});
+      this.name,
+      this.img,
+      this.kmPrice,
+      this.isParcel,
+      this.hasChild});
 
   Package.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -298,21 +300,21 @@ class Vehicle {
 
   Vehicle(
       {this.id,
-        this.type,
-        this.brand,
-        this.model,
-        this.factoryYear,
-        this.color,
-        this.licenseImage,
-        this.img});
+      this.type,
+      this.brand,
+      this.model,
+      this.factoryYear,
+      this.color,
+      this.licenseImage,
+      this.img});
 
   Vehicle.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
     brand = json['brand'];
     model = json['model'];
-    factoryYear = BaseIdNameModelString.fromMap(json['factory_year']) ;
-    color =  BaseIdNameModelString.fromMap(json['color']) ;
+    factoryYear = BaseIdNameModelString.fromMap(json['factory_year']);
+    color = BaseIdNameModelString.fromMap(json['color']);
     licenseImage = json['license_image'];
     img = json['img'];
   }

@@ -123,15 +123,13 @@ class LiveTrackingScreenForParcel extends StatelessWidget {
                       ],
                     ),
                     Spacer(),
-                    CustomOvel(
+                    customOval(
                         Icon(Icons.message_outlined,
                             color: Theme.of(context).primaryColor),
                         color: Theme.of(context).cardColor,
                         borderColor: Theme.of(context).primaryColor),
-
                     K.sizedBoxW0,
-
-                    CustomOvel(const Icon(Icons.phone, color: Colors.white),
+                    customOval(const Icon(Icons.phone, color: Colors.white),
                         color: Theme.of(context).primaryColor,
                         borderColor: Theme.of(context).primaryColor),
                   ],
