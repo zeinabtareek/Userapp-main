@@ -16,6 +16,3 @@ Map<RequestState, int> request = {
   RequestState.tripOngoing: 4,
   RequestState.tripFinishedState: 5,
 };
-// void func(){
-//   RequestState.initialState.index;
-// }

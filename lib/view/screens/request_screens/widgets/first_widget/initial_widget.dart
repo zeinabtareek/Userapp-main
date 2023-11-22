@@ -228,7 +228,7 @@ class InitialRequestWidget extends StatelessWidget {
 
                               if (controller.selectedSubPackage.value != null &&
                                   controller.initialSelectItem.value != null) {
-                                baseMapController.key.currentState!.contract();
+                                baseMapController.key.currentState!.expand();
                                 ///>>>>>>
                                 // baseMapController.changeState(
                                 //     request[RequestState.getPriceState]!);

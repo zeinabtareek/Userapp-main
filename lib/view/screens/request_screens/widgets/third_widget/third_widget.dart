@@ -33,6 +33,7 @@ class ThirdWidget extends StatelessWidget {
         init: FindingDriverController()..handelSocket(),
         builder: (findingDriverController) {
           return Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               const TollTipWidget(title: "driver3"),
               K.sizedBoxH0,

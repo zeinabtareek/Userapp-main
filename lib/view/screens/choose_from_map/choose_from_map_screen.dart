@@ -131,20 +131,20 @@ class ChooseFromMapScreen extends StatelessWidget {
                                   child: Image.asset(Images.mapLocationIcon),
                                 ),
                               )),
-                          // AnimatedPositioned(
-                          //   left: 0,
-                          //   right: 0,
-                          //   bottom: 15,
-                          //   duration: const Duration(milliseconds: 2000),
-                          //   curve: Curves.easeIn,
-                          //   child: Padding(
-                          //     padding: EdgeInsets.only(
-                          //       bottom:
-                          //           MediaQuery.of(context).viewInsets.bottom,
-                          //     ),
-                          //     child: const SearchBottom(),
-                          //   ),
-                          // ),
+                          AnimatedPositioned(
+                            left: 0,
+                            right: 0,
+                            bottom: 15,
+                            duration: const Duration(milliseconds: 2000),
+                            curve: Curves.easeIn,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom,
+                              ),
+                              child: const SearchBottom(),
+                            ),
+                          ),
                           Obx(
                             () => userMapController.searchResultsFrom.isNotEmpty
                                 ? userMapController.state == ViewState.busy
@@ -181,26 +181,8 @@ class ChooseFromMapScreen extends StatelessWidget {
             );
           },
         ),
-        bottomSheet:   SearchBottom(),
-        // Column(
-        //     mainAxisSize: MainAxisSize.min,
-        //     children: [
-        //       const Padding(
-        //         padding:   EdgeInsets.all(8.0),
-        //         child: SearchBottom(),
-        //       ),
-        //       K.sizedBoxH0,
-              //AnimatedPositioned(
-                // left: 15,
-                // right: 15,
-                // bottom: 15,
-              //   duration: Duration(milliseconds: 2000),
-              //   curve: Curves.easeIn,
-              //   child: SearchBottom(),
-              //
-              // ),
-            // ],
-          // )
+       // bottomSheet:   SearchBottom(),
+
       ),
 
     );

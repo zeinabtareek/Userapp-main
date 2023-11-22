@@ -56,7 +56,7 @@ class BaseMapScreen extends StatelessWidget {
     final controller = Get.put(BaseMapController());
     return
     Scaffold(
-          resizeToAvoidBottomInset: false,
+         // resizeToAvoidBottomInset: false,
              //   backgroundColor: Theme.of(context).shadowColor,
           body:
           CustomBody(
@@ -85,7 +85,7 @@ class BaseMapScreen extends StatelessWidget {
 
                       expandableContent:
                       Container(
-                          height: 500,
+                       //   height: 500,
                           // color: Colors.white,
                          color:Theme.of(context).scaffoldBackgroundColor,
                         // color: Colors.red,
@@ -94,8 +94,7 @@ class BaseMapScreen extends StatelessWidget {
                           child:
 
                           SingleChildScrollView(
-                            child: Column(
-                              children: [
+                            child:
                                 Obx(
                                   () => controller.widgetNumber.value ==
                                           request[RequestState.initialState]
@@ -153,83 +152,23 @@ class BaseMapScreen extends StatelessWidget {
                                                       FifthWidget()
                                                       : const SizedBox(),
                                 ), // ),
-                              ],
-                            ),
+
                           ),
                         ),
 
                       persistentHeader: fixedHeader(),
-                      //optional
-                      //This is a widget aligned to the bottom of the screen and stays there.
-                      ///footer
-                      // persistentFooter: Container(
-                      //   color: Colors.red,
-                      //   height: 60,
-                      //   child: Row(
-                      //     mainAxisSize: MainAxisSize.max,
-                      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //     children: <Widget>[
-                      //       IconButton(
-                      //           icon: const Icon(
-                      //             Icons.arrow_upward,
-                      //             color: Colors.white,
-                      //           ),
-                      //           onPressed: () {
-                      //             // controller.key.currentState!.contract();
-                      //             if( controller.key.currentState!.expansionStatus==controller.key.currentState!.expand){
-                      //               print('object');
-                      //             }
-                      //             controller.key.currentState!.expand();
-                      //             controller.expansionStatus.value =
-                      //                 controller.key.currentState!.expansionStatus;
-                      //             controller.widgetNumber.value = request[RequestState.initialState]!;
-                      //             // controller.widgetNumber.value = 0;
-                      //           }),
-                      //       IconButton(
-                      //         icon: Icon(
-                      //           Icons.cloud,
-                      //           color: Colors.white,
-                      //         ),
-                      //         onPressed: () {
-                      //           controller.key.currentState!.contract();
-                      //           controller.expansionStatus.value =
-                      //               controller.key.currentState!.expansionStatus;
-                      //           // controller.widgetNumber.value = 1;
-                      //           controller.widgetNumber.value = request[RequestState.getPriceState]!;
-                      //         },
-                      //       ),
-                      //       IconButton(
-                      //           icon: const Icon(
-                      //             Icons.arrow_downward,
-                      //             color: Colors.white,
-                      //           ),
-                      //           onPressed: () {
-                      //             controller.widgetNumber.value = 2;
-                      //
-                      //             controller.key.currentState!.expand();
-                      //           }),
-                      //     ],
-                      //   ),
-                      // ),
-
-                      //optional
-                      //The content extend will be at least this height.
                       persistentContentHeight: controller.persistentContentHeight,
-                      //optional
 
                       onIsContractedCallback: () => print('contracted'),
                       onIsExtendedCallback: () => print('expanded'),
-
-                      //optional; default: Duration(milliseconds: 250)
-                      //The durations of the animations.
                       animationDurationExtend: const Duration(milliseconds: 500),
                       animationDurationContract:
                           const Duration(milliseconds: 250),
 
-                      //optional; default: Curves.ease
-                      //The curves of the animations.
                       animationCurveExpand: Curves.bounceOut,
                       animationCurveContract: Curves.ease,
+                      // expandableContent: Container(height: 600,color: Colors.green,width: Get.width,),
+                      // background: Container(height: 600,color: Colors.red,width: Get.width,),
                     );
                   })),
       );

@@ -252,7 +252,7 @@ class RideController extends BaseController implements GetxService {
     RxBool priceIsLoading=false.obs;
   Future<OrderPriceData> getOrderPrice() async {
     priceIsLoading.value=true;
-    priceIsLoading.value=false;
+
     try {
       setState(ViewState.busy);
       priceData = await rideRepo.getPrice(
@@ -280,10 +280,11 @@ class RideController extends BaseController implements GetxService {
         update();
       }
 
-      setState(ViewState.idle);
+      setState(ViewState.idle);priceIsLoading.value=false;
       return priceData; // Return the result of getPrice function
     } catch (error) {
       // Handle errors here
+      priceIsLoading.value=false;
       setState(ViewState.error);
       rethrow; // Rethrow the error after handling (if needed)
     }
