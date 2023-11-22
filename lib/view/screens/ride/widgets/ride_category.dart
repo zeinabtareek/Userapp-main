@@ -64,6 +64,7 @@ class RideSubCategoryWidget extends StatelessWidget {
                                   categoryModel: listOfSubCategory[index]),
                             );
                           } else {
+
                             rideController
                                 .selectedSubPackage(listOfSubCategory[index]);
 
@@ -78,6 +79,9 @@ class RideSubCategoryWidget extends StatelessWidget {
                         } else {
                           rideController
                               .updateSelectedSubRideType(RideType.parcel);
+                          rideController
+                              .selectedSubPackage(listOfSubCategory[index]);
+
                           Get.to(() => const ParcelHomeScreen());
                         } // if (index == 0) {
                         //   rideController.updateSelectedRideType(RideType.car);

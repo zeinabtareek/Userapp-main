@@ -13,6 +13,8 @@ import 'package:ride_sharing_user_app/view/widgets/custom_text_field.dart';
 import '../../../../authenticate/presentation/widgets/test_field_title.dart';
 import '../../../../util/app_strings.dart';
 import '../../../../util/app_style.dart';
+import '../../home/controller/address_controller.dart';
+import '../../where_to_go/controller/where_to_go_controller.dart';
 
 class SenderReceiverInfoWidget extends StatefulWidget {
   const SenderReceiverInfoWidget({Key? key}) : super(key: key);
@@ -129,6 +131,9 @@ class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget>
           focusNode: parcelController.senderContactNode,
           nextFocus: parcelController.senderNameNode,
           inputType: TextInputType.phone,
+          onTap: (){
+
+          },
         ),
         TextFieldTitle(
           title: 'name'.tr,
@@ -150,18 +155,35 @@ class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget>
           title: 'address'.tr,
           textOpacity: 0.8,
         ),
+        // CustomTextField(
+        //   prefix: false,
+        //   suffixIcon: Images.addLocation,
+        //   borderRadius: 10,
+        //   showBorder: false,
+        //   hintText: 'location'.tr,
+        //   fillColor: Theme.of(context).primaryColor.withOpacity(0.04),
+        //   controller: parcelController.senderAddressController,
+        //   focusNode: parcelController.senderAddressNode,
+        //   inputType: TextInputType.text,
+        //   inputAction: TextInputAction.done,
+        //   onPressedSuffix: () {},
+        // ),
+        //
+
         CustomTextField(
-          prefix: false,
-          suffixIcon: Images.addLocation,
-          borderRadius: 10,
-          showBorder: false,
-          hintText: 'location'.tr,
-          fillColor: Theme.of(context).primaryColor.withOpacity(0.04),
-          controller: parcelController.senderAddressController,
-          focusNode: parcelController.senderAddressNode,
+          hintText: Strings.address.tr,
           inputType: TextInputType.text,
-          inputAction: TextInputAction.done,
-          onPressedSuffix: () {},
+          prefixIcon: Images.location,
+          borderRadius: 20,
+          readOnly: true,
+          focusNode: parcelController.senderAddressNode,
+          controller: parcelController.senderAddressController,
+           onTap: (){
+            parcelController.checkPermissionBeforeNavigation(
+              PointType.from,
+              context,
+            );
+          },
         ),
         HomeMyAddress(
           title: 'saved_address'.tr,
@@ -212,7 +234,7 @@ class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget>
           title: 'address'.tr,
           textOpacity: 0.8,
         ),
-        CustomTextField(
+       /* CustomTextField(
           suffixIcon: Images.addLocation,
           borderRadius: 10,
           showBorder: false,
@@ -223,6 +245,21 @@ class _SenderReceiverInfoWidgetState extends State<SenderReceiverInfoWidget>
           focusNode: parcelController.receiverAddressNode,
           inputType: TextInputType.text,
           inputAction: TextInputAction.done,
+        ),*/
+        CustomTextField(
+          hintText: Strings.address.tr,
+          inputType: TextInputType.text,
+          prefixIcon: Images.location,
+          borderRadius: 20,
+          readOnly: true,
+          focusNode: parcelController.receiverAddressNode,
+          controller: parcelController.receiverAddressController,
+          onTap: (){
+            parcelController.checkPermissionBeforeNavigation(
+              PointType.to,
+              context,
+            );
+          },
         ),
         HomeMyAddress(
           title: 'saved_address'.tr,

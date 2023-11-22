@@ -173,6 +173,7 @@ print('payment ${paymentType}');
           ),
         );
         orderId = createOrderModel.data!.id!;
+        // print('order ::::  id $orderId');
 
         setOrderId(orderId!);
         Get.find<RideController>()
@@ -193,7 +194,6 @@ print('payment ${paymentType}');
         print(" ::: error");
         isLoadingCreateATrip(false);
       }
-
 
       return createOrderModel; // Return the acceptedOrderData object
     } on CustomException catch (e) {
@@ -281,11 +281,6 @@ print('payment ${paymentType}');
     }
   }
 
-  Future<void> launchUrlFun(String url, bool isMail) async {
-    if (!await launchUrl(Uri.parse(isMail ? params.toString() : url))) {
-      throw 'Could not launch $url';
-    }
-  }
 
   final Uri params = Uri(
     scheme: 'mailto',

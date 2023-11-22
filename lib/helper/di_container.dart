@@ -42,6 +42,7 @@ import '../view/screens/history/controller/activity_controller.dart';
 import '../view/screens/history/controller/history_controller.dart';
 import '../view/screens/history/repository/history_repo.dart';
 import '../view/screens/notification/controller/notification_controller.dart';
+import '../view/screens/parcel/controller/create_parcel_controller.dart';
 import '../view/screens/profile/profile_screen/controller/user_controller.dart';
 import '../view/screens/request_screens/controller/base_map_controller.dart';
 import '../view/screens/request_screens/controller/finding_driver_controller.dart';
@@ -83,6 +84,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => CreateTripRepo());
   Get.lazyPut(() => RideRepo(apiClient: Get.find()));
   Get.lazyPut(() => SetMapRepo(apiClient: Get.find()));
+  Get.lazyPut(() => ParcelRepo( ));
   Get.lazyPut(() => PaymentRepo(apiClient: Get.find()));
   Get.lazyPut<HelpAndSupportRepo>(() => HelpAndSupportRepo());
 
@@ -108,6 +110,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => OfferController(offerRepo: Get.find()));
   Get.lazyPut(() => BannerController(bannerRepo: Get.find()));
   Get.lazyPut(() => AddressController(), fenix: true);
+  Get.lazyPut(() => CreateParcelController(parcelRepo: Get.find()), );
 
   ///newly added
   Get.lazyPut(() => BaseMapController(),fenix: true);

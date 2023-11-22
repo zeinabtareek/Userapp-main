@@ -32,6 +32,7 @@ target 'Runner' do
   use_frameworks!
   pod 'ReachabilitySwift'
   pod 'GoogleMaps'
+  pod 'Firebase/Messaging'
 
   use_modular_headers!
 

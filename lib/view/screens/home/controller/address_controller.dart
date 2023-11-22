@@ -72,7 +72,7 @@ class AddressController extends BaseController implements GetxService {
       selectedAddressLocation.value = null;
     }
   }
-
+//  Rxn<LatLng> selectedAddressLocation = Rxn();
   void naiveteToSelectAddress() {
     Get.to(() => ChooseFromMapScreen(
               selectedAddressLocation.value != null
