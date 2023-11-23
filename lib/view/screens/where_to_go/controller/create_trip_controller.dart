@@ -281,6 +281,10 @@ print('payment ${paymentType}');
     }
   }
 
+Future<void> launchUrlFun(String url, bool isMail) async {
+    if (!await launchUrl(Uri.parse(isMail ? params.toString() : url))) {
+      throw 'Could not launch $url';
+    }}
 
   final Uri params = Uri(
     scheme: 'mailto',
