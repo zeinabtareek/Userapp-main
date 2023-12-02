@@ -475,7 +475,18 @@
   "from": "From","from_gallery": "from gallery",
   "from_camera": "From camera",
   "your_wallet_now_is": "Your wallet balance now",
-  "your_balance_wallet_not_enough": "Sorry, your wallet balance is not enough to pay for the ride."
+  "your_balance_wallet_not_enough": "Sorry, your wallet balance is not enough to pay for the ride.",
+  "Sorry_for_waiting_first_alert": "We're working hard to find your driver. Thanks for waiting!",
+
+  "Sorry_for_waiting_sec_alert": "Currently seeking a driver for you. Your patience is appreciated.",
+
+  "Sorry_for_waiting_third_alert":"Apologies for the wait. Driver search is in progress.",
+
+  "Sorry_for_waiting_fourth_alert": "Still looking for a driver. Thank you for your patience.",
+
+  "Sorry_for_waiting_fifth_alert":"Finding a driver for you. Thanks for waiting!",
+
+  "Sorry_for_waiting_sixth_alert": "We apologize for the delay. Driver search ongoing."
 
 
 }

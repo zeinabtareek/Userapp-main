@@ -214,7 +214,7 @@ print('payment ${paymentType}');
 
       print('this is wallet');
       var minWallet=double.parse(user?.wallet.toString()??'0.0')-totalPrice;
-      OverlayHelper.showSuccessToast(Get.overlayContext!, '${'your_wallet_now_is'.tr} ${minWallet}');
+      OverlayHelper.showSuccessToast(Get.overlayContext!, '${'your_wallet_now_is'.tr} ${minWallet.ceil().toInt()}');
     } else {
       print('this isn\'t wallet');
     }
@@ -262,8 +262,10 @@ print('payment ${paymentType}');
 
         orderModel = await services.showTripDetails(orderId: orderId);
         orderModel = await services.showTripDetails(
-            orderId: 'b0a49d66-14e2-4236-bf1b-771e1f84a2fc');
+            orderId:
+            'b0a49d66-14e2-4236-bf1b-771e1f84a2fc'
         // Get.find<BaseMapController>().changeState(request[RequestState.riderDetailsState]!);//riderDetailsState
+        );
         print(orderModel.data?.driver);
         print(orderModel.data?.vehicleType?.id);
         // print(orderModel.data);
