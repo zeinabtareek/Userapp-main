@@ -31,8 +31,8 @@ class SetDestinationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // final controller = Get.put(WhereToGoController(setMapRepo: Get.find()));
     return Scaffold(
-    // backgroundColor: Colors.white,
-     backgroundColor: Theme.of(context).cardColor,
+      // backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).cardColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
         iconTheme:
@@ -236,7 +236,13 @@ class SetDestinationScreen extends StatelessWidget {
                                               width:
                                                   Dimensions.paddingSizeSmall,
                                             ),
-                                            Text('${item?.location}',style: textMedium,),
+                                            Flexible(
+                                              child: Text(
+                                                '${item?.location}',
+                                                style: textMedium,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),

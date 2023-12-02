@@ -265,9 +265,9 @@ class ChooseFromMapController extends BaseController
   }
 
   onMapCreated(gController) {
+    setMapController(gController);
     _getCurrantLocation();
 
-    setMapController(gController);
   }
 
   onCameraMove(CameraPosition position) {

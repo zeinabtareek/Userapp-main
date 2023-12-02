@@ -54,123 +54,113 @@ class BaseMapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(BaseMapController());
-    return
-    Scaffold(
-         // resizeToAvoidBottomInset: false,
-             //   backgroundColor: Theme.of(context).shadowColor,
-          body:
-          CustomBody(
-              appBar: CustomAppBar(
-                  title: Strings.theDeliverymanNeedYou.tr,
-                  onBackPressed: controller.onBackPressed),
-              body:    GetBuilder<BaseMapController>(
-                  init: BaseMapController()
-                    ,
-                  builder: (controller) {
-                    return ExpandableBottomSheet(
-                      key: controller.key,
-                      enableToggle: true,
-                      background:
+    return Scaffold(
+      // resizeToAvoidBottomInset: false,
+      //   backgroundColor: Theme.of(context).shadowColor,
+      body: CustomBody(
+          appBar: CustomAppBar(
+            title: Strings.theDeliverymanNeedYou.tr,
+            onBackPressed: controller.onBackPressed,
+          ),
+          body: GetBuilder<BaseMapController>(
+              init: BaseMapController(),
+              builder: (controller) {
+                return ExpandableBottomSheet(
+                  key: controller.key,
+                  enableToggle: true,
+                  background:
 
-                          ///Map background
-                          CommonMapWidget(
-                        mapId: controller.mapCompleter.future
-                            .then<int>((value) => value.mapId),
-                        onMapCreated: controller.onMapCreated,
-                        initialCameraPosition: CameraPosition(
-                          target: controller.initialPosition,
-                          zoom: 16,
-                        ),
-                      ),
+                      ///Map background
+                      CommonMapWidget(
+                    mapId: controller.mapCompleter.future
+                        .then<int>((value) => value.mapId),
+                    onMapCreated: controller.onMapCreated,
+                    initialCameraPosition: CameraPosition(
+                      target: controller.initialPosition,
+                      zoom: 16,
+                    ),
+                  ),
 
-                      expandableContent:
-                      Container(
-                       //   height: 500,
-                          // color: Colors.white,
-                         color:Theme.of(context).scaffoldBackgroundColor,
-                        // color: Colors.red,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: Dimensions.paddingSizeDefault),
-                          child:
+                  expandableContent: Container(
+                    //   height: 500,
+                    // color: Colors.white,
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    // color: Colors.red,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: Dimensions.paddingSizeDefault),
+                    child: SingleChildScrollView(
+                      child: Obx(
+                        () => controller.widgetNumber.value ==
+                                request[RequestState.initialState]
+                            ? InitialRequestWidget(
+                                image: Images.car,
+                                title: Get.find<RideController>()
+                                        .selectedSubPackage
+                                        .value
+                                        ?.categoryTitle
+                                        .toString() ??
+                                    '',
+                              )
+                            //     BikeRideDetailsWidgets(
+                            //       image: Images.car  ,
+                            //       title: Get.find<RideController>().selectedPackage.value?.categoryTitle.toString()??'',
+                            //     )
+                            : controller.widgetNumber.value ==
+                                    request[RequestState.getPriceState]
+                                ? SecondWidget(
+                                    image: Images.car,
+                                    title: Get.find<RideController>()
+                                            .selectedSubPackage
+                                            .value
+                                            ?.categoryTitle
+                                            .toString() ??
+                                        '',
+                                    points: points,
+                                  )
 
-                          SingleChildScrollView(
-                            child:
-                                Obx(
-                                  () => controller.widgetNumber.value ==
-                                          request[RequestState.initialState]
-                                      ? InitialRequestWidget(
-                                          image: Images.car,
-                                          title: Get.find<RideController>()
-                                                  .selectedSubPackage
-                                                  .value
-                                                  ?.categoryTitle
-                                                  .toString() ??
-                                              '',
-                                        )
-                                      //     BikeRideDetailsWidgets(
-                                      //       image: Images.car  ,
-                                      //       title: Get.find<RideController>().selectedPackage.value?.categoryTitle.toString()??'',
-                                      //     )
-                                      : controller.widgetNumber.value ==
-                                              request[RequestState.getPriceState]
-                                          ? SecondWidget(
-                                              image: Images.car,
-                                              title: Get.find<RideController>()
-                                                      .selectedSubPackage
-                                                      .value
-                                                      ?.categoryTitle
-                                                      .toString() ??
-                                                  '',
-                                              points: points,
-                                            )
+                                ///Get Price
+                                : controller.widgetNumber.value ==
+                                        request[RequestState.findDriverState]
+                                    ? const ThirdWidget(
+                                        whoWillPay: true,
+                                      )
 
-                                          ///Get Price
-                                          : controller.widgetNumber.value ==
-                                                  request[
-                                                      RequestState.findDriverState]
-                                              ? const ThirdWidget(
-                                                  whoWillPay: true,
-                                                )
+                                    ///Find Driver
+                                    : (controller.widgetNumber.value ==
+                                                request[RequestState
+                                                    .driverAcceptState] ||
+                                            controller.widgetNumber.value ==
+                                                request[RequestState
+                                                    .tripOngoing]) //tripOngoing
+                                        ? const FourthWidget()
 
-                                              ///Find Driver
-                                              : (controller.widgetNumber.value ==
-                                                          request[RequestState
-                                                              .driverAcceptState] ||
-                                                      controller
-                                                              .widgetNumber.value ==
-                                                          request[RequestState
-                                                              .tripOngoing]) //tripOngoing
-                                                  ? const FourthWidget()
+                                        ///Ride Details tripFinishedState
 
-                                                  ///Ride Details tripFinishedState
+                                        : controller.widgetNumber.value ==
+                                                request[RequestState
+                                                    .tripFinishedState]
+                                            ?
+                                            //                ///here you paymenmt
+                                            FifthWidget()
+                                            : const SizedBox(),
+                      ), // ),
+                    ),
+                  ),
 
-                                                  : controller.widgetNumber.value ==
-                                                          request[RequestState
-                                                              .tripFinishedState]
-                                                      ?
-                                                      //                ///here you paymenmt
-                                                      FifthWidget()
-                                                      : const SizedBox(),
-                                ), // ),
+                  persistentHeader: fixedHeader(),
+                  persistentContentHeight: controller.persistentContentHeight,
 
-                          ),
-                        ),
+                  onIsContractedCallback: () => print('contracted'),
+                  onIsExtendedCallback: () => print('expanded'),
+                  animationDurationExtend: const Duration(milliseconds: 500),
+                  animationDurationContract: const Duration(milliseconds: 250),
 
-                      persistentHeader: fixedHeader(),
-                      persistentContentHeight: controller.persistentContentHeight,
-
-                      onIsContractedCallback: () => print('contracted'),
-                      onIsExtendedCallback: () => print('expanded'),
-                      animationDurationExtend: const Duration(milliseconds: 500),
-                      animationDurationContract:
-                          const Duration(milliseconds: 250),
-
-                      animationCurveExpand: Curves.bounceOut,
-                      animationCurveContract: Curves.ease,
-                      // expandableContent: Container(height: 600,color: Colors.green,width: Get.width,),
-                      // background: Container(height: 600,color: Colors.red,width: Get.width,),
-                    );
-                  })),
-      );
+                  animationCurveExpand: Curves.bounceOut,
+                  animationCurveContract: Curves.ease,
+                  // expandableContent: Container(height: 600,color: Colors.green,width: Get.width,),
+                  // background: Container(height: 600,color: Colors.red,width: Get.width,),
+                );
+              })),
+    );
   }
 }

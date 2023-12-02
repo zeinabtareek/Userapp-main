@@ -89,14 +89,14 @@ class ParcelTrackingScreen extends StatelessWidget {
                     // limit: [2, 2, 2, 3].length,  )
                     // trackHistoryList([2, 2, 2, 3]),
 
-                    animatedWidget(
-                        widget: itemTrackHistory(
-                            onTap: () {
-                              Get.to(() => OrderDetails());
-                            },
-                            title: 'Nintendo Swich Oled',
-                            subTitle: 'Order ID: JB39029910020'),
-                        limit: 4),
+                    // animatedWidget(     
+                    //     widget: itemTrackHistory(
+                    //         // onTap: () {
+                    //         //   // Get.to(() => OrderDetails());
+                    //         // },
+                    //         title: 'Nintendo Swich Oled',
+                    //         subTitle: 'Order ID: JB39029910020'),
+                    //     limit: 4),
                   ],
                 ),
               ),

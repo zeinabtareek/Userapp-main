@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../../pagination/typedef/page_typedef.dart';
 import '../../../../util/app_style.dart';
 import '../../../../util/dimensions.dart';
 import '../../../../util/text_style.dart';
@@ -64,7 +65,6 @@ class RideSubCategoryWidget extends StatelessWidget {
                                   categoryModel: listOfSubCategory[index]),
                             );
                           } else {
-
                             rideController
                                 .selectedSubPackage(listOfSubCategory[index]);
 
@@ -82,7 +82,9 @@ class RideSubCategoryWidget extends StatelessWidget {
                           rideController
                               .selectedSubPackage(listOfSubCategory[index]);
 
-                          Get.to(() => const ParcelHomeScreen());
+                          Get.to(() => const ParcelHomeScreen(),
+                              binding: BindingsBuilder(() {
+                          }));
                         } // if (index == 0) {
                         //   rideController.updateSelectedRideType(RideType.car);
                         //   // ...
@@ -298,11 +300,10 @@ class RideCategoryWidget extends StatelessWidget {
                                                   BorderRadius.circular(
                                                       Dimensions
                                                           .radiusDefault)),
-                                          child: const Center(
+                                          child:  Center(
                                             child: Text(
-                                              // TODO: tr
-                                              'Coming Soon',
-                                              style: TextStyle(
+                                            "coming_soon".tr,
+                                              style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.bold,

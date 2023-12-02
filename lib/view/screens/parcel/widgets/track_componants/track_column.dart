@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../widgets/custom_divider.dart';
+import '../../../history/model/history_model.dart';
 import 'checked_icon.dart';
 
-trackColumn(List x) {
+trackColumn(List<OrderStep> x) {
   return Column(
       children: List.generate(
     x.length,
     (index) => Column(
       children: [
-        checkedIcon(isChecked: index != x.length - 1 ? true : false),
+        checkedIcon(isChecked: true),
         !(index == x.length - 1)
             ? SizedBox(
                 height: 45,
@@ -22,7 +23,7 @@ trackColumn(List x) {
                   axis: Axis.vertical,
                   color: Theme.of(Get.context!).primaryColor,
                 ))
-            : SizedBox()
+            : const SizedBox()
       ],
     ),
   ));

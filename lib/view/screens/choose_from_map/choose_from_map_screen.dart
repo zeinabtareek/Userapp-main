@@ -59,13 +59,13 @@ class ChooseFromMapScreen extends StatelessWidget {
                     appBar: CustomAppBar(title: Strings.seTDestination.tr),
                     body: GetBuilder<ChooseFromMapController>(
                         builder: (userMapController) {
-                      Completer<GoogleMapController> mapCompleter =
-                          Completer<GoogleMapController>();
-                      if (userMapController.mapController != null) {
-                        mapCompleter.complete(userMapController.mapController);
-                        userMapController.mapViewHelperMapCompleter =
-                            userMapController.mapController!;
-                      }
+                      // Completer<GoogleMapController> mapCompleter =
+                      //     Completer<GoogleMapController>();
+                      // if (userMapController.mapController != null) {
+                      //   mapCompleter.complete(userMapController.mapController);
+                      //   userMapController.mapViewHelperMapCompleter =
+                      //       userMapController.mapController!;
+                      // }
                       return Stack(
                         children: [
                           Animarker(

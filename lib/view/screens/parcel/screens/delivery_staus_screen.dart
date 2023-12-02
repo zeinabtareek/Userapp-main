@@ -27,6 +27,7 @@ import 'live_tracking_screen.dart';
 class DeliveryStatusScreen extends StatelessWidget {
   const DeliveryStatusScreen({super.key});
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: CustomBody(
@@ -54,16 +55,16 @@ class DeliveryStatusScreen extends StatelessWidget {
               K.sizedBoxH2,
               K.sizedBoxH2,
               K.sizedBoxH2,
-              itemTrackHistory(
-                  icon: const Icon(
-                    Icons.more_horiz,
-                    color: Colors.black,
-                  ),
-                  title: 'New York, NY, 10016, USA',
-                  subTitle: 'Order ID: JB390299191242',
-                  elevated: 0, onTap: () {  }),
+              // itemTrackHistory(
+              //   icon: const Icon(
+              //     Icons.more_horiz,
+              //     color: Colors.black,
+              //   ),
+              //   title: 'New York, NY, 10016, USA',
+              //   subTitle: 'Order ID: JB390299191242',
+              //   elevated: 0,
+              // ),
               K.sizedBoxH2,
-
               orderStatusWidget(() {},
                   isReturned: false, text: 'In Delivery Courier', width: 200),
               K.sizedBoxH2,
@@ -75,13 +76,13 @@ class DeliveryStatusScreen extends StatelessWidget {
                     children: [
                       K.sizedBoxW0,
                       K.sizedBoxW0,
-                      trackColumn(status),
+                      // trackColumn(status),
                       K.sizedBoxW0,
                       K.sizedBoxW0,
-                      Expanded(
-                          child: trackDataColumn(
-                        x: status,
-                      )),
+                      // Expanded(
+                      //     child: trackDataColumn(
+                      //   x: status,
+                      // )),
                     ],
                   ),
                   const SizedBox(
@@ -107,7 +108,7 @@ class DeliveryStatusScreen extends StatelessWidget {
                   buttonText: Strings.liveTracking.tr,
                   width: Get.width,
                   onPressed: () {
-                    Get.to(LiveTrackingScreenForParcel());
+                    // Get.to(LiveTrackingScreenForParcel());
                   },
                   radius: 50,
                 ),

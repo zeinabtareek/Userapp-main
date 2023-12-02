@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../util/app_strings.dart';
 import '../../util/dimensions.dart';
@@ -40,7 +41,7 @@ class PermissionDialog extends StatelessWidget {
                   onPressed: () async {
                     // await Geolocator.openAppSettings();
 
-                    Get.back(result: false);
+                    Get.back(result: true);
                   },
                 ),
               ),
@@ -51,13 +52,33 @@ class PermissionDialog extends StatelessWidget {
                       onPressed: () async {
                         // await Geolocator.openAppSettings();
 
-                        Get.back(result: true);
+                        Get.back(result:!(await requestLocationPermission()));
                       })),
             ]),
           ]),
         ),
       ),
     );
+  }
+
+  Future<bool> requestLocationPermission() async {
+    var status = await Permission.location.request();
+
+    if (status.isGranted) {
+      // Location permission granted, you can now access the user's location.
+      // Implement your location-related functionality here.
+      return Future.value(false);
+    } else if (status.isDenied) {
+      // Permission request denied by the user.
+
+      return Future.value(true);
+    } else if (status.isPermanentlyDenied) {
+      // The user opted to never ask for the permission again.
+      // You may want to navigate to the app settings so the user can manually grant permission.
+      return Future.value(true);
+    }else{
+      return Future.value(true);
+    }
   }
 }
 

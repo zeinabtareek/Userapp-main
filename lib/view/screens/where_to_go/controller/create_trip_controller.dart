@@ -89,27 +89,27 @@ class CreateATripController extends BaseMapController {
       extraPoint.insert(0, source);
       extraPoint.add(destination);
 
-      for (var i = 0; i < extraPoint.length; i++) {
-        if ((i + 1) <= extraPoint.length) {
-          var resList =
-              await FlutterPolylinePointsHelper.getRouteBetweenCoordinates(
-                  AppConstants.mapKey,
-                  extraPoint[i].latitude,
-                  extraPoint[i].longitude,
-                  extraPoint[i + 1].latitude,
-                  extraPoint[i + 1].longitude);
+      for (var i = 0; i < extraPoint.length - 1; i++) {
+        // if ((i + 1) <= extraPoint.length) {
+        var resList =
+            await FlutterPolylinePointsHelper.getRouteBetweenCoordinates(
+                AppConstants.mapKey,
+                extraPoint[i].latitude,
+                extraPoint[i].longitude,
+                extraPoint[i + 1].latitude,
+                extraPoint[i + 1].longitude);
 
-          for (var element in resList.points) {
-            list.add(
-              ExtraRoutes(
-                  lat: element.latitude.toString(),
-                  lng: element.longitude.toString(),
-                  location: ""
-                  //  await getPlaceNameFromLatLng(element.toLatLng),
-                  ),
-            );
-          }
+        for (var element in resList.points) {
+          list.add(
+            ExtraRoutes(
+                lat: element.latitude.toString(),
+                lng: element.longitude.toString(),
+                location: ""
+                //  await getPlaceNameFromLatLng(element.toLatLng),
+                ),
+          );
         }
+        // }
       }
       return list;
     }
@@ -137,7 +137,7 @@ class CreateATripController extends BaseMapController {
     LatLng destination = points.last;
 
     List<ExtraRoutes> extraRoute = await extraRoutes(points);
-      String time = "12";
+    String time = "12";
     //  await calculateDuration(source, destination);
 
     List<ExtraRoutes> gogleR = await googleRoutes(
@@ -149,7 +149,7 @@ class CreateATripController extends BaseMapController {
           : [],
       destination,
     );
-print('payment ${paymentType}');
+    print('payment $paymentType');
     try {
       var result = await actionCenter.execute(() async {
         setState(ViewState.busy);
@@ -200,25 +200,26 @@ print('payment ${paymentType}');
       OverlayHelper.showErrorToast(Get.overlayContext!, e.message);
     }
     //
-    throw Exception(
-        "Unexpected error occurred");
-
+    throw Exception("Unexpected error occurred");
   }
+
   //
   _checkThePaymentMethod(totalPrice) async {
-    PaymentTypeState selectedPaymentType =
-    enumFromString(paymentType ?? '');
+    PaymentTypeState selectedPaymentType = enumFromString(paymentType ?? '');
 
     if (selectedPaymentType == PaymentTypeState.wallet) {
       ///Zeinab this is ::: Condition when the payment method is wallet
 
       print('this is wallet');
-      var minWallet=double.parse(user?.wallet.toString()??'0.0')-totalPrice;
-      OverlayHelper.showSuccessToast(Get.overlayContext!, '${'your_wallet_now_is'.tr} ${minWallet.ceil().toInt()}');
+      var minWallet =
+          double.parse(user?.wallet.toString() ?? '0.0') - totalPrice;
+      OverlayHelper.showSuccessToast(Get.overlayContext!,
+          '${'your_wallet_now_is'.tr} ${minWallet.ceil().toInt()}');
     } else {
       print('this isn\'t wallet');
     }
   }
+
   @override
   Future<String> getPlaceNameFromLatLng(LatLng latlng) async {
     return SearchServices().getPlaceNameFromLatLng(latlng);
@@ -261,11 +262,11 @@ print('payment ${paymentType}');
         setState(ViewState.busy);
 
         orderModel = await services.showTripDetails(orderId: orderId);
-        orderModel = await services.showTripDetails(
-            orderId:
-            'b0a49d66-14e2-4236-bf1b-771e1f84a2fc'
-        // Get.find<BaseMapController>().changeState(request[RequestState.riderDetailsState]!);//riderDetailsState
-        );
+        // orderModel = await services.showTripDetails(
+        //     orderId:
+        //     'b0a49d66-14e2-4236-bf1b-771e1f84a2fc'
+        // // Get.find<BaseMapController>().changeState(request[RequestState.riderDetailsState]!);//riderDetailsState
+        // );
         print(orderModel.data?.driver);
         print(orderModel.data?.vehicleType?.id);
         // print(orderModel.data);
@@ -283,10 +284,11 @@ print('payment ${paymentType}');
     }
   }
 
-Future<void> launchUrlFun(String url, bool isMail) async {
+  Future<void> launchUrlFun(String url, bool isMail) async {
     if (!await launchUrl(Uri.parse(isMail ? params.toString() : url))) {
       throw 'Could not launch $url';
-    }}
+    }
+  }
 
   final Uri params = Uri(
     scheme: 'mailto',
