@@ -16,6 +16,7 @@ class OverlayHelper {
   static Color infoColor = const Color(0xffE3ECF7);
   static Color warningColor = const Color(0xffFAF3E6);
   static Color generalColor = const Color(0xFFEEEDF2);
+  static Color noColor = const Color(0xFFFFFFFF);
 
   static void showSuccessToast(BuildContext context, String text,
       {int seconds = 10}) {
@@ -64,6 +65,16 @@ class OverlayHelper {
         durationInSeconds: seconds);
   }
 
-  // progress methods
+
+  static void showDurationAlert(BuildContext context, String text, String iconSVG,String title,
+      {int seconds = 10}) {
+    showSnackBar("$title".tr, text,
+        context: context,
+        color: noColor,
+        iconSVG: iconSVG,
+        durationInSeconds: seconds);
+  }
+
+// progress methods
   // layer index 1 is preserved for the progress indicator
 }

@@ -28,15 +28,15 @@ class RouteWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if (isParcel == true) {
       return GetBuilder<ParcelController>(builder: (parcelController) {
-        return  _Child(
+        return _Child(
           colorText: colorText,
           isParcel: true,
           showTotalDistance: showTotalDistance,
         );
       });
     } else {
-      return  _Child(
-                  colorText: colorText,
+      return _Child(
+        colorText: colorText,
         isParcel: true,
         showTotalDistance: showTotalDistance,
       );
@@ -45,12 +45,11 @@ class RouteWidget extends StatelessWidget {
 }
 
 class _Child extends StatelessWidget {
-    bool? showTotalDistance = true;
+  bool? showTotalDistance = true;
   bool? isParcel = false;
   Color? colorText;
 
-   _Child({
-        super.key,
+  _Child({
     this.showTotalDistance,
     this.isParcel,
     this.colorText,
@@ -77,10 +76,15 @@ class _Child extends StatelessWidget {
                                 ? Images.package2
                                 : Images.currentLocation)),
                         SizedBox(
-                            height: whereToGoController.extraTextEditingControllers.isNotEmpty?
-                            (whereToGoController.extraTextEditingControllers.length+2)*25.h
-                            :45.h,
-                            width: 20 ,
+                            height: whereToGoController
+                                    .extraTextEditingControllers.isNotEmpty
+                                ? (whereToGoController
+                                            .extraTextEditingControllers
+                                            .length +
+                                        2) *
+                                    25.h
+                                : 45.h,
+                            width: 20,
                             child: colorText == null
                                 ? CustomDivider(
                                     height: 2,
@@ -109,33 +113,38 @@ class _Child extends StatelessWidget {
                       Text(
                         whereToGoController.fromRouteController.text,
                         // parcelController.senderAddressController.text,
-                        style: textRegular.copyWith( ),
+                        style: textRegular.copyWith(),
                       ),
-                      const SizedBox(height: Dimensions.paddingSizeSmall), Text(
+                      const SizedBox(height: Dimensions.paddingSizeSmall),
+                      Text(
                         'to'.tr,
                         style: textRegular.copyWith(
                             color: colorText?.withOpacity(.5) ??
                                 Theme.of(context).primaryColor),
                       ),
+
                       ///extra routes
                       ...whereToGoController.extraTextEditingControllers
                           .map((c) {
-                        return   Padding(
-                          padding: EdgeInsets.all(Dimensions.paddingSizeSmall),
-                            // height: Dimensions.paddingSizeSmall,
-                          child:  Text(whereToGoController.extraTextEditingControllers.first.text,style:
-                          TextStyle(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).primaryColor),),
+                        return Padding(
+                          padding:
+                              const EdgeInsets.all(Dimensions.paddingSizeSmall),
+                          // height: Dimensions.paddingSizeSmall,
+                          child: Text(
+                            c.text,
+                            style: TextStyle(
+                                fontSize: Dimensions.fontSizeSmall,
+                                color: Theme.of(context).primaryColor),
+                          ),
                           // TextStyle(fontSize: Dimensions.fontSizeSmall,color: Theme.of(context).primaryColorLight),),
                         );
                       }).toList(),
-
-
 
                       const SizedBox(height: Dimensions.paddingSizeSmall),
                       Text(
                         whereToGoController.toRouteController.text,
                         // parcelController.receiverAddressController.text,
-                        style:   textRegular.copyWith(   ),
+                        style: textRegular.copyWith(),
                         // style: textRegular.copyWith(
                         //     color: colorText ?? Theme.of(context).shadowColor),
                       ),
@@ -164,8 +173,8 @@ class _Child extends StatelessWidget {
                               Text(
                                 "total_distance".tr,
                                 style: textRegular.copyWith(
-                                  // color: Theme.of(context).cardColor
-                                ),
+                                    // color: Theme.of(context).cardColor
+                                    ),
                               ),
                             ],
                           ),

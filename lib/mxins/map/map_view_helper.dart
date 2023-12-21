@@ -54,7 +54,7 @@ mixin MapViewHelper on GetxController {
     double? disLong,
   }) async {
     bool isHaveDist = disLat != null && disLong != null;
-    GoogleMapController controller = _mapViewHelperMapController!;
+    GoogleMapController? controller = _mapViewHelperMapController;
 
     double zoomCamara = 0.0;
     if (isHaveDist) {
@@ -70,11 +70,11 @@ mixin MapViewHelper on GetxController {
     );
 
     if (!isAnimate) {
-      await controller.moveCamera(
+      await controller!.moveCamera(
         cameraPosition,
       );
     } else {
-      await controller.animateCamera(cameraPosition);
+      await controller!.animateCamera(cameraPosition);
     }
     update();
   }
@@ -143,6 +143,63 @@ mixin MapViewHelper on GetxController {
     if (isRequestUpdateUi) {
       update();
     }
+  }
+
+  Future<void> zoomToFit({
+    double padding = 0.5,
+    required List<LatLng> points,
+  }) async {
+    GoogleMapController? controller = _mapViewHelperMapController;
+
+    LatLngBounds? bounds;
+    if (controller != null) {
+      bounds = LatLngBounds(
+        southwest: points.first,
+        northeast: points.last,
+      );
+    }
+
+    LatLng centerBounds = LatLng(
+      (bounds!.northeast.latitude + bounds.southwest.latitude) / 2,
+      (bounds.northeast.longitude + bounds.southwest.longitude) / 2,
+    );
+    bool keepZoomingOut = true;
+
+    while (keepZoomingOut) {
+      final LatLngBounds screenBounds = await controller!.getVisibleRegion();
+      if (fits(bounds, screenBounds)) {
+        keepZoomingOut = false;
+        final double zoomLevel = await controller.getZoomLevel() - padding;
+        controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
+          target: centerBounds,
+          zoom: zoomLevel,
+        )));
+        break;
+      } else {
+        final double zoomLevel = await controller.getZoomLevel() - 0.1;
+        controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
+          target: centerBounds,
+          zoom: zoomLevel,
+        )));
+      }
+    }
+  }
+
+  bool fits(LatLngBounds fitBounds, LatLngBounds screenBounds) {
+    final bool northEastLatitudeCheck =
+        screenBounds.northeast.latitude >= fitBounds.northeast.latitude;
+    final bool northEastLongitudeCheck =
+        screenBounds.northeast.longitude >= fitBounds.northeast.longitude;
+
+    final bool southWestLatitudeCheck =
+        screenBounds.southwest.latitude <= fitBounds.southwest.latitude;
+    final bool southWestLongitudeCheck =
+        screenBounds.southwest.longitude <= fitBounds.southwest.longitude;
+
+    return northEastLatitudeCheck &&
+        northEastLongitudeCheck &&
+        southWestLatitudeCheck &&
+        southWestLongitudeCheck;
   }
 
   void addOnePointToExistPolyline(
@@ -276,18 +333,7 @@ mixin MapHelper on GetxController {
       if (state == false) {
         return null;
       } else {
-        // return toAppSetting()
-        //     .then((value) async {
-        //   if (value == false) {
-        //     return await getCurrentPosition();
-        //   }
-        //   return null;
-        // });
-        toAppSetting().then((value) async{
-          if (value) {
-       return  await   getCurrentPosition();
-          }
-        });
+        return await getCurrentPosition();
       }
     }
 
@@ -304,9 +350,9 @@ mixin MapHelper on GetxController {
       if (!state) {
         return null;
       } else {
-        toSystemSetting().then((value) async{
+        toSystemSetting().then((value) async {
           if (value) {
-        return  await  getCurrentPosition();
+            return await getCurrentPosition();
           }
         });
 

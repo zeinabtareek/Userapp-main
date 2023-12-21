@@ -28,6 +28,7 @@ class ChatController extends BaseController
 
   int _userTypeIndex = 0;
   bool get isOrderType => _userTypeIndex == 0;
+
   int get userTypeIndex => _userTypeIndex;
 
   void setUserTypeIndex(int index) {
@@ -35,11 +36,17 @@ class ChatController extends BaseController
     update();
   }
 
+  toNewChat(String newOrderId) {
+    setUserTypeIndex(0);
+    orderId = newOrderId;
+    canChat.value = true;
+  }
+
   Rxn<File> pickedImageFile = Rxn();
 
   RxBool get canShowTextFelid => (pickedImageFile.value == null).obs;
 
-  setChatId(String id) {
+  setChatId(String? id) {
     chatId(id);
     print(" chatId ");
   }
@@ -238,7 +245,6 @@ class ChatController extends BaseController
         pickedImageFile.value = null;
         canChat(true);
         conversationController.clear();
-   
       },
       checkConnection: true,
     );

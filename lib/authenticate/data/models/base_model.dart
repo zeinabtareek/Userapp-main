@@ -3,6 +3,9 @@ import 'dart:convert';
 abstract class BaseResModel<T> {
   String? msg;
   int? status;
+
+
+  
   BaseResModel({
     this.msg,
     this.status,

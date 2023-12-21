@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:ride_sharing_user_app/main.dart';
 
 import '../localization/language_model.dart';
+import '../main.dart';
 import 'images.dart';
 
 class AppConstants {
@@ -16,6 +16,7 @@ class AppConstants {
 
   // static const String baseUrl = 'http://hoodbackend.develobug.com';
   static const String getAllOrders = '/api/user/orders';
+  static const String getParcelListOrders = '/api/user/parcel_list';
   static const String getAllHistory = '/api/user/orders?status=';
   static const String getAllTransactions = '/api/user/all_transactions';
   static const String getNotification = '/api/user/notifications';

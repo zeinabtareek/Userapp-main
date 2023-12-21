@@ -30,9 +30,11 @@ class ThirdWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<FindingDriverController>(
-        init: FindingDriverController()..handelSocket(),
+        init: FindingDriverController() ,
+        // init: FindingDriverController()..handelSocket(),
         builder: (findingDriverController) {
           return Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               const TollTipWidget(title: "driver3"),
               K.sizedBoxH0,
@@ -83,6 +85,9 @@ class ThirdWidget extends StatelessWidget {
                       // Get.back();
 
                       // Get.offUntil(SetDestinationScreen, (route) => false);
+                      findingDriverController.dispose();
+                      Get.delete<FindingDriverController>();
+                      // Get.find<>()
                     },
                     fontSize: Dimensions.fontSizeDefault,
                   )),

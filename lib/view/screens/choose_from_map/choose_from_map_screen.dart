@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animarker/widgets/animarker.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../enum/view_state.dart';
 import '../../../util/app_strings.dart';
+import '../../../util/app_style.dart';
 import '../../../util/dimensions.dart';
 import '../../../util/images.dart';
 import '../../widgets/custom_app_bar.dart';
@@ -34,9 +36,9 @@ class ChooseFromMapScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
-        extendBodyBehindAppBar: true,
+   extendBodyBehindAppBar: true,
       //  backgroundColor: Colors.white,
-        resizeToAvoidBottomInset: false,
+       resizeToAvoidBottomInset: false,
         body: GetBuilder<ChooseFromMapController>(
           init: ChooseFromMapController(),
           builder: (controller) {
@@ -51,18 +53,19 @@ class ChooseFromMapScreen extends StatelessWidget {
                 return Future.value(true);
               },
               child: Stack(
+                alignment: Alignment.center,
                 children: [
                   CustomBody(
                     appBar: CustomAppBar(title: Strings.seTDestination.tr),
                     body: GetBuilder<ChooseFromMapController>(
                         builder: (userMapController) {
-                      Completer<GoogleMapController> mapCompleter =
-                          Completer<GoogleMapController>();
-                      if (userMapController.mapController != null) {
-                        mapCompleter.complete(userMapController.mapController);
-                        userMapController.mapViewHelperMapCompleter =
-                            userMapController.mapController!;
-                      }
+                      // Completer<GoogleMapController> mapCompleter =
+                      //     Completer<GoogleMapController>();
+                      // if (userMapController.mapController != null) {
+                      //   mapCompleter.complete(userMapController.mapController);
+                      //   userMapController.mapViewHelperMapCompleter =
+                      //       userMapController.mapController!;
+                      // }
                       return Stack(
                         children: [
                           Animarker(
@@ -151,6 +154,8 @@ class ChooseFromMapScreen extends StatelessWidget {
                                     : Positioned(
                                         left: 15,
                                         right: 15,
+                                        bottom:MediaQuery.of(context).size.height/3.5.h ,
+                                        top:0,
                                         child: SearchListWidget(
                                           listOfSearchedPlaces:
                                               userMapController
@@ -176,7 +181,10 @@ class ChooseFromMapScreen extends StatelessWidget {
             );
           },
         ),
+       // bottomSheet:   SearchBottom(),
+
       ),
+
     );
   }
 }

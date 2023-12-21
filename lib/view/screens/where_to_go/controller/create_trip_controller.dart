@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../enum/payment_enum.dart';
 import '../../../../enum/request_states.dart';
 import '../../../../enum/view_state.dart';
 import '../../../../mxins/map/map_view_helper.dart';
@@ -88,27 +89,27 @@ class CreateATripController extends BaseMapController {
       extraPoint.insert(0, source);
       extraPoint.add(destination);
 
-      for (var i = 0; i < extraPoint.length; i++) {
-        if ((i + 1) <= extraPoint.length) {
-          var resList =
-              await FlutterPolylinePointsHelper.getRouteBetweenCoordinates(
-                  AppConstants.mapKey,
-                  extraPoint[i].latitude,
-                  extraPoint[i].longitude,
-                  extraPoint[i + 1].latitude,
-                  extraPoint[i + 1].longitude);
+      for (var i = 0; i < extraPoint.length - 1; i++) {
+        // if ((i + 1) <= extraPoint.length) {
+        var resList =
+            await FlutterPolylinePointsHelper.getRouteBetweenCoordinates(
+                AppConstants.mapKey,
+                extraPoint[i].latitude,
+                extraPoint[i].longitude,
+                extraPoint[i + 1].latitude,
+                extraPoint[i + 1].longitude);
 
-          for (var element in resList.points) {
-            list.add(
-              ExtraRoutes(
-                  lat: element.latitude.toString(),
-                  lng: element.longitude.toString(),
-                  location: ""
-                  //  await getPlaceNameFromLatLng(element.toLatLng),
-                  ),
-            );
-          }
+        for (var element in resList.points) {
+          list.add(
+            ExtraRoutes(
+                lat: element.latitude.toString(),
+                lng: element.longitude.toString(),
+                location: ""
+                //  await getPlaceNameFromLatLng(element.toLatLng),
+                ),
+          );
         }
+        // }
       }
       return list;
     }
@@ -134,7 +135,11 @@ class CreateATripController extends BaseMapController {
   Future<CreateOrderModel> createATrip(List<LatLng> points) async {
     LatLng source = points.first; // Example source coordinate (San Francisco)
     LatLng destination = points.last;
+
     List<ExtraRoutes> extraRoute = await extraRoutes(points);
+    String time = "12";
+    //  await calculateDuration(source, destination);
+
     List<ExtraRoutes> gogleR = await googleRoutes(
       source,
       extraRoute.isNotEmpty
@@ -144,7 +149,7 @@ class CreateATripController extends BaseMapController {
           : [],
       destination,
     );
-
+    print('payment $paymentType');
     try {
       var result = await actionCenter.execute(() async {
         setState(ViewState.busy);
@@ -157,7 +162,8 @@ class CreateATripController extends BaseMapController {
             from: await _form(source),
             to: await _to(destination),
             extraRoutes: extraRoute,
-            time: '12',
+            // time: '22',
+            time: Get.find<BaseMapController>().durationValue.toString(),
             distance: num.parse(
                 Get.find<BaseMapController>().distance.value.toString()),
             note: note,
@@ -167,6 +173,7 @@ class CreateATripController extends BaseMapController {
           ),
         );
         orderId = createOrderModel.data!.id!;
+        // print('order ::::  id $orderId');
 
         setOrderId(orderId!);
         Get.find<RideController>()
@@ -178,6 +185,7 @@ class CreateATripController extends BaseMapController {
             .changeState(request[RequestState.findDriverState]!);
         Get.find<BaseMapController>().update();
         setState(ViewState.idle);
+        await _checkThePaymentMethod(createOrderModel.data?.finalPrice);
         isLoadingCreateATrip(false);
       }, checkConnection: true);
 
@@ -191,10 +199,25 @@ class CreateATripController extends BaseMapController {
     } on CustomException catch (e) {
       OverlayHelper.showErrorToast(Get.overlayContext!, e.message);
     }
+    //
+    throw Exception("Unexpected error occurred");
+  }
 
-    throw Exception(
-        "Unexpected error occurred"); // Throw an exception if none of the catch blocks are executed
-    // update();
+  //
+  _checkThePaymentMethod(totalPrice) async {
+    PaymentTypeState selectedPaymentType = enumFromString(paymentType ?? '');
+
+    if (selectedPaymentType == PaymentTypeState.wallet) {
+      ///Zeinab this is ::: Condition when the payment method is wallet
+
+      print('this is wallet');
+      var minWallet =
+          double.parse(user?.wallet.toString() ?? '0.0') - totalPrice;
+      OverlayHelper.showSuccessToast(Get.overlayContext!,
+          '${'your_wallet_now_is'.tr} ${minWallet.ceil().toInt()}');
+    } else {
+      print('this isn\'t wallet');
+    }
   }
 
   @override
@@ -239,9 +262,11 @@ class CreateATripController extends BaseMapController {
         setState(ViewState.busy);
 
         orderModel = await services.showTripDetails(orderId: orderId);
-        orderModel = await services.showTripDetails(
-            orderId: 'b0a49d66-14e2-4236-bf1b-771e1f84a2fc');
-        // Get.find<BaseMapController>().changeState(request[RequestState.riderDetailsState]!);//riderDetailsState
+        // orderModel = await services.showTripDetails(
+        //     orderId:
+        //     'b0a49d66-14e2-4236-bf1b-771e1f84a2fc'
+        // // Get.find<BaseMapController>().changeState(request[RequestState.riderDetailsState]!);//riderDetailsState
+        // );
         print(orderModel.data?.driver);
         print(orderModel.data?.vehicleType?.id);
         // print(orderModel.data);

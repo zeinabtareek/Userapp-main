@@ -129,8 +129,9 @@ class PaginationListViewInTabBar<UseCase extends MainPaginateListUseCase,
         );
       }
       if (state is PaginationError) {
+        print('state $state');
+        // return state.error==501.toString()?Text('no connection'):const Center(child: Icon(Icons.abc));
         return const Center(child: Icon(Icons.error));
-        // return const Center(child: Icon(Icons.error));
       }
       if (state is PaginationLoaded && state.items.isNotEmpty) {
         return paginatedLst(

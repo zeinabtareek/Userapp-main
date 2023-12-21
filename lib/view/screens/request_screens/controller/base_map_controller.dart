@@ -30,8 +30,8 @@ class BaseMapController extends BaseController with SocketIoMixin {
   late Position _position;
   Position get position => _position;
 
-  double _persistentContentHeight = 500;
-  // final double _persistentContentHeight = 500;
+  //double _persistentContentHeight = 300;
+    double _persistentContentHeight = 500;
   double percent = 0;
   set persistentContentHeightt(double num) {
     _persistentContentHeight = num;
@@ -63,8 +63,8 @@ class BaseMapController extends BaseController with SocketIoMixin {
     super.onInit();
     // await _getCurrantLocation();
     // setOrderId(null);
-    // await checkRideStateToFindingDriver();
-
+    await checkRideStateToFindingDriver();
+    persistentContentHeightt=600;
     Timer? timer;
     timer = Timer.periodic(const Duration(milliseconds: 1000), (_) {
       percent += 50;
@@ -120,7 +120,7 @@ if(key.currentState!=null){
   }
 else{
   key = GlobalKey<ExpandableBottomSheetState>();
-
+  key.currentState?.contract();
 }
   update();
   }
@@ -177,6 +177,7 @@ else{
 
   RxnDouble distance = RxnDouble();
   String duration = '';
+  var durationValue;
 
   ///calculate Distance
 
@@ -189,6 +190,7 @@ else{
         points[i + 1],
       );
       duration = distanceModel.rows?[0].elements?[0].duration?.text ?? '';
+      durationValue = distanceModel.rows?[0].elements?[0].duration?.value ?? 0.0;
       double distanceInKm =
           (distanceModel.rows?[0].elements?[0].distance?.value?.toDouble() ??
                   0.0) /

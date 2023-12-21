@@ -32,7 +32,7 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
   PaginationController(this.useCase, {this.refreshControllerr});
 
   @override
-    onInit() async{
+  onInit() async {
     change(PaginationBlocInitial(), status: RxStatus.success());
     _handler = PullToRefreshHandler();
     _refreshController = refreshControllerr ?? _handler?.refreshController;
@@ -69,16 +69,11 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
     // SchedulerBinding.instance.addPostFrameCallback((_) {
     //   scrollController.jumpTo(scrollController.position.maxScrollExtent);
     // });
-
   }
 
-
-
+  void get restData => _restData();
   onRefreshData({Function()? onLoadSucses}) async {
-
     change(PaginationLoading(), status: RxStatus.success());
-
-
 
     _restData();
     await _handelRes(
@@ -88,7 +83,7 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
         change(PaginationLoaded<Entity>(items), status: RxStatus.success());
         // emit(PaginationLoaded<Entity>(items));
 
-      //  moveScrollToMaxScrollExtent();
+        //  moveScrollToMaxScrollExtent();
       },
       onError: (error) {
         _handler?.refreshFailed();
@@ -96,10 +91,11 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
         // emit(PaginationError(
         //     error ?? AppGlobalConstants.notFoundDataDefaultMsg));
         change(
-          const PaginationError(
+          PaginationError(
             // todo
             // error ?? AppGlobalConstants.notFoundDataDefaultMsg,
-            "notFoundData",
+            "${error}",
+            // "notFoundData",
           ),
           status: RxStatus.success(),
         );
@@ -118,7 +114,6 @@ class PaginationController<PaginateApiUseCase extends MainPaginateListUseCase,
         );
       },
     );
-
 
     update();
   }

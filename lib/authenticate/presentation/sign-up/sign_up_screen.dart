@@ -24,7 +24,7 @@ class SignUpScreen extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
+    //  backgroundColor: Theme.of(context).canvasColor,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(

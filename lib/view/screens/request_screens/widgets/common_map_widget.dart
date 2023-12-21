@@ -9,12 +9,16 @@ class CommonMapWidget extends StatelessWidget {
   Future<int> mapId;
   CameraPosition initialCameraPosition;
   Function(GoogleMapController)? onMapCreated;
+  Set<Marker> markers;
+  Set<Polyline> polylines;
 
   CommonMapWidget({
     super.key,
     required this.mapId,
     required this.onMapCreated,
     required this.initialCameraPosition,
+    this.markers = const <Marker>{},
+    this.polylines = const <Polyline>{},
   });
 
   @override
@@ -37,8 +41,8 @@ class CommonMapWidget extends StatelessWidget {
               compassEnabled: true,
               mapType: MapType.normal,
               initialCameraPosition: initialCameraPosition,
-              // markers: Set(),
-              // TODO: 
+              markers: markers,
+              polylines: polylines,
               onMapCreated: onMapCreated,
             ),
           ),

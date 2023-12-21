@@ -12,6 +12,9 @@ import '../../view/screens/history/widgets/activity_item_view.dart';
 import '../../view/screens/notification/model/notification_res_model.dart';
 import '../../view/screens/notification/pagnaintion/use-case/get_notifications_use_case.dart';
 import '../../view/screens/notification/widgets/activity_notification_tap.dart';
+import '../../view/screens/parcel/page-use-case/get_parcel_list_package_use_case.dart';
+import '../../view/screens/parcel/widgets/item_track_history_card.dart';
+import '../../view/screens/parcel/widgets/track_componants/track_order_with_status.dart';
 import '../../view/screens/wallet/model/wallet_model.dart';
 import '../../view/screens/wallet/pagnation/get_all_transactions_use_case.dart';
 import '../../view/screens/wallet/widget/my_earn_card_widget.dart';
@@ -26,6 +29,15 @@ typedef PaginateTripHistoryController<T extends MainPaginateListUseCase, E>
     = PC<GetHistoryTripsUseCase, HistoryData>;
 typedef PaginateTripHistoryView = PaginationListViewInTabBar<
     GetHistoryTripsUseCase, HistoryData, ActivityItemView>;
+// PaginateTripHistory
+typedef PaginateParcelListPackageController<T extends MainPaginateListUseCase, E>
+    = PC<GetParcelListPackageUseCase, HistoryData>;
+typedef PaginateParcelListHomePackageController<T extends MainPaginateListUseCase, E>
+    = PC<GetParcelListPackageUseCase, HistoryData>;
+typedef PaginateParcelListPackageView = PaginationListViewInTabBar<
+    GetParcelListPackageUseCase, HistoryData, TrackOrderWithStatus>;
+typedef PaginateParcelListHomePackageView = PaginationListViewInTabBar<
+    GetParcelListPackageUseCase, HistoryData, ItemTrackHistory>;
 
 
 

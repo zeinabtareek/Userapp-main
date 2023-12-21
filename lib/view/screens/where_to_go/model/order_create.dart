@@ -542,8 +542,8 @@ class Driver {
     required this.img,
     required this.firstName,
     required this.lastName,
-    required this.isOnline,
-    required this.vehicle,
+     this.isOnline,
+     this.vehicle,
   });
   late final String id;
   late final String phoneCode;
@@ -552,8 +552,8 @@ class Driver {
   late final String img;
   late final String firstName;
   late final String lastName;
-  late final bool isOnline;
-  late final Vehicle vehicle;
+    bool? isOnline;
+  Vehicle? vehicle;
 
   Driver.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -564,7 +564,7 @@ class Driver {
     firstName = json['first_name'];
     lastName = json['last_name'];
     isOnline = json['is_online'];
-    vehicle = Vehicle.fromJson(json['vehicle']);
+    vehicle = json['vehicle']!=null? Vehicle.fromJson(json['vehicle']):null;
   }
 
   Map<String, dynamic> toJson() {
@@ -577,7 +577,7 @@ class Driver {
     data['first_name'] = firstName;
     data['last_name'] = lastName;
     data['is_online'] = isOnline;
-    data['vehicle'] = vehicle.toJson();
+    data['vehicle'] = vehicle?.toJson();
     return data;
   }
 }

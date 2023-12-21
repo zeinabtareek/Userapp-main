@@ -140,7 +140,6 @@
   "liqpay": "Liqpay",
   "master_card": "بطاقة ماستر بطاقة ائتمان",
   "apple_pay": "أبل باي",
-
   "here_lots_of_offer_for_you": "هذا الكثير من العرض لك!",
   "your_level": "مستواك",
   "you_are_level": "أنت مستوى",
@@ -322,7 +321,6 @@
   "coupon_code_is_required": "رمز القسيمة مطلوب",
   "your_code_is_applied_for_next_trip": "يتم تطبيق الرمز الخاص بك في رحلتك القادمة",
   "finding_deliveryman": "تسليم الغرامات",
-  "cancel": "يلغي",
   "submit": "إرسال",
   "call": "يتصل",
   "saved": "المحفوظة",
@@ -344,15 +342,6 @@
   "journey": "رحلة",
   "shopping": "التسوق",
   "mall": "مجمع تجاري",
-
-
-
-
-
-
-
-
-
   "otp_forget_password": "نسيت كلمة المرور",
   "history": "الرحلات السابقة",
   "set_destination": "حدد الوجهة",
@@ -369,13 +358,11 @@
   "no_history": "لا يوجد تاريخ",
   "pick_up_location": "موقع الإستلام؟",
   "search_address": "عنوان البحث....",
-
-  "email_is_not_valid":"بريد إلكتروني خاطئ",
-  "otp_is_not_valid":"رمز OTP خاطئ، حاول مرة أخرى",
+  "email_is_not_valid": "بريد إلكتروني خاطئ",
+  "otp_is_not_valid": "رمز OTP خاطئ، حاول مرة أخرى",
   "on_board_title1": "في أي مكان تكون فيه",
   "on_board_title2": "في أي وقت",
   "on_board_title3": "احجز سيارتك",
-
   "on_board_sub_title1": "يمكنك بيع المنازل بسهولة بمساعدة برنامج الاستماع Oryx ولجعل هذا الخط كبيرًا\nأنا أكتب المزيد.",
   "on_board_sub_title2": "قم ببيع المنازل بسهولة بمساعدة Listoryx ولجعل هذا الخط كبيرًا، فأنا أكتب المزيد.",
   "on_board_sub_title3": "قم ببيع المنازل بسهولة بمساعدة Listoryx ولجعل هذا الخط كبيرًا، فأنا أكتب المزيد.",
@@ -412,8 +399,7 @@
   "standard": "قياسي",
   "express": "أكسبرس",
   "sameDay": "نفس اليوم",
-  "shipment_details": "تفاصيل الشحنة"
-,
+  "shipment_details": "تفاصيل الشحنة",
   "most_recent": "الأحدث",
   "rate": "معدل",
   "resent_search": "البحث الأخير",
@@ -447,25 +433,24 @@
   "warning": "تنبيه",
   "error": "خطأ",
   "order_status": "حالة الطلب",
-  "order_canceled":   "تم إلغاء الطلب بنجاح",
+  "order_canceled": "تم إلغاء الطلب بنجاح",
   "send_withdraw_request": "إرسال طلب الانسحاب",
   "remark_hint": "اكتب ملاحظة",
   "enter_amount": "أدخل المبلغ",
   "withdraw_amount": "سحب المبلغ",
-
   "select_a_Payment_method": "اختر طريقة الدفع",
   "car_arrived": "وصلت السيارة للتو إلى وجهتك",
   "tap_to_add_your_credit_card": "انقر لإضافة بطاقة الائتمان الخاصة بك",
-
   "withdraw_successfully": "لقد تم السحب بنجاح",
   "add_your_credit_card": "أضف بطاقتك الائتمانية ...",
   "charge_amount": "شحن مبلغ المحفظة",
   "send_charge_request": "إرسال طلب شحن المحفظة",
   "add_withdraw_amount_first": "أضف مبلغ السحب أولاً",
   "add_charge_amount_first": "أضف مبلغ شحن المحفظة أولاً",
-    "do_you_want_to_delete_this_account": "هل تريد حذف هذا الحساب",
+  "do_you_want_to_delete_this_account": "هل تريد حذف هذا الحساب",
   "delete_acc": "حذف الحساب",
-  "no_address": "لا يوجد عنوان",  "min": "دقيقة",
+  "no_address": "لا يوجد عنوان",
+  "min": "دقيقة",
   "km": "كم",
   "hr": "ساعة",
   "digital": "الدفع الرقمي",
@@ -477,9 +462,40 @@
   "pay_with_apple_pay": "ادفع رحلتك باستخدام طريقة الدفع Apple pay ...",
   "click_on_btn_to_finish_your_billing": "انقر فوق الزر لإنهاء الدفع الخاص بك",
   "from": "من",
-  "from_camera": "من الكاميرا","from_gallery": "من المعرض",
+  "from_camera": "من الكاميرا",
+  "from_gallery": "من المعرض",
   "duration": "المدة",
-  "your_balance_wallet_not_enough": "عذرًا، رصيد محفظتك لا يكفي لدفع ثمن الرحلة."
-
-
+  "your_balance_wallet_not_enough": "عذرًا، رصيد محفظتك لا يكفي لدفع ثمن الرحلة.",
+  "your_wallet_now_is": "رصيد محفظتك الآن",
+  "Sorry_for_waiting_first_alert": "نحن نعمل جاهدين للعثور على السائق الخاص بك. شكرًا على انتظارك!",
+  "Sorry_for_waiting_sec_alert": "أبحث حاليًا عن سائق لك. نقدر سعة صدرك.",
+  "Sorry_for_waiting_third_alert": "نعتذر عن الانتظار. البحث عن برنامج التشغيل قيد التقدم.",
+  "Sorry_for_waiting_fourth_alert": "مازلت أبحث عن سائق. شكرًا لك على سعة صدرك.",
+  "Sorry_for_waiting_fifth_alert": "العثور على سائق لك. شكرًا على انتظارك!",
+  "Sorry_for_waiting_sixth_alert": "نعتذر عن التأخير. البحث عن السائق مستمر.",
+  "pending": "معلق",
+  "request_accepted": "تم قبول الطلب",
+  "parcel_picked": "تم استلام الطرد",
+  "arrived_drop_point": "وصل إلى نقطة الوصول",
+  "continued": "تم الاستمرار",
+  "cancel": "تم الإلغاء",
+  "spl_cancel": "إلغاء خاص",
+  "driver_cancel": "إلغاء السائق",
+  "driver_accept": "تم قبول السائق",
+  "parcel_delivered": "تم تسليم الطرد",
+  "driver_cancel": "إلغاء السائق",
+  "delivered": "تم التسليم",
+  "parcel_picked": "تم استلام الطرد",
+  "arrived_drop_point": "وصل إلى نقطة الوصول",
+  "delivered": "تم التسليم",
+  "all": "الكل",
+  "on_its_way": "في الطريق",
+  "cancel": "تم الإلغاء",
+  "delivered": "تم التسليم",
+  "current": "الحالي",
+  "prompt_message": "رقم التتبع أو اسم الحزمة...",
+  "order_id": "رقم الطلب",
+  "arrival_message": "سيصل إلى الوجهة في",
+  "view_details": "عرض التفاصيل",
+      "coming_soon": "قريباً"
 }
