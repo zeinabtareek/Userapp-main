@@ -16,7 +16,6 @@ class RouteHelper {
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () =>   DashboardScreen()),
-    //GetPage(name: splash, page: () => const SplashScreen()),
     GetPage(name: splash, page: () =>   SplashScreen()),
     GetPage(name: home, page: () => const HomeScreen()),
 

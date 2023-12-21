@@ -134,11 +134,7 @@ class CreateATripController extends BaseMapController {
   Future<CreateOrderModel> createATrip(List<LatLng> points) async {
     LatLng source = points.first; // Example source coordinate (San Francisco)
     LatLng destination = points.last;
-
     List<ExtraRoutes> extraRoute = await extraRoutes(points);
-    // String time = "12";
-    //  await calculateDuration(source, destination);
-
     List<ExtraRoutes> gogleR = await googleRoutes(
       source,
       extraRoute.isNotEmpty
@@ -171,7 +167,6 @@ class CreateATripController extends BaseMapController {
           ),
         );
         orderId = createOrderModel.data!.id!;
-        // print('order ::::  id $orderId');
 
         setOrderId(orderId!);
         Get.find<RideController>()

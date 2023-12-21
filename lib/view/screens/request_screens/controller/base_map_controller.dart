@@ -170,15 +170,8 @@ else{
     subscribeToEvent("map_$oId", (data) {
       if (kDebugMode) {
         print(" received data $data  $tag ");
-        // showTrip();
+
       }
-      // if (data is List) {
-      // bool isMyOrder = data.first['order_id'].toString() == oId;
-      // // if (data["order_id"].toString() == getOrderId()) {
-      // if (isMyOrder) {
-      //   showTrip();
-      // }
-      // }
     });
   }
 
@@ -205,17 +198,19 @@ else{
     return distance.value = result;
   }
 
-  calculateDuration(List<LatLng> points) async {
-    for (var i = 0; i < points.length - 1; i++) {
-      DistanceModel model = await SearchServices.getDistance(
-        points[i],
-        points[i + 1],
-      );
-      duration = model.rows?[0].elements?[0].duration?.text ?? '';
-    }
-    return duration;
-  }
+///calculate duration 1
+  // calculateDuration(List<LatLng> points) async {
+  //   for (var i = 0; i < points.length - 1; i++) {
+  //     DistanceModel model = await SearchServices.getDistance(
+  //       points[i],
+  //       points[i + 1],
+  //     );
+  //     duration = model.rows?[0].elements?[0].duration?.text ?? '';
+  //   }
+  //   return duration;
+  // }
 
+///calculate distance 1
   // calculateDistance(List<LatLng> points) async {
   // var result = 0.0;
 
@@ -226,10 +221,9 @@ else{
   //      );
   //   }
   // return distance.value = result;
-
   // }
 
-  ///calculate duration
+  ///calculate duration 2
   // calculateDuration(LatLng source, LatLng dis) async {
   //   final result = await SearchServices.getDistanceAndDuration(
   //     source,
