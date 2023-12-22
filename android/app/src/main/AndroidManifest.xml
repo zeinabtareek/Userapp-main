@@ -23,12 +23,12 @@
     </queries>
 
    <application
-        android:label="Hood"
+        android:label="Hexa Ride"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
        <meta-data android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyCzuhU5w3Ah8t2x2pIKXzsGoATsdzVNK9I"/>
+           android:value="AIzaSyBQJSH-J3c42mrEgb8vX2an6ajYteGmp_I"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

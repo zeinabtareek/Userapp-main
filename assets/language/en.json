@@ -498,6 +498,6 @@
   "arrival_message": "Will Arrive at the Destination in",
   "driver_accept": "Driver Accepted",
   "parcel_delivered": "Parcel Delivered",
-     "view_details": "View Details",
-      "coming_soon": "Coming Soon"
+  "view_details": "View Details",
+  "coming_soon": "Coming Soon"
 }
