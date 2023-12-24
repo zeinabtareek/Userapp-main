@@ -61,8 +61,6 @@ class CreateParcelBody {
     final Map<String, dynamic> data = {};
     data['order_type'] = orderType;
     data['package_id'] = packageId;
-    // data['from'] = from?.toJson();
-    // data['to'] = to?.toJson();
     data.addAll(from?.toJson() ?? {});
     data.addAll(to?.toJson() ?? {});
     if (googleRoutes != null && (googleRoutes?.isNotEmpty ?? false)) {

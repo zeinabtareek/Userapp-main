@@ -11,8 +11,8 @@ class AppConstants {
   // static const String baseUrl = 'https://arabchance.com/Hood-Backend-Dashboard/public';
   // static const String baseUrl = 'http://172.16.13.22:8000';
 
-  static const String baseUrl =
-      'https://arabchance.com/Hood-Backend-Dashboard/public';
+  static const String baseUrl =  'https://www.hoood.app/Hood-Backend-Dashboard/public/index.php';
+  // static const String baseUrl =  'https://arabchance.com/Hood-Backend-Dashboard/public';
 
   // static const String baseUrl = 'http://hoodbackend.develobug.com';
   static const String getAllOrders = '/api/user/orders';
