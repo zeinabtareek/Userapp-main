@@ -49,8 +49,8 @@ class RideSubCategoryWidget extends StatelessWidget {
                           rideController
                               .updateSelectedSubRideType(RideType.car);
 
-                          // rideController
-                          //     .selectedSubPackage(listOfSubCategory[index]);
+                          rideController
+                              .selectedSubPackage(listOfSubCategory[index]);
                           print(
                               'sub package ${listOfSubCategory[index].categoryTitle}');
 
@@ -58,6 +58,14 @@ class RideSubCategoryWidget extends StatelessWidget {
                           if (rideController.isFromCat.value == true) {
                             rideController
                                 .selectedSubPackage(listOfSubCategory[index]);
+                            print(' to ::: SetDestinationScreen');
+
+                            // Navigator.push(context, MaterialPageRoute(
+                            //     builder: (_) => SetDestinationScreen(
+                            //         fromCat: rideController.isFromCat.value,
+                            //         // fromCat: true,
+                            //         categoryModel: listOfSubCategory[index])));
+
                             Get.to(
                               () => SetDestinationScreen(
                                   fromCat: rideController.isFromCat.value,
@@ -83,8 +91,7 @@ class RideSubCategoryWidget extends StatelessWidget {
                               .selectedSubPackage(listOfSubCategory[index]);
 
                           Get.to(() => const ParcelHomeScreen(),
-                              binding: BindingsBuilder(() {
-                          }));
+                              binding: BindingsBuilder(() {}));
                         } // if (index == 0) {
                         //   rideController.updateSelectedRideType(RideType.car);
                         //   // ...
@@ -300,9 +307,9 @@ class RideCategoryWidget extends StatelessWidget {
                                                   BorderRadius.circular(
                                                       Dimensions
                                                           .radiusDefault)),
-                                          child:  Center(
+                                          child: Center(
                                             child: Text(
-                                            "coming_soon".tr,
+                                              "coming_soon".tr,
                                               style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 12,

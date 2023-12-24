@@ -42,6 +42,7 @@ class SetDestinationScreen extends StatelessWidget {
           init: WhereToGoController(),
           id: "WhereToGoController",
           builder: (whereToGoController) {
+            // return const SizedBox();
             return SingleChildScrollView(
               controller: whereToGoController.scrollController,
               child: Stack(children: [
@@ -556,7 +557,7 @@ class SavedPlaces extends StatelessWidget {
       // initState: (state) => Get.find<AddressController>()..getAddressList(),
       builder: (controller) {
         if (controller.addressModel.data != null &&
-            controller.addressModel.data!.isNotEmpty) {
+            (controller.addressModel.data?.isNotEmpty ?? false)) {
           return Container(
             decoration: K.boxDecorationWithPrimaryBorder,
             child: Column(

@@ -30,8 +30,8 @@ class HomeScreen extends GetView<BaseController> {
     return Scaffold(
       body: CustomBody(
         appBar: GetBuilder<HomeViewController>(
-        // appBar: GetBuilder<BaseController>(
-        //   init: BaseController()..onInit(),
+          // appBar: GetBuilder<BaseController>(
+          //   init: BaseController()..onInit(),
           init: HomeViewController()..getPermission(),
           initState: (_) {},
           builder: (controller) {
@@ -55,8 +55,8 @@ class HomeScreen extends GetView<BaseController> {
                     // initState: (_) =>
                     //     Get.find<CategoryController>().getCategoryList(),
                     builder: (categoryController) {
-                      return const RideCategoryWidget();
-                    }),
+                  return const RideCategoryWidget();
+                }),
                 K.sizedBoxH0,
                 // const CategoryView(),
                 const HomeSearchWidget(),
@@ -65,7 +65,9 @@ class HomeScreen extends GetView<BaseController> {
                 ),
                 HomeMapView(),
 
-                SizedBox(height: 200.h,),
+                SizedBox(
+                  height: 200.h,
+                ),
               ],
             ),
           ),

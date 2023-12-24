@@ -12,7 +12,7 @@ class AuthLib {
   static const String routeName = "user/";
 // http://hoodbackend.develobug.com/
   // static const String domain = "http://172.16.13.22:8000/api/";
-  static const String domain = "http://hoodbackend.develobug.com/api/";
+  static const String domain = "http://146.190.45.142/Hood-Backend-Dashboard/public/index.php/api/";
   // end- points
 
   static const String baseUrl = "$domain$routeName";

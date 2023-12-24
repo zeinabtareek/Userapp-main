@@ -14,7 +14,6 @@ class _RemoteApiAuth implements RemoteApiAuth {
     this.baseUrl,
   }) {
     baseUrl ??= 'https://www.hoood.app/Hood-Backend-Dashboard/public/index.php/api/user/';
-    // baseUrl ??= 'https://arabchance.com/Hood-Backend-Dashboard/public/api/user/';
   }
 
   final Dio _dio;
