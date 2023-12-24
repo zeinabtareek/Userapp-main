@@ -77,6 +77,7 @@ Future<void> main() async {
   await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
   FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
   await initializeDependencies();
+  // sl<AuthCases>().setUserDate(null);
   try {
     await dotenv.load(fileName: ".env");
   } catch (e) {

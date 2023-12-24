@@ -15,6 +15,7 @@ class AuthInterceptor extends InterceptorsWrapper {
 
       options.headers.addAll({
         "Authorization": "Bearer ${user?.token}",
+        "X-Authorization": "Bearer ${user?.token}",
       });
     } else {
       // // TODO: remove
