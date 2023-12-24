@@ -22,6 +22,7 @@ class FindingDriverController extends CreateATripController {
     _timer?.cancel();
     super.dispose();
   }
+
   @override
   onInit() async {
     super.onInit();
@@ -49,19 +50,48 @@ class FindingDriverController extends CreateATripController {
 
         // subscribeToEvent("map_$oId", (data) {
 
-        subscribeToEvent("map", (data) {
-          if (kDebugMode) {
-            print(" received data $data  $tag ");
-            // showTrip();
-          }
-          if (data is List) {
-            bool isMyOrder = data.first['order_id'].toString() == oId;
-            // if (data["order_id"].toString() == getOrderId()) {
-            if (isMyOrder) {
-              disconnectSocket();
+        subscribeToEvent(
+          "map",
+          (data) {
+            if (kDebugMode) {
+              print(" received data $data  $tag ");
+              // showTrip();
+            }
+            if (data is List) {
+              bool isMyOrder = data.first['order_id'].toString() == oId;
+              // if (data["order_id"].toString() == getOrderId()) {
+              if (isMyOrder) {
+                disconnectSocket();
 
-              showTrip();
-              // unsubscribeFromEvent("map");
+                // showTrip();
+                // unsubscribeFromEvent("map");
+              }
+            }
+          },
+        );
+
+        sendMassage(["user_id", "${user!.id}"]);
+        subscribeToEvent("user-notification.${user!.id}", (data) {
+          if ((data["data"]['order_id'].toString()) == getOrderId()) {
+            if (data["data"]["notify_type"] == "change_order_status") {
+              String? status = (data["data"]["status"].toString());
+              // if (status == "start_trip") {
+              //   changeState(request[RequestState.tripOngoing]!);
+              // } else if (status == "finished") {
+              //   disconnectSocket();
+              //   changeState(request[RequestState.tripFinishedState]!);
+              // } else if (status == "cancel") {
+              //   disconnectSocket();
+              //   // TODO:
+              //   changeState(request[RequestState.initialState]!);
+              // }
+
+              if (status == "driver_accept") {
+                disconnectSocket();
+                   showTrip(orderId: getOrderId());
+              }
+
+              //
             }
           }
         });
@@ -90,7 +120,6 @@ class FindingDriverController extends CreateATripController {
 
   ///handle waiting statue
 
-
   final List<String> randomTexts = [
     'Sorry_for_waiting_first_alert',
     'Sorry_for_waiting_sec_alert',
@@ -104,19 +133,24 @@ class FindingDriverController extends CreateATripController {
     final random = Random();
     final randomIndex = random.nextInt(randomTexts.length);
     print('randomTexts ::${randomTexts[randomIndex]}');
-    OverlayHelper.showDurationAlert(Get.overlayContext!, randomTexts[randomIndex],Images.reloadIcon,'We Still searching for you',);
+    OverlayHelper.showDurationAlert(
+      Get.overlayContext!,
+      randomTexts[randomIndex],
+      Images.reloadIcon,
+      'We Still searching for you',
+    );
   }
 
   handleWaitingStatus(bool stillWaiting) async {
     if (stillWaiting) {
       const Duration intervalTimeout = Duration(minutes: 3);
-      Duration initialTimeout = Duration(minutes: 2);
+      Duration initialTimeout = const Duration(minutes: 2);
 
       Future.delayed(initialTimeout, () {
         print('object1');
       });
 
-      _timer = Timer.periodic(intervalTimeout , (Timer timer) async {
+      _timer = Timer.periodic(intervalTimeout, (Timer timer) async {
         if (!stillWaiting) {
           timer.cancel();
         } else {
@@ -124,5 +158,5 @@ class FindingDriverController extends CreateATripController {
         }
       });
     }
-}
+  }
 }

@@ -63,7 +63,7 @@ class BaseMapController extends BaseController with SocketIoMixin {
     super.onInit();
     // await _getCurrantLocation();
     // setOrderId(null);
-    await checkRideStateToFindingDriver();
+    // await checkRideStateToFindingDriver();
     persistentContentHeightt=600;
     Timer? timer;
     timer = Timer.periodic(const Duration(milliseconds: 1000), (_) {
@@ -151,6 +151,7 @@ else{
               }
             }
           });
+     
         },
         onDisconnect: (socket) {
           unsubscribeFromEvent("user-notification.${user?.id}");
