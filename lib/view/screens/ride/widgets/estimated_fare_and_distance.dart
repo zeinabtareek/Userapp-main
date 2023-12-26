@@ -6,29 +6,53 @@ import 'package:ride_sharing_user_app/util/text_style.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
 
 import '../../../../util/app_style.dart';
+import '../../request_screens/controller/base_map_controller.dart';
 import '../../where_to_go/controller/create_trip_controller.dart';
 
 class EstimatedFareAndDistance extends StatelessWidget {
-  const EstimatedFareAndDistance({Key? key}) : super(key: key);
+  String? finalprice;
+  String? distance;
+
+  EstimatedFareAndDistance({
+    Key? key,
+    this.distance,
+    this.finalprice,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CreateATripController>(
-        init: CreateATripController(),
-    // initState: Get.find<CreateATripController>().showTrip(),
-    builder: (controller) => Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
-          color: Theme.of(context).primaryColor.withOpacity(0.15)),
-      padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          customDistanceItem(context, false, "${controller.orderModel.data?.distance.toString()??'0.0'} km", "distance_away"),
-          customDistanceItem(context, false, "${Get.find<RideController>().duration??0.0} min", "estimated_time"),
-          customDistanceItem(context, true, "${controller.orderModel.data?.finalPrice.toString()??'0.0'} ", "fare_price"),
-        ],
-      ),
+      init: CreateATripController(),
+      builder: (controller) => Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
+            color: Theme.of(context).primaryColor.withOpacity(0.15)),
+        padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            customDistanceItem(
+                context,
+                false,
+                "${distance ?? controller.orderModel.data?.distance.toString()} km",
+                "distance_away"),
+            customDistanceItem(
+                context,
+                false,
+                "${Get.find<BaseMapController>().duration ?? 0.0} ",
+                "estimated_time"),
+            customDistanceItem(
+                context,
+                true,
+                "${finalprice ?? controller.orderModel.data?.finalPrice.toString()} ",
+                "fare_price"),
+
+            // customDistanceItem(context, false, "${controller.orderModel.data?.distance.toString()??'0.0'} km", "distance_away"),
+            //      customDistanceItem(context, false, "${Get.find<RideController>().duration??0.0} min", "estimated_time"),
+            //      customDistanceItem(context, true, "${controller.orderModel.data?.finalPrice.toString()??'0.0'} ", "fare_price"),
+            //
+          ],
+        ),
       ),
     );
   }

@@ -183,7 +183,7 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
                     const SizedBox(
                       height: Dimensions.paddingSizeDefault,
                     ),
-                    const EstimatedFareAndDistance(),
+                      EstimatedFareAndDistance(),
                     const SizedBox(
                       height: Dimensions.paddingSizeDefault,
                     ),
@@ -250,7 +250,7 @@ class _ParcelDetailsWidgetsState extends State<ParcelDetailsWidgets> {
                   const SizedBox(
                     height: Dimensions.paddingSizeDefault,
                   ),
-                  const EstimatedFareAndDistance(),
+                    EstimatedFareAndDistance(),
                   const SizedBox(
                     height: Dimensions.paddingSizeDefault,
                   ),

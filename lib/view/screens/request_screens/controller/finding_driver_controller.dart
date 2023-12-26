@@ -109,6 +109,8 @@ class FindingDriverController extends CreateATripController {
         Get.find<BaseMapController>()
             .changeState(request[RequestState.findDriverState]!);
 
+
+
         Get.find<BaseMapController>().update();
 
         // Get.find<BaseMapController>().changeState(request[RequestState.riderDetailsState]!);//riderDetailsState

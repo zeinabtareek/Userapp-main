@@ -96,7 +96,14 @@ class FourthWidget extends StatelessWidget {
                         vehicle: controller.orderModel.data?.driver?.vehicle),
                   ),
                   K.sizedBoxH0,
-                  const EstimatedFareAndDistance(),
+                  ///zeinab 0.0
+                  //Get.find<CreateATripController>()
+
+                   EstimatedFareAndDistance(
+                     distance:controller.orderModel.data?.distance.toString()??'0.0',
+                     finalprice: controller.orderModel.data?.finalPrice.toString(),),
+
+
                   K.sizedBoxH0,
                   baseMapController.widgetNumber.value ==
                           request[RequestState.tripOngoing] //tripOngoing
