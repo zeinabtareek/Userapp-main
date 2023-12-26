@@ -30,8 +30,13 @@ class FourthWidget extends StatelessWidget {
     return GetBuilder<CreateATripController>(
         init: CreateATripController(),
         // initState: Get.find<CreateATripController>().showTrip(),
+        initState:  (_)async{
+         // await Get.find<BaseMapController>().listonOnNotificationSocketAfterAccept();
+        }
+        ,
         builder: (controller) => GetBuilder<BaseMapController>(
-            init: BaseMapController()..listonOnNotificationSocketAfterAccept(),
+            init: BaseMapController()
+              ..listonOnNotificationSocketAfterAccept(),
             builder: (baseMapController) => Column(children: [
                   TollTipWidget(
                       title: baseMapController.widgetNumber.value ==

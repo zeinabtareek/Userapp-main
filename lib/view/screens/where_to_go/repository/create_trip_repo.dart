@@ -73,14 +73,13 @@ Future<CreateOrderModel> createATrip(
     final res = await dio!.get(
       '${AppConstants.order}/' + orderId,
     );
-    print('res ::${res.statusCode}');
+    print('res :: TAG ${res.statusCode}');
     print('res ::${res.data}');
     if (res.statusCode == 200) {
       if (res.data != null) {
         final model = OrderModel.fromJson(res.data);
-        print('model ${model.data?.id ?? ''}');
-
-// TODO:  when driver accept
+        print('model ::${model.data?.id ?? ''}');
+        // TODO:  when driver accept
         Get.find<BaseMapController>().key.currentState!.expand();
         Get.find<BaseMapController>()
             .changeState(request[RequestState.driverAcceptState]!);

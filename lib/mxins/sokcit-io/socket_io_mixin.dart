@@ -10,7 +10,7 @@ mixin SocketIoMixin on GetxController {
   // String serverUrl = "http://63.250.36.228:8090";
   String serverUrl = "http://www.hoood.app:8090";
 
-  final String _tag = "Socket.IO";
+  final String _tag = "Socket.IO-TAG";
 
   String get tag => _tag;
   // Initialize the Socket?.IO connection

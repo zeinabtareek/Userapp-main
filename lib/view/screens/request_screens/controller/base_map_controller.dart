@@ -61,9 +61,8 @@ class BaseMapController extends BaseController with SocketIoMixin {
   @override
   onInit() async {
     super.onInit();
-    // await _getCurrantLocation();
-    // setOrderId(null);
-    await checkRideStateToFindingDriver();
+ ///zeinab back
+    // await checkRideStateToFindingDriver();
     persistentContentHeightt=600;
     Timer? timer;
     timer = Timer.periodic(const Duration(milliseconds: 1000), (_) {
@@ -125,14 +124,39 @@ else{
   update();
   }
 
-  void listonOnNotificationSocketAfterAccept() async {
+    listonOnNotificationSocketAfterAccept() async {
     await getUser;
     if (getOrderId() != null) {
+
+      // trackDriverLocationOnOrder();
+      // sendMassage(["user_id", "${user!.id}"]);
+      // subscribeToEvent("user-notification.${user!.id}", (data) {
+      //   print('data :: $data');
+      //   if ((data["data"]['order_id'].toString()) == getOrderId()) {
+      //     if (data["data"]["notify_type"] == "change_order_status") {
+      //       String? status = (data["data"]["status"].toString());
+      //       if (status == "start_trip") {
+      //         changeState(request[RequestState.tripOngoing]!);
+      //       } else if (status == "finished") {
+      //         disconnectSocket();
+      //         changeState(request[RequestState.tripFinishedState]!);
+      //       } else if (status == "cancel") {
+      //         disconnectSocket();
+      //         // TODO:
+      //         changeState(request[RequestState.initialState]!);
+      //       }
+      //
+      //       //
+      //     }
+      //   }
+      // });
+
       initializeSocket(
         onConnect: () {
           trackDriverLocationOnOrder();
           sendMassage(["user_id", "${user!.id}"]);
           subscribeToEvent("user-notification.${user!.id}", (data) {
+            print('data :: $data');
             if ((data["data"]['order_id'].toString()) == getOrderId()) {
               if (data["data"]["notify_type"] == "change_order_status") {
                 String? status = (data["data"]["status"].toString());

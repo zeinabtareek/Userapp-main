@@ -55,12 +55,40 @@ class FindingDriverController extends CreateATripController {
             // showTrip();
           }
           if (data is List) {
+            // bool isMyOrder = true;
             bool isMyOrder = data.first['order_id'].toString() == oId;
             // if (data["order_id"].toString() == getOrderId()) {
             if (isMyOrder) {
               disconnectSocket();
 
-              showTrip();
+
+              // Get.find<BaseMapController>()
+              //     .changeState(request[RequestState.driverAcceptState]!);
+              ///...
+              showTrip(orderId: getOrderId());
+              trackDriverLocationOnOrder();
+              sendMassage(["user_id", "${user!.id}"]);
+              subscribeToEvent("user-notification.${user!.id}", (data) {
+                print('data :: $data');
+                if ((data["data"]['order_id'].toString()) == getOrderId()) {
+                  if (data["data"]["notify_type"] == "change_order_status") {
+                    String? status = (data["data"]["status"].toString());
+                    if (status == "start_trip") {
+                      changeState(request[RequestState.tripOngoing]!);
+                    } else if (status == "finished") {
+                      disconnectSocket();
+                      changeState(request[RequestState.tripFinishedState]!);
+                    } else if (status == "cancel") {
+                      disconnectSocket();
+                      // TODO:
+                      changeState(request[RequestState.initialState]!);
+                    }
+
+                    //
+                  }
+                }
+              });
+              ///...
               // unsubscribeFromEvent("map");
             }
           }
