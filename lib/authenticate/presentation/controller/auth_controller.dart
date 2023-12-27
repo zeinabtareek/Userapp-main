@@ -79,6 +79,7 @@ class AuthController extends GetxController {
     initLoginWithPassScreen();
   }
 
+  ///imp use case
   AuthCases authCases;
 
   AuthController(

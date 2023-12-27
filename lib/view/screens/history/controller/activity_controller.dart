@@ -123,7 +123,6 @@ class ActivityController extends  BaseController
           ),
           position: desPoint,
           onTap: () {}));
-      // setPolylines(point,desPoint);
       update();
     } catch (e) {
       printError(info: '############no#########');

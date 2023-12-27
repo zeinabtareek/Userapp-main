@@ -23,7 +23,6 @@ class FindingDriverController extends CreateATripController {
     _timer?.cancel();
     super.dispose();
   }
-
   @override
   onInit() async {
     super.onInit();
@@ -155,6 +154,8 @@ class FindingDriverController extends CreateATripController {
         Get.find<BaseMapController>()
             .changeState(request[RequestState.findDriverState]!);
 
+
+
         Get.find<BaseMapController>().update();
 
         // Get.find<BaseMapController>().changeState(request[RequestState.riderDetailsState]!);//riderDetailsState
@@ -163,6 +164,7 @@ class FindingDriverController extends CreateATripController {
   }
 
   ///handle waiting statue
+
 
   final List<String> randomTexts = [
     'Sorry_for_waiting_first_alert',
@@ -190,13 +192,13 @@ class FindingDriverController extends CreateATripController {
   handleWaitingStatus(bool stillWaiting) async {
     if (stillWaiting) {
       const Duration intervalTimeout = Duration(minutes: 3);
-      Duration initialTimeout = const Duration(minutes: 2);
+      Duration initialTimeout = Duration(minutes: 2);
 
       Future.delayed(initialTimeout, () {
         print('object1');
       });
 
-      _timer = Timer.periodic(intervalTimeout, (Timer timer) async {
+      _timer = Timer.periodic(intervalTimeout , (Timer timer) async {
         if (!stillWaiting) {
           timer.cancel();
         } else {
@@ -204,5 +206,5 @@ class FindingDriverController extends CreateATripController {
         }
       });
     }
-  }
+}
 }

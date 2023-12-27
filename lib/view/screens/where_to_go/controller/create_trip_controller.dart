@@ -262,13 +262,17 @@ class CreateATripController extends BaseMapController {
       var result = await actionCenter.execute(() async {
         setState(ViewState.busy);
 
+        // orderModel = await services.showTripDetails(orderId: );
         orderModel = await services.showTripDetails(orderId: orderId);
+
+
+
         // orderModel = await services.showTripDetails(
         //     orderId:
         //     'b0a49d66-14e2-4236-bf1b-771e1f84a2fc'
         // // Get.find<BaseMapController>().changeState(request[RequestState.riderDetailsState]!);//riderDetailsState
         // );
-        print(orderModel.data?.driver);
+        print('driver first name ${orderModel.data?.driver?.firstName}');
         print(orderModel.data?.vehicleType?.id);
         // print(orderModel.data);
         setState(ViewState.idle);

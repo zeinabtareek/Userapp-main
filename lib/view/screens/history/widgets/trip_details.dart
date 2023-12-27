@@ -67,9 +67,11 @@ class ActivityScreenTripDetails extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   onTap: ()async{
+
+
                     await activityController.goToPlace(mapCompleter,lat:  0.0, lng:  0.0,  );
 
-                  },
+                    },
                 ),
                   SizedBox(height:20.h),
                   tripDetails .extraRoutes!=null&&tripDetails .extraRoutes!.isNotEmpty ?

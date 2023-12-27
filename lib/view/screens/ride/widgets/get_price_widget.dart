@@ -35,6 +35,7 @@ import '../../../../util/app_strings.dart';
 import '../../../../util/app_style.dart';
 import '../../../../util/text_style.dart';
 import '../../../widgets/custom_category_card.dart';
+import '../../where_to_go/repository/create_trip_repo.dart';
 
 class GetPriceWidget extends StatelessWidget {
   String image;
@@ -123,6 +124,8 @@ class GetPriceWidget extends StatelessWidget {
               const SizedBox(
                 height: Dimensions.paddingSizeDefault,
               ),
+
+
               Row(
                 children: [
                   Expanded(
@@ -183,6 +186,8 @@ class GetPriceWidget extends StatelessWidget {
               const SizedBox(
                 height: Dimensions.paddingSizeDefault,
               ),
+
+
                FindDriverCustomBtn2(
                 fromPage: 'ride',
                 whoWillPay: true,

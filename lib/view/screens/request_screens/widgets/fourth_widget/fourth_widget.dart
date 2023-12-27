@@ -113,7 +113,7 @@ class FourthWidget extends StatelessWidget {
               vehicle: controller.orderModel.data?.driver?.vehicle),
         ),
         K.sizedBoxH0,
-        const EstimatedFareAndDistance(),
+         EstimatedFareAndDistance(),
         K.sizedBoxH0,
         !isOnGoing(baseMapController) //tripOngoing
             ? const SizedBox()

@@ -458,7 +458,7 @@ print('object');
                   // ),
                   K.sizedBoxH0,
 
-                  const EstimatedFareAndDistance(),
+                    EstimatedFareAndDistance(),
 
                   K.sizedBoxH0,
 
@@ -530,7 +530,7 @@ print('object');
                   const SizedBox(
                     height: Dimensions.paddingSizeDefault,
                   ),
-                  const EstimatedFareAndDistance(),
+                    EstimatedFareAndDistance(),
                   const SizedBox(
                     height: Dimensions.paddingSizeDefault,
                   ),

@@ -255,12 +255,12 @@ class _DistanceWidgetState extends State<DistanceWidget> {
                 LatLng(34.0522, -118.2437),
               ]);
 
-              var x = await con.calculateDuration([
-                LatLng(37.7749, -122.4194), // San Francisco
-                LatLng(34.0522, -118.2437),
-              ]);
+              // var x = await con.calculateDuration([
+              //   LatLng(37.7749, -122.4194), // San Francisco
+              //   LatLng(34.0522, -118.2437),
+              // ]);
 
-              print('duartion $x');
+              // print('duartion $x');
             },
             child: Text('ddd')),
       ],
