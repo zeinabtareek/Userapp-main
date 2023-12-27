@@ -245,7 +245,7 @@ class SecondWidget extends StatelessWidget {
                                         //
 
                                         if (Get.find<RideController>()
-                                                .initialSelectItem ==
+                                                .initialSelectItem.value ==
                                             'wallet') {
                                           baseMapController.changeState(request[
                                               RequestState.findDriverState]!);

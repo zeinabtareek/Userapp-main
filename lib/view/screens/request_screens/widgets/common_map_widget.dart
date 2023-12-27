@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_animarker/widgets/animarker.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../util/dimensions.dart';
@@ -23,43 +25,31 @@ class CommonMapWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Animarker(
-          curve: Curves.easeIn,
-          rippleRadius: 0.2,
-          useRotation: true,
-          duration: const Duration(milliseconds: 2300),
-          mapId: mapId,
-          shouldAnimateCamera: false,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(Dimensions.radiusOverLarge),
-            child: GoogleMap(
-              zoomControlsEnabled: false,
-              myLocationButtonEnabled: true,
-              myLocationEnabled: true,
-              compassEnabled: true,
-              mapType: MapType.normal,
-              initialCameraPosition: initialCameraPosition,
-              markers: markers,
-              polylines: polylines,
-              onMapCreated: onMapCreated,
-            ),
+    return Container(
+      height: MediaQuery.sizeOf(context).height / 2 - 40.h,
+      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+      child: Animarker(
+        curve: Curves.easeIn,
+        rippleRadius: 0.2,
+        useRotation: true,
+        duration: const Duration(milliseconds: 2300),
+        mapId: mapId,
+        shouldAnimateCamera: false,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(Dimensions.radiusOverLarge),
+          child: GoogleMap(
+            zoomControlsEnabled: true,
+            myLocationButtonEnabled: true,
+            // myLocationEnabled: true,
+            compassEnabled: true,
+            mapType: MapType.terrain,
+            initialCameraPosition: initialCameraPosition,
+            markers: markers,
+            polylines: polylines,
+            onMapCreated: onMapCreated,
           ),
         ),
-        Positioned(
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 100,
-                child: Image.asset(Images.mapLocationIcon),
-              ),
-            ))
-      ],
+      ),
     );
   }
 }

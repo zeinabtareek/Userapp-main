@@ -630,4 +630,6 @@ class ParcelController extends BaseController
       OverlayHelper.showErrorToast(Get.overlayContext!, e.message);
     }
   }
+
+  GoogleMapController? controller;
 }

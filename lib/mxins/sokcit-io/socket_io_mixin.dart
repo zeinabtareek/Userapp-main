@@ -4,13 +4,13 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 // socket_io_mixin
-mixin SocketIoMixin on GetxController {
+mixin SocketIoMixin {
   io.Socket? socket;
 
   // String serverUrl = "http://63.250.36.228:8090";
-  String serverUrl = "http://www.hoood.app:8090";
+  String serverUrl = "https://www.hoood.app:8090";
 
-  final String _tag = "Socket.IO";
+  final String _tag = "Socket.IO-TAG";
 
   String get tag => _tag;
   // Initialize the Socket?.IO connection
@@ -48,26 +48,38 @@ mixin SocketIoMixin on GetxController {
   }
 
   sendMassage(List<dynamic> args) {
-    print("  sendMassage $_tag $args ");
+    if (kDebugMode) {
+      print("  sendMassage $_tag $args ");
+    }
     socket?.send([]);
   }
 
   // Disconnect from the Socket?.IO server
   void disconnectSocket() {
-    print(" disconnectSocket $_tag ");
+    if (kDebugMode) {
+      print(" disconnectSocket $_tag ");
+    }
     socket?.disconnect();
   }
 
   // Send an event to the Socket?.IO server
   void sendSocketEvent<T>(String event, T data) {
-    print(" sendSocketEvent $_tag  $event  $data ");
+    if (kDebugMode) {
+      print(" sendSocketEvent $_tag  $event  $data ");
+    }
     socket?.emit(event, data);
   }
 
   // Listen for a specific event and handle data
   void subscribeToEvent(String event, Function(dynamic data) onData) {
     if (socket != null) {
-      print(" subscribeToEvent $event $tag   ");
+      if (kDebugMode) {
+        print(" subscribeToEvent $event $tag   ");
+      }
+
+      if (socket!.hasListeners(event)) {
+        socket!.off(event);
+      }
       socket!.on(event, (data) {
         if (kDebugMode) {
           print("  $tag   received on  $event: $data ");
@@ -79,7 +91,9 @@ mixin SocketIoMixin on GetxController {
 
   void unsubscribeFromEvent(String event) {
     if (socket != null) {
-      print("$tag Unsubscribing from event $event");
+      if (kDebugMode) {
+        print("$tag Unsubscribing from event $event");
+      }
       socket?.off(event);
     }
   }

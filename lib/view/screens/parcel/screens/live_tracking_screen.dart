@@ -92,8 +92,10 @@ class LiveTrackingScreenForParcel extends GetView<ParcelController> {
                                                         .pickedPoints.first,
                                                     zoom: 15),
                                             onMapCreated: (gController) async {
-                                              controller
-                                                      .mapViewHelperMapCompleter =
+
+                                              controller.controller = gController;
+                                              // controller
+                                              //         .mapViewHelperMapCompleter =
                                                   gController;
                                               controller.pickedPoints = [
                                                 LatLng(
@@ -115,9 +117,9 @@ class LiveTrackingScreenForParcel extends GetView<ParcelController> {
                                                   .drawMarkersIfHavePickedPoints();
                                               controller
                                                   .drawPolylineIfHavePickedPoints();
-                                              controller.zoomToFit(
-                                                  points:
-                                                      controller.pickedPoints);
+                                              // controller.zoomToFit(
+                                              //     points:
+                                              //         controller.pickedPoints);
                                             }),
                                       )),
                                   // Positioned(

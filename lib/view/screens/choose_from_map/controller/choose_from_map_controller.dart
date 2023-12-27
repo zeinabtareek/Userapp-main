@@ -91,6 +91,7 @@ class ChooseFromMapController extends BaseController
         ? calculateZoomLevel(pickedPoints.first, pickedPoints.last)
         : 13;
     goToPlaceByCamera(
+      controller: _mapController!,
       lat: point?.latitude ?? _position.latitude,
       lng: point?.longitude ?? _position.longitude,
       update,
@@ -260,7 +261,7 @@ class ChooseFromMapController extends BaseController
   });
   void setMapController(GoogleMapController mapController) {
     _mapController = mapController;
-    mapViewHelperMapController = mapController;
+    // mapViewHelperMapController = mapController;
     // _mapCompleter = Completer<GoogleMapController>()..complete(mapController);
   }
 

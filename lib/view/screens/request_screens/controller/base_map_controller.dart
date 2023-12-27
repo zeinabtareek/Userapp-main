@@ -6,32 +6,36 @@ import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ride_sharing_user_app/util/images.dart';
 
 import '../../../../bases/base_controller.dart';
 import '../../../../enum/request_states.dart';
 import '../../../../helper/cache_helper.dart';
 import '../../../../mxins/map/map_view_helper.dart';
 import '../../../../mxins/sokcit-io/socket_io_mixin.dart';
+import '../../map/controller/map_controller.dart';
 import '../../ride/controller/ride_controller.dart';
+import '../../where_to_go/controller/create_trip_controller.dart';
 import '../../where_to_go/model/distance_model.dart';
 import '../../where_to_go/repository/search_service.dart';
 
-class BaseMapController extends BaseController with SocketIoMixin {
+class BaseMapController extends BaseController
+    with SocketIoMixin, MapViewHelper {
   GlobalKey<ExpandableBottomSheetState> key = GlobalKey();
   var expansionStatus = ExpansionStatus.contracted.obs;
   var widgetNumber = 0.obs;
+  MarkerId myMarkerId = const MarkerId('myMarker');
 
   Completer<GoogleMapController> mapCompleter =
       Completer<GoogleMapController>();
-  GoogleMapController? _mapController;
-  late LatLng _initialPosition = const LatLng(23.83721, 90.363715);
-  LatLng get initialPosition => _initialPosition;
+  LatLng? _initialPosition = const LatLng(23.83721, 90.363715);
+  LatLng? get initialPosition => _initialPosition;
 
   late Position _position;
   Position get position => _position;
 
   //double _persistentContentHeight = 300;
-    double _persistentContentHeight = 500;
+  double _persistentContentHeight = 500;
   double percent = 0;
   set persistentContentHeightt(double num) {
     _persistentContentHeight = num;
@@ -43,6 +47,8 @@ class BaseMapController extends BaseController with SocketIoMixin {
   String? orderId;
 
   static const String orderIdKey = "orderIdKey";
+
+  GoogleMapController? controller;
 
   void setOrderId(String? orderId) async {
     this.orderId = orderId;
@@ -62,9 +68,10 @@ class BaseMapController extends BaseController with SocketIoMixin {
   onInit() async {
     super.onInit();
     // await _getCurrantLocation();
+
     // setOrderId(null);
     // await checkRideStateToFindingDriver();
-    persistentContentHeightt=600;
+    persistentContentHeightt = 600;
     Timer? timer;
     timer = Timer.periodic(const Duration(milliseconds: 1000), (_) {
       percent += 50;
@@ -81,6 +88,7 @@ class BaseMapController extends BaseController with SocketIoMixin {
     if (getOrderId() == null) {
       widgetNumber.value = request[RequestState.initialState]!;
     } else {
+      // TODO::
       widgetNumber.value = request[RequestState.driverAcceptState]!;
     }
     update();
@@ -92,66 +100,106 @@ class BaseMapController extends BaseController with SocketIoMixin {
   }
 
   void setMapController(GoogleMapController mapController) {
-    _mapController = mapController;
+    // mapViewHelperMapCompleter = mapController;
+    controller = mapController;
+    // widgetNumber.value = request[RequestState.findDriverState]!;
   }
 
-  Future _getCurrantLocation() async {
+  Future<LatLng?> getCurrantLocation() async {
     try {
       _position = (await MapHelper.getCurrentPosition())!;
       _initialPosition = LatLng(_position.latitude, _position.longitude);
+      await drawMyMarker();
+
+      goToPlaceByCamera(
+        update,
+        controller: controller!,
+        lat: _initialPosition!.latitude,
+        lng: _initialPosition!.longitude,
+        isAnimate: true,
+      );
+      return _initialPosition;
     } on Exception {
-      // TODO
+      return null;
+      throw UnimplementedError(" cannot getCurrantLocation  ");
     }
   }
 
-  onMapCreated(gController) {
-    _getCurrantLocation();
+  drawMyMarker() async {
+    addOneMarker(
+      update,
+      marker: Marker(
+        markerId: myMarkerId,
+        position: _initialPosition!,
+        icon: BitmapDescriptor.fromBytes(
+          await getBytesFromAsset(Images.myMapIcon, 80),
+        ),
+        rotation: _position.heading,
+      ),
+    );
+  }
 
+  onMapCreated(gController) async {
     setMapController(gController);
+    await getCurrantLocation();
   }
 
   changeState(int value) {
-
-if(key.currentState!=null){
-    key.currentState?.contract();
-    expansionStatus.value = key.currentState!.expansionStatus;
-    widgetNumber.value = value;
-
-  }
-else{
-  key = GlobalKey<ExpandableBottomSheetState>();
-  key.currentState?.contract();
-}
-  update();
+    if (key.currentState != null) {
+      key.currentState?.contract();
+      expansionStatus.value = key.currentState!.expansionStatus;
+      widgetNumber.value = value;
+    } else {
+      key = GlobalKey<ExpandableBottomSheetState>();
+      key.currentState?.contract();
+    }
+    update();
   }
 
-  void listonOnNotificationSocketAfterAccept() async {
+  void listonOnNotificationSocketAfterAccept({
+    Function()? onStartTrip,
+    Function()? onFinishedTrip,
+    Function()? onCancelTrip,
+  }) async {
     await getUser;
     if (getOrderId() != null) {
       initializeSocket(
         onConnect: () {
           trackDriverLocationOnOrder();
           sendMassage(["user_id", "${user!.id}"]);
-          subscribeToEvent("user-notification.${user!.id}", (data) {
+          subscribeToEvent("user-notification.${user!.id}", (data) async {
             if ((data["data"]['order_id'].toString()) == getOrderId()) {
               if (data["data"]["notify_type"] == "change_order_status") {
+                var baseMapController = Get.find<BaseMapController>();
                 String? status = (data["data"]["status"].toString());
                 if (status == "start_trip") {
-                  changeState(request[RequestState.tripOngoing]!);
+                  print('start trip TAG');
+                  baseMapController
+                      .changeState(request[RequestState.tripOngoing]!);
+                  baseMapController.persistentContentHeightt = 300;
+                  baseMapController.key.currentState!.contract();
+
+                  baseMapController.update();
+                  Get.find<CreateATripController>().update();
                 } else if (status == "finished") {
-                  disconnectSocket();
-                  changeState(request[RequestState.tripFinishedState]!);
+                  print('finished trip TAG');
+
+                  // disconnectSocket();
+                  baseMapController
+                      .changeState(request[RequestState.tripFinishedState]!);
                 } else if (status == "cancel") {
-                  disconnectSocket();
                   // TODO:
-                  changeState(request[RequestState.initialState]!);
+
+                  print('cancel trip TAG');
+
+                  baseMapController
+                      .changeState(request[RequestState.findDriverState]!);
                 }
 
                 //
               }
             }
           });
-     
         },
         onDisconnect: (socket) {
           unsubscribeFromEvent("user-notification.${user?.id}");
@@ -198,7 +246,8 @@ else{
         points[i + 1],
       );
       duration = distanceModel.rows?[0].elements?[0].duration?.text ?? '';
-      durationValue = distanceModel.rows?[0].elements?[0].duration?.value ?? 0.0;
+      durationValue =
+          distanceModel.rows?[0].elements?[0].duration?.value ?? 0.0;
       double distanceInKm =
           (distanceModel.rows?[0].elements?[0].distance?.value?.toDouble() ??
                   0.0) /

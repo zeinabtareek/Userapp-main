@@ -178,6 +178,7 @@ class CreateATripController extends BaseMapController {
         setOrderId(orderId!);
         Get.find<RideController>()
             .updateRideCurrentState(RideState.findingRider);
+
         // print('new trip data   ${createOrderModel.data?.id}');
 
         Get.find<BaseMapController>().key.currentState!.contract();

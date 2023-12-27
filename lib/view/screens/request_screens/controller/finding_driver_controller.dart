@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/util/ui/overlay_helper.dart';
 
 import '../../../../enum/request_states.dart';
@@ -36,12 +37,19 @@ class FindingDriverController extends CreateATripController {
   }
 
   Future<void> initHandleWaitingStatus() async {
-    await handleWaitingStatus(true);
+    if (Get.find<BaseMapController>().widgetNumber.value ==
+        request[RequestState.findDriverState]) {
+      await handleWaitingStatus(true);
+    } else {
+      return;
+    }
   }
 
   void handelSocket() {
     initializeSocket(
       onConnect: () {
+        var baseController = Get.find<BaseMapController>();
+
         sendSocketEvent("current_order", {
           // "status": "driver_accept",
           "status": "pending",
@@ -52,43 +60,79 @@ class FindingDriverController extends CreateATripController {
 
         subscribeToEvent(
           "map",
-          (data) {
+          (data) async {
             if (kDebugMode) {
-              print(" received data $data  $tag ");
+              print(" received data $data  $tag ${DateTime.now()} ");
               // showTrip();
             }
-            if (data is List) {
-              bool isMyOrder = data.first['order_id'].toString() == oId;
-              // if (data["order_id"].toString() == getOrderId()) {
-              if (isMyOrder) {
-                disconnectSocket();
+            if (data is List<dynamic>) {
+              List<Marker> smarkers = [];
+              for (var element in data) {
+                print('elm $element TAG  ${DateTime.now()}}');
 
-                // showTrip();
-                // unsubscribeFromEvent("map");
+                String driverId = element["driver_id"];
+                double lat = element["lat"];
+                double lng = element["lng"];
+                num head = element["angle"];
+                Marker marker = Marker(
+                  markerId: MarkerId(driverId),
+                  position: LatLng(lat, lng),
+                  rotation: head.toDouble(),
+                  icon: BitmapDescriptor.fromBytes(
+                    await getBytesFromAsset(Images.nCar, 50),
+                  ),
+                );
+                smarkers.add(marker);
+                // setInitialPosition = LatLng(lat, lng);
+                // Get.find<BaseMapController>().markers.add(marker);
               }
+
+              // var baseController = Get.find<BaseMapController>();
+              baseController.replaceMarkers(baseController.update,
+                  markers: smarkers);
+              baseController.drawMyMarker();
+              baseController.goToPlaceByCamera(
+                baseController.update,
+                controller: baseController.controller!,
+                lat: baseController.initialPosition!.latitude,
+                lng: baseController.initialPosition!.longitude,
+                isAnimate: true,
+                disLat: smarkers.first.position.latitude,
+                disLng: smarkers.first.position.longitude,
+              );
+
+              // bool isMyOrder = data.first['order_id'].toString() == oId;
+              // // if (data["order_id"].toString() == getOrderId()) {
+              // if (isMyOrder) {
+              //   disconnectSocket();
+
+              //   // showTrip();
+              //   // unsubscribeFromEvent("map");
+              // }
             }
           },
         );
 
         sendMassage(["user_id", "${user!.id}"]);
-        subscribeToEvent("user-notification.${user!.id}", (data) {
+        subscribeToEvent("user-notification.${user!.id}", (data) async {
           if ((data["data"]['order_id'].toString()) == getOrderId()) {
             if (data["data"]["notify_type"] == "change_order_status") {
               String? status = (data["data"]["status"].toString());
-              // if (status == "start_trip") {
-              //   changeState(request[RequestState.tripOngoing]!);
-              // } else if (status == "finished") {
-              //   disconnectSocket();
-              //   changeState(request[RequestState.tripFinishedState]!);
-              // } else if (status == "cancel") {
-              //   disconnectSocket();
-              //   // TODO:
-              //   changeState(request[RequestState.initialState]!);
-              // }
 
               if (status == "driver_accept") {
+                handleWaitingStatus(false);
                 disconnectSocket();
-                   showTrip(orderId: getOrderId());
+                print('**********************');
+                baseController.persistentContentHeightt = 300;
+                baseController.key.currentState?.contract();
+
+                baseController.update();
+                Get.find<CreateATripController>().update();
+
+                // onClose();
+                // dispose();
+                // Get.delete<FindingDriverController>();
+                showTrip(orderId: getOrderId());
               }
 
               //
@@ -132,7 +176,9 @@ class FindingDriverController extends CreateATripController {
   printRandom() {
     final random = Random();
     final randomIndex = random.nextInt(randomTexts.length);
-    print('randomTexts ::${randomTexts[randomIndex]}');
+    if (kDebugMode) {
+      print('randomTexts ::${randomTexts[randomIndex]}');
+    }
     OverlayHelper.showDurationAlert(
       Get.overlayContext!,
       randomTexts[randomIndex],

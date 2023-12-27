@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'dart:math';
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -14,25 +15,8 @@ import 'package:url_launcher/url_launcher_string.dart';
 import '../../view/widgets/permission_dialog.dart';
 
 mixin MapViewHelper on GetxController {
-  GoogleMapController? _mapViewHelperMapController;
-
-  set mapViewHelperMapController(GoogleMapController com) {
-    _mapViewHelperMapController = com;
-  }
-
-  Completer<GoogleMapController>? _mapViewHelperMapCompleter;
-  set mapViewHelperMapCompleter(GoogleMapController com) {
-    mapViewHelperMapController = com;
-    _mapViewHelperMapCompleter = Completer<GoogleMapController>()
-      ..complete(com);
-    // com.complete(_mapViewHelperMapController);
-  }
-
-  Completer<GoogleMapController>? get getMapViewHelperMapCompleter =>
-      _mapViewHelperMapCompleter;
-
   // MapViewHelper(this.mapCompleter);
-  final Set<Marker> _markers = <Marker>{};
+  Set<Marker> _markers = <Marker>{};
   Set<Marker> get markers => _markers;
 
   final Set<Polyline> _polylines = <Polyline>{};
@@ -47,36 +31,61 @@ mixin MapViewHelper on GetxController {
     Function() update, {
     required double lat,
     required double lng,
+    required GoogleMapController controller,
     double bearing = 170,
     double zoom = 19.0,
     bool isAnimate = true,
     double? disLat,
-    double? disLong,
+    double? disLng,
   }) async {
-    bool isHaveDist = disLat != null && disLong != null;
-    GoogleMapController? controller = _mapViewHelperMapController;
+    bool isHaveDist = disLat != null && disLng != null;
+    // GoogleMapController? controller = _mapViewHelperMapController;
 
-    double zoomCamara = 0.0;
+    LatLngBounds? bounds;
+    LatLng? centerBounds;
     if (isHaveDist) {
-      LatLng dis = LatLng(disLat ?? lat, disLong ?? lng);
-      zoomCamara = calculateZoomLevel(LatLng(lat, lng), dis);
-    }
-    var cameraPosition = CameraUpdate.newCameraPosition(
-      CameraPosition(
-        bearing: bearing,
-        target: LatLng(lat, lng),
-        zoom: isHaveDist ? zoomCamara : zoom,
-      ),
-    );
-
-    if (!isAnimate) {
-      await controller!.moveCamera(
-        cameraPosition,
+      bounds = LatLngBounds(
+        southwest: LatLng(lat, lng),
+        northeast: LatLng(disLat, disLng),
       );
-    } else {
-      await controller!.animateCamera(cameraPosition);
+      centerBounds = LatLng(
+        (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
+        (bounds.northeast.longitude + bounds.southwest.longitude) / 2,
+      );
+      zoomToFit(
+        controller,
+        bounds,
+        centerBounds,
+        padding: 0.2,
+      );
     }
-    update();
+
+    // double? zoomCamara = 0.0;
+    // if (isHaveDist) {
+    //   LatLng dis = LatLng(disLat, disLng);
+    //   zoomCamara = calculateZoomLevel(LatLng(lat, lng), dis);
+    // }
+    else {
+      var cameraPosition = CameraUpdate.newCameraPosition(
+        CameraPosition(
+          bearing: 0,
+          target: LatLng(lat, lng),
+          zoom: isHaveDist ? 17 : zoom,
+        ),
+      );
+
+      if (!isAnimate) {
+        await controller.moveCamera(
+          cameraPosition,
+        );
+      } else {
+        await controller.animateCamera(cameraPosition);
+      }
+    }
+    // update();
+    // if (isHaveDist) {
+    //   zoomToFit(controller, bounds!, centerBounds!, padding: 1.5);
+    // }
   }
 
   void addOneMarker(
@@ -113,6 +122,18 @@ mixin MapViewHelper on GetxController {
     }
   }
 
+  replaceMarkers(
+    Function() update, {
+    required List<Marker> markers,
+    bool isRequestUpdateForEachAddOneUi = false,
+    bool isRequestUpdateUiAfterAddedALL = true,
+  }) {
+    _markers.clear();
+    _markers = <Marker>{};
+    addListMarker(update, markers: markers);
+    update();
+  }
+
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
     ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
@@ -145,28 +166,13 @@ mixin MapViewHelper on GetxController {
     }
   }
 
-  Future<void> zoomToFit({
-    double padding = 0.5,
-    required List<LatLng> points,
-  }) async {
-    GoogleMapController? controller = _mapViewHelperMapController;
-
-    LatLngBounds? bounds;
-    if (controller != null) {
-      bounds = LatLngBounds(
-        southwest: points.first,
-        northeast: points.last,
-      );
-    }
-
-    LatLng centerBounds = LatLng(
-      (bounds!.northeast.latitude + bounds.southwest.latitude) / 2,
-      (bounds.northeast.longitude + bounds.southwest.longitude) / 2,
-    );
+  Future<void> zoomToFit(
+      GoogleMapController controller, LatLngBounds bounds, LatLng centerBounds,
+      {double padding = 0.5}) async {
     bool keepZoomingOut = true;
 
     while (keepZoomingOut) {
-      final LatLngBounds screenBounds = await controller!.getVisibleRegion();
+      final LatLngBounds screenBounds = await controller.getVisibleRegion();
       if (fits(bounds, screenBounds)) {
         keepZoomingOut = false;
         final double zoomLevel = await controller.getZoomLevel() - padding;

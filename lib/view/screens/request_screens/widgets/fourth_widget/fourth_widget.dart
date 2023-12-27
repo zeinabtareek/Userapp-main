@@ -28,113 +28,138 @@ class FourthWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CreateATripController>(
-        init: CreateATripController(),
-        // initState: Get.find<CreateATripController>().showTrip(),
-        builder: (controller) => GetBuilder<BaseMapController>(
-            init: BaseMapController()..listonOnNotificationSocketAfterAccept(),
-            builder: (baseMapController) => Column(children: [
-                  TollTipWidget(
-                      title: baseMapController.widgetNumber.value ==
-                              request[RequestState.tripOngoing] //tripOngoing
-                          ? Strings.tripIsOngoing.tr
-                          : Strings.riderDetails.tr),
-                  K.sizedBoxH0,
-                  baseMapController.widgetNumber.value ==
-                          request[RequestState.tripOngoing] //tripOngoing
-                      ? const SizedBox()
-                      : ContactWidget(),
-                  K.sizedBoxH0,
-                  baseMapController.widgetNumber.value ==
-                          request[RequestState.tripOngoing] //tripOngoing
-                      ? Image.asset(Images.car)
-                      : const SizedBox(),
-                  K.sizedBoxH0,
-                  baseMapController.widgetNumber.value ==
-                          request[RequestState.tripOngoing] //tripOngoing
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: Dimensions.paddingSizeDefault),
-                          child: Text.rich(
-                            TextSpan(
-                              style: textRegular.copyWith(
-                                  fontSize: Dimensions.fontSizeLarge,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .color!
-                                      .withOpacity(0.8)),
-                              children: [
-                                TextSpan(
-                                    text: Strings.theCarJustArrivedAt.tr,
-                                    style: textRegular.copyWith(
-                                        fontSize: Dimensions.fontSizeDefault)),
-                                TextSpan(text: " ".tr),
-                                TextSpan(
-                                    text: Strings.yourDestination.tr,
-                                    style: textMedium.copyWith(
-                                        fontSize: Dimensions.fontSizeDefault,
-                                        color: Theme.of(context).primaryColor)),
-                              ],
-                            ),
-                          ),
-                        )
-                      : const SizedBox(),
-                  K.sizedBoxH0,
-                  ActivityScreenRiderDetails(
-                    riderDetails: Driver(
-                        firstName:
-                            controller.orderModel.data?.driver?.firstName ?? '',
-                        rate: 5,
-                        img: controller.orderModel.data?.driver?.img ?? '',
-                        lastName:
-                            controller.orderModel.data?.driver?.lastName ?? '',
-                        vehicle: controller.orderModel.data?.driver?.vehicle),
+      init: CreateATripController(),
+      // initState: Get.find<CreateATripController>().showTrip(),
+      builder: (controller) => GetBuilder<BaseMapController>(
+        init: BaseMapController()..listonOnNotificationSocketAfterAccept(),
+        builder: (baseMapController) => FutureBuilder<Object>(
+            future: Future.delayed(const Duration(seconds: 3), () {
+           
+              // controller.update();
+              return true;
+            }),
+            builder: (context, snapshot) {
+              return widget(
+                baseMapController,
+                context,
+                controller,
+                snapshot.connectionState == ConnectionState.waiting,
+              );
+            }),
+      ),
+    );
+  }
+
+  Column widget(
+    BaseMapController baseMapController,
+    BuildContext context,
+    CreateATripController controller,
+    bool isNotTripOngoing,
+  ) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        TollTipWidget(
+          title: isOnGoing(baseMapController) //tripOngoing
+              ? Strings.tripIsOngoing.tr
+              : "",
+        ),
+        // K.sizedBoxH0,
+        !isOnGoing(baseMapController) //tripOngoing
+            ? const SizedBox()
+            : ContactWidget(),
+        // K.sizedBoxH0,
+        isNotTripOngoing //tripOngoing
+            ? Image.asset(Images.car)
+            : const SizedBox(),
+        // K.sizedBoxH0,
+        isNotTripOngoing //tripOngoing
+            ? Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: Dimensions.paddingSizeDefault),
+                child: Text.rich(
+                  TextSpan(
+                    style: textRegular.copyWith(
+                        fontSize: Dimensions.fontSizeLarge,
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .color!
+                            .withOpacity(0.8)),
+                    children: [
+                      TextSpan(
+                          text: Strings.theCarJustArrivedAt.tr,
+                          style: textRegular.copyWith(
+                              fontSize: Dimensions.fontSizeDefault)),
+                      TextSpan(text: " ".tr),
+                      TextSpan(
+                          text: Strings.yourDestination.tr,
+                          style: textMedium.copyWith(
+                              fontSize: Dimensions.fontSizeDefault,
+                              color: Theme.of(context).primaryColor)),
+                    ],
                   ),
-                  K.sizedBoxH0,
-                  const EstimatedFareAndDistance(),
-                  K.sizedBoxH0,
-                  baseMapController.widgetNumber.value ==
-                          request[RequestState.tripOngoing] //tripOngoing
-                      ? const SizedBox()
-                      : RouteWidget(),
-                  K.sizedBoxH0,
-                  baseMapController.widgetNumber.value ==
-                          request[RequestState.tripOngoing] //tripOngoing
-                      ? const SizedBox()
-                      : GetBuilder<TimerController>(
-                          init: TimerController(),
-                          builder: (timerController) => Row(
-                            children: [
-                              Expanded(
-                                  child: CustomButton(
-                                buttonText: 'cancel'.tr,
-                                transparent: true,
-                                borderWidth: 1,
-                                textColor: timerController.isTimerRuning()
-                                    ? Theme.of(context).colorScheme.error
-                                    : Theme.of(Get.context!).hintColor,
-                                borderColor: timerController.isTimerRuning()
-                                    ? Theme.of(context).colorScheme.error
-                                    : Theme.of(Get.context!).hintColor,
-                                showBorder: true,
-                                radius: Dimensions.radiusExtraLarge,
-                                height: 40,
-                                onPressed: timerController.isTimerRuning()
-                                    ? () {
-                                        timerController.stopTimer(rest: true);
-                                        controller.cancelATrip(
-                                            orderId: controller
-                                                .createOrderModel.data?.id
-                                                .toString());
-                                      }
-                                    : null,
-                              )),
-                              const TimerWidget(),
-                            ],
-                          ),
-                        ),
-                  K.sizedBoxH0,
-                  K.sizedBoxH0,
-                ])));
+                ),
+              )
+            : const SizedBox(),
+
+        K.sizedBoxH0,
+        ActivityScreenRiderDetails(
+          riderDetails: Driver(
+              firstName: controller.orderModel.data?.driver?.firstName ?? '',
+              rate: 5,
+              img: controller.orderModel.data?.driver?.img ?? '',
+              lastName: controller.orderModel.data?.driver?.lastName ?? '',
+              vehicle: controller.orderModel.data?.driver?.vehicle),
+        ),
+        K.sizedBoxH0,
+        const EstimatedFareAndDistance(),
+        K.sizedBoxH0,
+        !isOnGoing(baseMapController) //tripOngoing
+            ? const SizedBox()
+            : RouteWidget(),
+        K.sizedBoxH0,
+        isOnGoing(baseMapController) //tripOngoing
+            ? const SizedBox()
+            : GetBuilder<TimerController>(
+                init: TimerController(),
+                builder: (timerController) => Row(
+                  children: [
+                    Expanded(
+                        child: CustomButton(
+                      buttonText: 'cancel'.tr,
+                      transparent: true,
+                      borderWidth: 1,
+                      textColor: timerController.isTimerRuning()
+                          ? Theme.of(context).colorScheme.error
+                          : Theme.of(Get.context!).hintColor,
+                      borderColor: timerController.isTimerRuning()
+                          ? Theme.of(context).colorScheme.error
+                          : Theme.of(Get.context!).hintColor,
+                      showBorder: true,
+                      radius: Dimensions.radiusExtraLarge,
+                      height: 40,
+                      onPressed: timerController.isTimerRuning()
+                          ? () {
+                              timerController.stopTimer(rest: true);
+                              controller.cancelATrip(
+                                  orderId: controller.createOrderModel.data?.id
+                                      .toString());
+                            }
+                          : null,
+                    )),
+                    const TimerWidget(),
+                  ],
+                ),
+              ),
+        K.sizedBoxH0,
+        K.sizedBoxH0,
+      ],
+    );
+  }
+
+  bool isOnGoing(BaseMapController baseMapController) {
+    return baseMapController.widgetNumber.value ==
+        request[RequestState.tripOngoing];
   }
 }

@@ -139,7 +139,11 @@ class Images {
   static const String onBoarding = 'assets/image/onboardinag_arrow.png';
   // static const String onboard1 = 'assets/image/onboard1.png';
   // static const String onboard2 = 'assets/image/onboard2.png';
-  // static const String onboard3 = 'assets/image/onboard3.png';
+  // static const String onboard3 = 'assets/image/onboard3.png'
+  static const String dCar = 'assets/image/d-car.png';
+  static const String nCar = 'assets/image/n-car.png';
+  static const String myMapIcon  = 'assets/image/p-my.png';
+
   static const String chat = 'assets/image/chat.png';
   static const String package = 'assets/image/package.png';
   static const String scanner = 'assets/image/Scaner.png';

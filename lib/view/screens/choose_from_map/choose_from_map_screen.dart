@@ -36,9 +36,9 @@ class ChooseFromMapScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
-   extendBodyBehindAppBar: true,
-      //  backgroundColor: Colors.white,
-       resizeToAvoidBottomInset: false,
+        extendBodyBehindAppBar: true,
+        //  backgroundColor: Colors.white,
+        resizeToAvoidBottomInset: false,
         body: GetBuilder<ChooseFromMapController>(
           init: ChooseFromMapController(),
           builder: (controller) {
@@ -73,10 +73,7 @@ class ChooseFromMapScreen extends StatelessWidget {
                             rippleRadius: 0.2,
                             useRotation: true,
                             duration: const Duration(milliseconds: 2300),
-                            mapId: controller
-                                    .getMapViewHelperMapCompleter?.future
-                                    .then<int>((value) => value.mapId) ??
-                                Future.value(3),
+                            mapId: Future.value(3),
                             markers: controller.markers,
                             shouldAnimateCamera: false,
                             child: ClipRRect(
@@ -154,8 +151,10 @@ class ChooseFromMapScreen extends StatelessWidget {
                                     : Positioned(
                                         left: 15,
                                         right: 15,
-                                        bottom:MediaQuery.of(context).size.height/3.5.h ,
-                                        top:0,
+                                        bottom:
+                                            MediaQuery.of(context).size.height /
+                                                3.5.h,
+                                        top: 0,
                                         child: SearchListWidget(
                                           listOfSearchedPlaces:
                                               userMapController
@@ -181,10 +180,8 @@ class ChooseFromMapScreen extends StatelessWidget {
             );
           },
         ),
-       // bottomSheet:   SearchBottom(),
-
+        // bottomSheet:   SearchBottom(),
       ),
-
     );
   }
 }
