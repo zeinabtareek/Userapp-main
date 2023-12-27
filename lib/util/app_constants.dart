@@ -51,6 +51,7 @@ class AppConstants {
   // static const String cancelTrip = "/api/user/orders/";
 
   static const profileDetails = "/api/user/profile_details";
+  static const postARate = "/api/user/rate";
 
   // Shared Key
   static const String notification = 'demand_notification';
