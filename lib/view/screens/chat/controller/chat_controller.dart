@@ -108,7 +108,7 @@ class ChatController extends BaseController
     pickedImageFile.value = null;
     initializeSocket(
       onConnect: () {
-        sendMassage(["user_id", "${user!.id}"]);
+        sendSocketEvent("user_id", "${user!.id}");
         subscribeToEvent("user-notification.${user!.id}", (data) {
           if (kDebugMode) {
             print(" received data $data  $tag ");

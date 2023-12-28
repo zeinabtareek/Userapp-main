@@ -58,7 +58,7 @@ class RideSubCategoryWidget extends StatelessWidget {
                           if (rideController.isFromCat.value == true) {
                             rideController
                                 .selectedSubPackage(listOfSubCategory[index]);
-                            print(' to ::: SetDestinationScreen');
+                            // print(' to ::: SetDestinationScreen');
 
                             // Navigator.push(context, MaterialPageRoute(
                             //     builder: (_) => SetDestinationScreen(

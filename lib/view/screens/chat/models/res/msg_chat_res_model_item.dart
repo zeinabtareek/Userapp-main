@@ -85,9 +85,9 @@ class MsgChatResModelItem {
   String? id;
   String? chatType;
   Order? order;
-  Driver? user;
-  Driver? driver;
-  Driver? admin;
+  Driverd? user;
+  Driverd? driver;
+  Driverd? admin;
   String? lastMsg;
   MsgType? msgType;
   DateTime? readAt;
@@ -140,13 +140,13 @@ class MsgChatResModelItem {
             ? Order.fromMap(map['order'] as Map<String, dynamic>)
             : null,
         user: map['user'] != null
-            ? Driver.fromMap(map['user'] as Map<String, dynamic>)
+            ? Driverd.fromMap(map['user'] as Map<String, dynamic>)
             : null,
         driver: map['driver'] != null
-            ? Driver.fromMap(map['driver'] as Map<String, dynamic>)
+            ? Driverd.fromMap(map['driver'] as Map<String, dynamic>)
             : null,
         admin: map['admin'] != null
-            ? Driver.fromMap(map['admin'] as Map<String, dynamic>)
+            ? Driverd.fromMap(map['admin'] as Map<String, dynamic>)
             : null,
         lastMsg: map['last_msg'] != null ? map['last_msg'] as String : null,
         msgType: map['msg_type'] != null
@@ -180,13 +180,13 @@ class MsgChatResModelItem {
             ? Order.fromMap(map['order'] as Map<String, dynamic>)
             : null,
         user: map['user'] != null
-            ? Driver.fromMap(map['user'] as Map<String, dynamic>)
+            ? Driverd.fromMap(map['user'] as Map<String, dynamic>)
             : null,
         driver: map['driver'] != null
-            ? Driver.fromMap(map['driver'] as Map<String, dynamic>)
+            ? Driverd.fromMap(map['driver'] as Map<String, dynamic>)
             : null,
         admin: map['admin'] != null
-            ? Driver.fromMap(map['admin'] as Map<String, dynamic>)
+            ? Driverd.fromMap(map['admin'] as Map<String, dynamic>)
             : null,
         lastMsg: map['last_msg'] != null ? map['last_msg'] as String : null,
         msgType: mapElement['msg_type'] != null
@@ -242,7 +242,7 @@ class MsgChatResModelItem {
   }
 }
 
-class Driver {
+class Driverd {
   String? id;
   String? phoneCode;
   String? phone;
@@ -250,10 +250,10 @@ class Driver {
   String? img;
   String? firstName;
   String? lastName;
-  dynamic vehicle;
+  VehicleD? vehicle;
   String? username;
   int? rate;
-  Driver({
+  Driverd({
     this.id,
     this.rate,
     this.phoneCode,
@@ -280,8 +280,8 @@ class Driver {
     };
   }
 
-  factory Driver.fromMap(Map<String, dynamic> map) {
-    return Driver(
+  factory Driverd.fromMap(Map<String, dynamic> map) {
+    return Driverd(
       id: map['id'] != null ? map['id'] as String : null,
       phoneCode: map['phone_code'] != null ? map['phone_code'] as String : null,
       phone: map['phone'] != null ? map['phone'] as String : null,
@@ -291,18 +291,19 @@ class Driver {
           (map['first_name'] != null ? map['first_name'] as String : null) ??
               (map['name'] != null ? map['name'] as String : null),
       lastName: map['last_name'] != null ? map['last_name'] as String : null,
-      vehicle: map['vehicle'] != null ? Vehicle.fromJson(map['vehicle']) : null,
+      vehicle:
+          map['vehicle'] != null ? VehicleD.fromJson(map['vehicle']) : null,
       username: map['user_name'] != null ? map['user_name'] as String : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Driver.fromJson(String source) =>
-      Driver.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Driverd.fromJson(String source) =>
+      Driverd.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  factory Driver. fromUser(UserAuthModel user) {
-    return Driver(
+  factory Driverd.fromUser(UserAuthModel user) {
+    return Driverd(
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,

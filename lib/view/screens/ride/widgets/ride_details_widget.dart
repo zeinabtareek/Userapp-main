@@ -57,15 +57,22 @@ class BikeRideDetailsWidgets extends StatelessWidget {
               title,
               image,
               (state) => rideController.updateRideCurrentState(state),
-              rideController.isBiddingOn,points),
+              rideController.isBiddingOn,
+              points),
         );
       },
     );
   }
 }
 
-Widget getshetWidget(RideState state, BuildContext context, String title,
-    String image, Function(RideState state) update, bool isBiddingOn,List<LatLng> points) {
+Widget getshetWidget(
+    RideState state,
+    BuildContext context,
+    String title,
+    String image,
+    Function(RideState state) update,
+    bool isBiddingOn,
+    List<LatLng> points) {
   if (state == RideState.initial) {
     return GetBuilder<RideController>(
         //rideController.selectedPackage.value?
@@ -182,7 +189,7 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
     return Column(children: [
       GetPriceWidget(
         image: Images.car,
-        points:points ,
+        points: points,
         title: 'Suv.',
       ),
     ]);
@@ -209,7 +216,7 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
         ContactWidget(),
         K.sizedBoxH0,
         K.sizedBoxH0,
-          EstimatedFareAndDistance(),
+        EstimatedFareAndDistance(),
         K.sizedBoxH0,
         RouteWidget(),
         K.sizedBoxH0,
@@ -258,7 +265,7 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
           height: Dimensions.paddingSizeDefault,
         ),
         ActivityScreenRiderDetails(
-          riderDetails: Driver(
+          riderDetails: Driverd(
               firstName: "mostafizur",
               rate: 5,
               img:
@@ -268,7 +275,7 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
         const SizedBox(
           height: Dimensions.paddingSizeDefault,
         ),
-           EstimatedFareAndDistance(),
+        EstimatedFareAndDistance(),
         const SizedBox(
           height: Dimensions.paddingSizeDefault,
         ),
@@ -310,7 +317,7 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
                   update(RideState.completeRide);
                   //Get.back();
                   Get.find<MapController>().notifyMapController();
-                  Get.off(() =>   PaymentScreen());
+                  Get.off(() => PaymentScreen());
                 },
               );
             });
@@ -348,7 +355,7 @@ Widget getshetWidget(RideState state, BuildContext context, String title,
           ),
         ),
         ActivityScreenRiderDetails(
-          riderDetails: Driver(
+          riderDetails: Driverd(
               firstName: "mostafizur",
               rate: 5,
               img:

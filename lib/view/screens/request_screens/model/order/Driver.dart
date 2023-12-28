@@ -1,4 +1,4 @@
-import 'Vehicle.dart';
+import '../../../where_to_go/model/order_create.dart';
 
 class Driver {
   Driver({
@@ -19,7 +19,7 @@ class Driver {
     img = json['img'];
     firstName = json['first_name'];
     lastName = json['last_name'];
-    vehicle = json['vehicle'] != null ? Vehicle.fromJson(json['vehicle']) : null;
+    vehicle = json['vehicle'] != null ?VehicleD.fromJson(json['vehicle']) : null;
   }
   String ?id;
   String ?phoneCode;
@@ -28,7 +28,7 @@ class Driver {
   String ?img;
   String ?firstName;
   String ?lastName;
-  Vehicle? vehicle;
+  VehicleD? vehicle;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

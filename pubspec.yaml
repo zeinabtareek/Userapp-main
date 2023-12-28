@@ -36,18 +36,21 @@ dependencies:
   flutter_html: ^3.0.0-alpha.5
   flutter_local_notifications: ^12.0.4
   flutter_polyline_points: ^2.0.0
- 
+  flutter_screenutil: null
   flutter_secure_storage: any
   flutter_spinkit: null
   flutter_staggered_animations: null
   flutter_svg: null
   flutter_widget_from_html_core: ^0.8.5+1
+  fwfh_text_style: null
   geocoder2: null
   geocoding: null
   geolocator: ^9.0.1
   get: ^4.6.5
   get_it: ^7.6.4
+  gif_view: null
   google_maps_flutter: null
+  google_maps_utils: ^2.0.0+1
   image_picker: ^0.8.6
   intl: ^0.17.0
   jiffy: null
@@ -65,19 +68,15 @@ dependencies:
   shared_preferences: null
   shimmer: ^3.0.0
   socket_io_client: ^2.0.3+1
+  sqflite: ^2.3.0
   syncfusion_flutter_datepicker: ^22.2.12
   top_snackbar_flutter: null
-  url_launcher: ^6.1.14
-  flutter_screenutil:
-  fwfh_text_style:
-  sqflite: ^2.3.0
   upgrader: ^5.0.0
-  gif_view:
+  url_launcher: ^6.1.14
 dev:
   fluttercommunity:
     plus:
-      packageinfo:
-
+      ? packageinfo
 
 dependency_overrides:
   #  modal_bottom_sheet:

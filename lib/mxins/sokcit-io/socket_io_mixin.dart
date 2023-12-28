@@ -51,7 +51,7 @@ mixin SocketIoMixin {
     if (kDebugMode) {
       print("  sendMassage $_tag $args ");
     }
-    socket?.send([]);
+    socket?.send(args);
   }
 
   // Disconnect from the Socket?.IO server
@@ -75,10 +75,6 @@ mixin SocketIoMixin {
     if (socket != null) {
       if (kDebugMode) {
         print(" subscribeToEvent $event $tag   ");
-      }
-
-      if (socket!.hasListeners(event)) {
-        socket!.off(event);
       }
       socket!.on(event, (data) {
         if (kDebugMode) {
