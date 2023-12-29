@@ -126,7 +126,7 @@ class FindingDriverController extends CreateATripController {
                 baseController.key.currentState?.contract();
 
                 baseController.update();
-                Get.find<CreateATripController>().update();
+               // Get.find<CreateATripController>().update();
 
                 // onClose();
                 // dispose();
