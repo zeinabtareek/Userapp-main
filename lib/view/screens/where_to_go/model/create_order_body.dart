@@ -13,6 +13,7 @@ class CreateOrderBody {
   String? note;
   String? vehicleTypeId;
   String? paymentType;
+  String? promoCode;
 
   CreateOrderBody({
     this.orderType,
@@ -25,6 +26,7 @@ class CreateOrderBody {
     this.note,
     this.vehicleTypeId,
     this.paymentType,
+    this.promoCode,
     this.googleRoutes,
   });
 
@@ -45,6 +47,7 @@ class CreateOrderBody {
       time: json['time'],
       distance: json['distance'],
       note: json['note'],
+      promoCode: json['promo_code'],
       vehicleTypeId: json['vehicle_type_id'],
       paymentType: json['payment_type'],
     );
@@ -54,6 +57,7 @@ class CreateOrderBody {
     final Map<String, dynamic> data = {};
     data['order_type'] = orderType;
     data['package_id'] = packageId;
+    data['promo_code'] = promoCode;
     data.addAll(from?.toJson() ?? {});
     data.addAll(to?.toJson() ?? {});
 

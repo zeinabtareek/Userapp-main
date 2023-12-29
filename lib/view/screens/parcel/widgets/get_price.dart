@@ -354,7 +354,7 @@ class GetPrice extends StatelessWidget {
                   const SizedBox(
                     height: Dimensions.paddingSizeDefault,
                   ),
-                  TripFareSummery(
+                  const TripFareSummery(
                     paymentMethod: 'cash',
                   ),
                   const SizedBox(

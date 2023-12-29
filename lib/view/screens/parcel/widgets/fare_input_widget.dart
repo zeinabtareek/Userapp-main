@@ -48,7 +48,10 @@ class FindDriverCustomBtn2 extends StatelessWidget {
                     : Strings.findDeliveryMan.tr,
             onPressed: () async {
               if (fromPage == 'ride') {
-                Get.find<CreateATripController>().createATrip(points);
+                Get.find<CreateATripController>().createATrip(
+                  points,
+                // promoCode: Get.find<RideController>().
+                );
                 // Get.find<CreateATripController>().state==ViewState.busy?
                 Get.find<RideController>()
                     .updateRideCurrentState(RideState.findingRider);
@@ -77,8 +80,7 @@ class FindDriverCustomBtn2 extends StatelessWidget {
                       .then((value) async {
                     print('####second');
 
-                    Get.dialog(
-                        const ConfirmationTripDialog(
+                    Get.dialog( const ConfirmationTripDialog(
                           isStartedTrip: true,
                         ),
                         barrierDismissible: false);
