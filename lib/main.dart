@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -71,6 +73,14 @@ Future<void> main() async {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
   }
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Map<String, Map<String, String>> languages = await di.init();
 
@@ -98,7 +108,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
     if (GetPlatform.isWeb) {
@@ -217,7 +227,8 @@ class DistanceWidget extends StatefulWidget {
   final LatLng source;
   final LatLng destination;
 
-  DistanceWidget({required this.source, required this.destination});
+  const DistanceWidget(
+      {super.key, required this.source, required this.destination});
 
   @override
   _DistanceWidgetState createState() => _DistanceWidgetState();
@@ -251,8 +262,8 @@ class _DistanceWidgetState extends State<DistanceWidget> {
         TextButton(
             onPressed: () async {
               con.calculateDistance([
-                LatLng(37.7749, -122.4194), // San Francisco
-                LatLng(34.0522, -118.2437),
+                const LatLng(37.7749, -122.4194), // San Francisco
+                const LatLng(34.0522, -118.2437),
               ]);
 
               // var x = await con.calculateDuration([
@@ -262,7 +273,7 @@ class _DistanceWidgetState extends State<DistanceWidget> {
 
               // print('duartion $x');
             },
-            child: Text('ddd')),
+            child: const Text('ddd')),
       ],
     );
   }
