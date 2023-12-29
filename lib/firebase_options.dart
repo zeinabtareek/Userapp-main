@@ -26,7 +26,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -55,14 +58,5 @@ class DefaultFirebaseOptions {
     messagingSenderId: '738167961601',
     projectId: 'hood-mobile-app',
     storageBucket: 'hood-mobile-app.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAs4pSvkkAhITknVbFHnc2cjw8KALPxdHs',
-    appId: '1:738167961601:ios:e2665e0ba4e471c8fce800',
-    messagingSenderId: '738167961601',
-    projectId: 'hood-mobile-app',
-    storageBucket: 'hood-mobile-app.appspot.com',
-    iosBundleId: 'com.sixamtech.ridesharinguser.rideSharingUserApp',
   );
 }
