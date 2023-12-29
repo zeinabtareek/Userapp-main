@@ -23,13 +23,14 @@ class FindingDriverController extends CreateATripController {
     _timer?.cancel();
     super.dispose();
   }
+
   @override
   onInit() async {
     super.onInit();
     oId = getOrderId();
+   Get.find<BaseMapController>(). listonOnNotificationSocketAfterAccept();
 
-    handelSocket();
-
+    // trackingAllDriversOnMap();
     await handelState();
 
     initHandleWaitingStatus();
@@ -44,108 +45,6 @@ class FindingDriverController extends CreateATripController {
     }
   }
 
-  void handelSocket() {
-    initializeSocket(
-      onConnect: () {
-        var baseController = Get.find<BaseMapController>();
-
-        sendSocketEvent("current_order", {
-          // "status": "driver_accept",
-          "status": "pending",
-          "order_id": oId,
-        });
-
-        // subscribeToEvent("map_$oId", (data) {
-
-        subscribeToEvent(
-          "map",
-          (data) async {
-            if (kDebugMode) {
-              print(" received data $data  $tag ${DateTime.now()} ");
-              // showTrip();
-            }
-            if (data is List<dynamic>) {
-              List<Marker> smarkers = [];
-              for (var element in data) {
-                print('elm $element TAG  ${DateTime.now()}}');
-
-                String driverId = element["driver_id"];
-                double lat = element["lat"];
-                double lng = element["lng"];
-                num head = element["angle"];
-                Marker marker = Marker(
-                  markerId: MarkerId(driverId),
-                  position: LatLng(lat, lng),
-                  rotation: head.toDouble(),
-                  icon: BitmapDescriptor.fromBytes(
-                    await getBytesFromAsset(Images.nCar, 50),
-                  ),
-                );
-                smarkers.add(marker);
-                // setInitialPosition = LatLng(lat, lng);
-                // Get.find<BaseMapController>().markers.add(marker);
-              }
-
-              // var baseController = Get.find<BaseMapController>();
-              baseController.replaceMarkers(baseController.update,
-                  markers: smarkers);
-              baseController.drawMyMarker();
-              baseController.goToPlaceByCamera(
-                baseController.update,
-                controller: baseController.controller!,
-                lat: baseController.initialPosition!.latitude,
-                lng: baseController.initialPosition!.longitude,
-                isAnimate: true,
-                disLat: smarkers.first.position.latitude,
-                disLng: smarkers.first.position.longitude,
-              );
-
-              // bool isMyOrder = data.first['order_id'].toString() == oId;
-              // // if (data["order_id"].toString() == getOrderId()) {
-              // if (isMyOrder) {
-              //   disconnectSocket();
-
-              //   // showTrip();
-              //   // unsubscribeFromEvent("map");
-              // }
-            }
-          },
-        );
-
-        sendMassage(["user_id", "${user!.id}"]);
-        subscribeToEvent("user-notification.${user!.id}", (data) async {
-          if ((data["data"]['order_id'].toString()) == getOrderId()) {
-            if (data["data"]["notify_type"] == "change_order_status") {
-              String? status = (data["data"]["status"].toString());
-
-              if (status == "driver_accept") {
-                handleWaitingStatus(false);
-                disconnectSocket();
-                print('**********************');
-                baseController.persistentContentHeightt = 300;
-                baseController.key.currentState?.contract();
-
-                baseController.update();
-               // Get.find<CreateATripController>().update();
-
-                // onClose();
-                // dispose();
-                // Get.delete<FindingDriverController>();
-                showTrip(orderId: getOrderId());
-              }
-
-              //
-            }
-          }
-        });
-      },
-      onDisconnect: (socket) {
-        socket.off("map");
-      },
-    );
-    connectSocket();
-  }
-
   handelState() async {
     if (Get.find<BaseMapController>().widgetNumber.value ==
         request[RequestState.findDriverState]) {
@@ -153,8 +52,6 @@ class FindingDriverController extends CreateATripController {
         Get.find<BaseMapController>().key.currentState!.expand();
         Get.find<BaseMapController>()
             .changeState(request[RequestState.findDriverState]!);
-
-
 
         Get.find<BaseMapController>().update();
 
@@ -164,7 +61,6 @@ class FindingDriverController extends CreateATripController {
   }
 
   ///handle waiting statue
-
 
   final List<String> randomTexts = [
     'Sorry_for_waiting_first_alert',
@@ -192,13 +88,13 @@ class FindingDriverController extends CreateATripController {
   handleWaitingStatus(bool stillWaiting) async {
     if (stillWaiting) {
       const Duration intervalTimeout = Duration(minutes: 3);
-      Duration initialTimeout = Duration(minutes: 2);
+      Duration initialTimeout = const Duration(minutes: 2);
 
       Future.delayed(initialTimeout, () {
         print('object1');
       });
 
-      _timer = Timer.periodic(intervalTimeout , (Timer timer) async {
+      _timer = Timer.periodic(intervalTimeout, (Timer timer) async {
         if (!stillWaiting) {
           timer.cancel();
         } else {
@@ -206,5 +102,5 @@ class FindingDriverController extends CreateATripController {
         }
       });
     }
-}
+  }
 }

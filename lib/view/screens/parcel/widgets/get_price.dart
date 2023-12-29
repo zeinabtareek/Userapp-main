@@ -25,9 +25,8 @@ import 'finding_rider_widget.dart';
 import 'otp_widget.dart';
 import 'route_widget.dart';
 import 'tolltip_widget.dart';
+
 class GetPrice extends StatelessWidget {
-
-
   String image;
   String title;
 
@@ -324,23 +323,26 @@ class GetPrice extends StatelessWidget {
         padding: const EdgeInsets.symmetric(
             horizontal: Dimensions.paddingSizeDefault),
         child: Column(
-          mainAxisAlignment:MainAxisAlignment.end, mainAxisSize: MainAxisSize.min,
-
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
           children: [
             if (rideController.currentRideState == RideState.initial)
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('your selected car type is : $title',style: textRegular.copyWith(
-                      color: Theme.of(context).primaryColor,fontWeight: FontWeight.w600),),
+                  Text(
+                    'your selected car type is : $title',
+                    style: textRegular.copyWith(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w600),
+                  ),
                   K.sizedBoxH0,
-
                   Center(
                     child: GestureDetector(
                       onTap: () {},
                       child: CustomCategoryCard(
-                        height: MediaQuery.of(context).size.height/7,
+                        height: MediaQuery.of(context).size.height / 7,
                         image: image,
                         title: title,
                         isClicked: false,
@@ -352,7 +354,9 @@ class GetPrice extends StatelessWidget {
                   const SizedBox(
                     height: Dimensions.paddingSizeDefault,
                   ),
-                    TripFareSummery(paymentMethod: 'cash',),
+                  TripFareSummery(
+                    paymentMethod: 'cash',
+                  ),
                   const SizedBox(
                     height: Dimensions.paddingSizeDefault,
                   ),
@@ -366,28 +370,25 @@ class GetPrice extends StatelessWidget {
                   ),
                   rideController.isBiddingOn
                       ?
-                  ///TODO :this code zeinab removed it to apply the getPrice screen
-                  //
-                  // const FindDriverCustomBtn(fromPage: Strings.ride, whoWillPay: true,)
 
-                  CustomButton(
-                      buttonText: Strings.getPrice.tr,
-                      radius: 50,
-                      onPressed: () {
-print('object');
-                        rideController
-                            .updateRideCurrentState(RideState.acceptingRider);
-                      })
+                      ///TODO :this code zeinab removed it to apply the getPrice screen
+                      //
+                      // const FindDriverCustomBtn(fromPage: Strings.ride, whoWillPay: true,)
 
-
-
-
+                      CustomButton(
+                          buttonText: Strings.getPrice.tr,
+                          radius: 50,
+                          onPressed: () {
+                            print('object');
+                            rideController.updateRideCurrentState(
+                                RideState.acceptingRider);
+                          })
                       : CustomButton(
-                      buttonText: Strings.findRider.tr,
-                      onPressed: () {
-                        rideController
-                            .updateRideCurrentState(RideState.findingRider);
-                      }),
+                          buttonText: Strings.findRider.tr,
+                          onPressed: () {
+                            rideController
+                                .updateRideCurrentState(RideState.findingRider);
+                          }),
                   K.sizedBoxH0,
                   K.sizedBoxH0,
                 ],
@@ -403,25 +404,29 @@ print('object');
                 const RiseFareWidget(fromPage: Strings.ride),
                 K.sizedBoxH0,
               ]),
-            if (rideController.currentRideState == RideState.findingRider)///
-                Column(
-                  mainAxisAlignment:MainAxisAlignment.end, mainAxisSize: MainAxisSize.min,
+            if (rideController.currentRideState == RideState.findingRider)
+
+              ///
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     ///hna kda zeinab
 
+                    FindingRiderWidget(fromPage: Strings.ride),
+                  ]),
+            if (rideController.currentRideState == RideState.getPrice)
 
-
-                FindingRiderWidget(fromPage: Strings.ride),
-              ]),
-
-            if (rideController.currentRideState == RideState.getPrice)///
+              ///
               Column(
-
-                  mainAxisAlignment:MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   mainAxisSize: MainAxisSize.min,
-                  children:   [
-                GetPrice(image: Images.car,title: 'Suv.',),
-              ]),
+                  children: [
+                    GetPrice(
+                      image: Images.car,
+                      title: 'Suv.',
+                    ),
+                  ]),
             if (rideController.currentRideState == RideState.acceptingRider)
               const Column(children: [
                 RiderDetailsWidget(
@@ -458,7 +463,7 @@ print('object');
                   // ),
                   K.sizedBoxH0,
 
-                    EstimatedFareAndDistance(),
+                  EstimatedFareAndDistance(),
 
                   K.sizedBoxH0,
 
@@ -508,15 +513,15 @@ print('object');
                     height: Dimensions.paddingSizeDefault,
                   ),
 
-
                   ///Zeinab Uncomment this
                   ActivityScreenRiderDetails(
-                    riderDetails: Driver(
+                    riderDetails: Driverd(
                         firstName: "mostafizur",
                         rate: 5,
                         img:
-                        "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                            "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
                         lastName: "smith"),
+
                     ///till here
                     // RiderDetails(
                     //     f: "mostafizur",
@@ -530,7 +535,7 @@ print('object');
                   const SizedBox(
                     height: Dimensions.paddingSizeDefault,
                   ),
-                    EstimatedFareAndDistance(),
+                  EstimatedFareAndDistance(),
                   const SizedBox(
                     height: Dimensions.paddingSizeDefault,
                   ),
@@ -573,7 +578,7 @@ print('object');
                                 .updateRideCurrentState(RideState.completeRide);
                             //Get.back();
                             Get.find<MapController>().notifyMapController();
-                            Get.off(() =>   PaymentScreen());
+                            Get.off(() => PaymentScreen());
                           },
                         );
                       });
@@ -611,11 +616,11 @@ print('object');
                     ),
                   ),
                   ActivityScreenRiderDetails(
-                    riderDetails: Driver(
+                    riderDetails: Driverd(
                         firstName: "mostafizur",
                         rate: 5,
                         img:
-                        "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
+                            "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg",
                         lastName: "smith"),
                   ),
                   const SizedBox(
@@ -628,4 +633,4 @@ print('object');
       );
     });
   }
-  }
+}

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/view/screens/request_screens/controller/base_map_controller.dart';
@@ -20,12 +19,12 @@ import '../../../where_to_go/controller/create_trip_controller.dart';
 import '../../controller/trip_finish_controller.dart';
 
 class FifthWidget extends StatelessWidget {
-    FifthWidget({Key? key}) : super(key: key);
+  FifthWidget({Key? key}) : super(key: key);
 
-  final controller=Get.put(TripFinishedController());
+  final controller = Get.put(TripFinishedController());
   @override
   Widget build(BuildContext context) {
-    return  GestureDetector(
+    return GestureDetector(
       onTap: () {
         showDialog(
             context: context,
@@ -46,7 +45,7 @@ class FifthWidget extends StatelessWidget {
                   Get.find<MapController>().notifyMapController();
                   Get.find<BaseMapController>().setOrderId(null);
 
-                  Get.off(() =>   PaymentScreen());
+                  Get.off(() => PaymentScreen());
                 },
               );
             });
@@ -83,17 +82,16 @@ class FifthWidget extends StatelessWidget {
             ),
           ),
         ),
-      GetBuilder<CreateATripController>(
+        GetBuilder<CreateATripController>(
           init: CreateATripController(),
           builder: (controller) => ActivityScreenRiderDetails(
-          riderDetails: Driver(
-              firstName: controller.orderModel.data?.driver?.firstName??'',
-              rate: 5,
-              img:  controller.orderModel.data?.driver?.img??'',
-              lastName: controller.orderModel.data?.driver?.lastName??'',
-              vehicle: controller.orderModel.data?.driver?.vehicle
+            riderDetails: Driverd(
+                firstName: controller.orderModel.data?.driver?.firstName ?? '',
+                rate: 5,
+                img: controller.orderModel.data?.driver?.img ?? '',
+                lastName: controller.orderModel.data?.driver?.lastName ?? '',
+                vehicle: controller.orderModel.data?.driver?.vehicle),
           ),
-        ),
         ),
         const SizedBox(
           height: Dimensions.paddingSizeDefault,

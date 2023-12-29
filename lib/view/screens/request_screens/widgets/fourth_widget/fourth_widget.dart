@@ -34,7 +34,6 @@ class FourthWidget extends StatelessWidget {
         init: BaseMapController()..listonOnNotificationSocketAfterAccept(),
         builder: (baseMapController) => FutureBuilder<Object>(
             future: Future.delayed(const Duration(seconds: 3), () {
-           
               // controller.update();
               return true;
             }),
@@ -105,7 +104,7 @@ class FourthWidget extends StatelessWidget {
 
         K.sizedBoxH0,
         ActivityScreenRiderDetails(
-          riderDetails: Driver(
+          riderDetails: Driverd(
               firstName: controller.orderModel.data?.driver?.firstName ?? '',
               rate: 5,
               img: controller.orderModel.data?.driver?.img ?? '',
@@ -113,7 +112,7 @@ class FourthWidget extends StatelessWidget {
               vehicle: controller.orderModel.data?.driver?.vehicle),
         ),
         K.sizedBoxH0,
-         EstimatedFareAndDistance(),
+        EstimatedFareAndDistance(),
         K.sizedBoxH0,
         !isOnGoing(baseMapController) //tripOngoing
             ? const SizedBox()

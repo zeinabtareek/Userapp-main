@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,8 +10,14 @@ import 'package:ride_sharing_user_app/helper/display_helper.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
 
 class NotificationHelper {
-
+  static String? _fcmToken;
+  static String? get fcmToken => _fcmToken;
   static Future<void> initialize(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
+   _fcmToken = await FirebaseMessaging.instance.getToken();
+
+        log('fcmToken: $fcmToken', name: "TAG-FCM");
+
+    
     AndroidInitializationSettings androidInitialize = const AndroidInitializationSettings('notification_icon');
     var iOSInitialize = const DarwinInitializationSettings();
     var initializationsSettings = InitializationSettings(android: androidInitialize, iOS: iOSInitialize);
@@ -66,8 +73,8 @@ class NotificationHelper {
   }
 
   static Future<void> showNotification(RemoteMessage message, FlutterLocalNotificationsPlugin fln, bool data) async {
-    String title = message.data['title'];
-    String body = message.data['body'];
+        String title = message.notification?.title ?? "";
+    String body = message.notification?.body ?? "";
     String? orderID = message.data['order_id'];
     String? image = (message.data['image'] != null && message.data['image'].isNotEmpty)
         ? message.data['image'].startsWith('http') ? message.data['image']

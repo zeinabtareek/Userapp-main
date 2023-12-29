@@ -74,7 +74,7 @@ class SendMsgReqModel {
       chatType: chatType!.name,
       msg: msg,
       msgType: msgType,
-      user: Driver.fromUser(user),
+      user: Driverd.fromUser(user),
       createdAt: DateTime.now(),
       readAt: DateTime.now(),
       senderType: ChatConstant.who,
