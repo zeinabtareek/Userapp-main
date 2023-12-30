@@ -10,6 +10,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/fare_input_widget.dart';
 import 'package:ride_sharing_user_app/view/screens/request_screens/controller/finding_driver_controller.dart';
+ import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../../../bases/base_controller.dart';
 import '../../../../enum/request_states.dart';
@@ -32,7 +33,7 @@ class BaseMapController extends BaseController
 
   Completer<GoogleMapController> mapCompleter =
       Completer<GoogleMapController>();
-  LatLng? _initialPosition = const LatLng(23.83721, 90.363715);
+  LatLng? _initialPosition = const LatLng(24.774265, 46.738586);
   LatLng? get initialPosition => _initialPosition;
 
   late Position _position;
@@ -71,6 +72,14 @@ class BaseMapController extends BaseController
   @override
   onInit() async {
     super.onInit();
+    try {
+      await   WakelockPlus.enable();
+    } catch (e) {
+      print('Error enabling wakelock: $e');
+    }
+
+    print('Wakelock ${WakelockPlus.enabled}');
+
     // await _getCurrantLocation();
 
     // setOrderId(null);
@@ -85,7 +94,12 @@ class BaseMapController extends BaseController
       }
     });
   }
-
+  @override
+    dispose() async {
+    // Disable wakelock when the screen is disposed
+    await WakelockPlus.disable();
+    super.dispose();
+  }
   ///check whether there is a previous
 
   checkRideStateToFindingDriver() async {
@@ -177,8 +191,7 @@ class BaseMapController extends BaseController
                   if (kDebugMode) {
                     print('start trip TAG');
                   }
-                  baseMapController
-                      .changeState(request[RequestState.tripOngoing]!);
+                  baseMapController.changeState(request[RequestState.tripOngoing]!);
                   baseMapController.persistentContentHeightt = 200;
                   baseMapController.key.currentState!.contract();
 
@@ -195,6 +208,8 @@ class BaseMapController extends BaseController
 
                   disconnectSocket();
                 } else if (status == "cancel") {
+                  await Get.find<FindingDriverController>().   handleWaitingStatus(false);
+
                   if (kDebugMode) {
                     print('cancel trip TAG');
                   }
@@ -204,6 +219,8 @@ class BaseMapController extends BaseController
                       .changeState(request[RequestState.findDriverState]!);
                   // disconnectSocket();
                 } else if (status == "driver_accept") {
+                  await Get.find<FindingDriverController>().   handleWaitingStatus(false);
+
                   baseMapController.persistentContentHeightt = 200;
                   baseMapController.key.currentState?.contract();
                   baseMapController.update();

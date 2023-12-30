@@ -13,7 +13,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:moyasar/moyasar.dart';
+import 'package:ride_sharing_user_app/view/screens/request_screens/controller/finding_driver_controller.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import 'authenticate/domain/use-cases/auth_cases.dart';
+import 'enum/request_states.dart';
 import 'firebase_options.dart';
 import 'helper/notification_helper.dart';
 import 'theme/dark_theme.dart';
@@ -68,6 +71,7 @@ Future<void> main() async {
     HttpOverrides.global = MyHttpOverrides();
   }
   WidgetsFlutterBinding.ensureInitialized();
+
 
   if (!Platform.isIOS) {
     await Firebase.initializeApp(
@@ -172,7 +176,7 @@ class MyApp extends StatelessWidget {
                           //   destination: LatLng(34.0522, -118.2437), // Los Angeles
                           // ),
 
-                          // home:PaymentScreen(),
+                          home:DistanceWidget(source: LatLng(0.0,0.0), destination:  LatLng(0.0,0.0),),
                           // home:MapView(),
                           // ParcelHomeScreen(),
                           // AnimatedWidget(items:['2','3','4','5','6'] ,isVertical: false,widget:  itemTrackHistory(onTap: (){
@@ -238,6 +242,7 @@ class _DistanceWidgetState extends State<DistanceWidget> {
   String distance = '';
   String duration = '';
   final con = Get.put(BaseMapController());
+  final cont = Get.put(FindingDriverController());
   @override
   void initState() {
     super.initState();
@@ -254,27 +259,30 @@ class _DistanceWidgetState extends State<DistanceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('Distance: $distance'),
-        Text('Duration: $duration'),
-        Text('distance.value: ${con.distance.value}'),
-        TextButton(
-            onPressed: () async {
-              con.calculateDistance([
-                const LatLng(37.7749, -122.4194), // San Francisco
-                const LatLng(34.0522, -118.2437),
-              ]);
-
-              // var x = await con.calculateDuration([
-              //   LatLng(37.7749, -122.4194), // San Francisco
-              //   LatLng(34.0522, -118.2437),
-              // ]);
-
-              // print('duartion $x');
-            },
-            child: const Text('ddd')),
-      ],
+    return Scaffold(
+      body: Column(
+        children: [
+          Text('Distance: $distance'),
+          Text('Duration: $duration'),
+          Text('distance.value: ${con.distance.value}'),
+          TextButton(
+              onPressed: () async {
+                // con.calculateDistance([
+                //   const LatLng(37.7749, -122.4194), // San Francisco
+                //   const LatLng(34.0522, -118.2437),
+                // ]);
+      
+                // var x = await con.calculateDuration([
+                //   LatLng(37.7749, -122.4194), // San Francisco
+                //   LatLng(34.0522, -118.2437),
+                // ]);
+      
+                // print('duartion $x');
+                // cont.
+               },
+              child: const Text('ddd')),
+        ],
+      ),
     );
   }
 }

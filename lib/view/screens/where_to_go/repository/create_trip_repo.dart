@@ -80,7 +80,8 @@ Future<CreateOrderModel> createATrip(
         final model = OrderModel.fromJson(res.data);
         print('model ::${model.data?.id ?? ''}');
         // TODO:  when driver accept
-        Get.find<BaseMapController>().key.currentState!.expand();
+        Get.find<BaseMapController>().key.currentState!.contract();
+        // Get.find<BaseMapController>().key.currentState!.expand();
         Get.find<BaseMapController>()
             .changeState(request[RequestState.driverAcceptState]!);
 

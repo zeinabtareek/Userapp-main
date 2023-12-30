@@ -133,15 +133,16 @@ class CreateATripController extends BaseMapController {
 
   ///create a trip function
   RxBool isLoadingCreateATrip = false.obs;
-  Future<CreateOrderModel> createATrip(List<LatLng> points,
+  Future<CreateOrderModel>
+  createATrip(List<LatLng> points,
       // {required String promoCode}
       ) async {
+    print('promoCode $promoCode');
     LatLng source = points.first; // Example source coordinate (San Francisco)
     LatLng destination = points.last;
 
     List<ExtraRoutes> extraRoute = await extraRoutes(points);
     String time = "12";
-    //  await calculateDuration(source, destination);
 
     List<ExtraRoutes> gogleR = await googleRoutes(
       source,
@@ -153,7 +154,7 @@ class CreateATripController extends BaseMapController {
       destination,
     );
     print('payment $paymentType');
-    try {
+      try {
       var result = await actionCenter.execute(() async {
         setState(ViewState.busy);
         isLoadingCreateATrip(true);
@@ -236,6 +237,8 @@ class CreateATripController extends BaseMapController {
       var result = await actionCenter.execute(() async {
         setState(ViewState.busy);
         var result = await services.cancelATrip(orderId: getOrderId());
+        Get.find<BaseMapController>()  .changeState(request[RequestState.initialState]!);
+
         print(result);
         setOrderId(null);
         setState(ViewState.idle);
