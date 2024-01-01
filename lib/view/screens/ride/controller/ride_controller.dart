@@ -214,13 +214,17 @@ class RideController extends BaseController implements GetxService {
   OrderPriceData priceData = OrderPriceData();
   final loading = false.obs;
 
+
+  String?  _promoCode ;
+  String? get promoCode =>  _promoCode;
+
   getPromoCodeDiscount() async {
     loading.value = true;
     try {
       var result = await actionCenter.execute(() async {
         if (promoCodeController.text.isEmpty) {
-          OverlayHelper.showErrorToast(
-              Get.overlayContext!, Strings.noEnteredPromoCode.tr);
+
+          OverlayHelper.showErrorToast(Get.overlayContext!, Strings.noEnteredPromoCode.tr);
         } else {
           // double? distance = await calculate3Distance();
           priceData = await rideRepo.getPrice(
@@ -230,6 +234,9 @@ class RideController extends BaseController implements GetxService {
               distance: Get.find<BaseMapController>().distance.value
               // distance: distance,
               );
+       if  ( priceData.promoCodeUsed==true){
+         _promoCode =promoCodeController.text;
+       }
           OverlayHelper.showSuccessToast(Get.overlayContext!, Strings.done.tr);
           print('priceData $priceData');
         }

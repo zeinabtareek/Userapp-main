@@ -33,7 +33,7 @@ class BaseMapController extends BaseController
 
   Completer<GoogleMapController> mapCompleter =
       Completer<GoogleMapController>();
-  LatLng? _initialPosition = const LatLng(23.83721, 90.363715);
+  LatLng? _initialPosition = const LatLng(24.774265, 46.738586);
   LatLng? get initialPosition => _initialPosition;
 
   late Position _position;
@@ -72,6 +72,14 @@ class BaseMapController extends BaseController
   @override
   onInit() async {
     super.onInit();
+    try {
+      // await   WakelockPlus.enable();
+    } catch (e) {
+      print('Error enabling wakelock: $e');
+    }
+
+    // print('Wakelock ${WakelockPlus.enabled}');
+
     // await _getCurrantLocation();
 
     // setOrderId(null);
@@ -86,7 +94,12 @@ class BaseMapController extends BaseController
       }
     });
   }
-
+  @override
+    dispose() async {
+    // Disable wakelock when the screen is disposed
+    // await WakelockPlus.disable();
+    super.dispose();
+  }
   ///check whether there is a previous
 
   checkRideStateToFindingDriver() async {

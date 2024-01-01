@@ -32,7 +32,9 @@ class RideRepo {
         debugPrint('######${response.data }');
         if (response.statusCode == 200) {
           final model = OrderPriceData.fromJson(response.data['data']);
-          promoCode!=null??    OverlayHelper.showSuccessToast(Get.overlayContext!, Strings.done.tr);
+          promoCode!=null??
+              OverlayHelper.showSuccessToast(Get.overlayContext!, Strings.done.tr);
+
 
           return model;
         } else if (response.statusCode == 422) {

@@ -46,7 +46,7 @@ class CreditCardScreen extends StatelessWidget {
 
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.center,children: [
-                  Text('add_your_credit_card'.tr+'$amount'),
+                  Text('${'add_your_credit_card'.tr}$amount'),
                   const SizedBox(width: Dimensions.paddingSizeExtraSmall,),
                   Text('complete'.tr, style: textSemiBold.copyWith(color: Theme.of(context).primaryColor)),
                 ],),

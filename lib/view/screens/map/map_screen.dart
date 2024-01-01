@@ -47,6 +47,8 @@ class MapScreen extends StatelessWidget {
                 mapCompleter.complete(userMapController.mapController);
               }
               return ExpandableBottomSheet(
+                enableToggle: false,
+
                 background: Stack(
                   children: [
                     Animarker(
@@ -113,6 +115,16 @@ class MapScreen extends StatelessWidget {
                                 ),
                               ])
                         : const SizedBox(),
+
+
+                onIsExtendedCallback: () => print('expanded'),
+                animationDurationExtend: const Duration(milliseconds: 250),
+                animationDurationContract: const Duration(milliseconds: 250),
+
+                // animationCurveExpand: Curves.bounceOut,
+                 animationCurveContract: Curves.ease,
+
+
               );
             }),
           ),

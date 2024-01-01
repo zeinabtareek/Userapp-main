@@ -35,6 +35,7 @@ class CreateATripController extends BaseMapController {
       Get.find<RideController>().selectedSubPackage.value?.id;
 
   String? get paymentType => Get.find<RideController>().initialSelectItem.value;
+  String? get promoCode => Get.find<RideController>().promoCode;
 
   Future<List<ExtraRoutes>> extraRoutes(List<LatLng> allTripPoint) async {
     var to = allTripPoint.removeLast();
@@ -132,13 +133,16 @@ class CreateATripController extends BaseMapController {
 
   ///create a trip function
   RxBool isLoadingCreateATrip = false.obs;
-  Future<CreateOrderModel> createATrip(List<LatLng> points) async {
+  Future<CreateOrderModel>
+  createATrip(List<LatLng> points,
+      // {required String promoCode}
+      ) async {
+    print('promoCode $promoCode');
     LatLng source = points.first; // Example source coordinate (San Francisco)
     LatLng destination = points.last;
 
     List<ExtraRoutes> extraRoute = await extraRoutes(points);
     String time = "12";
-    //  await calculateDuration(source, destination);
 
     List<ExtraRoutes> gogleR = await googleRoutes(
       source,
@@ -150,20 +154,20 @@ class CreateATripController extends BaseMapController {
       destination,
     );
     print('payment $paymentType');
-    try {
+      try {
       var result = await actionCenter.execute(() async {
         setState(ViewState.busy);
         isLoadingCreateATrip(true);
 
         createOrderModel = await services.createATrip(
           createOrderBody: CreateOrderBody(
+            promoCode:promoCode??'' ,
             orderType: 'trip',
             packageId: packageId,
             from: await _form(source),
             to: await _to(destination),
             extraRoutes: extraRoute,
-            // time: '22',
-            time: Get.find<BaseMapController>().durationValue.toString(),
+             time: Get.find<BaseMapController>().durationValue.toString(),
             distance: num.parse(
                 Get.find<BaseMapController>().distance.value.toString()),
             note: note,
@@ -204,7 +208,7 @@ class CreateATripController extends BaseMapController {
     throw Exception("Unexpected error occurred");
   }
 
-  //
+
   _checkThePaymentMethod(totalPrice) async {
     PaymentTypeState selectedPaymentType = enumFromString(paymentType ?? '');
 
@@ -233,6 +237,8 @@ class CreateATripController extends BaseMapController {
       var result = await actionCenter.execute(() async {
         setState(ViewState.busy);
         var result = await services.cancelATrip(orderId: getOrderId());
+        Get.find<BaseMapController>()  .changeState(request[RequestState.initialState]!);
+
         print(result);
         setOrderId(null);
         setState(ViewState.idle);

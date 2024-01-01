@@ -29,6 +29,8 @@ class OrderData {
   String? orderNum;
   From? from;
   From? to;
+  PromoCode? promoCode; // Replace dynamic with PromoCode
+
   String? status;
   List<StatusTimes>? statusTimes;
   dynamic distance;
@@ -40,7 +42,7 @@ class OrderData {
   List<GoogleRoute>? googleRoute;
   dynamic parcelDetails;
   VehicleType? vehicleType;
-  bool? promoCode;
+  // bool? promoCode;
   dynamic kmPrice;
   late final dynamic priceBeforeDiscount;
   late final bool? promoCodeUsed;
@@ -66,6 +68,8 @@ class OrderData {
     this.distance,
     this.time,
     this.paymentType,
+    this.promoCode,
+
     this.transactionId,
     this.note,
     this.extraRoutes,
@@ -74,7 +78,7 @@ class OrderData {
     this.parcelDetails,
     this.package,
     this.vehicleType,
-    this.promoCode,
+    // this.promoCode,
     this.driver,
     this.kmPrice,
     this.priceBeforeDiscount,
@@ -101,6 +105,8 @@ class OrderData {
         });
       }
       distance = json['distance'];
+      promoCode = json['promo_code'] != null ? PromoCode.fromJson(json['promo_code']) : null;
+
       time = json['time'];
       paymentType = json['payment_type'];
       transactionId = json['transaction_id'];
@@ -150,6 +156,9 @@ class OrderData {
     if (to != null) {
       data['to'] = to!.toJson();
     }
+    if (promoCode != null) {
+      data['promo_code'] = promoCode!.toJson();
+    }
     data['status'] = status;
     if (statusTimes != null) {
       data['status_times'] = statusTimes!.map((v) => v.toJson()).toList();
@@ -190,6 +199,31 @@ class OrderData {
   }
 }
 
+class PromoCode {
+  String? id;
+  String? code;
+  dynamic discount;
+
+  PromoCode({
+    this.id,
+    this.code,
+    this.discount,
+  });
+
+  PromoCode.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    code = json['code'];
+    discount = json['discount'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['code'] = code;
+    data['discount'] = discount;
+    return data;
+  }
+}
 class From {
   String? lat;
   String? lng;
@@ -311,6 +345,9 @@ class VehicleType {
     return data;
   }
 }
+
+
+
 
 // class OrderData {
 //   OrderData({

@@ -12,7 +12,7 @@ class PriceConverter {
     }
     return '  '
     // return '\$ '
-        '${(price).toStringAsFixed(2).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
+        '${(price).toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
   }
 
   static double convertWithDiscount(BuildContext context, double price, double discount, String discountType) {

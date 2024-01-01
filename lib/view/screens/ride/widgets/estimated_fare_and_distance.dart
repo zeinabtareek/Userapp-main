@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:ride_sharing_user_app/helper/price_converter.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/text_style.dart';
@@ -44,8 +45,8 @@ class EstimatedFareAndDistance extends StatelessWidget {
             customDistanceItem(
                 context,
                 true,
-                "${finalprice ?? controller.orderModel.data?.finalPrice.toString()} ",
-                "fare_price"),
+               "${finalprice ?? controller.orderModel.data?.finalPrice .toStringAsFixed(2)} ",
+                "price"),
 
             // customDistanceItem(context, false, "${controller.orderModel.data?.distance.toString()??'0.0'} km", "distance_away"),
             //      customDistanceItem(context, false, "${Get.find<RideController>().duration??0.0} min", "estimated_time"),
@@ -70,7 +71,7 @@ class EstimatedFareAndDistance extends StatelessWidget {
               color: Theme.of(context).primaryColor,
               fontSize: Dimensions.fontSizeLarge),
         ),
-        SizedBox(
+        const SizedBox(
           height: Dimensions.paddingSizeThree,
         ),
         Text(
