@@ -18,8 +18,8 @@ import '../model/order_create.dart';
 
 class CreateTripRepo {
   final dio = DioUtilNew.dio;
-Future<CreateOrderModel> createATrip(
-  {required CreateOrderBody createOrderBody}) async {
+  Future<CreateOrderModel> createATrip(
+      {required CreateOrderBody createOrderBody}) async {
     final data = createOrderBody.toJson();
 
     final res = await dio!.post(
@@ -55,7 +55,7 @@ Future<CreateOrderModel> createATrip(
         print('cancel response ${res.data ?? ''}');
         OverlayHelper.showGeneralToast(
             Get.overlayContext!, Strings.orderStatus, Strings.orderCanceled);
-            
+
         Get.offAll(DashboardScreen());
         // Get.offAll(SetDestinationScreen(fromCat: false));
         return res.data;
@@ -122,5 +122,29 @@ Future<CreateOrderModel> createATrip(
     //   // OverlayHelper.showErrorToast(Get.overlayContext!, e.message);
     //   throw e; // Optionally re-throw the exception
     // }
+  }
+
+  Future<CreateOrderModel?> getCurrentOrder() async {
+    final res = await dio!.get(
+      AppConstants.getCurrentOrder,
+    );
+    if (res.statusCode == 200) {
+      if (res.data != null) {
+        final model = CreateOrderModel.fromJson(res.data);
+
+        return model;
+      }
+    } else if (res.statusCode == 422) {
+      throw CustomException(res.data['message'], description: 'test 422');
+    } else if(res.statusCode == 404){
+      return null;
+    } 
+    
+    
+    {
+      throw ApiResponseException(res.statusCode!);
+    }
+
+    throw Exception("Unexpected error occurred");
   }
 }

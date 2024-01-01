@@ -42,6 +42,7 @@ class AppConstants {
   static String updateProfile = "/api/user/update_profile";
      static const  String getAppVersion = '/api/user/app_version';
      static const  String checkRegin = '/api/user/check_region';
+     static const  String getCurrentOrder = '/api/user/current_order';
 
 
   static const String changePaymentType = "/api/user/change_payment_type";

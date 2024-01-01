@@ -19,7 +19,7 @@ mixin MapViewHelper on GetxController {
   Set<Marker> _markers = <Marker>{};
   Set<Marker> get markers => _markers;
 
-  final Set<Polyline> _polylines = <Polyline>{};
+  Set<Polyline> _polylines = <Polyline>{};
 
   Set<Polyline> get polylines => _polylines;
 
@@ -33,7 +33,7 @@ mixin MapViewHelper on GetxController {
     required double lng,
     required GoogleMapController controller,
     double bearing = 170,
-    double zoom = 19.0,
+    double zoom = 17.0,
     bool isAnimate = true,
     double? disLat,
     double? disLng,
@@ -44,10 +44,21 @@ mixin MapViewHelper on GetxController {
     LatLngBounds? bounds;
     LatLng? centerBounds;
     if (isHaveDist) {
-      bounds = LatLngBounds(
-        southwest: LatLng(lat, lng),
-        northeast: LatLng(disLat, disLng),
-      );
+      // assert(lat <= disLat, 'Invalid latitude values');
+
+      // assert(lng <= disLng, 'Invalid longitude values');
+
+      if (lat <= disLat) {
+        bounds = LatLngBounds(
+          southwest: LatLng(lat, lng),
+          northeast: LatLng(disLat, disLng),
+        );
+      } else {
+        bounds = LatLngBounds(
+          southwest: LatLng(lat, lng),
+          northeast: LatLng(disLat, disLng),
+        );
+      }
       centerBounds = LatLng(
         (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
         (bounds.northeast.longitude + bounds.southwest.longitude) / 2,
@@ -68,9 +79,9 @@ mixin MapViewHelper on GetxController {
     else {
       var cameraPosition = CameraUpdate.newCameraPosition(
         CameraPosition(
-          bearing: 0,
+          bearing: bearing,
           target: LatLng(lat, lng),
-          zoom: isHaveDist ? 17 : zoom,
+          zoom: zoom,
         ),
       );
 
@@ -162,6 +173,37 @@ mixin MapViewHelper on GetxController {
     thePolyline = polyline;
 
     if (isRequestUpdateUi) {
+      update();
+    }
+  }
+// replacePolylines
+
+  void replacePolygynies(
+    Function() update, {
+    required List<Polyline> polygynies,
+    bool isRequestUpdateForEachAddOneUi = false,
+    bool isRequestUpdateUiAfterAddedALL = true,
+  }) {
+    _polylines.clear();
+    _polylines = <Polyline>{};
+    addListPolyline(update, polylines: polygynies);
+    update();
+  }
+
+  void addListPolyline(
+    Function() update, {
+    required List<Polyline> polylines,
+    bool isRequestUpdateForEachAddOneUi = false,
+    bool isRequestUpdateUiAfterAddedALL = true,
+  }) {
+    for (var element in polylines) {
+      addOnePolyline(
+        update,
+        polyline: element,
+        isRequestUpdateUi: isRequestUpdateForEachAddOneUi,
+      );
+    }
+    if (isRequestUpdateUiAfterAddedALL) {
       update();
     }
   }

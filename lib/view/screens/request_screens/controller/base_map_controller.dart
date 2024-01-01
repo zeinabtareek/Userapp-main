@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:ride_sharing_user_app/util/images.dart';
-import 'package:ride_sharing_user_app/view/screens/parcel/widgets/fare_input_widget.dart';
-import 'package:ride_sharing_user_app/view/screens/request_screens/controller/finding_driver_controller.dart';
+import '../../../../util/images.dart';
+import '../../parcel/widgets/fare_input_widget.dart';
+import 'finding_driver_controller.dart';
 
 import '../../../../bases/base_controller.dart';
 import '../../../../enum/request_states.dart';
@@ -103,15 +104,10 @@ class BaseMapController extends BaseController
     Get.back();
   }
 
-  void setMapController(GoogleMapController mapController) {
-    // mapViewHelperMapCompleter = mapController;
-    controller = mapController;
-    // widgetNumber.value = request[RequestState.findDriverState]!;
-  }
-
   Future<LatLng?> getCurrantLocation() async {
     try {
       _position = (await MapHelper.getCurrentPosition())!;
+
       _initialPosition = LatLng(_position.latitude, _position.longitude);
       await drawMyMarker();
 
@@ -120,6 +116,7 @@ class BaseMapController extends BaseController
         controller: controller!,
         lat: _initialPosition!.latitude,
         lng: _initialPosition!.longitude,
+        bearing: _position.heading,
         isAnimate: true,
       );
       return _initialPosition;
@@ -144,8 +141,10 @@ class BaseMapController extends BaseController
   }
 
   onMapCreated(gController) async {
-    setMapController(gController);
+    controller = gController;
     await getCurrantLocation();
+    Get.put(CreateATripController()).getCurrantOrder();
+    // widgetNumber.value = request[RequestState.findDriverState]!;
   }
 
   changeState(int value) {
@@ -170,50 +169,8 @@ class BaseMapController extends BaseController
           subscribeToEvent("user-notification.${user!.id}", (data) async {
             if ((data["data"]['order_id'].toString()) == getOrderId()) {
               if (data["data"]["notify_type"] == "change_order_status") {
-                var baseMapController = Get.find<BaseMapController>();
                 String? status = (data["data"]["status"].toString());
-                stopTrackingAllDriversOnMap();
-                if (status == "start_trip") {
-                  if (kDebugMode) {
-                    print('start trip TAG');
-                  }
-                  baseMapController
-                      .changeState(request[RequestState.tripOngoing]!);
-                  baseMapController.persistentContentHeightt = 200;
-                  baseMapController.key.currentState!.contract();
-
-                  baseMapController.update();
-                  Get.find<CreateATripController>().update();
-                } else if (status == "finished") {
-                  if (kDebugMode) {
-                    print('finished trip TAG');
-                  }
-
-                  baseMapController
-                      .changeState(request[RequestState.tripFinishedState]!);
-                  stopTrackTheDriverLocationOnOrder();
-
-                  disconnectSocket();
-                } else if (status == "cancel") {
-                  if (kDebugMode) {
-                    print('cancel trip TAG');
-                  }
-                  stopTrackTheDriverLocationOnOrder();
-                  trackingAllDriversOnMap();
-                  baseMapController
-                      .changeState(request[RequestState.findDriverState]!);
-                  // disconnectSocket();
-                } else if (status == "driver_accept") {
-                  baseMapController.persistentContentHeightt = 200;
-                  baseMapController.key.currentState?.contract();
-                  baseMapController.update();
-                  Get.find<CreateATripController>().update();
-
-                  Get.find<CreateATripController>()
-                      .showTrip(orderId: getOrderId());
-
-                  trackTheDriverLocationOnOrder();
-                }
+                handelTripUiBasedOnTripState(status);
 
                 //
               }
@@ -228,38 +185,58 @@ class BaseMapController extends BaseController
     }
   }
 
+  void handelTripUiBasedOnTripState(
+    String status,
+  ) {
+    var baseMapController = Get.find<BaseMapController>();
+    stopTrackingAllDriversOnMap();
+    if (status == "start_trip") {
+      if (kDebugMode) {
+        print('start trip TAG');
+      }
+      baseMapController.changeState(request[RequestState.tripOngoing]!);
+      baseMapController.persistentContentHeightt = 200;
+      baseMapController.key.currentState!.contract();
+
+      baseMapController.update();
+      Get.find<CreateATripController>().update();
+    } else if (status == "finished") {
+      setOrderId(null);
+      if (kDebugMode) {
+        print('finished trip TAG');
+      }
+
+      baseMapController.changeState(request[RequestState.tripFinishedState]!);
+      stopTrackTheDriverLocationOnOrder();
+
+      disconnectSocket();
+    } else if (status == "cancel" || status == "pending") {
+      if (kDebugMode) {
+        print('$state trip TAG');
+      }
+      if (status == "cancel") {
+        stopTrackTheDriverLocationOnOrder();
+      }
+      trackingAllDriversOnMap();
+      baseMapController.changeState(request[RequestState.findDriverState]!);
+      // disconnectSocket();
+    } else if (status == "driver_accept") {
+      trackTheDriverLocationOnOrder();
+      baseMapController.persistentContentHeightt = 200;
+      baseMapController.key.currentState?.contract();
+      baseMapController.update();
+      Get.find<CreateATripController>().update();
+
+      Get.find<CreateATripController>().showTrip(orderId: getOrderId());
+    }
+  }
+
   void trackingAllDriversOnMap() {
     subscribeToEvent(
       "map",
       (data) async {
-        if (kDebugMode) {
-          print(" received data $data  $tag ${DateTime.now()} ");
-          // showTrip();
-        }
         if (data is List<dynamic>) {
-          List<Marker> smarkers = [];
-          for (var element in data) {
-            if (kDebugMode) {
-              print(
-                  'elm $element  Ang ${element["angle"]} TAG  ${DateTime.now()}}');
-            }
-
-            String driverId = element["driver_id"];
-            double lat = element["lat"];
-            double lng = element["lng"];
-            num head = element["angle"] ?? 30;
-            Marker marker = Marker(
-              markerId: MarkerId(driverId),
-              position: LatLng(lat, lng),
-              rotation: head.toDouble(),
-              icon: BitmapDescriptor.fromBytes(
-                await getBytesFromAsset(Images.nCar, 50),
-              ),
-            );
-            smarkers.add(marker);
-          }
-
-          drawListOfDriversOnMap(smarkers);
+          drawListOfDriversOnMap(await _driversFromSocketToMarker(data));
         }
       },
     );
@@ -268,6 +245,34 @@ class BaseMapController extends BaseController
       "status": "pending",
       "order_id": oId,
     });
+  }
+
+  Future<List<Marker>> _driversFromSocketToMarker(
+    List<dynamic> data, {
+    bool isTrackDriver = false,
+  }) async {
+    List<Marker> smarkers = [];
+    for (var element in data) {
+      if (kDebugMode) {
+        print('elm $element  Ang ${element["angle"]} TAG  ${DateTime.now()}}');
+      }
+
+      String driverId = element["driver_id"];
+      double lat = element["lat"];
+      double lng = element["lng"];
+      num head = element["angle"] ?? 30;
+      Marker marker = Marker(
+        markerId: MarkerId(driverId),
+        position: LatLng(lat, lng),
+        rotation: head.toDouble(),
+        icon: BitmapDescriptor.fromBytes(
+          await getBytesFromAsset(
+              !isTrackDriver ? Images.nCar : Images.dCar, 50),
+        ),
+      );
+      smarkers.add(marker);
+    }
+    return smarkers;
   }
 
   void stopTrackingAllDriversOnMap() {
@@ -281,9 +286,25 @@ class BaseMapController extends BaseController
       "order_id": oId,
     });
 
-    subscribeToEvent("map_$oId", (data) {
-      if (kDebugMode) {
-        print(" received data $data  $tag ");
+    subscribeToEvent("map_$oId", (data) async {
+      if (data is List<dynamic>) {
+        var driverData = data.first;
+        log('driverData:::  $tag $driverData \n \t ',
+            name: "driverData:::  $tag");
+        var list = driverData["points"] as List<dynamic>;
+
+        if (list.isNotEmpty) {
+          List<LatLng> points = list.map((e) {
+            LatLng p = LatLng(e["lat"], e["lng"]);
+            return p;
+          }).toList();
+
+          await _drawPolygyniesFromLatLngPoints(points);
+        }
+        drawListOfDriversOnMap(
+          await _driversFromSocketToMarker([driverData], isTrackDriver: true),
+          trackFirstDriver: true,
+        );
       }
     });
   }
@@ -319,7 +340,10 @@ class BaseMapController extends BaseController
     return (distance.value = result.round()).round();
   }
 
-  void drawListOfDriversOnMap(List<Marker> smarkers) {
+  void drawListOfDriversOnMap(
+    List<Marker> smarkers, {
+    bool trackFirstDriver = false,
+  }) {
     replaceMarkers(update, markers: smarkers);
     drawMyMarker();
     goToPlaceByCamera(
@@ -328,31 +352,25 @@ class BaseMapController extends BaseController
       lat: initialPosition!.latitude,
       lng: initialPosition!.longitude,
       isAnimate: true,
-      disLat: smarkers.first.position.latitude,
-      disLng: smarkers.first.position.longitude,
+      disLat: trackFirstDriver ? smarkers.first.position.latitude : null,
+      disLng: trackFirstDriver ? smarkers.first.position.longitude : null,
     );
   }
 
-  Future _drawPolylineIfHavePickedPoints(List<LatLng> points) async {
+  Future _drawPolygyniesFromLatLngPoints(List<LatLng> points) async {
+    List<Polyline> polygynies = [];
     for (var i = 0; i < points.length - 1; i++) {
-      LatLng fPoint = points[i];
-      LatLng lPoint = points[i + 1];
-      var x = await FlutterPolylinePointsHelper.getRouteBetweenCoordinates(
-        AppConstants.mapKey,
-        fPoint.latitude,
-        fPoint.longitude,
-        lPoint.latitude,
-        lPoint.longitude,
-      );
-
-      Polyline polyline = Polyline(
+      polygynies.add(Polyline(
         polylineId: PolylineId("$i"),
-        points: x.points.map((e) => e.toLatLng).toList(),
+        points: points,
         color: Colors.teal,
         width: 5,
-        // patterns: [PatternItem.dash(3.0)],
-      );
-      addOnePolyline(update, polyline: polyline);
+        patterns: [PatternItem.dash(3.0)],
+      ));
     }
+    replacePolygynies(
+      update,
+      polygynies: polygynies,
+    );
   }
 }

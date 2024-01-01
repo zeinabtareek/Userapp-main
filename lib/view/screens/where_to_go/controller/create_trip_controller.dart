@@ -249,29 +249,14 @@ class CreateATripController extends BaseMapController {
 
   ///show trip
   OrderModel orderModel = OrderModel();
-  // showTrip() async {
-  //   try {
-  //     var result = await actionCenter.execute(() async {
-  //       setState(ViewState.busy);
-  // showTrip({orderId}) async {
-  //   try {
-  //     var result = await actionCenter.execute(() async {
-  //  setState(ViewState.busy);
+
   showTrip({orderId}) async {
     try {
       var result = await actionCenter.execute(() async {
         setState(ViewState.busy);
 
         // orderModel = await services.showTripDetails(orderId: );
-        orderModel = await services.showTripDetails(orderId: orderId);
-
-
-
-        // orderModel = await services.showTripDetails(
-        //     orderId:
-        //     'b0a49d66-14e2-4236-bf1b-771e1f84a2fc'
-        // // Get.find<BaseMapController>().changeState(request[RequestState.riderDetailsState]!);//riderDetailsState
-        // );
+        orderModel = await services.showTripDetails(orderId: getOrderId());
         print('driver first name ${orderModel.data?.driver?.firstName}');
         print(orderModel.data?.vehicleType?.id);
         // print(orderModel.data);
@@ -300,4 +285,35 @@ class CreateATripController extends BaseMapController {
     path: 'test@gmail.com',
     query: 'subject=support Feedback&body=',
   );
+
+  getCurrantOrder() async {
+    try {
+      var result = await actionCenter.execute(
+        () async {
+          setState(ViewState.busy);
+
+          // orderModel = await services.showTripDetails(orderId: );
+          var result = await services.getCurrentOrder();
+          if (result != null) {
+            var status = result.data?.status;
+            if (status != null) {
+              Get.find<BaseMapController>()
+                ..setOrderId(result.data!.id!)
+                ..handelTripUiBasedOnTripState(status);
+            }
+          }
+          // print(orderModel.data);
+          setState(ViewState.idle);
+        },
+        checkConnection: true,
+      );
+
+      if (!result) {
+        setState(ViewState.error);
+        print(" ::: error");
+      }
+    } catch (e) {
+      setState(ViewState.idle);
+    }
+  }
 }

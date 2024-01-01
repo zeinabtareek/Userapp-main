@@ -149,6 +149,7 @@ class ActionCenter with WidgetsBindingObserver {
               Get.overlayContext!, ex.message.replaceAll("\"", ""));
         }
       } else {
+        
         OverlayHelper.showErrorToast(
             Get.overlayContext!, Strings.somethingWrong.tr);
         _logger.error(error: ex.toString());
