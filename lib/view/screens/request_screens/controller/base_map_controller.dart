@@ -9,8 +9,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../../util/images.dart';
-import '../../parcel/widgets/fare_input_widget.dart';
-import 'finding_driver_controller.dart';
 
 import '../../../../bases/base_controller.dart';
 import '../../../../enum/request_states.dart';
@@ -44,6 +42,7 @@ class BaseMapController extends BaseController
   double percent = 0;
   set persistentContentHeightt(double num) {
     _persistentContentHeight = num;
+    update();
   }
 
   double get persistentContentHeight => _persistentContentHeight;
@@ -94,12 +93,14 @@ class BaseMapController extends BaseController
       }
     });
   }
+
   @override
-    dispose() async {
+  dispose() async {
     // Disable wakelock when the screen is disposed
     // await WakelockPlus.disable();
     super.dispose();
   }
+
   ///check whether there is a previous
 
   checkRideStateToFindingDriver() async {
@@ -214,7 +215,6 @@ class BaseMapController extends BaseController
       baseMapController.update();
       Get.find<CreateATripController>().update();
     } else if (status == "finished") {
-      setOrderId(null);
       if (kDebugMode) {
         print('finished trip TAG');
       }
@@ -223,6 +223,7 @@ class BaseMapController extends BaseController
       stopTrackTheDriverLocationOnOrder();
 
       disconnectSocket();
+      setOrderId(null);
     } else if (status == "cancel" || status == "pending") {
       if (kDebugMode) {
         print('$state trip TAG');
@@ -306,6 +307,18 @@ class BaseMapController extends BaseController
             name: "driverData:::  $tag");
         var list = driverData["points"] as List<dynamic>;
 
+        bool isStarted = driverData["tripD"]["isStarted"];
+        print('isStarted:::: $tag $isStarted');
+
+        LatLng? dist;
+        if (isStarted) {
+          var lat = double.tryParse(driverData["tripD"]["to"]["lat"]);
+          var lng = double.tryParse(driverData["tripD"]["to"]["lng"]);
+
+          dist = LatLng(lat ?? 0, lng ?? 0);
+          print('isStarted:::: ${dist.toJson()}');
+        }
+
         if (list.isNotEmpty) {
           List<LatLng> points = list.map((e) {
             LatLng p = LatLng(e["lat"], e["lng"]);
@@ -315,9 +328,13 @@ class BaseMapController extends BaseController
           await _drawPolygyniesFromLatLngPoints(points);
         }
         drawListOfDriversOnMap(
-          await _driversFromSocketToMarker([driverData], isTrackDriver: true),
-          trackFirstDriver: true,
-        );
+            await _driversFromSocketToMarker(
+              [driverData],
+              isTrackDriver: true,
+            ),
+            trackFirstDriver: isStarted == false,
+            isDrawMyMarker: isStarted == false,
+            trackPoint: dist);
       }
     });
   }
@@ -356,17 +373,25 @@ class BaseMapController extends BaseController
   void drawListOfDriversOnMap(
     List<Marker> smarkers, {
     bool trackFirstDriver = false,
+    bool isDrawMyMarker = true,
+    LatLng? trackPoint,
   }) {
     replaceMarkers(update, markers: smarkers);
-    drawMyMarker();
+    if (isDrawMyMarker) {
+      drawMyMarker();
+    }
     goToPlaceByCamera(
       update,
       controller: controller!,
       lat: initialPosition!.latitude,
       lng: initialPosition!.longitude,
       isAnimate: true,
-      disLat: trackFirstDriver ? smarkers.first.position.latitude : null,
-      disLng: trackFirstDriver ? smarkers.first.position.longitude : null,
+      disLat: trackFirstDriver
+          ? smarkers.first.position.latitude
+          : trackPoint?.latitude,
+      disLng: trackFirstDriver
+          ? smarkers.first.position.longitude
+          : trackPoint?.longitude,
     );
   }
 

@@ -64,7 +64,7 @@ class FourthWidget extends StatelessWidget {
               : "",
         ),
         // K.sizedBoxH0,
-        !isOnGoing(baseMapController) //tripOngoing
+        isOnGoing(baseMapController) //tripOngoing
             ? const SizedBox()
             : ContactWidget(),
         // K.sizedBoxH0,

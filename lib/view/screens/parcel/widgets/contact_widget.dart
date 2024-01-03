@@ -6,6 +6,9 @@ import 'package:ride_sharing_user_app/view/screens/message/message_list.dart';
 import 'package:ride_sharing_user_app/view/screens/message/message_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../chat/controller/chat_controller.dart';
+import '../../chat/message_screen.dart';
+import '../../chat/repository/chat_repo.dart';
 import '../../where_to_go/controller/create_trip_controller.dart';
 
 class ContactWidget extends StatelessWidget {
@@ -33,7 +36,24 @@ class ContactWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: GestureDetector(
-                  onTap: () => Get.to(() => const MessageOldScreen()),
+                  onTap: () {
+                    // TODO::  handel  orderId in parcel cicle
+                    String orderId = controller.getOrderId()!;
+
+                    Get.to(() => const MessageScreen(),
+                        binding: BindingsBuilder(() {
+                      // ignore: avoid_single_cascade_in_expression_statements
+                      if (Get.isRegistered<ChatController>()) {
+                        Get.find<ChatController>()
+                          ..initChat()
+                          ..toNewChat(orderId);
+                      } else {
+                        Get.put(ChatController(chatRepo: ChatRepo()))
+                          ..initChat()
+                          ..toNewChat(orderId);
+                      }
+                    }));
+                  },
                   // onTap: () => Get.to(() => const MessageListScreen()),
                   // onTap: () => Get.to(() => const MessageListScreen()),
                   child: SizedBox(
@@ -46,8 +66,9 @@ class ContactWidget extends StatelessWidget {
               Expanded(
                 child: GestureDetector(
                   onTap: () => controller.launchUrlFun(
-                      "tel:${controller.orderModel.data?.driver?.phone ?? ''}",
-                      false),
+                    "tel:${controller.orderModel.data?.driver?.phone ?? ''}",
+                    false,
+                  ),
 
                   // onTap: () async {
                   //   await launchUrl(launchUri,

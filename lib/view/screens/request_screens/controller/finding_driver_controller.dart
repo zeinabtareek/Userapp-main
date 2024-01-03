@@ -30,9 +30,7 @@ class FindingDriverController extends CreateATripController {
     oId = getOrderId();
    Get.find<BaseMapController>(). listonOnNotificationSocketAfterAccept();
 
-    // trackingAllDriversOnMap();
-  //   await handelState();
-      handleInitialState();
+    //  handleInitialState();
   }
   // Future<void> handleInitialState() async {
   //   final baseMapController = Get.find<BaseMapController>();

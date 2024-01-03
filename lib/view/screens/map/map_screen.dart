@@ -8,6 +8,7 @@ import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/view/screens/map/controller/map_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/parcel/widgets/parcel_expendable_bottom_sheet.dart';
+import 'package:ride_sharing_user_app/view/screens/request_screens/controller/base_map_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/controller/ride_controller.dart';
 import 'package:ride_sharing_user_app/view/screens/ride/widgets/ride_expendable_bottom_sheet.dart';
 import 'package:ride_sharing_user_app/view/widgets/custom_app_bar.dart';
@@ -47,7 +48,8 @@ class MapScreen extends StatelessWidget {
                 mapCompleter.complete(userMapController.mapController);
               }
               return ExpandableBottomSheet(
-                enableToggle: false,
+                // key:Get.find<BaseMapController>().key ,
+                enableToggle: true,
 
                 background: Stack(
                   children: [
@@ -56,8 +58,9 @@ class MapScreen extends StatelessWidget {
                       rippleRadius: 0.2,
                       useRotation: true,
                       duration: const Duration(milliseconds: 2300),
-                      mapId:   mapCompleter.future.then<int>((value) => value.mapId),
-                       shouldAnimateCamera: false,
+                      mapId:
+                          mapCompleter.future.then<int>((value) => value.mapId),
+                      shouldAnimateCamera: false,
                       child: ClipRRect(
                         borderRadius:
                             BorderRadius.circular(Dimensions.radiusOverLarge),
@@ -116,15 +119,12 @@ class MapScreen extends StatelessWidget {
                               ])
                         : const SizedBox(),
 
-
                 onIsExtendedCallback: () => print('expanded'),
                 animationDurationExtend: const Duration(milliseconds: 250),
                 animationDurationContract: const Duration(milliseconds: 250),
 
                 // animationCurveExpand: Curves.bounceOut,
-                 animationCurveContract: Curves.ease,
-
-
+                animationCurveContract: Curves.ease,
               );
             }),
           ),

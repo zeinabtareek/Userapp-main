@@ -58,113 +58,111 @@ class BaseMapScreen extends StatelessWidget {
       // resizeToAvoidBottomInset: false,
       //   backgroundColor: Theme.of(context).shadowColor,
       body: CustomBody(
-        appBar: CustomAppBar(
-          title: Strings.theDeliverymanNeedYou.tr,
-          onBackPressed: controller.onBackPressed,
-        ),
-        body: ExpandableBottomSheet(
-              key: controller.key,
-              enableToggle: true,
+          appBar: CustomAppBar(
+            title: Strings.theDeliverymanNeedYou.tr,
+            onBackPressed: controller.onBackPressed,
+          ),
+          body: ExpandableBottomSheet(
+            key: controller.key,
+            enableToggle: false,
 
-              background: GetBuilder<BaseMapController>(
-                init: BaseMapController(),
-            
-                builder: (controller) {
-                  return CommonMapWidget(
-                    markers: controller.markers,
-                    polylines: controller.polylines,
-                    mapId: controller.mapCompleter.future
-                        .then<int>((value) => value.mapId),
-                    onMapCreated: controller.onMapCreated,
-                    initialCameraPosition: CameraPosition(
-                      target: controller.initialPosition!,
-                      zoom: 12,
-                    ),
-                  );
-                },
+            background: GetBuilder<BaseMapController>(
+              init: BaseMapController(),
+              builder: (controller) {
+                return CommonMapWidget(
+                  markers: controller.markers,
+                  polylines: controller.polylines,
+                  mapId: controller.mapCompleter.future
+                      .then<int>((value) => value.mapId),
+                  onMapCreated: controller.onMapCreated,
+                  initialCameraPosition: CameraPosition(
+                    target: controller.initialPosition!,
+                    zoom: 12,
+                  ),
+                );
+              },
+            ),
+
+            expandableContent: Container(
+              //   height: 500,
+              // color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
+              // color: Colors.red,
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.paddingSizeDefault),
+              child: SingleChildScrollView(
+                child: Obx(
+                  () => controller.widgetNumber.value ==
+                          request[RequestState.initialState]
+                      ? InitialRequestWidget(
+                          image: Images.car,
+                          title: Get.find<RideController>()
+                                  .selectedSubPackage
+                                  .value
+                                  ?.categoryTitle
+                                  .toString() ??
+                              '',
+                        )
+                      //     BikeRideDetailsWidgets(
+                      //       image: Images.car  ,
+                      //       title: Get.find<RideController>().selectedPackage.value?.categoryTitle.toString()??'',
+                      //     )
+                      : controller.widgetNumber.value ==
+                              request[RequestState.getPriceState]
+                          ? SecondWidget(
+                              image: Images.car,
+                              title: Get.find<RideController>()
+                                      .selectedSubPackage
+                                      .value
+                                      ?.categoryTitle
+                                      .toString() ??
+                                  '',
+                              points: points,
+                            )
+
+                          ///Get Price
+                          : controller.widgetNumber.value ==
+                                  request[RequestState.findDriverState]
+                              ? const ThirdWidget(
+                                  whoWillPay: true,
+                                )
+
+                              ///Find Driver
+                              : (controller.widgetNumber.value ==
+                                          request[
+                                              RequestState.driverAcceptState] ||
+                                      controller.widgetNumber.value ==
+                                          request[RequestState
+                                              .tripOngoing]) //tripOngoing
+                                  ? const FourthWidget()
+
+                                  ///Ride Details tripFinishedState
+
+                                  : controller.widgetNumber.value ==
+                                          request[
+                                              RequestState.tripFinishedState]
+                                      ?
+                                      //                ///here you paymenmt
+                                      FifthWidget()
+                                      : const SizedBox(),
+                ), // ),
               ),
+            ),
 
-              expandableContent: Container(
-                //   height: 500,
-                // color: Colors.white,
-                color: Theme.of(context).scaffoldBackgroundColor,
-                // color: Colors.red,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: Dimensions.paddingSizeDefault),
-                child: SingleChildScrollView(
-                  child: Obx(
-                    () => controller.widgetNumber.value ==
-                            request[RequestState.initialState]
-                        ? InitialRequestWidget(
-                            image: Images.car,
-                            title: Get.find<RideController>()
-                                    .selectedSubPackage
-                                    .value
-                                    ?.categoryTitle
-                                    .toString() ??
-                                '',
-                          )
-                        //     BikeRideDetailsWidgets(
-                        //       image: Images.car  ,
-                        //       title: Get.find<RideController>().selectedPackage.value?.categoryTitle.toString()??'',
-                        //     )
-                        : controller.widgetNumber.value ==
-                                request[RequestState.getPriceState]
-                            ? SecondWidget(
-                                image: Images.car,
-                                title: Get.find<RideController>()
-                                        .selectedSubPackage
-                                        .value
-                                        ?.categoryTitle
-                                        .toString() ??
-                                    '',
-                                points: points,
-                              )
+            persistentHeader: fixedHeader(),
+            persistentContentHeight: controller.persistentContentHeight,
 
-                            ///Get Price
-                            : controller.widgetNumber.value ==
-                                    request[RequestState.findDriverState]
-                                ? const ThirdWidget(
-                                    whoWillPay: true,
-                                  )
+            onIsContractedCallback: () => print('contracted'),
+            onIsExtendedCallback: () => print('expanded'),
+            animationDurationExtend: const Duration(milliseconds: 500),
+            animationDurationContract: const Duration(milliseconds: 250),
 
-                                ///Find Driver
-                                : (controller.widgetNumber.value ==
-                                            request[RequestState
-                                                .driverAcceptState] ||
-                                        controller.widgetNumber.value ==
-                                            request[RequestState
-                                                .tripOngoing]) //tripOngoing
-                                    ? const FourthWidget()
+            animationCurveExpand: Curves.bounceOut,
+            animationCurveContract: Curves.ease,
 
-                                    ///Ride Details tripFinishedState
-
-                                    : controller.widgetNumber.value ==
-                                            request[
-                                                RequestState.tripFinishedState]
-                                        ?
-                                        //                ///here you paymenmt
-                                        FifthWidget()
-                                        : const SizedBox(),
-                  ), // ),
-                ),
-              ),
-
-              persistentHeader: fixedHeader(),
-              persistentContentHeight: controller.persistentContentHeight,
-
-              onIsContractedCallback: () => print('contracted'),
-              onIsExtendedCallback: () => print('expanded'),
-              animationDurationExtend: const Duration(milliseconds: 500),
-              animationDurationContract: const Duration(milliseconds: 250),
-
-              animationCurveExpand: Curves.bounceOut,
-              animationCurveContract: Curves.ease,
-              // expandableContent: Container(height: 600,color: Colors.green,width: Get.width,),
-              // background: Container(height: 600,color: Colors.red,width: Get.width,),
-            )
-         
-      ),
+            // expandableContent: Container(height: 600,color: Colors.green,width: Get.width,),
+            // background: Container(height: 600,color: Colors.red,width: Get.width,),
+          )),
     );
   }
 }

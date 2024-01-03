@@ -2,27 +2,21 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:ride_sharing_user_app/helper/display_helper.dart';
-import 'package:ride_sharing_user_app/util/app_constants.dart';
+import 'package:path_provider/path_provider.dart';
+
+import '../util/app_constants.dart';
 
 class NotificationHelper {
   static String? _fcmToken;
   static String? get fcmToken => _fcmToken;
   static Future<void> initialize(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
-  await  FirebaseMessaging.instance.requestPermission(
-      sound: true,
-      badge: true,
-      alert: true,
-      provisional: false,
-    );
     _fcmToken = await FirebaseMessaging.instance.getToken();
-
-    log('fcmToken: $fcmToken', name: "TAG-FCM");
+    await _requestPermission(flutterLocalNotificationsPlugin);
+    log('fcmToken: $_fcmToken', name: 'TAG-FCM');
 
     AndroidInitializationSettings androidInitialize =
         const AndroidInitializationSettings('notification_icon');
@@ -69,26 +63,49 @@ class NotificationHelper {
       );
 
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        customPrint('onMessage: ${message.data}');
+        log('onMessage: ${message.data}', name: 'TAG-FCM');
         NotificationHelper.showNotification(
             message, flutterLocalNotificationsPlugin, true);
       });
+
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-        customPrint('onOpenApp: ${message.data}');
+        log('onOpenApp: ${message.data}', name: "TAG-FCM");
       });
 
-      customPrint('onMessage: ${message.data}');
+      log('onMessage: ${message.data}', name: 'TAG-FCM');
       NotificationHelper.showNotification(
           message, flutterLocalNotificationsPlugin, true);
     });
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      customPrint('onOpenApp: ${message.data}');
+      log('onOpenApp: ${message.data}', name: "TAG-FCM");
     });
+  }
+
+  static Future<void> _requestPermission(
+      FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
+    if (Platform.isAndroid) {
+      await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestPermission();
+    }
+    if (Platform.isIOS) {
+      await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions();
+    }
+    await FirebaseMessaging.instance.requestPermission(
+      sound: true,
+      badge: true,
+      alert: true,
+      carPlay: true,
+    );
   }
 
   static Future<void> showNotification(RemoteMessage message,
       FlutterLocalNotificationsPlugin fln, bool data) async {
-        
+    log('showNotification: ${message.notification?.toMap()}', name: 'TAG-FCM');
     String title = message.notification?.title ?? "";
     String body = message.notification?.body ?? "";
     String? orderID = message.data['order_id'];
@@ -105,7 +122,7 @@ class NotificationHelper {
     } catch (e) {
       await showBigPictureNotificationHiddenLargeIcon(
           title, body, orderID, null, fln);
-      customPrint('Failed to show notification: ${e.toString()}');
+      log('Failed to show notification: ${e.toString()}', name: "TAG-FCM");
     }
   }
 
@@ -119,7 +136,7 @@ class NotificationHelper {
     String? bigPicturePath;
     BigPictureStyleInformation? bigPictureStyleInformation;
     BigTextStyleInformation? bigTextStyleInformation;
-    if (image != null && !GetPlatform.isWeb) {
+    if (image != null && !kIsWeb) {
       largeIconPath = await _downloadAndSaveFile(image, 'largeIcon');
       bigPicturePath = largeIconPath;
       bigPictureStyleInformation = BigPictureStyleInformation(
@@ -169,7 +186,7 @@ class NotificationHelper {
 }
 
 Future<dynamic> myBackgroundMessageHandler(RemoteMessage remoteMessage) async {
-  customPrint('onBackground: ${remoteMessage.data}');
+  log('onBackground: ${remoteMessage.data}', name: "TAG-FCM");
   // var androidInitialize = new AndroidInitializationSettings('notification_icon');
   // var iOSInitialize = new IOSInitializationSettings();
   // var initializationsSettings = new InitializationSettings(android: androidInitialize, iOS: iOSInitialize);
@@ -180,5 +197,5 @@ Future<dynamic> myBackgroundMessageHandler(RemoteMessage remoteMessage) async {
 
 Future<dynamic> myBackgroundMessageReceiver(
     NotificationResponse response) async {
-  customPrint('onBackgroundClicked: ${response.payload}');
+  log('onBackgroundClicked: ${response.payload}', name: 'TAG-FCM');
 }

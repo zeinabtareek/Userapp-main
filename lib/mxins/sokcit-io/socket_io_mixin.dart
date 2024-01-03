@@ -1,100 +1,143 @@
-import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+// ignore_for_file: unnecessary_this
+
+import 'dart:developer';
+
+
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
-// socket_io_mixin
 mixin SocketIoMixin {
   io.Socket? socket;
 
-  // String serverUrl = "http://63.250.36.228:8090";
   String serverUrl = "https://www.hoood.app:8090";
+
+  bool get isSocketRdy => this.socket != null && socketIsConnected();
 
   final String _tag = "Socket.IO-TAG";
 
   String get tag => _tag;
-  // Initialize the Socket?.IO connection
+
+  void logSocket(String msg) {
+    log(
+      msg,
+      name: tag,
+      time:DateTime.now(), 
+  
+    );
+  }
+
   void initializeSocket({
     Function()? onConnect,
     Function(io.Socket socket)? onDisconnect,
   }) {
-    socket = io.io(serverUrl, <String, dynamic>{
-      'transports': ['websocket'],
-      'autoConnect': false,
-      // "driver_id": Get.find<BaseController>().user!.id,
-    });
+    this.socket = io.io(
+      serverUrl,
+      <String, dynamic>{
+        'transports': ['websocket'],
+        'autoConnect': false,
+      },
+    );
 
     // Define your event handlers here
     socket?.on('connect', (_) {
-      if (kDebugMode) {
-        print('Connected to $_tag  On :: $serverUrl ');
-      }
+      logSocket('Connected  On :: $serverUrl ');
+
       onConnect?.call();
     });
 
     socket?.on('disconnect', (_) {
-      if (kDebugMode) {
-        print('Disconnected from $_tag On :: $serverUrl ');
+      logSocket('Disconnected from $serverUrl ');
 
-        // socket?.destroy();
-      }
+      socket?.dispose();
       onDisconnect?.call(socket!);
     });
   }
 
+  void clearListeners() {
+    if (socket != null) {
+      if (socketIsConnected()) {
+        logSocket('clearListeners from  $serverUrl ');
+      }
+      this.socket?.clearListeners();
+    }
+  }
+
   // Connect to the Socket?.IO server
   void connectSocket() {
-    socket?.connect();
+    try {
+      if (this.socket != null) {
+        if (!socketIsConnected()) {
+          this.socket?.connect();
+        } else {
+          logSocket('Already connected Socket from  $serverUrl ');
+        }
+      }
+    } catch (e) {
+      logSocket('un able connect to Socket from $serverUrl ');
+    }
   }
 
   sendMassage(List<dynamic> args) {
-    if (kDebugMode) {
-      print("  sendMassage $_tag $args ");
+    if (isSocketRdy) {
+      logSocket("$_tag  sendMassage  $args ");
+      this.socket?.send(args);
     }
-    socket?.send(args);
   }
+  // 01118719987
 
   // Disconnect from the Socket?.IO server
   void disconnectSocket() {
-    if (kDebugMode) {
-      print(" disconnectSocket $_tag ");
+    if (isSocketRdy) {
+      logSocket("$_tag socket?.disconnect ()  On :: $serverUrl ");
+
+      this.socket!.disconnect();
+      logSocket(" emit-disconnect $_tag  On :: $serverUrl ");
+
+      this.socket?.emit(
+            "disconnect",
+          );
+      logSocket("$_tag disconnectSocket On :: $serverUrl ");
+
+      this.socket?.destroy();
+      logSocket("$_tag socket?.destroy ()  On :: $serverUrl ");
+
+      this.socket?.dispose();
+      logSocket("$_tag socket?.dispose ()  On :: $serverUrl ");
+
+      this.socket?.close();
+      logSocket("$_tag socket?.close ()  On :: $serverUrl  ");
     }
-    socket?.disconnect();
   }
 
   // Send an event to the Socket?.IO server
   void sendSocketEvent<T>(String event, T data) {
-    if (kDebugMode) {
-      print(" sendSocketEvent $_tag  $event  $data ");
+    if (isSocketRdy) {
+      logSocket("$tag sendSocketEvent   $event  $data ");
+
+      this.socket?.emit(event, data);
     }
-    socket?.emit(event, data);
   }
 
   // Listen for a specific event and handle data
   void subscribeToEvent(String event, Function(dynamic data) onData) {
     if (socket != null) {
-      if (kDebugMode) {
-        print(" subscribeToEvent $event $tag   ");
-      }
-      socket!.on(event, (data) {
-        if (kDebugMode) {
-          print("  $tag   received on  $event: $data ");
-        }
+      logSocket(" $tag  subscribeToEvent $event  ");
+
+      this.socket!.on(event, (data) {
+        logSocket(" $tag received data on event $event $data  ");
         onData.call(data);
       });
     }
   }
 
-  void unsubscribeFromEvent(String event) {
-    if (socket != null) {
-      if (kDebugMode) {
-        print("$tag Unsubscribing from event $event");
-      }
-      socket?.off(event);
-    }
+  bool socketIsConnected() {
+    return this.socket?.connected ?? false;
   }
 
-  bool isSocketConnected() {
-    return socket?.connected ?? false;
+  void unsubscribeFromEvent(String event) {
+    if (socket != null) {
+      logSocket("$tag Unsubscribing from event $event");
+
+      socket?.off(event);
+    }
   }
 }

@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animarker/widgets/animarker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../util/dimensions.dart';
 import '../../../../util/images.dart';
+import '../controller/base_map_controller.dart';
 
 class CommonMapWidget extends StatelessWidget {
   Future<int> mapId;
