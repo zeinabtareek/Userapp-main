@@ -14,8 +14,8 @@ import '../model/search_suggestion_model.dart';
 
 class SearchServices {
   final Completer<GoogleMapController> _controller = Completer();
-  final String _country = 'eg';
-  // final String _country = 'sa';
+  // final String _country = 'eg';
+  final String _country = 'sa';
 
 // https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&components=country:eg&types=(cities)&key=${K.googleKeyAPi}
   Future<List<Predictions>> getAutoCompleteFrom(
