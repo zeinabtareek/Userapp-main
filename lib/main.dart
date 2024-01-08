@@ -84,8 +84,8 @@ Future<void> main() async {
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Map<String, Map<String, String>> languages = await di.init();
 
-  await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
   FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
+  await NotificationHelper.initialize();
   await initializeDependencies();
   // sl<AuthCases>().setUserDate(null);
   try {

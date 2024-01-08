@@ -98,22 +98,6 @@ class ConversationBubble extends PaginationViewItem<MsgChatResModelItem> {
                                             width: 100,
                                             fit: BoxFit.contain,
                                             image: data.msg ?? "",
-
-                                            // frameBuilder: (BuildContext context,
-                                            //     Widget child,
-                                            //     int? frame,
-                                            //     bool? wasSynchronouslyLoaded) {
-                                            //   if (wasSynchronouslyLoaded==true) {
-                                            //     // Image was loaded synchronously
-                                            //     onImageLoaded();
-                                            //   } else {
-                                            //     // Image was loaded asynchronously
-                                            //     return child;
-                                            //   }
-                                            // },                                          headers: {
-                                            //   "Authorization":
-                                            //       "Bearer ${sl<AuthCases>().getUserData()}"
-                                            // },
                                           )
                                         : Image.file(
                                             height: 100,

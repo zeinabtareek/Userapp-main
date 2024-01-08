@@ -57,7 +57,9 @@ class CreateOrderBody {
     final Map<String, dynamic> data = {};
     data['order_type'] = orderType;
     data['package_id'] = packageId;
-    data['promo_code'] = promoCode;
+    if (promoCode != null && ((promoCode?.isNotEmpty) ?? false)) {
+      data['promo_code'] = promoCode;
+    }
     data.addAll(from?.toJson() ?? {});
     data.addAll(to?.toJson() ?? {});
 

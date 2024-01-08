@@ -29,7 +29,9 @@ class OrderData {
   String? orderNum;
   From? from;
   From? to;
-  PromoCode? promoCode; // Replace dynamic with PromoCode
+  PromoCode? promoCode;
+
+  String? chatId;
 
   String? status;
   List<StatusTimes>? statusTimes;
@@ -60,6 +62,7 @@ class OrderData {
   dynamic driverAmount;
   OrderData({
     this.id,
+    this.chatId,
     this.orderNum,
     this.from,
     this.to,
@@ -69,7 +72,6 @@ class OrderData {
     this.time,
     this.paymentType,
     this.promoCode,
-
     this.transactionId,
     this.note,
     this.extraRoutes,
@@ -105,7 +107,9 @@ class OrderData {
         });
       }
       distance = json['distance'];
-      promoCode = json['promo_code'] != null ? PromoCode.fromJson(json['promo_code']) : null;
+      promoCode = json['promo_code'] != null
+          ? PromoCode.fromJson(json['promo_code'])
+          : null;
 
       time = json['time'];
       paymentType = json['payment_type'];
@@ -224,6 +228,7 @@ class PromoCode {
     return data;
   }
 }
+
 class From {
   String? lat;
   String? lng;
@@ -345,9 +350,6 @@ class VehicleType {
     return data;
   }
 }
-
-
-
 
 // class OrderData {
 //   OrderData({

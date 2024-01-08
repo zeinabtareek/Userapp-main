@@ -35,7 +35,7 @@ class CreateATripController extends BaseMapController {
       Get.find<RideController>().selectedSubPackage.value?.id;
 
   String? get paymentType => Get.find<RideController>().initialSelectItem.value;
-  String? get promoCode => Get.find<RideController>().promoCode;
+  String? get promoCodeP => Get.find<RideController>().promoCode;
 
   Future<List<ExtraRoutes>> extraRoutes(List<LatLng> allTripPoint) async {
     var to = allTripPoint.removeLast();
@@ -137,7 +137,7 @@ class CreateATripController extends BaseMapController {
   createATrip(List<LatLng> points,
       // {required String promoCode}
       ) async {
-    print('promoCode $promoCode');
+    print('promoCode $promoCodeP');
     LatLng source = points.first; // Example source coordinate (San Francisco)
     LatLng destination = points.last;
 
@@ -161,7 +161,7 @@ class CreateATripController extends BaseMapController {
 
         createOrderModel = await services.createATrip(
           createOrderBody: CreateOrderBody(
-            promoCode:promoCode??'' ,
+            promoCode:promoCodeP??'' ,
             orderType: 'trip',
             packageId: packageId,
             from: await _form(source),

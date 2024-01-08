@@ -36,9 +36,14 @@ class ChatController extends BaseController
     update();
   }
 
-  toNewChat(String newOrderId) {
+ void toNewChat(String orderIdp, {String? chatIdP}) {
     setUserTypeIndex(0);
-    orderId = newOrderId;
+    if (chatIdP != null) {
+      chatId.value = chatIdP;
+         setChatId(chatIdP);
+    }
+
+    orderId = orderIdp;
     canChat.value = true;
   }
 

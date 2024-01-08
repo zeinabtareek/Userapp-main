@@ -4,6 +4,7 @@ import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
 import 'package:ride_sharing_user_app/view/screens/message/message_list.dart';
 import 'package:ride_sharing_user_app/view/screens/message/message_screen.dart';
+import 'package:ride_sharing_user_app/view/screens/request_screens/controller/base_map_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../chat/controller/chat_controller.dart';
@@ -36,23 +37,41 @@ class ContactWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     // TODO::  handel  orderId in parcel cicle
+
+                    controller.disconnectSocket();
                     String orderId = controller.getOrderId()!;
 
-                    Get.to(() => const MessageScreen(),
-                        binding: BindingsBuilder(() {
-                      // ignore: avoid_single_cascade_in_expression_statements
-                      if (Get.isRegistered<ChatController>()) {
-                        Get.find<ChatController>()
-                          ..initChat()
-                          ..toNewChat(orderId);
-                      } else {
-                        Get.put(ChatController(chatRepo: ChatRepo()))
-                          ..initChat()
-                          ..toNewChat(orderId);
-                      }
-                    }));
+                    String chatId = await Get.to(
+                      () => const MessageScreen(),
+                      binding: BindingsBuilder(
+                        () {
+                          // ignore: avoid_single_cascade_in_expression_statements
+                          if (Get.isRegistered<ChatController>()) {
+                            Get.find<ChatController>()
+                              ..initChat()
+                              ..toNewChat(
+                                orderId,
+                                chatIdP:
+                                    controller.createOrderModel.data?.chatId,
+                              );
+                          } else {
+                            Get.put(ChatController(chatRepo: ChatRepo()))
+                              ..initChat()
+                              ..toNewChat(
+                                orderId,
+                                chatIdP:
+                                    controller.createOrderModel.data?.chatId,
+                              );
+                          }
+                        },
+                      ),
+                    );
+                    controller.createOrderModel.data?.chatId = chatId;
+
+                    Get.find<BaseMapController>().listonOnNotificationSocketAfterAccept();
+
                   },
                   // onTap: () => Get.to(() => const MessageListScreen()),
                   // onTap: () => Get.to(() => const MessageListScreen()),

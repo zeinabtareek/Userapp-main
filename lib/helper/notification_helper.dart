@@ -1,46 +1,43 @@
-import 'dart:developer';
+import 'dart:developer' as l;
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+import 'package:ride_sharing_user_app/view/screens/dashboard/dashboard_screen.dart';
 
 import '../util/app_constants.dart';
+import '../view/screens/dashboard/bottom_menu_controller.dart';
 
 class NotificationHelper {
   static String? _fcmToken;
   static String? get fcmToken => _fcmToken;
-  static Future<void> initialize(
-      FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
+
+  static final FlutterLocalNotificationsPlugin
+      _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  @pragma('vm:entry-point')
+  static Future<void> initialize() async {
     _fcmToken = await FirebaseMessaging.instance.getToken();
-    await _requestPermission(flutterLocalNotificationsPlugin);
-    log('fcmToken: $_fcmToken', name: 'TAG-FCM');
+    await _requestPermission(_flutterLocalNotificationsPlugin);
+    l.log('fcmToken: $_fcmToken', name: 'TAG-FCM');
 
     AndroidInitializationSettings androidInitialize =
         const AndroidInitializationSettings('notification_icon');
     var iOSInitialize = const DarwinInitializationSettings();
     var initializationsSettings =
         InitializationSettings(android: androidInitialize, iOS: iOSInitialize);
-    flutterLocalNotificationsPlugin.initialize(
+    _flutterLocalNotificationsPlugin.initialize(
       initializationsSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse response) async {
-        // TODO: Route
-        // try{
-        //   if(payload != null && payload.isNotEmpty) {
-        //     Get.toNamed(RouteHelper.getOrderDetailsRoute(int.parse(payload)));
-        //   }else {
-        //     Get.toNamed(RouteHelper.getNotificationRoute());
-        //   }
-        // }catch (e) {}
-        return;
-      },
-      onDidReceiveBackgroundNotificationResponse: myBackgroundMessageReceiver,
+      onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
+      onDidReceiveBackgroundNotificationResponse: onTapLocalNotification,
     );
-
+/*
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      AndroidInitializationSettings androidInitialize =
+       AndroidInitializationSettings androidInitialize =
           const AndroidInitializationSettings('notification_icon');
       var iOSInitialize = const DarwinInitializationSettings();
       var initializationsSettings = InitializationSettings(
@@ -61,25 +58,84 @@ class NotificationHelper {
         },
         onDidReceiveBackgroundNotificationResponse: myBackgroundMessageReceiver,
       );
-
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        log('onMessage: ${message.data}', name: 'TAG-FCM');
-        NotificationHelper.showNotification(
-            message, flutterLocalNotificationsPlugin, true);
-      });
-
-      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-        log('onOpenApp: ${message.data}', name: "TAG-FCM");
-      });
-
-      log('onMessage: ${message.data}', name: 'TAG-FCM');
+      l.log('onMessageFrom Foreground : ${message.data}', name: 'TAG-FCM');
       NotificationHelper.showNotification(
           message, flutterLocalNotificationsPlugin, true);
     });
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      log('onOpenApp: ${message.data}', name: "TAG-FCM");
+   
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      l.log('onMessageFrom Foreground : ${message.data}', name: 'TAG-FCM');
+      NotificationHelper.showNotification(
+          message, flutterLocalNotificationsPlugin, true);
     });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      l.log('onOpenApp From Background: ${message.data}', name: "TAG-FCM");
+    });
+
+    FirebaseMessaging.instance.getInitialMessage().then(
+      (RemoteMessage? message) {
+        if (message != null) {
+          l.log('onOpenApp From terminated: ${message.data}', name: "TAG-FCM");
+        }
+      },
+    );
+
+
+
+ */
+
+    FirebaseMessaging.onMessage.listen(
+      (RemoteMessage message) {
+        AndroidInitializationSettings androidInitialize =
+            const AndroidInitializationSettings('notification_icon');
+        var iOSInitialize = const DarwinInitializationSettings();
+        var initializationsSettings = InitializationSettings(
+            android: androidInitialize, iOS: iOSInitialize);
+        _flutterLocalNotificationsPlugin.initialize(
+          initializationsSettings,
+          onDidReceiveNotificationResponse:
+              (NotificationResponse response) async {
+            // TODO: Route
+            // try{
+            //   if(payload != null && payload.isNotEmpty) {
+            //     Get.toNamed(RouteHelper.getOrderDetailsRoute(int.parse(payload)));
+            //   }else {
+            //     Get.toNamed(RouteHelper.getNotificationRoute());
+            //   }
+            // }catch (e) {}
+            return;
+          },
+          onDidReceiveBackgroundNotificationResponse: onTapLocalNotification,
+        );
+
+        l.log('onMessage: ${message.data}', name: 'TAG-FCM');
+        NotificationHelper.showNotification(
+          message,
+          _flutterLocalNotificationsPlugin,
+          true,
+        );
+      },
+    );
+
+    // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    //   l.log('onOpenApp: ${message.data}', name: "TAG-FCM");
+    // });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      l.log('onOpenApp From Background: ${message.data}', name: "TAG-FCM");
+    });
+
+    FirebaseMessaging.instance.getInitialMessage().then(
+      (RemoteMessage? message) {
+        if (message != null) {
+          l.log('onOpenApp From terminated: ${message.data}', name: "TAG-FCM");
+        }
+      },
+    );
   }
+
+
 
   static Future<void> _requestPermission(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
@@ -103,12 +159,17 @@ class NotificationHelper {
     );
   }
 
-  static Future<void> showNotification(RemoteMessage message,
-      FlutterLocalNotificationsPlugin fln, bool data) async {
-    log('showNotification: ${message.notification?.toMap()}', name: 'TAG-FCM');
+  static Future<void> showNotification(
+    RemoteMessage message,
+    FlutterLocalNotificationsPlugin fln,
+    bool data,
+  ) async {
+    l.log('showNotification: ${message.notification?.toMap()}',
+        name: 'TAG-FCM');
     String title = message.notification?.title ?? "";
     String body = message.notification?.body ?? "";
     String? orderID = message.data['order_id'];
+
     String? image = (message.data['image'] != null &&
             message.data['image'].isNotEmpty)
         ? message.data['image'].startsWith('http')
@@ -122,7 +183,7 @@ class NotificationHelper {
     } catch (e) {
       await showBigPictureNotificationHiddenLargeIcon(
           title, body, orderID, null, fln);
-      log('Failed to show notification: ${e.toString()}', name: "TAG-FCM");
+      l.log('Failed to show notification: ${e.toString()}', name: "TAG-FCM");
     }
   }
 
@@ -185,8 +246,9 @@ class NotificationHelper {
   }
 }
 
+@pragma('vm:entry-point')
 Future<dynamic> myBackgroundMessageHandler(RemoteMessage remoteMessage) async {
-  log('onBackground: ${remoteMessage.data}', name: "TAG-FCM");
+  l.log('onBackground: ${remoteMessage.data}', name: "TAG-FCM");
   // var androidInitialize = new AndroidInitializationSettings('notification_icon');
   // var iOSInitialize = new IOSInitializationSettings();
   // var initializationsSettings = new InitializationSettings(android: androidInitialize, iOS: iOSInitialize);
@@ -195,7 +257,27 @@ Future<dynamic> myBackgroundMessageHandler(RemoteMessage remoteMessage) async {
   // NotificationHelper.showNotification(message, flutterLocalNotificationsPlugin, true);
 }
 
-Future<dynamic> myBackgroundMessageReceiver(
-    NotificationResponse response) async {
-  log('onBackgroundClicked: ${response.payload}', name: 'TAG-FCM');
+Future<dynamic> onTapLocalNotification(NotificationResponse response) async {
+  l.log('onForegroundClicked - onTapLocalNotification: ${response.payload}',
+      name: 'TAG-FCM');
+      
 }
+  void onDidReceiveNotificationResponse(NotificationResponse response) async {
+      l.log(
+        'onForegroundClicked - onDidReceiveNotificationResponse: ${response.payload}',
+        name: 'TAG-FCM',
+      );
+  
+      Get.to(() => DashboardScreen());
+      Get.find<BottomMenuController>().selectNotificationScreen();
+  
+      // TODO: Route
+      // try{
+      //   if(payload != null && payload.isNotEmpty) {
+      //     Get.toNamed(RouteHelper.getOrderDetailsRoute(int.parse(payload)));
+      //   }else {
+      //     Get.toNamed(RouteHelper.getNotificationRoute());
+      //   }
+      // }catch (e) {}
+      return;
+    }

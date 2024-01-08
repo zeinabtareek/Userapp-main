@@ -27,7 +27,8 @@ class MessageScreen extends GetView<ChatController> {
         if (controller.orderId == null) {
           controller.disconnectSocket();
         }
-        return Future.value(true);
+        Get.back(result: controller.chatId);
+        return Future.value(false);
       },
       child: Scaffold(
         bottomSheet: Obx(() => Visibility(
@@ -216,7 +217,7 @@ class MessageScreen extends GetView<ChatController> {
                 if (controller.orderId == null) {
                   controller.disconnectSocket();
                 }
-                Get.back();
+                Get.back(result: controller.chatId);
               },
             ),
             Expanded(

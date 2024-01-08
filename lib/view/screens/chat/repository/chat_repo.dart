@@ -30,7 +30,7 @@ class ChatRepo {
         var msg = MsgChatResModelItem.fromMap(res.data['data']);
 
         if (Get.find<ChatController>().chatId.value == null) {
-          print("  chatId from json ${msg.id} ");
+         
           Get.find<ChatController>().setChatId(msg.id.toString());
 
           // ignore: avoid_single_cascade_in_expression_statements
