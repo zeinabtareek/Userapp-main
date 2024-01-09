@@ -2,7 +2,6 @@
 
 import 'dart:developer';
 
-
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 mixin SocketIoMixin {
@@ -20,8 +19,7 @@ mixin SocketIoMixin {
     log(
       msg,
       name: tag,
-      time:DateTime.now(), 
-  
+      time: DateTime.now(),
     );
   }
 

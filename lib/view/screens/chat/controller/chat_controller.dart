@@ -20,7 +20,7 @@ class ChatController extends BaseController
 
   ChatController({required this.chatRepo});
 
-  String? orderId;
+  RxnString orderId = RxnString();
 
   RxnString chatId = RxnString();
 
@@ -36,15 +36,27 @@ class ChatController extends BaseController
     update();
   }
 
- void toNewChat(String orderIdp, {String? chatIdP}) {
+  void toNewChat(String orderIdp, ) {
     setUserTypeIndex(0);
-    if (chatIdP != null) {
-      chatId.value = chatIdP;
-         setChatId(chatIdP);
-    }
+  
 
-    orderId = orderIdp;
+    orderId.value = orderIdp;
     canChat.value = true;
+    // Future.delayed(const Duration(seconds: 1));
+    Get.put(
+      PaginateChatMsgsController(
+        GetChatMsgsUseCase(
+          GetChatMsgsReqModel(
+            1,
+            chatId: chatId.value,
+            orderId: orderId.value,
+          ),
+        ),
+      ),
+    );
+    update();
+    refresh();
+    // paginateChatMsgsController = Get.find<PaginateChatMsgsController>();
   }
 
   Rxn<File> pickedImageFile = Rxn();
@@ -111,28 +123,39 @@ class ChatController extends BaseController
     conversationController.text = '';
     isLoading(false);
     pickedImageFile.value = null;
-    initializeSocket(
-      onConnect: () {
-        sendSocketEvent("user_id", "${user!.id}");
-        subscribeToEvent("user-notification.${user!.id}", (data) {
-          if (kDebugMode) {
-            print(" received data $data  $tag ");
-          }
-
-          if (true) {
-            var controller = Get.find<PaginateChatMsgsController>();
-            var msg =
-                MsgChatResModelItem.fromSocketMap(data['data']['message']);
-            // print(" msg ::: ${msg.toString()} ");
-            controller.items.insert(0, msg);
-            controller.update();
-          }
-        });
-      },
-    );
-    connectSocket();
+    if (!socketIsConnected()) {
+      initializeSocket(
+        onConnect: startListenOnNotification,
+        onDisconnect: (socket) {
+          stopListenOnNotification();
+        },
+      );
+      connectSocket();
+    } else {
+      startListenOnNotification();
+    }
     await Future.delayed(const Duration(seconds: 1));
     paginateChatMsgsController = Get.find<PaginateChatMsgsController>();
+  }
+
+  void stopListenOnNotification() =>
+      unsubscribeFromEvent("user-notification.${user!.id}");
+
+  startListenOnNotification() {
+    sendSocketEvent("user_id", "${user!.id}");
+    subscribeToEvent("user-notification.${user!.id}", (data) {
+      if (kDebugMode) {
+        print(" received data $data  $tag ");
+      }
+
+      if (true) {
+        var controller = Get.find<PaginateChatMsgsController>();
+        var msg = MsgChatResModelItem.fromSocketMap(data['data']['message']);
+        // print(" msg ::: ${msg.toString()} ");
+        controller.items.insert(0, msg);
+        controller.update();
+      }
+    });
   }
 
   /*
@@ -226,7 +249,7 @@ class ChatController extends BaseController
       () async {
         isLoading.value = true;
         SendMsgReqModel req = _getReqBody().getIdForChat(
-          orderId: isOrderType ? orderId : null,
+          orderId: isOrderType ? orderId.value : null,
           chatId: !isOrderType ? chatId.value : null,
         );
         await chatRepo.sendMsg(
@@ -244,6 +267,7 @@ class ChatController extends BaseController
             0,
             msg,
           );
+          paginateChatMsgsController?.update();
         }
 
         paginateChatMsgsController?.update();
@@ -268,6 +292,4 @@ class ChatController extends BaseController
     }
     return req;
   }
-
-
 }

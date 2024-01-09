@@ -125,7 +125,6 @@ class RideController extends BaseController implements GetxService {
     isExpanded = false;
   }
 
-
   void vehicleToggle() {
     isExpanded = !isExpanded;
     heightOfTypes = isExpanded ? 110.0 : 0.0;
@@ -214,17 +213,16 @@ class RideController extends BaseController implements GetxService {
   OrderPriceData priceData = OrderPriceData();
   final loading = false.obs;
 
-
-  String?  _promoCode ;
-  String? get promoCode =>  _promoCode;
+  String? _promoCode;
+  String? get promoCode => _promoCode;
 
   getPromoCodeDiscount() async {
     loading.value = true;
     try {
       var result = await actionCenter.execute(() async {
         if (promoCodeController.text.isEmpty) {
-
-          OverlayHelper.showErrorToast(Get.overlayContext!, Strings.noEnteredPromoCode.tr);
+          OverlayHelper.showErrorToast(
+              Get.overlayContext!, Strings.noEnteredPromoCode.tr);
         } else {
           // double? distance = await calculate3Distance();
           priceData = await rideRepo.getPrice(
@@ -234,9 +232,9 @@ class RideController extends BaseController implements GetxService {
               distance: Get.find<BaseMapController>().distance.value
               // distance: distance,
               );
-       if  ( priceData.promoCodeUsed==true){
-         _promoCode =promoCodeController.text;
-       }
+          if (priceData.promoCodeUsed == true) {
+            _promoCode = promoCodeController.text;
+          }
           OverlayHelper.showSuccessToast(Get.overlayContext!, Strings.done.tr);
           print('priceData $priceData');
         }
@@ -256,9 +254,9 @@ class RideController extends BaseController implements GetxService {
     }
   }
 
-    RxBool priceIsLoading=false.obs;
+  RxBool priceIsLoading = false.obs;
   Future<OrderPriceData> getOrderPrice() async {
-    priceIsLoading.value=true;
+    priceIsLoading.value = true;
 
     try {
       setState(ViewState.busy);
@@ -287,11 +285,12 @@ class RideController extends BaseController implements GetxService {
         update();
       }
 
-      setState(ViewState.idle);priceIsLoading.value=false;
+      setState(ViewState.idle);
+      priceIsLoading.value = false;
       return priceData; // Return the result of getPrice function
     } catch (error) {
       // Handle errors here
-      priceIsLoading.value=false;
+      priceIsLoading.value = false;
       setState(ViewState.error);
       rethrow; // Rethrow the error after handling (if needed)
     }

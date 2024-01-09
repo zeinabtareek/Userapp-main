@@ -40,10 +40,12 @@ class ContactWidget extends StatelessWidget {
                   onTap: () async {
                     // TODO::  handel  orderId in parcel cicle
 
-                    controller.disconnectSocket();
+                    // controller.disconnectSocket();
+                    Get.find<BaseMapController>().stopListenOnNotification();
                     String orderId = controller.getOrderId()!;
-
-                    String chatId = await Get.to(
+                    print('*************** TAG contact_widget.dart ');
+                    print('*************** TAG Front orderId $orderId ');
+                    Get.to(
                       () => const MessageScreen(),
                       binding: BindingsBuilder(
                         () {
@@ -53,25 +55,24 @@ class ContactWidget extends StatelessWidget {
                               ..initChat()
                               ..toNewChat(
                                 orderId,
-                                chatIdP:
-                                    controller.createOrderModel.data?.chatId,
                               );
                           } else {
                             Get.put(ChatController(chatRepo: ChatRepo()))
                               ..initChat()
                               ..toNewChat(
                                 orderId,
-                                chatIdP:
-                                    controller.createOrderModel.data?.chatId,
                               );
                           }
                         },
                       ),
-                    );
-                    controller.createOrderModel.data?.chatId = chatId;
+                    )!
+                        .then((value) {
+                      print('*************** TAG Back orderId $orderId ');
 
-                    Get.find<BaseMapController>().listonOnNotificationSocketAfterAccept();
+                      // controller.createOrderModel.data?.chatId = value;
 
+                      Get.find<BaseMapController>().startListenOnNotification();
+                    });
                   },
                   // onTap: () => Get.to(() => const MessageListScreen()),
                   // onTap: () => Get.to(() => const MessageListScreen()),

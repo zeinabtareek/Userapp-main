@@ -21,7 +21,7 @@ class GetChatMsgsUseCase
   Future<DataState<(PaginationApiModel, List<MsgChatResModelItem>)>> call(
       {GetChatMsgsReqModel? parm}) async {
     final res = await DioUtilNew.dio!.get(
-      "${ChatConstant.postSendMsg}/${req!.chatId}",
+      _getAPILink,
       queryParameters: {
         ...req?.toMap() ?? {},
       },
@@ -36,16 +36,19 @@ class GetChatMsgsUseCase
       //     .map((data) => MsgChatResModelItem.fromMap(data))
       //     .toList();
 
-      for (var element in res.data['data']["messages"]) {
-        list.add(MsgChatResModelItem.fromSingleMsg(element, res.data['data']));
-      }
-      if (list.isNotEmpty) {
-        var controller = Get.find<ChatController>();
-        controller.orderId = list.first.order?.id;
+      if (res.data['data'] != null) {
+        for (var element in res.data['data']["messages"]) {
+          list.add(
+              MsgChatResModelItem.fromSingleMsg(element, res.data['data']));
+        }
+        if (list.isNotEmpty) {
+          var controller = Get.find<ChatController>();
+          controller.orderId.value = list.first.order?.id;
 
-        controller.canChat(
-          list.first.order?.canChatInOrder ?? true,
-        );
+          controller.canChat(
+            list.first.order?.canChatInOrder ?? true,
+          );
+        }
       }
       // return DataSuccess((paginationApiModel, list));
       return DataSuccess((PaginationApiModel(), list));
@@ -53,6 +56,13 @@ class GetChatMsgsUseCase
       String msg = res.data['message'];
       return DataFailedErrorMsg(msg, null);
     }
+  }
+
+  String get _getAPILink {
+    if (req!.isInOrder) {
+      return ChatConstant.getChatByOrder(req!.orderId!);
+    }
+    return "${ChatConstant.postSendMsg}/${req!.chatId}";
   }
 
   @override

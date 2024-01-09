@@ -10,4 +10,9 @@ class ChatConstant {
     var url = "api/driver/complain_chat";
     return _domain.endsWith("/") ? '$_domain$url' : '$_domain/$url';
   }
+    static String getChatByOrder(String orderId) {
+    var url = '$_api/$_who/';
+    String link = _domain.endsWith("/") ? '$_domain$url' : '$_domain/$url';
+    return "${link}orders/$orderId/chat";
+  }
 }
