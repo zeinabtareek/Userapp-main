@@ -92,11 +92,11 @@ class LiveTrackingScreenForParcel extends GetView<ParcelController> {
                                                         .pickedPoints.first,
                                                     zoom: 15),
                                             onMapCreated: (gController) async {
-
-                                              controller.controller = gController;
+                                              controller.controller =
+                                                  gController;
                                               // controller
                                               //         .mapViewHelperMapCompleter =
-                                                  gController;
+                                              gController;
                                               controller.pickedPoints = [
                                                 LatLng(
                                                   double.parse(item.from!.lat
@@ -272,6 +272,8 @@ class LiveTrackingScreenForParcel extends GetView<ParcelController> {
                                 color: Theme.of(context).cardColor,
                                 borderColor: Theme.of(context).primaryColor,
                                 onTap: () {
+                                  print('*************** TAG LiveTrackingScreen');
+
                                   Get.to(() => const MessageScreen(),
                                       binding: BindingsBuilder(() {
                                     // ignore: avoid_single_cascade_in_expression_statements

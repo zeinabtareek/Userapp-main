@@ -158,6 +158,7 @@ class BaseMapController extends BaseController
     controller = gController;
     await getCurrantLocation();
     Get.put(CreateATripController()).getCurrantOrder();
+    Get.find<RideController>().promoCodeController.text = '';
     // widgetNumber.value = request[RequestState.findDriverState]!;
   }
 
@@ -177,26 +178,33 @@ class BaseMapController extends BaseController
     await getUser;
     if (getOrderId() != null) {
       initializeSocket(
-        onConnect: () {
-          sendSocketEvent("user_id", "${user!.id}");
-          trackingAllDriversOnMap();
-          subscribeToEvent("user-notification.${user!.id}", (data) async {
-            if ((data["data"]['order_id'].toString()) == getOrderId()) {
-              if (data["data"]["notify_type"] == "change_order_status") {
-                String? status = (data["data"]["status"].toString());
-                handelTripUiBasedOnTripState(status);
-
-                //
-              }
-            }
-          });
-        },
+        onConnect: startListenOnNotification,
         onDisconnect: (socket) {
-          unsubscribeFromEvent("user-notification.${user?.id}");
+          stopListenOnNotification();
         },
       );
       connectSocket();
     }
+  }
+
+  void stopListenOnNotification() =>
+      unsubscribeFromEvent("user-notification.${user?.id}");
+
+  startListenOnNotification() {
+    sendSocketEvent("user_id", "${user!.id}");
+    trackingAllDriversOnMap();
+    subscribeToEvent("user-notification.${user!.id}", (data) async {
+      if ((data["data"]['order_id'].toString()) == getOrderId()) {
+        if (data["data"]["notify_type"] == "change_order_status") {
+          String? status = (data["data"]["status"].toString());
+          log(
+            'status:::  $tag $status ',
+            name: "status:::  $tag",
+          );
+          handelTripUiBasedOnTripState(status);
+        }
+      }
+    });
   }
 
   void handelTripUiBasedOnTripState(
@@ -205,6 +213,8 @@ class BaseMapController extends BaseController
     var baseMapController = Get.find<BaseMapController>();
     stopTrackingAllDriversOnMap();
     if (status == "start_trip") {
+      Get.find<CreateATripController>().showTrip(orderId: getOrderId());
+
       if (kDebugMode) {
         print('start trip TAG');
       }

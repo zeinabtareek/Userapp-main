@@ -134,7 +134,7 @@ class OrderData {
       vehicleType = json['vehicle_type'] != null
           ? VehicleType.fromJson(json['vehicle_type'])
           : null;
-      promoCode = json['promo_code'];
+      // promoCode = json['promo_code'];
       driver = json['driver'] != null ? Driver.fromJson(json['driver']) : null;
       kmPrice = json['km_price'];
       priceBeforeDiscount = json['price_before_discount'];

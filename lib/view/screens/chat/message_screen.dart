@@ -24,10 +24,12 @@ class MessageScreen extends GetView<ChatController> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        if (controller.orderId == null) {
+        if (controller.orderId.value == null) {
           controller.disconnectSocket();
+        } else {
+          controller.stopListenOnNotification();
         }
-        Get.back(result: controller.chatId);
+        Get.back();
         return Future.value(false);
       },
       child: Scaffold(
@@ -214,10 +216,12 @@ class MessageScreen extends GetView<ChatController> {
             CustomAppBar(
               title: Strings.message.tr,
               onBackPressed: () {
-                if (controller.orderId == null) {
+                if (controller.orderId.value == null) {
                   controller.disconnectSocket();
+                } else {
+                  controller.stopListenOnNotification();
                 }
-                Get.back(result: controller.chatId);
+                Get.back();
               },
             ),
             Expanded(
@@ -228,7 +232,8 @@ class MessageScreen extends GetView<ChatController> {
                 child: Obx(() => SizedBox(
                       height: (Get.height / 5) * 3.5 -
                           MediaQuery.of(context).viewInsets.bottom,
-                      child: controller.chatId.value != null
+                      child: controller.chatId.value != null ||
+                              controller.orderId.value != null
                           ? FutureBuilder(
                               future: Future.delayed(
                                   const Duration(milliseconds: 250),
@@ -242,7 +247,8 @@ class MessageScreen extends GetView<ChatController> {
                                       GetChatMsgsUseCase(
                                         GetChatMsgsReqModel(
                                           1,
-                                          chatId: controller.chatId.value!,
+                                          chatId: controller.chatId.value,
+                                          orderId: controller.orderId.value,
                                         ),
                                       ),
                                     ),

@@ -228,13 +228,13 @@ class SecondWidget extends StatelessWidget {
                       height: Dimensions.paddingSizeDefault,
                     ),
 
-                    TextButton(
-                        onPressed: () {
-                          Get.find<CreateATripController>().showTrip(
-                              orderId: '1cba258e-5837-4d99-861b-b67bf816047e');
-                          // Get.find<CreateTripRepo>().showTripDetails(orderId: '81ab4cfb-5b8f-4b54-b9f0-35bc21f67afc');
-                        },
-                        child: Text('show Order')),
+                    // TextButton(x
+                    //     onPressed: () {
+                    //       Get.find<CreateATripController>().showTrip(
+                    //           orderId: '1cba258e-5837-4d99-861b-b67bf816047e');
+                    //       // Get.find<CreateTripRepo>().showTripDetails(orderId: '81ab4cfb-5b8f-4b54-b9f0-35bc21f67afc');
+                    //     },
+                    //     child: Text('show Order')),
 
                     //  if (!isKeyboardIsOpen)
                     GetBuilder<CreateATripController>(
