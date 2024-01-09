@@ -55,7 +55,7 @@ class BaseMapScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(BaseMapController());
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: false,
       //   backgroundColor: Theme.of(context).shadowColor,
       body: CustomBody(
           appBar: CustomAppBar(
@@ -84,11 +84,8 @@ class BaseMapScreen extends StatelessWidget {
             ),
 
             expandableContent: Container(
-              //   height: 500,
-              // color: Colors.white,
               color: Theme.of(context).scaffoldBackgroundColor,
-              // color: Colors.red,
-              padding: const EdgeInsets.symmetric(
+               padding: const EdgeInsets.symmetric(
                   horizontal: Dimensions.paddingSizeDefault),
               child: SingleChildScrollView(
                 child: Obx(
@@ -103,10 +100,6 @@ class BaseMapScreen extends StatelessWidget {
                                   .toString() ??
                               '',
                         )
-                      //     BikeRideDetailsWidgets(
-                      //       image: Images.car  ,
-                      //       title: Get.find<RideController>().selectedPackage.value?.categoryTitle.toString()??'',
-                      //     )
                       : controller.widgetNumber.value ==
                               request[RequestState.getPriceState]
                           ? SecondWidget(
@@ -133,7 +126,7 @@ class BaseMapScreen extends StatelessWidget {
                                               RequestState.driverAcceptState] ||
                                       controller.widgetNumber.value ==
                                           request[RequestState
-                                              .tripOngoing]) //tripOngoing
+                                              .tripOngoing])
                                   ? const FourthWidget()
 
                                   ///Ride Details tripFinishedState
@@ -142,7 +135,7 @@ class BaseMapScreen extends StatelessWidget {
                                           request[
                                               RequestState.tripFinishedState]
                                       ?
-                                      //                ///here you paymenmt
+
                                       FifthWidget()
                                       : const SizedBox(),
                 ), // ),
@@ -151,17 +144,12 @@ class BaseMapScreen extends StatelessWidget {
 
             persistentHeader: fixedHeader(),
             persistentContentHeight: controller.persistentContentHeight,
-
             onIsContractedCallback: () => print('contracted'),
             onIsExtendedCallback: () => print('expanded'),
             animationDurationExtend: const Duration(milliseconds: 500),
             animationDurationContract: const Duration(milliseconds: 250),
-
             animationCurveExpand: Curves.bounceOut,
             animationCurveContract: Curves.ease,
-
-            // expandableContent: Container(height: 600,color: Colors.green,width: Get.width,),
-            // background: Container(height: 600,color: Colors.red,width: Get.width,),
           )),
     );
   }

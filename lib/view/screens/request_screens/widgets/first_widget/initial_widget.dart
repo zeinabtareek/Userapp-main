@@ -34,14 +34,18 @@ class InitialRequestWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isKeyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
 
+    print('isKeyboardIsOpen :::${isKeyboardIsOpen}');
+
     return   GetBuilder<RideController>(
       autoRemove: false,
         init: RideController(rideRepo: Get.find()),
         builder: (controller) {
+          print('isKeyboardIsOpen :::2${isKeyboardIsOpen}');
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // if (!isKeyboardIsOpen)
               Text(
                 controller.selectedSubPackage.value == null
                     ? 'please_choose_a_car_type'.tr
@@ -216,6 +220,7 @@ class InitialRequestWidget extends StatelessWidget {
                     const SizedBox(
                       height: Dimensions.paddingSizeDefault,
                     ),
+
                     GetBuilder<BaseMapController>(
                         init: BaseMapController(),
                         builder: (baseMapController) =>Obx(()=>CustomButton(
@@ -257,16 +262,16 @@ class InitialRequestWidget extends StatelessWidget {
                             }))),
                     K.sizedBoxH0,
                     K.sizedBoxH0,
+
                   ],
                 ),
               ),
 
-              // isBiddingOn
-              //     ?
-
-              ///TODO :this code zeinab removed it to apply the getPrice screen
             ],
           );
+
         }) ;
   }
 }
+
+
