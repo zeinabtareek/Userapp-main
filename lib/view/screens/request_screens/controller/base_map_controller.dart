@@ -312,21 +312,25 @@ class BaseMapController extends BaseController
 
     subscribeToEvent("map_$oId", (data) async {
       if (data is List<dynamic>) {
+        /// return the trip driver in list of one length
         var driverData = data.first;
-        log('driverData:::  $tag $driverData \n \t ',
-            name: "driverData:::  $tag");
+
         var list = driverData["points"] as List<dynamic>;
 
         bool isStarted = driverData["tripD"]["isStarted"];
-        print('isStarted:::: $tag $isStarted');
 
         LatLng? dist;
-        if (isStarted) {
+
+        var driverMarkers = await _driversFromSocketToMarker(
+          [driverData],
+          isTrackDriver: true,
+        );
+        if (!isStarted) {
+          dist = driverMarkers.first.position;
+        } else {
           var lat = double.tryParse(driverData["tripD"]["to"]["lat"]);
           var lng = double.tryParse(driverData["tripD"]["to"]["lng"]);
-
           dist = LatLng(lat ?? 0, lng ?? 0);
-          print('isStarted:::: ${dist.toJson()}');
         }
 
         if (list.isNotEmpty) {
@@ -338,13 +342,10 @@ class BaseMapController extends BaseController
           await _drawPolygyniesFromLatLngPoints(points);
         }
         drawListOfDriversOnMap(
-            await _driversFromSocketToMarker(
-              [driverData],
-              isTrackDriver: true,
-            ),
-            trackFirstDriver: isStarted == false,
-            isDrawMyMarker: isStarted == false,
-            trackPoint: dist);
+          driverMarkers,
+          isDrawMyMarker: !isStarted,
+          trackPoint: dist,
+        );
       }
     });
   }
@@ -382,7 +383,6 @@ class BaseMapController extends BaseController
 
   void drawListOfDriversOnMap(
     List<Marker> smarkers, {
-    bool trackFirstDriver = false,
     bool isDrawMyMarker = true,
     LatLng? trackPoint,
   }) {
@@ -396,12 +396,8 @@ class BaseMapController extends BaseController
       lat: initialPosition!.latitude,
       lng: initialPosition!.longitude,
       isAnimate: true,
-      disLat: trackFirstDriver
-          ? smarkers.first.position.latitude
-          : trackPoint?.latitude,
-      disLng: trackFirstDriver
-          ? smarkers.first.position.longitude
-          : trackPoint?.longitude,
+      disLat: trackPoint?.latitude,
+      disLng: trackPoint?.longitude,
     );
   }
 

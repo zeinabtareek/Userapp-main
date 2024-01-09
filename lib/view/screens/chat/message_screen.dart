@@ -29,6 +29,7 @@ class MessageScreen extends GetView<ChatController> {
         } else {
           controller.stopListenOnNotification();
         }
+        controller.clearData();
         Get.back();
         return Future.value(false);
       },
@@ -221,6 +222,7 @@ class MessageScreen extends GetView<ChatController> {
                 } else {
                   controller.stopListenOnNotification();
                 }
+                controller.clearData();
                 Get.back();
               },
             ),

@@ -279,7 +279,7 @@ class PaginationChatListView<UseCase extends MainPaginateListUseCase, Entity,
       if (state is PaginationNoMoreData && state.items.isNotEmpty) {
         return Builder(builder: (context) {
           WidgetsBinding.instance.addPostFrameCallback(
-          // WidgetsBinding.instance.addPostFrameCallback(
+            // WidgetsBinding.instance.addPostFrameCallback(
             (timeStamp) {
               controller.moveScrollToMaxScrollExtent();
             },

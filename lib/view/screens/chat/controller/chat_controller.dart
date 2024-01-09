@@ -36,9 +36,10 @@ class ChatController extends BaseController
     update();
   }
 
-  void toNewChat(String orderIdp, ) {
+  void toNewChat(
+    String orderIdp,
+  ) {
     setUserTypeIndex(0);
-  
 
     orderId.value = orderIdp;
     canChat.value = true;
@@ -48,7 +49,7 @@ class ChatController extends BaseController
         GetChatMsgsUseCase(
           GetChatMsgsReqModel(
             1,
-            chatId: chatId.value,
+            // chatId: chatId.value,
             orderId: orderId.value,
           ),
         ),
@@ -65,9 +66,24 @@ class ChatController extends BaseController
 
   setChatId(String? id) {
     chatId(id);
-    print(" chatId ");
+    Get.put(
+      PaginateChatMsgsController(
+        GetChatMsgsUseCase(
+          GetChatMsgsReqModel(
+            1,
+            chatId: chatId.value,
+            // orderId: orderId.value,
+          ),
+        ),
+      ),
+    );
   }
 
+  clearData() async {
+    chatId(null);
+    orderId(null);
+    await Get.delete<PaginateChatMsgsController>();
+  }
   // FilePickerResult? _otherFile;
   // FilePickerResult? get otherFile => _otherFile;
 
